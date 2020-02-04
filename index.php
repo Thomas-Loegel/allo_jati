@@ -5,4 +5,8 @@ $router = new Router($_GET['url']);
 
 //liste de nos routes
 
+$router->get('/', function () {
+    echo "Homepage";
+});
+
 $router->run();
