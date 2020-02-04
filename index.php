@@ -8,6 +8,4 @@ $router->get('/', function () {
     echo "Homepage";
 });
 
-
-
 $router->run();
