@@ -1,37 +1,37 @@
 <?php
 class RolesController
 {
-    private $id_roles;
-    private $id_artists
-    private $id_works;
+    private $id_role;
+    private $id_artist;
+    private $id_work;
 
-    private $actors;
-    private $directors;
+    private $actor;
+    private $director;
 
 
     public function __construct()
     {
-        $this->actors    = $actors;
-        $this->directors = $directors;
+        $this->actor    = $actor;
+        $this->director = $director;
     }
 
     // Setter
-    public function setActors($actors)
+    public function setActor($actor)
     {
-        $this->actors = $actors;
+        $this->actor = $actor;
     }
-    public function setDirectors($directors)
+    public function setDirector($director)
     {
-        $this->directors = $directors;
+        $this->director = $director;
     }
 
     // Getter
-    public function getActors($actors)
+    public function getActor($actor)
     {
-        return $this->actors;
+        return $this->actor;
     }
-    public function getDirectors($directors)
+    public function getDirector($director)
     {
-        return $this->directors;
+        return $this->director;
     }
 }
