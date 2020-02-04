@@ -1,10 +1,10 @@
 <?php
 class ArtistsController
 {
-    private $id_artists;
-    private $id_roles;
-    private $id_works;
-    private $id_medias;
+    private $id_artist;
+    private $id_role;
+    private $id_work;
+    private $id_media;
 
     private $first_name;
     private $last_name;
@@ -13,7 +13,10 @@ class ArtistsController
 
     public function __construct()
     {
-
+        $this->first_name = $first_name;
+        $this->last_name  = $last_name;
+        $this->birth_day  = $birth_day;
+        $this->bio        = $bio;
     }
 
     // Setter
