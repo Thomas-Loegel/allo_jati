@@ -1,0 +1,12 @@
+{
+    "name": "project/allo_jati",
+    "authors": [
+        {
+            "name": "jad67tony",
+            "email": "anthony.montmirail@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "2.0"
+    }
+}
