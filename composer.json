@@ -1,0 +1,12 @@
+{
+    "name": "project/allo_jati",
+    "authors": [
+        {
+            "name": "Thomas Loegel",
+            "email": "t.loegel@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}
