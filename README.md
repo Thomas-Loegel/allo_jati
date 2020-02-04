@@ -21,7 +21,7 @@ Objectifs : Réaliser le plus de fonctionnalités possibles (si tout n’y est p
 
 
 # Schéma :
-> Réalisation des schémas conceptuels de données :[UML](https://www.lucidchart.com/invitations/accept/90c1c58c-25d2-4692-bcea-743d184b5abd) - [MCD](https://www.lucidchart.com/invitations/accept/457dde16-143d-4771-9a6e-9944b522f302) - [MPD](https://www.lucidchart.com/invitations/accept/b167b63f-9dd1-4247-bd44-70905bf34788)
+> Réalisation des schémas conceptuels de données : [UML](https://www.lucidchart.com/invitations/accept/90c1c58c-25d2-4692-bcea-743d184b5abd) - [MCD](https://www.lucidchart.com/invitations/accept/457dde16-143d-4771-9a6e-9944b522f302) - [MPD](https://www.lucidchart.com/invitations/accept/b167b63f-9dd1-4247-bd44-70905bf34788)
 
 # Collaborateurs
 [Johana](https://github.com/johanna-Galli) - [Anthony](https://github.com/AnthonyM68) - [Illias](https://github.com/Ilias-Imoula) - [Thomas](https://github.com/Thomas-Loegel)
