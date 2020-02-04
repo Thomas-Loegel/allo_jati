@@ -27,7 +27,8 @@ Objectifs : Réaliser le plus de fonctionnalités possibles (si tout n’y est p
 [Johana](https://github.com/johanna-Galli) - [Anthony](https://github.com/AnthonyM68) - [Illias](https://github.com/Ilias-Imoula) - [Thomas](https://github.com/Thomas-Loegel)
 
 # NOTE :
-- Utilisez la BDD fournie dans le dépot et modifiez le fichier Core/config.json si besoin
+ Utilisez la BDD fournie dans le dépot et modifiez le fichier si besoin
+> Core/config.json
 
 ```sh
   {
