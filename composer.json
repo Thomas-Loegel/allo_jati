@@ -1,0 +1,12 @@
+{
+    "name": "project/allo_jati",
+    "authors": [
+        {
+            "name": "ilias-imoula",
+            "email": "iliasimoula97@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}
