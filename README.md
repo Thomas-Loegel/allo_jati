@@ -30,7 +30,7 @@ Objectifs : Réaliser le plus de fonctionnalités possibles (si tout n’y est p
  Utilisez la BDD fournie dans le dépot et modifiez le fichier si besoin
 > Core/config.json
 
-```sh
+```json
   {
     "dsn": "mysql:host=localhost;dbname=allo_jati;charset=utf8",
     "user": "root",
