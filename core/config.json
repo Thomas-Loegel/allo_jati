@@ -2,5 +2,5 @@
     "dsn": "mysql:host=localhost;dbname=allo_jati;charset=utf8",
     "user": "root",
     "psswd": "",
-    "baseUrl": "http://localhost/mvcPOO_Twig"
+    "baseUrl": "http://localhost/allo_jati"
 }

@@ -8,5 +8,8 @@
     ],
     "require": {
         "twig/twig": "2.0"
+    },
+    "autoload": {
+        "classmap":["Router/", "Controllers/", "Models/"] 
     }
 }
