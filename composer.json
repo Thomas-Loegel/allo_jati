@@ -1,0 +1,12 @@
+{
+    "name": "project/allo_jati",
+    "authors": [
+        {
+            "name": "Johanna Galli",
+            "email": "galli.johanna.g2@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "2.0"
+    }
+}
