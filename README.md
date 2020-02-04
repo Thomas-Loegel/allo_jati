@@ -17,8 +17,6 @@ Le site comportera une partie administration qui permettra de gérer nos donnée
 • Avoir un système de tri sur la page d’accueil permettant d’afficher les films selon un genre, une année de sortie ou un réalisateur par exemple, il n’est pas nécessaire que ce tri s’effectue en asynchrone.
 Objectifs : Réaliser le plus de fonctionnalités possibles (si tout n’y est pas, et surtout les bonus, ce n’est pas si grave), MAIS SURTOUT avoir un code propre et organisé en utilisant un MVC POO. Le responsive n’est pas non plus la priorité.
 
-> **Collaborateurs** : Johanna, Anthony, Thomas, Ilias
-
 > **Note** :  Durée : Minimum 5/6 jours (plus si nécessaire, ensuite nous nous « apaiserons » tous sur Wordpress :D)
 
 
@@ -27,3 +25,6 @@ Objectifs : Réaliser le plus de fonctionnalités possibles (si tout n’y est p
 . [UML](https://www.lucidchart.com/invitations/accept/90c1c58c-25d2-4692-bcea-743d184b5abd)
 . [MCD](https://www.lucidchart.com/invitations/accept/457dde16-143d-4771-9a6e-9944b522f302)
 . [MPD](https://www.lucidchart.com/invitations/accept/b167b63f-9dd1-4247-bd44-70905bf34788)
+
+# Collaborateurs
+[Johana](https://github.com/johanna-Galli) - [Anthony](https://github.com/AnthonyM68) - [Illias](https://github.com/Ilias-Imoula) - [Thomas](https://github.com/Thomas-Loegel)
