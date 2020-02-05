@@ -1,5 +1,5 @@
 <?php
-class ArtistsController
+class ArtistsController extends Controller
 {
     private $id_artist;
     private $id_role;
@@ -13,6 +13,7 @@ class ArtistsController
 
     public function __construct()
     {
+        $this->twig = parent::getTwig();
         $this->first_name = $first_name;
         $this->last_name  = $last_name;
         $this->birth_day  = $birth_day;
@@ -50,8 +51,16 @@ class ArtistsController
     {
         return $this->birth_day;
     }
-    public function getLast_name($bio)
+    public function getBio($bio)
     {
         return $this->bio;
+    }
+
+    // Affichage du template
+    public function index()
+    {
+        $pageTwig = 'Artists/index.html.twig';
+        $template = $this->twig->load($pageTwig);
+        echo $template->render();
     }
 }
