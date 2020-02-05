@@ -14,10 +14,10 @@ class ArtistsController extends Controller
     public function __construct()
     {
         $this->twig = parent::getTwig();
-        $this->first_name = $first_name;
+       /*$this->first_name = $first_name;
         $this->last_name  = $last_name;
         $this->birth_day  = $birth_day;
-        $this->bio        = $bio;
+        $this->bio        = $bio;*/
     }
 
     // Setter

@@ -1,0 +1,24 @@
+{% extends "template.html.twig" %}
+
+{% block title %}Medias{% endblock %}
+
+{% block body %}
+
+<h2>Bienvenue sur la page des Medias</h2>
+<p>
+    Ici on présente les affiches de Films !
+</p>
+
+
+{% for poster in posters %}
+
+<img src="{{ poster.poster }}" > 
+{% endfor %}
+
+{% for picture in pictures %}
+<img src="{{ picture.pictures }}" > 
+
+{% endfor %}
+
+
+{% endblock %}
