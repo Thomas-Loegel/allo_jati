@@ -2,5 +2,5 @@
     "dsn": "mysql:host=localhost;dbname=allo_jati;charset=utf8;port=3308",
     "user": "root",
     "psswd": "",
-    "baseUrl": "http://localhost/allo_jati/"
+    "baseUrl": "http://localhost/allo_jati"
 }
