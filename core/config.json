@@ -1,6 +1,13 @@
 {
+<<<<<<< HEAD
    "dsn": "mysql:host=localhost;dbname=allo_jati;charset=utf8;port=3308",
    "user": "root",
    "psswd": "",
    "baseUrl": "http://localhost/allo_jati/"
+=======
+    "dsn": "mysql:host=localhost;dbname=allo_jati;charset=utf8;port=3308",
+    "user": "root",
+    "psswd": "",
+    "baseUrl": "http://localhost/allo_jati/"
+>>>>>>> c17d1a93977341b5415f858853cc3e1db4535211
 }
