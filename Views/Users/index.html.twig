@@ -4,31 +4,30 @@
 
 {% block body %}
 
-<h2>Bienvenue sur la page User</h2>
-
 {% if slug is null %}
 
 <h2>Connectez-vous :</h2>
 
 <div class="container">
    <div class="row">
-      <form class="col-4">
+      <form class="col-4" method="POST">
+
          <div class="form-group">
-            <label for="pseudo">Pseudo</label>
-            <input type="text" class="form-control" id="pseudo" placeholder="ex : kékédu68">
+            <label for="pseudo"> <h4>Pseudo</h4> </label>
+            <input type="text" class="form-control" id="pseudo">
+            <p><a href="#">J'ai oublié mon pseudo :'(</a></p>
          </div>
+
          <div class="form-group">
-            <label for="password">Mot de passe</label>
+            <label for="password"> <h4>Mot de passe</h4> </label>
             <input type="password" class="form-control" id="password">
          </div>
 
          <div class="form-group">
-            <a href="{{baseUrl}}/Users/register" class="badge badge-light col">Pas encore inscrit ?!</a>
-            <button type="submit" class="btn btn-primary col">Se connecter</button>
+            <a href="{{baseUrl}}/Users/register" class="badge badge-light col">Pas encore inscrit ?! :o</a>
+            <button type="submit" class="btn btn-outline-info col">Se connecter</button>
          </div>
 
-         <p class="text-center"><a href="#">Identifiant ou mot de passe oublié ?</a></p>
-         
       </form>
    </div>
 </div>
@@ -40,9 +39,12 @@
 
 <div class="container">
    <div class="row">
-      <form class="col-4">
-         <label for="mail">Adresse mail *</label>
-         <input type="mail" class="form-control" id="mail">
+      <form class="col-4" method ="POST">
+
+         <div class="form-group">
+            <label for="mail">Adresse mail *</label>
+            <input type="mail" class="form-control" id="mail">
+         </div>
 
          <div class="form-group">
             <label for="pseudo">Pseudo *</label>
@@ -63,7 +65,7 @@
             <button type="submit" class="btn btn-primary col">S'inscrire</button>
          </div>
 
-         <small id="requiredField" class="form-text text-muted">* champs obligatoires</small>
+         <small id="requiredField" class="form-text text-muted">Champs obligatoires *</small>
       </form>
    </div>
 </div>
