@@ -20,8 +20,18 @@ class ArtistsController extends Controller
     }
 
     // Affichage du template + Tous les Artistes
-    public function index()
+    public function index($slug = null;)
     {
+        if ($slug == 1) {
+            echo "Acteur";
+        }
+        elseif ($slug == 2){
+            echo "Réalisateur";
+        }
+        elseif ($slug == 3){
+            echo "Acteur & Réalisateur";
+        }
+        
         $result   = $this->model->getAllArtists();
         $pageTwig = 'Artists/index.html.twig';
         $template = $this->twig->load($pageTwig);

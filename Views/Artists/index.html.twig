@@ -10,10 +10,18 @@
     </p>
 
     {% for artists in result %}
-        <p>Id : {{ artists.id_artist }}</p>
+        <p>Role : {{ artists.role }}</p>
+
+        {% if slug is 1 %}
+
+        {% elseif slug is 2 %}
+        {% endif %}
+        {% endif %}
+
         <p>Prénom : {{ artists.first_name }}</p>
         <p>Nom : {{ artists.last_name }}</p>
         <p>date de naissance : {{ artists.birth_day | date("d/m/Y") }}</p>
+        <p>Biographie : <br> {{ artists.bio }}</p>
         <hr>
     {% endfor %}
 
