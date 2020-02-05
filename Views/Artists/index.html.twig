@@ -1,0 +1,20 @@
+{% extends "template.html.twig" %}
+
+{% block title %}Artistes{% endblock %}
+
+{% block body %}
+
+    <h2>Bienvenue sur la page de l'artiste demandé</h2>
+    <p>
+        Ici on peut afficher la fiche de l'artiste avec toutes les infos !
+    </p>
+
+    {% for artists in result %}
+        <p>Id : {{ artists.id_artist }}</p>
+        <p>Prénom : {{ artists.first_name }}</p>
+        <p>Nom : {{ artists.last_name }}</p>
+        <p>date de naissance : {{ artists.birth_day | date("d/m/Y") }}</p>
+        <hr>
+    {% endfor %}
+
+{% endblock %}
