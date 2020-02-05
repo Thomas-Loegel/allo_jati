@@ -1,5 +1,5 @@
 <?php
-class RolesController
+class RolesController extends Controller
 {
     private $id_role;
     private $id_artist;
