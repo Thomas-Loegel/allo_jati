@@ -2,28 +2,15 @@
     "name": "project/allo_jati",
     "authors": [
         {
-<<<<<<< HEAD
             "name": "Johanna Galli",
             "email": "galli.johanna.g2@gmail.com"
         }
     ],
     "require": {
-        "twig/twig": "2.0"
+        "twig/twig": "3.0"
         
     },
     "autoload": {
         "classmap": ["Router/", "Controllers/", "Models/"]
-
-=======
-            "name": "Thomas Loegel",
-            "email": "t.loegel@gmail.com"
-        }
-    ],
-    "require": {
-        "twig/twig": "^3.0"
-    },
-    "autoload": {
-        "classmap": ["Controllers/", "Models/", "Router/"]
->>>>>>> cd56bce69579a82101bf7957033ec20fda32ec99
     }
 }
