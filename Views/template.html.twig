@@ -9,7 +9,7 @@
     <title>{% block title %}Allo Jati{% endblock %}</title>
 
     {% block stylesheets %}
-        <link rel="stylesheet" href="assets/css/bootstrap+reboot.css">
+        <link rel="stylesheet" href="{{baseUrl}}/assets/css/bootstrap+reboot.css">
     {% endblock %}
 </head>
 
@@ -18,7 +18,8 @@
     <nav>
         <ul>
             <li><a href="{{baseUrl}}">Home</a></li>
-            <li><a href="{{baseUrl}}Artists">Fiche artiste</a></li>
+            <li><a href="{{baseUrl}}/Artists">Fiche artiste</a></li>
+            <li><a href="{{baseUrl}}/Users">Fiche utilisateur</a></li>
         </ul>
     </nav>
     {% endblock %}
