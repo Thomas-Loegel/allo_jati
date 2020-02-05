@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}Accueil{% endblock %}</title>
+
+    <title>{% block title %}Allo Jati{% endblock %}</title>
+
     {% block stylesheets %}
-    {# Here you can add only the CSS that you need #}
+        <link rel="stylesheet" href="assets/css/bootstrap+reboot.css">
     {% endblock %}
 </head>
 
@@ -15,20 +17,24 @@
     {% block header %}
     <nav>
         <ul>
-            <li><a href="{{baseUrl}}">Accueil</a></li>
+            <li><a href="{{baseUrl}}">Home</a></li>
+            <li><a href="{{baseUrl}}Artists">Fiche artiste</a></li>
         </ul>
     </nav>
     {% endblock %}
 
     {% block body %}
-    {# Here the main content, you can create other blocks if there are useful to you #}
+    <main>
+        {# Here the main content, you can create other blocks if there are useful to you #}
+    </main>
     {% endblock %}
 
     {% block footer %}
+        {# Footer ici #}
     {% endblock %}
 
     {% block javascripts %}
-    {# Here you can add only the JS that you need #}
+        {# Here you can add only the JS that you need #}
     {% endblock %}
 </body>
 
