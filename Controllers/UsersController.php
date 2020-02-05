@@ -9,49 +9,19 @@ class User
     private $mail;
 
 
-    /**admin */
-    public function set_admin($admin)
+    public function set($admin, $pseudo, $mdp)
     {
         $this->$admin = $admin;
-    }
-
-    public function get_admin()
-    {
-        echo $this->admin;
-    }
-
-
-    /**pseudo */
-    public function set_pseudo($pseudo)
-    {
         $this->$pseudo = $pseudo;
-    }
-
-    public function get_pseudo()
-    {
-        echo $this->pseudo;
-    }
-
-    /**mdp */
-    public function set_mdp($mdp)
-    {
         $this->$mdp = $mdp;
     }
 
-    public function get_mdp()
+    public function get()
     {
+        echo $this->admin;
+        echo $this->pseudo;
         echo $this->mdp;
-    }
-
-    /**mail */
-    public function set_mail($mail)
-    {
-        $this->$mail = $mail;
-    }
-
-
-    public function get_mail()
-    {
         echo $this->mail;
     }
+
 }
