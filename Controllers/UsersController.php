@@ -110,4 +110,22 @@ class UsersController extends Controller
          'slug' => $slug,
       ]);
    }
+
+   public function reg($slug = "register"){
+
+
+      if (!empty($_POST['mail']) && !empty($_POST['pseudo']) && !empty($_POST['mdp'])) {
+         echo "ok";
+      } else echo "pas ok";
+
+
+      $pageTwig = 'Users/index.html.twig';
+      $template = $this->twig->load($pageTwig);
+
+      echo $template->render([
+         'slug' => $slug,
+      ]);
+      
+   }
+
 }

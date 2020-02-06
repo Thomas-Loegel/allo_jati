@@ -8,7 +8,9 @@ $router = new Router($_GET['url']);
 // listes de nos routes
 $router->get('/', 'Home.index');
 $router->get('/Artists', 'Artists.index');
-$router->post('/Users/log', 'Users.log');
+
+$router->post('/Admin', 'Admin.index');
+
 $router->get('/Users/:slug', 'Users.index');
 $router->get('/Users', 'Users.index');
 
