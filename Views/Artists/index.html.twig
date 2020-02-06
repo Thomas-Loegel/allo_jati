@@ -10,7 +10,7 @@
     </p>
 
     {% for artists in result %}
-        <p>Id : {{ artists.id_artist }}</p>
+        <p>Id : {{ artists.role }}</p>
         <p>Prénom : {{ artists.first_name }}</p>
         <p>Nom : {{ artists.last_name }}</p>
         <p>date de naissance : {{ artists.birth_day | date("d/m/Y") }}</p>
