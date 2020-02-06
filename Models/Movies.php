@@ -16,13 +16,8 @@ class Movies extends Model
     }
 
     // Recupère un Film avec ID
-    public function getMovie(int $id_movie)
-    {
-        $req = $this->pdo->prepare(
-           'SELECT *
-            FROM movies
-            WHERE movies.id_movie = ?
-            AND movies.id_movie = movies.id_movie ');
+    public function getMovie($id_movie) {
+        $req = $this->pdo->prepare('SELECT * FROM movies WHERE movies.id_movie = ? AND movies.id_movie = movies.id_movie ');
         $req->execute([$id_movie]);
         return $req->fetch();
     }
