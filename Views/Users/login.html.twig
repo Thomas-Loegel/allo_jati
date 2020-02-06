@@ -1,0 +1,75 @@
+{% extends "template.html.twig" %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block body %}
+
+{% if slug is null %}
+
+<h2>Connectez-vous :</h2>
+
+<div class="container">
+   <div class="row">
+      <form class="col-4" method="POST">
+
+         <div class="form-group">
+            <label for="pseudo"> <h4>Pseudo</h4> </label>
+            <input type="text" class="form-control" id="pseudo">
+            <p><a href="#">J'ai oublié mon pseudo :'(</a></p>
+         </div>
+
+         <div class="form-group">
+            <label for="password"> <h4>Mot de passe</h4> </label>
+            <input type="password" class="form-control" id="password">
+         </div>
+
+         <div class="form-group">
+            <a href="{{baseUrl}}/Connexion/Enregistrement" class="badge badge-light col">Pas encore inscrit ?! :o</a>
+            <button type="submit" class="btn btn-outline-info col">Se connecter</button>
+         </div>
+
+      </form>
+   </div>
+</div>
+{% endif %}
+
+{% if (slug == 'Enregistrement') %}
+
+<h2>Créez un compte :</h2>
+
+<div class="container">
+   <div class="row">
+      <form class="col-4" method ="POST">
+
+         <div class="form-group">
+            <label for="mail">Adresse mail *</label>
+            <input type="mail" class="form-control" id="mail">
+         </div>
+
+         <div class="form-group">
+            <label for="pseudo">Pseudo *</label>
+            <input type="text" class="form-control" id="pseudo">
+         </div>
+
+         <div class="form-group">
+            <label for="password">Mot de passe *</label>
+            <input type="password" class="form-control" id="password">
+         </div>
+
+         <div class="form-group">
+            <label for="exampleFormControlFile1">Photo de profil</label>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+         </div>
+
+         <div class="form-group">
+            <button type="submit" class="btn btn-primary col">S'inscrire</button>
+         </div>
+
+         <small id="requiredField" class="form-text text-muted">Champs obligatoires *</small>
+      </form>
+   </div>
+</div>
+
+{% endif %}
+
+{% endblock %}
