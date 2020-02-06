@@ -13,5 +13,4 @@ $router->get('/Connexion', 'Users.index');
 
 $router->get('/', 'Home.index');
 
-
 $router->run();

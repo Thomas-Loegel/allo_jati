@@ -4,17 +4,20 @@
 
 {% block body %}
 
-<h2>Bienvenue sur la page de l'artiste demandé</h2>
-<p>
-   Ici on peut afficher la fiche de l'artiste avec toutes les infos !
-</p>
+<h2>{{ artist.first_name }} {{ artist.last_name }}</h2>
 
 <div class="">
    <img src="{{ artist.picture }}">
-   <p>Prénom : {{ artist.first_name }}</p>
-   <p>Nom : {{ artist.last_name }}</p>
    <p>Date de naissance : {{ artist.birth_day | date("d/m/Y") }}</p>
    <p>Biographie : <br> {{ artist.bio }}</p>
+</div>
+
+<div class="">
+   <h3>A voir aussi dans :</h3>
+   {% for movies in mvies %}
+      <p>{{movies.title}}</p>
+      <a href="{{baseUrl}}/Film">{{movies.picture}}</a>
+   {% endfor %}
 </div>
 
 {% endblock %}

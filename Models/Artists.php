@@ -16,7 +16,7 @@ class Artists extends Model
    }
 
    // Récupère tout les Artistes liés au Film
-   public function getByMovie($id)
+   public function getByMovie(int $id)
    {
       $req = $this->pdo->prepare(
          "SELECT artists.*
@@ -28,6 +28,7 @@ class Artists extends Model
       return $req->fetchAll();
    }
 
+   // Récupère la fiche de l'Artiste
    public function getArtist(int $id_artist)
    {
       $req = $this->pdo->prepare(
