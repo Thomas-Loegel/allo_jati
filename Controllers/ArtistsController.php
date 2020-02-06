@@ -17,6 +17,14 @@ class ArtistsController extends Controller
       $this->model = new Artists();
    }
 
+   // Affiche les Artistes
+   public function showAllArtists()
+   {
+      $artists   = $this->model->getAllArtists();
+      $pageTwig = 'Artists/showAllArtists.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render(['artists' => $artists]);
+   }
 
    // Affiche la fiche Artiste
    public function showArtist($id_artist)
@@ -27,7 +35,7 @@ class ArtistsController extends Controller
    echo $template->render(['artist' => $artist]);
    }
 
-   // Affiche tout les Artistes du Film
+   // Affiche les Artistes du Film
    public function showByMovie()
    {
       $artists = $this->model->getByFilm();

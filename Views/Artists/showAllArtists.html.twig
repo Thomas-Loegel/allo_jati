@@ -1,0 +1,17 @@
+{% extends "template.html.twig" %}
+
+{% block title %}Artistes{% endblock %}
+
+{% block body %}
+
+   <h2>Artistes</h2>
+
+   {% for artists in artists %}
+      <a href="{{baseUrl}}/Artistes/Artiste_{{artists.id_artist}}">
+         <img src="{{artists.picture}}">
+      </a>
+      <p>{{artists.first_name}} {{artists.last_name}}</p>
+
+   {% endfor %}
+
+{% endblock %}

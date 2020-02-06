@@ -3,16 +3,27 @@ require_once 'vendor/autoload.php';
 
 $router = new Router($_GET['url']);
 
-// listes des routes
-$router->get('/Films/Film_:id_movie', 'Movies.showOneMovie');
+// Routes Films:
+$router->get('/Films/Film_:id_movie', 'Movies.showMovie');
 $router->get('/Films/Artiste_:id_artist', 'Artists.showArtist');
-$router->get('Comments/Delete_:id_movie', 'Comments.delAllComByMovie');
-$router->get('/Connexion/:slug', 'Users.index');
-$router->get('Comments/GetAll', 'Comments.getAllCom');
 $router->get('/Films', 'Movies.showAllMovies');
-$router->get('/Connexion', 'Users.index');
+
+// Routes Artistes:
+$router->get('/Artistes/Artiste_:id_artist', 'Artists.showArtist');
+$router->get('/Artistes', 'Artists.showAllArtists');
 $router->get('/Artists', 'Artists.index');
+
+// Routes Commentaires:
+$router->get('Comments/Delete_:id_movie', 'Comments.delAllComByMovie');
+$router->get('Comments/GetAll', 'Comments.getAllCom');
 $router->get('/Comments', 'Comments.index');
 
+// Routes Connexion:
+$router->get('/Connexion', 'Users.index');
+$router->get('/Connexion/:slug', 'Users.index');
+
+// Routes Home:
 $router->get('/', 'Home.index');
+
+// Run Routes
 $router->run();
