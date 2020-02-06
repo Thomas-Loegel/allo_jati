@@ -11,7 +11,6 @@ $router->get('/Films', 'Movies.showAllMovies');
 // Routes Artistes:
 $router->get('/Artistes/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artistes', 'Artists.showAllArtists');
-$router->get('/Artists', 'Artists.index');
 
 // Routes Commentaires:
 $router->get('Comments/Delete_:id_movie', 'Comments.delAllComByMovie');
