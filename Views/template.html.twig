@@ -8,7 +8,7 @@
 
     <title>{% block title %}Allo Jati{% endblock %}</title>
 
-    {% block stylesheets %}
+    {% block styles %}
         <link rel="stylesheet" href="{{baseUrl}}/assets/css/bootstrap+reboot.css">
     {% endblock %}
 </head>
@@ -19,6 +19,7 @@
         <ul>
             <li><a href="{{baseUrl}}">Home</a></li>
             <li><a href="{{baseUrl}}/Films">Films</a></li>
+            <li><a href="{{baseUrl}}/Artistes">Artistes</a></li>
             <li><a href="{{baseUrl}}/Connexion">Connexion</a></li>
         </ul>
     </nav>
@@ -34,7 +35,7 @@
         {# Footer ici #}
     {% endblock %}
 
-    {% block javascripts %}
+    {% block js %}
         {# Here you can add only the JS that you need #}
     {% endblock %}
 </body>
