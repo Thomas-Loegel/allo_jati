@@ -9,7 +9,7 @@
     <title>{% block title %}Allo Jati{% endblock %}</title>
 
     {% block stylesheets %}
-        <link rel="stylesheet" href="assets/css/bootstrap+reboot.css">
+        <link rel="stylesheet" href="{{ baseUrl }}/assets/css/bootstrap+reboot.css">
     {% endblock %}
 </head>
 
@@ -19,7 +19,7 @@
         <ul>
             <li><a href="{{baseUrl}}">Home</a></li>
             <li><a href="{{baseUrl}}/Films">Films</a></li>
-            <li><a href="{{baseUrl}}/Users">Connexion</a></li>
+            <li><a href="{{baseUrl}}/Connexion">Connexion</a></li>
         </ul>
     </nav>
     {% endblock %}
