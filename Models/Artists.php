@@ -19,7 +19,12 @@ class Artists extends Model
     // Récupère tout les Artistes liés au Film
     public function getByArtists()
     {
-        $req = $this->pdo->prepare('SELECT artists.*, movies.*, GROUP_CONCAT(movies.id_movie) AS picture FROM artists, movies, artists_movies WHERE artists.id_artist = ? AND artists.id_artist = artists_movies.id_artist AND artists_movies.id_movie = movies.id_movie');
+        $req = "SELECT comments.id, users.login
+                AS author, comments.content, comments.date
+    			FROM comments
+    			INNER JOIN users
+    			ON comments.author = users.id
+    			WHERE comments.id_article=".$articleid;
         $req->execute();
         return $req->fetchAll();
     }
