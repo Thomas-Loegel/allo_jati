@@ -1,4 +1,5 @@
 <?php
+
 class ArtistsController extends Controller
 {
     private $id_artist;
@@ -12,7 +13,6 @@ class ArtistsController extends Controller
     public function __construct()
     {
         $this->twig = parent::getTwig();
-
         parent::__construct();
         $this->model = new Artists();
     }
@@ -27,10 +27,10 @@ class ArtistsController extends Controller
     }
 
     // Affichage du template + Tous les Artistes du Film
-    public function setByArtists()
+    public function showByMovie()
     {
-        $result   = $this->model->getByArtists();
-        $pageTwig = 'Artists/show.html.twig';
+        $result   = $this->model->getByFilm();
+        $pageTwig = 'Artists/showByMovie.html.twig';
         $template = $this->twig->load($pageTwig);
         echo $template->render(["result" => $result]);
     }

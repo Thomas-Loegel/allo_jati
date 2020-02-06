@@ -2,7 +2,6 @@
 
 class Artists extends Model
 {
-
     public function __construct()
     {
         $this->pdo = parent::getPdo();
@@ -17,15 +16,10 @@ class Artists extends Model
     }
 
     // Récupère tout les Artistes liés au Film
-    public function getByArtists()
+    public function getByMovie()
     {
-        $req = "SELECT comments.id, users.login
-                AS author, comments.content, comments.date
-    			FROM comments
-    			INNER JOIN users
-    			ON comments.author = users.id
-    			WHERE comments.id_article=".$articleid;
+        $req =
         $req->execute();
-        return $req->fetchAll();
+        return $req->fetch();
     }
 }
