@@ -1,48 +1,53 @@
 <?php
-
-class Arts 
+class ArtsController extends Controller
 {
-   private $id_oeuvres;
+   private $id_works;
    private $type;
-   private $titre;
-   private $annee;
-   private $genre;
+   private $title;
+   private $year;
+   private $style;
 
-   
-   public function __construct($id_oeuvres,$type,$titre,$annee,$genre)
+   public function __construct()
    {
-      $this->id_oeuvres = $id_oeuvres;
-      $this->type = $type;
-      $this->titre = $titre;
-      $this->annee = $annee;
-      $this->genre = $genre;
+      $this->twig = parent::getTwig();
+      parent::__construct();
+      $this->model = new Works();
    }
-   public function __getType(){
+   /** Setter*/ 
+
+   public function setType($value)
+   {
+      $this->type = $value;
+   }
+   public function setTitle($value)
+   {
+      $this->title = $value;
+   }
+   public function setYear($value)
+   {
+      $this->year = $value;
+   }
+   public function setStyle($value)
+   {
+      $this->style = $value;
+   }
+
+   /** Getter*/ 
+
+   public function getType()
+   {
       return $this->type;
    }
-   public function __setType($value){
-      $this->type=$value;
+   public function getTitle()
+   {
+      return $this->title;
    }
-
-   public function __getTitre(){
-      return $this->titre;
+   public function getYear()
+   {
+      return $this->year;
    }
-   public function __setTitre($value){
-      $this->titre=$value;
+   public function getStyle()
+   {
+      return $this->style;
    }
-
-   public function __getAnnee(){
-      return $this->annee;
-   }
-   public function __setAnnee($value){
-      $this->annee=$value;
-   }
-
-   public function __getGenre(){
-      return $this->genre;
-   }
-   public function __setGenre($value){
-      $this->genre=$value;
-   }
-
 }
