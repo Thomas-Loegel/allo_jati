@@ -4,10 +4,29 @@
 
 {% block body %}
 
-<h2>Bienvenue sur la page de l'artiste demandé</h2>
-<p>
-    Ici on peut afficher la fiche de l'artite avec toutes les infos !
-</p>
+    <h2>Bienvenue sur la page de l'artiste demandé</h2>
+    <p>
+        Ici on peut afficher la fiche de l'artiste avec toutes les infos !
+    </p>
 
+    {% for artists in result %}
+
+        <img src="{{ artists.picture }}">
+
+        {% if artists.role == 1 %}
+            <p>Rôle : Acteur</p>
+
+            {% elseif artists.role == 2 %}
+                <p>Rôle : Réalisateur</p>
+            {% elseif artists.role == 3 %}
+                <p>Rôle : Acteur & Réalisateur</p>
+        {% endif %}
+
+        <p>Prénom : {{ artists.first_name }}</p>
+        <p>Nom : {{ artists.last_name }}</p>
+        <p>Date de naissance : {{ artists.birth_day | date("d/m/Y") }}</p>
+        <p>Biographie : <br> {{ artists.bio }}</p>
+        <hr>
+    {% endfor %}
 
 {% endblock %}

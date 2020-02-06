@@ -11,4 +11,8 @@ $router->get('/Films', 'Works.index');
 $router->get('/Films/Show/:id_works', 'Works.showmovie');
 
 
+$router->get('/Users/:slug', 'Users.index');
+$router->get('/Users', 'Users.index');
+
+
 $router->run();
