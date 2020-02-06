@@ -13,7 +13,7 @@ class MoviesController extends ArtsController
         $this->model = new Movies();
     }
 
-    // Récupère tout les films
+    // Affichage du template + Récupère tout les films
     public function showAllMovies()
     {
         $result = $this->model->getAllMovies();
@@ -22,7 +22,7 @@ class MoviesController extends ArtsController
         echo $template->render(["result" => $result]);
     }
 
-    // Récupère un Film avec son ID
+    // Affichage du template + Récupère un Film avec son ID
     public function showOneMovie(int $id_movie) {
 
         $result = $this->model->getMovie($id_movie);
