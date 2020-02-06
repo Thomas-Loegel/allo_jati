@@ -23,7 +23,7 @@ class ArtistsController extends Controller
         $result   = $this->model->getAllArtists();
         $pageTwig = 'Artists/index.html.twig';
         $template = $this->twig->load($pageTwig);
-        echo $template->render(["result" => $result]);
+        echo $template->render(['result' => $result]);
     }
 
     // Affichage du template + Tous les Artistes du Film
