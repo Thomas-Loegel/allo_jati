@@ -34,7 +34,7 @@ class UsersController extends Controller
             header("Location: $this->baseUrl");
         }
 
-        $pageTwig = 'Users/login.html.twig';
+        $pageTwig = 'Users/index.html.twig';
         $template = $this->twig->load($pageTwig);
         echo $template->render(['slug' => $slug, "title" => $title]);
     }
