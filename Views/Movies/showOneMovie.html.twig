@@ -11,20 +11,19 @@
    <p>{{movie.time}}</p>
    <p>{{movie.resume}}</p>
 
-   {% for artist in artists %}
+   {% for artists in artists %}
 
-      {% if artist.role == 1 %}
+      {% if artists.role == 1 %}
          {% set role = 'Acteur' %}
 
-         {% elseif artist.role == 2 %}
+         {% elseif artists.role == 2 %}
             {% set role = 'Réalisateur' %}
-         {% elseif artist.role == 3 %}
+         {% elseif artists.role == 3 %}
             {% set role = 'Réalisateur & Acteur' %}
-
       {% endif %}
 
       <ul>
-         <li>{{role}} : <a href="{{baseUrl}}/Films/Artiste_{{artist.id_artist}}">{{artist.first_name}} {{artist.last_name}}</a></li>
+         <li>{{role}} : <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}">{{artists.first_name}} {{artists.last_name}}</a></li>
       </ul>
    {% endfor %}
 
