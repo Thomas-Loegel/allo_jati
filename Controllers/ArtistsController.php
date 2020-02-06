@@ -17,12 +17,12 @@ class ArtistsController extends Controller
       $this->model = new Artists();
    }
 
-   // Affichage du template + Tous les Artistes
-   public function index()
+   // Affichage du template + La fiche Artiste
+   public function showArtist(int $id_artist)
    {
-      $result   = $this->model->getAllArtists();
-      $pageTwig = 'Artists/index.html.twig';
+      $artist   = $this->model->getArtist($id_artist);
+      $pageTwig = 'Artists/showArtist.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['result' => $result]);
+      echo $template->render(['artist' => $artist]);
    }
 }

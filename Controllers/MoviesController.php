@@ -25,10 +25,11 @@ class MoviesController extends ArtsController
     // Affichage du template + Récupère un Film avec son ID + Récupère la listes des Artistes du Film
     public function showOneMovie(int $id_movie) {
 
+      // Récupère la liste des Artistes d'un Film
       $instanceArtists = new Artists();
-      $movie = $this->model->getMovie($id_movie);
-
       $artists = $instanceArtists->getByMovie($id_movie);
+
+      $movie = $this->model->getMovie($id_movie);
       $pageTwig = 'Movies/showOneMovie.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(["movie" => $movie, "artists" => $artists]);

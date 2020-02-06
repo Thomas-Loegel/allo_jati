@@ -27,4 +27,15 @@ class Artists extends Model
       $req->execute([$id]);
       return $req->fetchAll();
    }
+
+   public function getArtist(int $id_artist)
+   {
+      $req = $this->pdo->prepare(
+        'SELECT *
+         FROM artists
+         WHERE artists.id_artist = ?
+         AND artists.id_artist = artists.id_artist');
+      $req->execute([$id_artist]);
+      return $req->fetch();
+   }
 }

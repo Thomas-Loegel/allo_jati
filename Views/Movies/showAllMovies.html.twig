@@ -3,18 +3,18 @@
 {% block title %}Films{% endblock %}
 
 {% block body %}
-    <div class="d-flex justify-content-center" >
-        <h1 class="text-primary pb-5">Films</h1>
-    </div>
+   <div class="d-flex justify-content-center" >
+      <h1 class="text-primary pb-5">Films</h1>
+   </div>
 
-    <div class="d-flex justify-content-center flex-wrap">
-        {% for movies in result %}
-            <div class="d-flex flex-column m-5">
-                <div class="mx-auto">
-                    <h3 class="text-primary "><a href="{{baseUrl}}/Films/Film/{{ movies.id_movie}}">{{movies.title}}</a></h3>
-                </div>
-                <img src="{{movies.picture}}"></img>
+   <div class="d-flex justify-content-center flex-wrap">
+      {% for movies in result %}
+         <div class="d-flex flex-column m-5">
+            <div class="mx-auto">
+               <h3 class="text-primary "><a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}">{{movies.title}}</a></h3>
             </div>
-        {% endfor %}
-    </div>
+            <img src="{{movies.picture}}"></img>
+         </div>
+      {% endfor %}
+   </div>
 {% endblock %}
