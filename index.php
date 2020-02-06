@@ -1,4 +1,3 @@
-
 <?php
 require_once 'vendor/autoload.php';
 
@@ -11,8 +10,8 @@ $router->get('/Films', 'Movies.showAllMovies');
 $router->get('/Artists/show', 'Artists.setByArtists');
 $router->get('/Artists', 'Artists.index');
 
-$router->get('/Users/:slug', 'Users.index');
-$router->get('/Users', 'Users.index');
+$router->get('/Connexion/:slug', 'Users.index');
+$router->get('/Connexion', 'Users.index');
 
 $router->get('/', 'Home.index');
 
