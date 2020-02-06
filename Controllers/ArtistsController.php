@@ -2,10 +2,8 @@
 class ArtistsController extends Controller
 {
     private $id_artist;
-    private $id_role;
-    private $id_work;
-    private $id_media;
-
+    private $role;
+    private $picture;
     private $first_name;
     private $last_name;
     private $birth_day;
@@ -26,5 +24,14 @@ class ArtistsController extends Controller
         $pageTwig = 'Artists/index.html.twig';
         $template = $this->twig->load($pageTwig);
         echo $template->render(['result' => $result]);
+    }
+
+    // Affichage du template + Tous les Artistes du Film
+    public function setByArtists()
+    {
+        $result   = $this->model->getByArtists();
+        $pageTwig = 'Artists/show.html.twig';
+        $template = $this->twig->load($pageTwig);
+        echo $template->render(["result" => $result]);
     }
 }
