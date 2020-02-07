@@ -1,5 +1,5 @@
 <?php
-require_once 'vendor/autoload.php';
+require_once('vendor/autoload.php');
 
 $router = new Router($_GET['url']);
 
@@ -10,7 +10,7 @@ $router->get('/Films', 'Movies.showAllMovies');
 
 
 // Route Artistes
-$router->get('/Artists', 'Artists.index');
+$router->get('/Artistes', 'Artists.showAllArtists');
 
 
 // Route Users
