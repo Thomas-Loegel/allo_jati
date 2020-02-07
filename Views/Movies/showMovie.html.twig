@@ -34,6 +34,14 @@
    </div>
   
    
+
+   <img src="{{movie.picture}}"></img>
+   <h2>{{movie.title}}</h2>
+   <p>Année : {{movie.year}}</p>
+   <p>Genre : {{movie.style}}</p>
+   <p>Durée : {{movie.time | date('H:i:s')}}</p>
+   <p>Résumé : <br> {{movie.resume}}</p>
+
    {% for artists in artists %}
 
       {% if artists.role == 1 %}
@@ -46,10 +54,13 @@
       {% endif %}
 
       <ul>
-         <li>{{role}} : <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}">{{artists.first_name}} {{artists.last_name}}</a></li>
+         <li>{{role}} : <a href="{{baseUrl}}/Artiste_{{artists.id_artist}}">{{artists.first_name}} {{artists.last_name}}</a></li>
       </ul>
       <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="" style="width:200px;height:300px;"></img></a>
    {% endfor %}
+<<<<<<< HEAD:Views/Movies/showOneMovie.html.twig
    <button type="button" class="btn btn-outline-primary mt-5 btn-lg"><a class="text-decoration-none text-reset" href="{{baseUrl}}/Films">Retour</a></button>
    </div> 
+=======
+>>>>>>> 331830228f277ef2b9d5ad3b9b04def0aac0774d:Views/Movies/showMovie.html.twig
 {% endblock %}
