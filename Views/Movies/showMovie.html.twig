@@ -4,12 +4,12 @@
 
 {% block body %}
 
-   <h2>{{movie.title}}</h2>
    <img src="{{movie.picture}}"></img>
-   <p>{{movie.year}}</p>
-   <p>{{movie.style}}</p>
-   <p>{{movie.time}}</p>
-   <p>{{movie.resume}}</p>
+   <h2>{{movie.title}}</h2>
+   <p>Année : {{movie.year}}</p>
+   <p>Genre : {{movie.style}}</p>
+   <p>Durée : {{movie.time | date('H:i:s')}}</p>
+   <p>Résumé : <br> {{movie.resume}}</p>
 
    {% for artists in artists %}
 
@@ -26,5 +26,4 @@
          <li>{{role}} : <a href="{{baseUrl}}/Artiste_{{artists.id_artist}}">{{artists.first_name}} {{artists.last_name}}</a></li>
       </ul>
    {% endfor %}
-
 {% endblock %}
