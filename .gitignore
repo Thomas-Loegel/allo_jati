@@ -41,8 +41,9 @@ $RECYCLE.BIN/
 # Other
 /core/
 *.editorconfig
-*composer.json
-*composer.lock
+*.allo_jati.sql
+*.composer.json
+*.composer.lock
 
 
 # End of https://www.gitignore.io/api/windows,composer

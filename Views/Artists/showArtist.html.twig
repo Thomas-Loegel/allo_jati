@@ -1,0 +1,23 @@
+{% extends "template.html.twig" %}
+
+{% block title %}Artiste{% endblock %}
+
+{% block body %}
+
+<h2>{{ artist.first_name }} {{ artist.last_name }}</h2>
+
+<div class="">
+   <img src="{{ artist.picture }}">
+   <p>Date de naissance : {{ artist.birth_day | date("d/m/Y") }}</p>
+   <p>Biographie : <br> {{ artist.bio }}</p>
+</div>
+
+<div class="">
+   <h3>A voir aussi dans :</h3>
+   {% for movies in mvies %}
+      <p>{{movies.title}}</p>
+      <a href="{{baseUrl}}/Film">{{movies.picture}}</a>
+   {% endfor %}
+</div>
+
+{% endblock %}
