@@ -2,7 +2,7 @@
 
 class Admin extends User
 {
-
+/*
    public function __construct()
     {
         $this->twig = parent::getTwig();
@@ -14,5 +14,5 @@ class Admin extends User
         $template = $this->twig->load($pageTwig);
         echo $template->render();
     }
-    
+    */
 }

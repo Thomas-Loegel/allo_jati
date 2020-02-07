@@ -9,7 +9,12 @@ $router = new Router($_GET['url']);
 $router->get('/', 'Home.index');
 $router->get('/Artists', 'Artists.index');
 
-$router->post('/Admin', 'Admin.index');
+//$router->post('/Admin', 'Admin.index');
+
+
+$router->post('/Users/login', 'Users.login');
+$router->post('/Users/register', 'Users.register');
+
 
 $router->get('/Users/:slug', 'Users.index');
 $router->get('/Users', 'Users.index');

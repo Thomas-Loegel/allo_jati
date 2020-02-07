@@ -21,6 +21,7 @@ class Controller
             ]);
             self::$_twig->addExtension(new \Twig\Extension\DebugExtension());
             self::$_twig->addGlobal('baseUrl', self::getBaseUrl());
+            //self::$_twig->addGlobal('session',  $_SESSION);
         }
         return self::$_twig;
     }
@@ -32,4 +33,11 @@ class Controller
         }
         return self::$_baseUrl;
     }
+
+
+    /*
+    protected static function test()
+    {
+      var_dump("test");
+    }*/
 }
