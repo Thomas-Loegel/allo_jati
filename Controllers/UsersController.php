@@ -22,12 +22,14 @@ class UsersController extends Controller
         $title = "Connexion";
 
         //si slug = register alors change le $title en "inscription".
-        if ($slug === "Enregistrement") {
+        if ($slug === "Enregistrement")
+        {
             $title = "Inscription";
         }
 
         //si slug est défini et différent de "register" (en gros si l'utilisateur met nimp dans l'url) alors :
-        if (isset($slug) && $slug !== "Enregistrement") {
+        if (isset($slug) && $slug !== "Enregistrement")
+        {
             //Affiche une erreur 303 dans la console :
             header("HTTP/1.0 303 Redirection");
             //Fait une redirection vers la page d'accueil :

@@ -23,14 +23,14 @@ class MoviesController extends ArtsController
    }
 
    // Affiche un Film avec son ID
-   public function showOneMovie($id_movie) {
+   public function showMovie($id_movie) {
 
       // Affiche les Artistes liés au Film
       $instanceArtists = new Artists();
       $artists = $instanceArtists->getByMovie($id_movie);
 
       $movie = $this->model->getMovie($id_movie);
-      $pageTwig = 'Movies/showOneMovie.html.twig';
+      $pageTwig = 'Movies/showMovie.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(["movie" => $movie, "artists" => $artists]);
    }
