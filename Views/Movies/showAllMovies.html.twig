@@ -11,9 +11,9 @@
       {% for movies in movies %}
          <div class="d-flex flex-column m-5">
             <div class="mx-auto">
-               <h3 class="text-primary "><a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}">{{movies.title}}</a></h3>
+               <h3 class="text-primary">{{movies.title}}</h3>
             </div>
-            <img src="{{movies.picture}}"></img>
+            <a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}"><img src="{{movies.picture}}" style="width:400px;height:500px;"></img></a>
          </div>
       {% endfor %}
    </div>

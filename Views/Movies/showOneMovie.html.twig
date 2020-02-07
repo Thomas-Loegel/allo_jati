@@ -3,29 +3,37 @@
 {% block title %}Film{% endblock %}
 
 {% block body %}
-   <div class="d-flex">
-      <img src="{{result.picture}}"></img>
-      <div class="d-flex flex-column m-5">
-         <div class="d-flex justify-content-center" >
-            <h1 class="text-primary pb-5">{{result.title}}</h1>
-         </div>   
-         <p>{{result.year}}</p>
-         <p>{{result.style}}</p>
-         <p>{{result.time}}</p>
-         <p>{{result.resume}}</p>
+<div class="container rounded" style="background-color:#81ecec">
+   <div class="d-flex pt-5">
+      <img class="rounded img-thumbnail" src="{{movie.picture}}" style="width:400px;height:500px;"></img>
+      <div class="d-flex flex-column ml-5">         
+         <h1 class="text-primary pb-5 text-center">{{movie.title}}</h1> 
+         <div class="d-flex justify-content-center">
+            <p class="mx-5 mb-5"><span class="font-weight-bold">Année:</span>{{movie.year}}</p>
+            <p class="mx-5 mb-5"><span class="font-weight-bold">Durée:</span>{{movie.time}}</p>
+            <p class="mx-5 mb-5"><span class="font-weight-bold">Genre:</span>{{movie.style}}</p>
+         </div>        
+         <p class="text-center text-break">{{movie.resume}}</p> 
       </div>
-   </div>   
+   </div >  
 
+   <h1 class="text-center m-5">Les artistes</h1>
 
-   <button type="button" class="btn btn-outline-primary mt-5"><a class="text-decoration-none text-reset" href="{{baseUrl}}/Films">Films</a></button>
-
-   <h2>{{movie.title}}</h2>
-   <img src="{{movie.picture}}"></img>
-   <p>{{movie.year}}</p>
-   <p>{{movie.style}}</p>
-   <p>{{movie.time}}</p>
-   <p>{{movie.resume}}</p>
-
+   <div class="d-flex justify-content-center flex-wrap">
+      
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
+      
+   </div>
+  
+   
    {% for artists in artists %}
 
       {% if artists.role == 1 %}
@@ -40,6 +48,8 @@
       <ul>
          <li>{{role}} : <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}">{{artists.first_name}} {{artists.last_name}}</a></li>
       </ul>
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="" style="width:200px;height:300px;"></img></a>
    {% endfor %}
-
+   <button type="button" class="btn btn-outline-primary mt-5 btn-lg"><a class="text-decoration-none text-reset" href="{{baseUrl}}/Films">Retour</a></button>
+   </div> 
 {% endblock %}
