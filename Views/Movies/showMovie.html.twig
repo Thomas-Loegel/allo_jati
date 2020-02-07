@@ -3,64 +3,66 @@
 {% block title %}Film{% endblock %}
 
 {% block body %}
-<div class="container rounded" style="background-color:#81ecec">
+<div style="background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12)" >
+<div class="container rounded">
    <div class="d-flex pt-5">
       <img class="rounded img-thumbnail" src="{{movie.picture}}" style="width:400px;height:500px;"></img>
       <div class="d-flex flex-column ml-5">         
-         <h1 class="text-primary pb-5 text-center">{{movie.title}}</h1> 
+         <h1 class="pb-5 text-center text-white">{{movie.title}}</h1> 
          <div class="d-flex justify-content-center">
-            <p class="mx-5 mb-5"><span class="font-weight-bold">Année:</span>{{movie.year}}</p>
-            <p class="mx-5 mb-5"><span class="font-weight-bold">Durée:</span>{{movie.time}}</p>
-            <p class="mx-5 mb-5"><span class="font-weight-bold">Genre:</span>{{movie.style}}</p>
-         </div>        
-         <p class="text-center text-break">{{movie.resume}}</p> 
+            <p class="mx-5 mb-5 text-white"><span class="font-weight-bold">Année : </span>{{movie.year}}</p>
+            <p class="mx-5 mb-5 text-white"><span class="font-weight-bold">Genre : </span>{{movie.style}}</p>
+            <p class="mx-5 mb-5 text-white"><span class="font-weight-bold">Durée : </span>{{movie.time | date('H:i:s')}}</p>
+         </div> 
+         <p class="font-weight-bold text-white">Résumé : <br>  </p>     
+         <p class="text-centerp text-break text-white"> {{movie.resume}}</p> 
       </div>
-   </div >  
+   </div>  
+    
+   <h1 class="text-center m-5 text-white">Les artistes</h1>
+   
+<div class="d-flex justify-content-center flex-wrap">
+   <div class="d-flex flex-column m-5">     
+         <h6 class="text-center">{{movie.title}} <br>role :</h6>
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="{{movies.picture}}" style="width:200px;height:300px;"></img></a> 
+   </div>
+      <div class="d-flex flex-column m-5">     
+         <h6 class="text-center">{{movie.title}} <br>role :</h6>
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="{{movies.picture}}" style="width:200px;height:300px;"></img></a> 
+   </div>
+      <div class="d-flex flex-column m-5">     
+         <h6 class="text-center">{{movie.title}} <br>role :</h6>
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="{{movies.picture}}" style="width:200px;height:300px;"></img></a> 
+   </div>
+      <div class="d-flex flex-column m-5">     
+         <h6 class="text-center">{{movie.title}} <br>role :</h6>
+      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="{{movies.picture}}" style="width:200px;height:300px;"></img></a> 
+   </div>
 
-   <h1 class="text-center m-5">Les artistes</h1>
+</div>
 
    <div class="d-flex justify-content-center flex-wrap">
-      
-      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
-      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
-      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
-      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
-      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
-      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
-      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
-      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
-      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="https://i.ibb.co/KjrrMmp/fun10.jpg" style="width:200px;height:300px;"></img></a>
-      
-   </div>
-  
-   
+      {% for artists in artists %}
 
-   <img src="{{movie.picture}}"></img>
-   <h2>{{movie.title}}</h2>
-   <p>Année : {{movie.year}}</p>
-   <p>Genre : {{movie.style}}</p>
-   <p>Durée : {{movie.time | date('H:i:s')}}</p>
-   <p>Résumé : <br> {{movie.resume}}</p>
+         {% if artists.role == 1 %}
+            {% set role = 'Acteur' %}
 
-   {% for artists in artists %}
+            {% elseif artists.role == 2 %}
+               {% set role = 'Réalisateur' %}
 
-      {% if artists.role == 1 %}
-         {% set role = 'Acteur' %}
+            {% elseif artists.role == 3 %}
+               {% set role = 'Réalisateur & Acteur' %}
 
-         {% elseif artists.role == 2 %}
-            {% set role = 'Réalisateur' %}
-         {% elseif artists.role == 3 %}
-            {% set role = 'Réalisateur & Acteur' %}
       {% endif %}
 
-      <ul>
-         <li>{{role}} : <a href="{{baseUrl}}/Artiste_{{artists.id_artist}}">{{artists.first_name}} {{artists.last_name}}</a></li>
-      </ul>
-      <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="" style="width:200px;height:300px;"></img></a>
+      <div class="d-flex flex-column m-5">     
+         <h6 class="text-center">{{artists.first_name}} {{artists.last_name}}<br>{{role}}</h6>
+         <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}"><img class="rounded img-thumbnail m-3" src="{{artists.picture}}" style="width:200px;height:300px;"></img></a> 
+      </div>
+
    {% endfor %}
-<<<<<<< HEAD:Views/Movies/showOneMovie.html.twig
-   <button type="button" class="btn btn-outline-primary mt-5 btn-lg"><a class="text-decoration-none text-reset" href="{{baseUrl}}/Films">Retour</a></button>
-   </div> 
-=======
->>>>>>> 331830228f277ef2b9d5ad3b9b04def0aac0774d:Views/Movies/showMovie.html.twig
+   </div>  
+   <a class="text-decoration-none text-reset" href="{{baseUrl}}/Films"><input class="btn btn-primary mt-5 btn-lg" type="submit" value="Retour"></a>
+</div>
 {% endblock %}
+
