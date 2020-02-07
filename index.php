@@ -5,7 +5,6 @@ require_once('vendor/autoload.php');
 
 $router = new Router($_GET['url']);
 
-<<<<<<< HEAD
 // listes des routes
 $router->get('/Films/Film_:id_movie', 'Movies.showOneMovie');
 $router->post('/Comments/addComment/:id_movie', 'Comments.addComment');
@@ -13,12 +12,6 @@ $router->get('/Films/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Comments/Delete_:id_movie', 'Comments.delAllComByMovie');
 $router->get('/Connexion/:slug', 'Users.index');
 $router->get('/Comments/GetAll', 'Comments.getAllCom');
-=======
-// Route Films
-$router->get('/Films/Artiste_:id_artist', 'Artists.showArtist');
-$router->get('/Films/Film_:id_movie', 'Movies.showMovie');
-$router->get('/Film_:id_movie', 'Movies.showMovie');
->>>>>>> c70338a8fcc7a3676301506eb8f211212c04ad90
 $router->get('/Films', 'Movies.showAllMovies');
 
 
@@ -45,10 +38,6 @@ $router->get('/Comments/GetAll', 'Comments.getAllCom');
 $router->get('/Comments', 'Comments.index');
 
 
-<<<<<<< HEAD
-=======
-// Route Home
->>>>>>> c70338a8fcc7a3676301506eb8f211212c04ad90
 $router->get('/', 'Home.index');
 $router->get('/Artists', 'Artists.index');
 
