@@ -1,10 +1,19 @@
 {% extends "template.html.twig" %}
 
 {% block body %}
-    <h2>{{result.title}}</h2>
-    <img src="{{result.picture}}"></img>
-    <p>{{result.year}}</p>
-    <p>{{result.style}}</p>
-    <p>{{result.time}}</p>
-    <p>{{result.resume}}</p>
+   <div class="d-flex">
+      <img src="{{result.picture}}"></img>
+      <div class="d-flex flex-column m-5">
+         <div class="d-flex justify-content-center" >
+            <h1 class="text-primary pb-5">{{result.title}}</h1>
+         </div>   
+         <p>{{result.year}}</p>
+         <p>{{result.style}}</p>
+         <p>{{result.time}}</p>
+         <p>{{result.resume}}</p>
+      </div>
+   </div>   
+
+
+   <button type="button" class="btn btn-outline-primary mt-5"><a class="text-decoration-none text-reset" href="{{baseUrl}}/Films">Films</a></button>
 {% endblock %}
