@@ -6,10 +6,13 @@ $router = new Router($_GET['url']);
 // Route Films
 $router->get('/Films/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Films/Film_:id_movie', 'Movies.showOneMovie');
+$router->get('/Film_:id_movie', 'Movies.showOneMovie');
 $router->get('/Films', 'Movies.showAllMovies');
 
 
 // Route Artistes
+$router->get('/Artistes/Artiste_:id_artist', 'Artists.showArtist');
+$router->get('/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artistes', 'Artists.showAllArtists');
 
 

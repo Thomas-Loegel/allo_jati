@@ -3,25 +3,12 @@
 {% block title %}Artistes{% endblock %}
 
 {% block body %}
-
    {% for artists in artists %}
-      <h2>{{ artists.first_name }} {{ artists.last_name }}</h2>
-      <img src="{{ artists.picture }}">
-
-         <!-- Défini le role de l'artiste -->
-         {% if artists.role == 1 %}
-            <p>Rôle : Acteur</p>
-
-            {% elseif artists.role == 2 %}
-               <p>Rôle : Réalisateur</p>
-            {% elseif artists.role == 3 %}
-               <p>Rôle : Réalisateur & Acteur</p>
-         {% endif %}
-
-      <p>Date de naissance : {{ artists.birth_day | date("d/m/Y") }}</p>
-      <p>Biographie : <br> {{ artists.bio }}</p>
-      <hr>
+      <div class="">
+         <p>{{ artists.first_name }} {{ artists.last_name }}</p>
+         <a href="{{baseUrl}}/Artistes/Artiste_{{artists.id_artist}}">
+            <img src="{{ artists.picture }}">
+         </a>
+      </div>
    {% endfor %}
-
-
 {% endblock %}
