@@ -16,18 +16,21 @@ class MoviesController extends ArtsController
     // Affichage du template + Récupère tout les films
     public function showAllMovies()
     {
-        $result = $this->model->getAllMovies();
+        $movies = $this->model->getAllMovies();
         $pageTwig = 'Movies/showAllMovies.html.twig';
         $template = $this->twig->load($pageTwig);
-        echo $template->render(["result" => $result]);
+        echo $template->render(["movies" => $movies]);
     }
 
     // Affichage du template + Récupère un Film avec son ID
-    public function showOneMovie(int $id_movie) {
+    public function showOneMovie($id_movie) {
 
-        $result = $this->model->getMovie($id_movie);
+      $instanceArtists = new Artists();
+      $artists = $this->model->
+
+        $movie = $this->model->getMovie($id_movie);
         $pageTwig = 'Movies/showOneMovie.html.twig';
         $template = $this->twig->load($pageTwig);
-        echo $template->render(["result" => $result]);
+        echo $template->render(["movie" => $movie]);
     }
 }

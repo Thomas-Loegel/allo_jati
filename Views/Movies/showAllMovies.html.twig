@@ -8,7 +8,7 @@
    </div>
 
    <div class="d-flex justify-content-center flex-wrap">
-      {% for movies in result %}
+      {% for movies in movies %}
          <div class="d-flex flex-column m-5">
             <div class="mx-auto">
                <h3 class="text-primary "><a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}">{{movies.title}}</a></h3>
