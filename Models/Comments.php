@@ -41,11 +41,6 @@ class Comments extends Model
       return $result;
    }
 
-
-
-
-
-
    //recherche la liste des commentaire par id_movie
    public function linkCommentByMovie($id)
    {

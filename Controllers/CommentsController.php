@@ -43,8 +43,6 @@ class CommentsController extends Controller
    public function addComment($id_movie){
       /*session_start();
       var_dump($_SESSION['status']);
-
-
       if($_SESSION['status'] != null){
          $pseudo = $_SESSION['utilisateur'];
 
@@ -52,12 +50,8 @@ class CommentsController extends Controller
          $_SESSION['tmpComment'] = $_POST['ControlText'];
          var_dump($_SESSION['tmpComment']);
       }*/
-
-
    }
 }
-
-
 /*(
       'SELECT comments.* 
       FROM movies, movie_comments, comments 
