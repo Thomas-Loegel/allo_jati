@@ -13,19 +13,18 @@
       <button class="btn btn-dark my-2 my-sm-0" type="submit">Go</button>
    </form>
 
+
    <div class="d-flex justify-content-center flex-wrap">
       {% for artists in artists %}
          <div class="d-flex flex-column m-5">
-            <a href="{{baseUrl}}/Artistes/Artiste_{{artists.id_artist}}">
-               <img src="{{artists.picture}}">
-            </a>
-
             <div class="mx-auto">
+               <h6 class="text-primary text-center">{{ artists.first_name }} {{ artists.last_name }}</h6>
                <a href="{{baseUrl}}/Artistes/Artiste_{{artists.id_artist}}">
-                  {{artists.first_name}} {{artists.last_name}}
+                  <img src="{{ artists.picture }}">
                </a>
             </div>
          </div>
       {% endfor %}
    </div>
+
 {% endblock %}

@@ -29,10 +29,16 @@ class MoviesController extends ArtsController
       $instanceArtists = new Artists();
       $artists = $instanceArtists->getByMovie($id_movie);
 
+      //Affiche les commentaire du film
+      $instanceComments = new Comments();
+      $comments = $instanceComments->linkCommentByMovie($id_movie);
+
+
+
       $movie = $this->model->getMovie($id_movie);
       $pageTwig = 'Movies/showMovie.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["movie" => $movie, "artists" => $artists]);
+      echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments]);
    }
 
    // Affiche la recherche Film
