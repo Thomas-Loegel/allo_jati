@@ -16,13 +16,10 @@ class MoviesController extends ArtsController
    // Affiche tout les Films
    public function showAllMovies()
    {
-      // Affiche la recherche Film
-      $result = $this->model->getBySearch();
-
       $movies   = $this->model->getAllMovies();
       $pageTwig = 'Movies/showAllMovies.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["movies" => $movies, "result" => $result]);
+      echo $template->render(["movies" => $movies]);
    }
 
    // Affiche un Film avec son Id
