@@ -10,12 +10,12 @@ class UsersController extends Controller
    {
       //$this->twig = parent::getTwig();
       parent::__construct();
-      $this->model = new User();
+      $this->model = new Users();
    }
 
 
    // Affichage du template pour $slug = null (formulaire de connexion)
-   public function index($slug = null)
+   public function connexion($slug = null)
    {
       //$slug est null
       $title = "Connexion";
@@ -93,7 +93,7 @@ class UsersController extends Controller
    }
 
    //gestion de l'envoi du formulaire d'inscription
-   public function register($slug = "register")
+   public function register($slug = "Enregistrement")
    {
       $generalError = "";
       $mailError = "";
@@ -149,10 +149,8 @@ class UsersController extends Controller
          'mailError' => $mailError,
          'pseudoError' => $pseudoError,
          'mdpError' => $mdpError,
-
          'inputMail' => $mail,
          'inputPseudo' => $pseudo,
-
       ]);
    }
 }

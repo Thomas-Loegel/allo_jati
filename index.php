@@ -5,6 +5,7 @@ require_once('vendor/autoload.php');
 
 $router = new Router($_GET['url']);
 
+
 // Route Films
 $router->get('/Films/Film_:id_movie', 'Movies.showMovie');
 $router->get('/Film_:id_movie', 'Movies.showMovie');
@@ -18,15 +19,16 @@ $router->get('/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artistes', 'Artists.showAllArtists');
 
-// Route Login
-$router->get('/Connexion/:slug', 'Users.index');
-$router->get('/Connexion', 'Users.index');
 
-// Route Users
-$router->post('/Users/login', 'Users.login');
-$router->post('/Users/register', 'Users.register');
-$router->get('/Users/:slug', 'Users.index');
-$router->get('/Users', 'Users.index');
+// Route Login
+$router->get('/Connexion', 'Users.connexion');
+$router->post('/Connexion', 'Users.login');
+
+
+// Route Register
+$router->post('/:slug', 'Users.register');
+$router->get('/:slug', 'Users.connexion');
+
 
 // Route Commentaires
 $router->post('/Comments/addComment/:id_movie', 'Comments.addComment');
@@ -34,8 +36,10 @@ $router->get('/Comments/Delete_:id_movie', 'Comments.delAllComByMovie');
 $router->get('/Comments/GetAll', 'Comments.getAllCom');
 $router->get('/Comments', 'Comments.index');
 
+
 // Route Home
 $router->get('/', 'Home.index');
+
 
 // Route RUN
 $router->run();
