@@ -17,28 +17,32 @@ class ArtistsController extends Controller
       $this->model = new Artists();
    }
 
+   // Affiche la fiche Artiste
+   public function showArtist(int $id_artist)
+   {
+      // Affiche les Films de Artiste par Id
+      $instanceMovies = new Movies();
+      $movies   = $instanceMovies->getAllMovies($id_artist);
+
+      $artist   = $this->model->getArtist($id_artist);
+      $pageTwig = 'Artists/showArtist.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render(['artist' => $artist, "movies" => $movies]);
+   }
+
    // Affiche les Artistes
    public function showAllArtists()
    {
-      $artists   = $this->model->getAllArtists();
+      $artists  = $this->model->getAllArtists();
       $pageTwig = 'Artists/showAllArtists.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(['artists' => $artists]);
    }
 
-   // Affiche la fiche Artiste
-   public function showArtist($id_artist)
-   {
-   $artist   = $this->model->getArtist($id_artist);
-   $pageTwig = 'Artists/showArtist.html.twig';
-   $template = $this->twig->load($pageTwig);
-   echo $template->render(['artist' => $artist]);
-   }
-
    // Affiche les Artistes du Film
    public function showByMovie()
    {
-      $artists = $this->model->getByFilm();
+      $artists  = $this->model->getByFilm();
       $pageTwig = 'Artists/showByMovie.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(["artists" => $artists]);

@@ -19,7 +19,7 @@ class Artists extends Model
    public function getArtist(int $id_artist)
    {
       $req = $this->pdo->prepare(
-         'SELECT *
+        'SELECT *
          FROM artists
          WHERE artists.id_artist = ?
          AND artists.id_artist = artists.id_artist');
@@ -31,7 +31,7 @@ class Artists extends Model
    public function getByMovie(int $id)
    {
       $req = $this->pdo->prepare(
-         "SELECT artists.*
+        "SELECT artists.*
          FROM artists, artists_movies, movies
          WHERE movies.id_movie = ?
          AND movies.id_movie = artists_movies.id_movie

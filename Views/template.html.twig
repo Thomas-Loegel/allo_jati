@@ -2,42 +2,43 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>{% block title %}Allo Jati{% endblock %}</title>
+   <title>{% block title %}Allo Jati{% endblock %}</title>
 
-    {% block styles %}
-        <link rel="stylesheet" href="{{baseUrl}}/assets/css/bootstrap+reboot.css">
-    {% endblock %}
+   {% block stylesheets %}
+   <link rel="stylesheet" href="{{baseUrl}}/assets/css/style.css">
+   <link rel="stylesheet" href="{{baseUrl}}/assets/css/bootstrap+reboot.css">
+
+   {% endblock %}
 </head>
 
 <body>
-    {% block header %}
-    <nav>
-        <ul>
-            <li><a href="{{baseUrl}}">Home</a></li>
-            <li><a href="{{baseUrl}}/Films">Films</a></li>
-            <li><a href="{{baseUrl}}/Artistes">Artistes</a></li>
-            <li><a href="{{baseUrl}}/Connexion">Connexion</a></li>
-        </ul>
-    </nav>
-    {% endblock %}
+   {% block header %}
+   <nav>
+      <ul>
+         <li><a href="{{baseUrl}}">Home</a></li>
+         <li><a href="{{baseUrl}}/Artists">Fiche artiste</a></li>
+         <li><a href="{{baseUrl}}/Films">Films</a></li>
+         <li><a href="{{baseUrl}}/Connexion">Connexion</a></li>
+      </ul>
+   </nav>
+   {% endblock %}
 
-    {% block body %}
-    <main>
-        {# Here the main content, you can create other blocks if there are useful to you #}
-    </main>
-    {% endblock %}
+   {% block body %}
+   <main>
+      {# Here the main content, you can create other blocks if there are useful to you #}
+   </main>
+   {% endblock %}
 
-    {% block footer %}
-        {# Footer ici #}
-    {% endblock %}
+   {% block footer %}
+   {# Footer ici #}
+   {% endblock %}
 
-    {% block js %}
-        {# Here you can add only the JS that you need #}
-    {% endblock %}
+   {% block javascripts %}
+   {# Here you can add only the JS that you need #}
+   {% endblock %}
 </body>
-
 </html>
