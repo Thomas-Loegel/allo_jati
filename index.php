@@ -6,7 +6,8 @@ require_once('vendor/autoload.php');
 $router = new Router($_GET['url']);
 
 // Route Films
-$router->get('/Films/Film_:id_movie', 'Movies.showOneMovie');
+$router->get('/Films/Film_:id_movie', 'Movies.showMovie');
+$router->get('/Film_:id_movie', 'Movies.showMovie');
 $router->get('/Films/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Films', 'Movies.showAllMovies');
 
@@ -14,8 +15,8 @@ $router->get('/Films', 'Movies.showAllMovies');
 // Route Artistes
 $router->get('/Artistes/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artiste_:id_artist', 'Artists.showArtist');
+$router->get('/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artistes', 'Artists.showAllArtists');
-$router->get('/Artists', 'Artists.index');
 
 // Route Login
 $router->get('/Connexion/:slug', 'Users.index');
