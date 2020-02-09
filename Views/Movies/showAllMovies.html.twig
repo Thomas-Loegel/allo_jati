@@ -7,10 +7,18 @@
       <h2 class="text-primary pb-5">Films</h2>
    </div>
 
-   <form method="POST" class="form-inline">
+   <form method="get" action="{{baseUrl}}/Films/{{query}}" class="form-inline">
       <input class="form-control mr-sm-2" type="search" name="query" placeholder="Rechercher..." aria-label="Search">
       <button class="btn btn-dark my-2 my-sm-0" type="submit">Go</button>
    </form>
+
+   <!-- Affiche la recherche Film -->
+   {% if app.request.get('query') is defined %}
+      {% set query = app.request.request.get("query") %}
+      {{query}}
+   {% endif %}
+
+   {{query}}
 
    <div class="d-flex justify-content-center flex-wrap">
       {% for movies in movies %}
@@ -19,11 +27,9 @@
                <img src="{{movies.picture}}">
             </a>
 
-            <div class="mx-auto">
-               <a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}">
-                  <p class="text-primary text-center">{{movies.title}}</p>
-               </a>
-            </div>
+            <a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}">
+               <p class="text-primary text-center">{{movies.title}}</p>
+            </a>
          </div>
       {% endfor %}
    </div>

@@ -16,10 +16,13 @@ class MoviesController extends ArtsController
    // Affiche tout les Films
    public function showAllMovies()
    {
-      $movies = $this->model->getAllMovies();
+      // Affiche la recherche Film
+      $result = $this->model->getBySearch();
+
+      $movies   = $this->model->getAllMovies();
       $pageTwig = 'Movies/showAllMovies.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["movies" => $movies]);
+      echo $template->render(["movies" => $movies, "result" => $result]);
    }
 
    // Affiche un Film avec son Id
@@ -34,19 +37,9 @@ class MoviesController extends ArtsController
       $comments = $instanceComments->linkCommentByMovie($id_movie);
 
 
-
       $movie = $this->model->getMovie($id_movie);
       $pageTwig = 'Movies/showMovie.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments]);
-   }
-
-   // Affiche la recherche Film
-   public function findMovie($query)
-   {
-      $finder = $this->model->getBySearch($query);
-      $pageTwig = 'Movies/showAllMovies.html.twig';
-      $template = $this->twig->load($pageTwig);
-      echo $template->render(["finder" => $finder]);
    }
 }

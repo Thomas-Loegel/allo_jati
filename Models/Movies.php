@@ -33,10 +33,8 @@ class Movies extends Model
         'SELECT title
          FROM movies
          WHERE title
-         LIKE "%'. $query .'%"
-         ORDER BY id DESC'
-      );
-      $req->execute();
+         LIKE "%?%"');
+      $req->execute([$query]);
       return $req->fetch();
    }
 }
