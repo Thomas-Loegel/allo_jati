@@ -4,14 +4,28 @@
 
 {% block body %}
 
-   <h2>Artistes</h2>
+   <div class="d-flex justify-content-center" >
+      <h2 class="text-primary pb-5">Artistes</h2>
+   </div>
 
-   {% for artists in artists %}
-      <a href="{{baseUrl}}/Artistes/Artiste_{{artists.id_artist}}">
-         <img src="{{artists.picture}}">
-      </a>
-      <p>{{artists.first_name}} {{artists.last_name}}</p>
+   <form class="form-inline">
+      <input class="form-control mr-sm-2" type="search" placeholder="Rechercher..." aria-label="Search">
+      <button class="btn btn-dark my-2 my-sm-0" type="submit">Go</button>
+   </form>
 
-   {% endfor %}
+   <div class="d-flex justify-content-center flex-wrap">
+      {% for artists in artists %}
+         <div class="d-flex flex-column m-5">
+            <a href="{{baseUrl}}/Artistes/Artiste_{{artists.id_artist}}">
+               <img src="{{artists.picture}}">
+            </a>
 
+            <div class="mx-auto">
+               <a href="{{baseUrl}}/Artistes/Artiste_{{artists.id_artist}}">
+                  {{artists.first_name}} {{artists.last_name}}
+               </a>
+            </div>
+         </div>
+      {% endfor %}
+   </div>
 {% endblock %}

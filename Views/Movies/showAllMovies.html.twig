@@ -4,16 +4,24 @@
 
 {% block body %}
    <div class="d-flex justify-content-center" >
-      <h1 class="text-primary pb-5">Films</h1>
+      <h2 class="text-primary pb-5">Films</h2>
    </div>
+
+   <form method="POST" class="form-inline">
+      <input class="form-control mr-sm-2" type="search" name="query" placeholder="Rechercher..." aria-label="Search">
+      <button class="btn btn-dark my-2 my-sm-0" type="submit">Go</button>
+   </form>
 
    <div class="d-flex justify-content-center flex-wrap">
       {% for movies in movies %}
          <div class="d-flex flex-column m-5">
+            <a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}">
+               <img src="{{movies.picture}}">
+            </a>
+
             <div class="mx-auto">
-               <h3 class="text-primary "><a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}">{{movies.title}}</a></h3>
+               <a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}" class="text-primary">{{movies.title}}</a>
             </div>
-            <img src="{{movies.picture}}"></img>
          </div>
       {% endfor %}
    </div>

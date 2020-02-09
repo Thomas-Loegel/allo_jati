@@ -34,4 +34,13 @@ class MoviesController extends ArtsController
       $template = $this->twig->load($pageTwig);
       echo $template->render(["movie" => $movie, "artists" => $artists]);
    }
+
+   // Affiche la recherche Film
+   public function findMovie($query)
+   {
+      $finder = $this->model->getBySearch($query);
+      $pageTwig = 'Movies/showAllMovies.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render(["finder" => $finder]);
+   }
 }
