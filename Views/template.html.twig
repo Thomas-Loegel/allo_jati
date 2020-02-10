@@ -17,20 +17,21 @@
 
 <body>
    {% block header %}
-   <nav>
-      <ul>
-         <li><a href="{{baseUrl}}">Home</a></li>
-         <li><a href="{{baseUrl}}/Artistes">Artistes</a></li>
-         <li><a href="{{baseUrl}}/Films">Films</a></li>
-         <li><a href="{{baseUrl}}/Connexion">Connexion</a></li>
-      </ul>
-   </nav>
+   <header>
+      <nav class="header-nav">
+         <ul>
+            <li><a href="{{baseUrl}}">home</a></li>
+            <li><a href="{{baseUrl}}/Artistes">artistes</a></li>
+            <li><a href="{{baseUrl}}/Films">films</a></li>
+            <li><a href="{{baseUrl}}/Connexion">connexion</a></li>
+            <li>{{test.utilisateur}}</li>
+         </ul>
+      </nav>
+   </header>
    {% endblock %}
 
    {% block body %}
-   <main>
-      {# Here the main content, you can create other blocks if there are useful to you #}
-   </main>
+   {# Main ici}
    {% endblock %}
 
    {% block footer %}

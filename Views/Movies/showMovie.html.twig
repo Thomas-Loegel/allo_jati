@@ -3,28 +3,42 @@
 {% block title %}Film{% endblock %}
 
 {% block body %}
+<main>
+   <div class="wrapper-id">
 
-   <h2>{{movie.title}}</h2>
-   <img src="{{movie.picture}}"></img>
-   <p>{{movie.year}}</p>
-   <p>{{movie.style}}</p>
-   <p>{{movie.time}}</p>
-   <p>{{movie.resume}}</p>
+      <div class="item-1">
+         <img src="{{movie.picture}}"></img>
 
-   {% for artists in artists %}
+         <ul>
+            <li><strong>Genre :</strong> {{movie.style}}</li>
+            <li><strong>Durée :</strong> {{movie.time}}</li>
+            <li><strong>Date de sortie :</strong> {{movie.year}}</li>
+         </ul>
 
-      {% if artists.role == 1 %}
-         {% set role = 'Acteur' %}
+         <div class="list-artists">
+         {% for artists in artists %}
+            {% if artists.role == 1 %}
+               {% set role = 'Acteur' %}
 
-         {% elseif artists.role == 2 %}
-            {% set role = 'Réalisateur' %}
-         {% elseif artists.role == 3 %}
-            {% set role = 'Réalisateur & Acteur' %}
-      {% endif %}
+               {% elseif artists.role == 2 %}
+                  {% set role = 'Réalisateur' %}
+               {% elseif artists.role == 3 %}
+                  {% set role = 'Réalisateur & Acteur' %}
+            {% endif %}
 
-      <ul>
-         <li>{{role}} : <a href="{{baseUrl}}/Artiste_{{artists.id_artist}}">{{artists.first_name}} {{artists.last_name}}</a></li>
-      </ul>
-   {% endfor %}
+            <ul>
+               <li> <strong>{{role}} :</strong>
+                  <a href="{{baseUrl}}/Artiste_{{artists.id_artist}}">{{artists.first_name}} {{artists.last_name}}</a>
+               </li>
+            </ul>
+         {% endfor %}
+         </div>
+      </div>
 
+      <div class="item-2">
+         <h3>{{movie.title}}</h3>
+         <p>{{movie.resume}}</p>
+      </div>
+   </div>
+</main>
 {% endblock %}

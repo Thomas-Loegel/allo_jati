@@ -3,36 +3,42 @@
 {% block title %}Films{% endblock %}
 
 {% block body %}
-   <div class="d-flex justify-content-center" >
-      <h2 class="text-primary pb-5">Films</h2>
+<main>
+   <div class="title-center" >
+      <h2>Films</h2>
    </div>
 
-   <form method="GET" action="{{baseUrl}}/Films" class="form-inline">
+   <form class="form-search form-inline" method="GET" action="{{baseUrl}}/Films">
       <input class="form-control mr-sm-2" type="search" name="search" placeholder="Rechercher..." aria-label="Search">
       <button class="btn btn-dark my-2 my-sm-0" type="submit">Go</button>
    </form>
 
+   <div class="wrap-serach-result">
+      {% for search in search %}
+      <div class="serch-result">
+         <ul>
+            <li>
+               <a href="{{baseUrl}}/Films/Film_{{search.id_movie}}">{{search.title}}</a>
+            </li>
+         </ul>
+      </div>
+      {% endfor %}
+   </div>
 
-   {% for search in search %}
-      <ul>
-         <li>
-            <a href="{{baseUrl}}/Films/Film_{{search.id_movie}}">{{search.title}}</a>
-         </li>
-      </ul>
-   {% endfor %}
-
-
-   <div class="d-flex justify-content-center flex-wrap">
+   <div class="container">
       {% for movies in movies %}
-         <div class="d-flex flex-column m-5">
+         <div class="box-shadow">
             <a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}">
                <img src="{{movies.picture}}">
             </a>
 
-            <a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}">
-               <p class="text-primary text-center">{{movies.title}}</p>
-            </a>
+            <div class="box-title">
+               <a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}">
+                  <p>{{movies.title}}</p>
+               </a>
+            </div>
          </div>
       {% endfor %}
    </div>
+</main>
 {% endblock %}
