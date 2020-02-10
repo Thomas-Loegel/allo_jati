@@ -2,32 +2,41 @@
 
 class MoviesController extends ArtsController
 {
-    private $picture;
-    private $resume;
-    private $time;
+   private $picture;
+   private $resume;
+   private $time;
 
-    public function __construct()
-    {
-        $this->twig = parent::getTwig();
-        parent::__construct();
-        $this->model = new Movies();
-    }
+   public function __construct()
+   {
+      $this->twig = parent::getTwig();
+      parent::__construct();
+      $this->model = new Movies();
+   }
 
-    // Affichage du template + Récupère tout les films
-    public function showAllMovies()
-    {
-        $result = $this->model->getAllMovies();
-        $pageTwig = 'Movies/showAllMovies.html.twig';
-        $template = $this->twig->load($pageTwig);
-        echo $template->render(["result" => $result]);
-    }
+   // Affiche tout les Films
+   public function showAllMovies()
+   {
+      $movies   = $this->model->getAllMovies();
+      $pageTwig = 'Movies/showAllMovies.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render(["movies" => $movies]);
+   }
 
-    // Affichage du template + Récupère un Film avec son ID
-    public function showOneMovie(int $id_movie) {
+   // Affiche un Film avec son Id
+   public function showMovie($id_movie) {
 
-        $result = $this->model->getMovie($id_movie);
-        $pageTwig = 'Movies/showOneMovie.html.twig';
-        $template = $this->twig->load($pageTwig);
-        echo $template->render(["result" => $result]);
-    }
+      // Affiche les Artistes liés a Id Film
+      $instanceArtists = new Artists();
+      $artists = $instanceArtists->getByMovie($id_movie);
+
+      //Affiche les commentaire du film
+      $instanceComments = new Comments();
+      $comments = $instanceComments->linkCommentByMovie($id_movie);
+
+
+      $movie = $this->model->getMovie($id_movie);
+      $pageTwig = 'Movies/showMovie.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments]);
+   }
 }

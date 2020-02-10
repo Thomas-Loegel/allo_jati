@@ -1,0 +1,33 @@
+{% extends "template.html.twig" %}
+
+{% block title %}{{ artist.first_name }} {{ artist.last_name }}{% endblock %}
+
+{% block body %}
+
+   <div class="">
+      <img src="{{ artist.picture }}">
+      <h2>{{ artist.first_name }} {{ artist.last_name }}</h2>
+
+      <!-- Défini le role de l'artiste -->
+      {% if artists.role == 1 %}
+         <p>Rôle : Acteur</p>
+
+         {% elseif artists.role == 2 %}
+            <p>Rôle : Réalisateur</p>
+         {% elseif artists.role == 3 %}
+            <p>Rôle : Réalisateur & Acteur</p>
+      {% endif %}
+
+      <p>Date de naissance : {{ artist.birth_day | date("d/m/Y") }}</p>
+      <p>Biographie : <br> {{ artist.bio }}</p>
+   </div>
+
+   <div class="">
+      <h3>A voir aussi dans :</h3>
+      <!-- Affiche les films ou l'acteur est présent -->
+      {% for movies in movies %}
+         <a href="{{baseUrl}}/Film_{{movies.id_movie}}">{{movies.title}}</a> <br>
+      {% endfor %}
+   </div>
+
+{% endblock %}

@@ -4,72 +4,81 @@
 
 {% block body %}
 
-{% if slug is null %}
+   {% for login in utilisateur %}
+      <p>{{pseudo.pseudo}}</p>
+   {% endfor %}
 
-<h2>Connectez-vous :</h2>
 
-<div class="container">
-   <div class="row">
-      <form class="col-4" method="POST">
+   {% if slug is null %}
 
-         <div class="form-group">
-            <label for="pseudo"> <h4>Pseudo</h4> </label>
-            <input type="text" class="form-control" id="pseudo">
-            <p><a href="#">J'ai oublié mon pseudo :'(</a></p>
+      <h2>Connectez-vous :</h2>
+
+      <div class="container">
+         <div class="row">
+            <form name="login" class="col-4" method="POST" action="{{baseUrl}}/Connexion">
+
+               <div class="form-group">
+                  <label for="pseudo"> <h4>Pseudo</h4> </label>
+                  <input type="text" name="pseudo" class="form-control" id="pseudo">
+                  <p><a href="#">J'ai oublié mon pseudo :'(</a></p>
+               </div>
+
+               <div class="form-group">
+                  <label for="mdp"> <h4>Mot de passe</h4> </label>
+                  <input type="password" class="form-control" name="mdp">
+               </div>
+
+               <div class="form-group">
+                  <a href="{{baseUrl}}/Enregistrement" class="badge badge-light col">Pas encore inscrit ?! :o</a>
+                  <button type="submit" class="btn btn-outline-info col">Se connecter</button>
+                  <p class="text-danger text-center col">{{error}}</p>
+               </div>
+
+            </form>
          </div>
+      </div>
+   {% endif %}
 
-         <div class="form-group">
-            <label for="password"> <h4>Mot de passe</h4> </label>
-            <input type="password" class="form-control" id="password">
+
+   {% if (slug == 'Enregistrement') %}
+
+      <h2>Créez un compte :</h2>
+
+      <div class="container">
+         <div class="row">
+            <form name="register" class="col-4" method ="POST" action="{{ baseUrl }}/Enregistrement">
+
+               <div class="form-group">
+                  <label for="regMail">Adresse mail *</label>
+                  <input type="email" class="form-control" name="mail" value=" {{ inputMail }}">
+                  <small id="requiredField" class="form-text text-muted"> {{ mailError }}</small>
+               </div>
+
+               <div class="form-group">
+                  <label for="regPseudo">Pseudo *</label>
+                  <input type="text" class="form-control" name="pseudo" value="{{ inputPseudo }}">
+                  <small id="requiredField" class="form-text text-muted"> {{ pseudoError }}</small>
+               </div>
+
+               <div class="form-group">
+                  <label for="regPassword">Mot de passe *</label>
+                  <input type="password" class="form-control" name="mdp">
+                  <small id="requiredField" class="form-text text-muted"> {{ mdpError }}</small>
+               </div>
+
+               <div class="form-group">
+                  <label for="photo">Photo de profil</label>
+                  <input type="file" class="form-control-file" name="photo">
+               </div>
+
+               <div class="form-group">
+                  <button type="submit" class="btn btn-outline-info col">S'inscrire</button>
+                  <p class="text-danger text-center col">{{ generalError }}</p>
+               </div>
+
+               <small id="requiredField" class="form-text text-muted">Champs obligatoires *</small>
+            </form>
          </div>
-
-         <div class="form-group">
-            <a href="{{baseUrl}}/Connexion/Enregistrement" class="badge badge-light col">Pas encore inscrit ?! :o</a>
-            <button type="submit" class="btn btn-outline-info col">Se connecter</button>
-         </div>
-
-      </form>
-   </div>
-</div>
-{% endif %}
-
-{% if (slug == 'Enregistrement') %}
-
-<h2>Créez un compte :</h2>
-
-<div class="container">
-   <div class="row">
-      <form class="col-4" method ="POST">
-
-         <div class="form-group">
-            <label for="mail">Adresse mail *</label>
-            <input type="mail" class="form-control" id="mail">
-         </div>
-
-         <div class="form-group">
-            <label for="pseudo">Pseudo *</label>
-            <input type="text" class="form-control" id="pseudo">
-         </div>
-
-         <div class="form-group">
-            <label for="password">Mot de passe *</label>
-            <input type="password" class="form-control" id="password">
-         </div>
-
-         <div class="form-group">
-            <label for="exampleFormControlFile1">Photo de profil</label>
-            <input type="file" class="form-control-file" id="exampleFormControlFile1">
-         </div>
-
-         <div class="form-group">
-            <button type="submit" class="btn btn-primary col">S'inscrire</button>
-         </div>
-
-         <small id="requiredField" class="form-text text-muted">Champs obligatoires *</small>
-      </form>
-   </div>
-</div>
-
-{% endif %}
-
+      </div>
+   {% endif %}
 {% endblock %}
