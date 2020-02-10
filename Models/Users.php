@@ -23,7 +23,6 @@ class Users extends Model
    function insertUser($mail, $pseudo, $mdp)
    {
       $req = $this->pdo->prepare("INSERT INTO users(mail, pseudo, mdp) VALUES ('$mail', '$pseudo', '$mdp')");
-
       $req->execute();
    }
 }
