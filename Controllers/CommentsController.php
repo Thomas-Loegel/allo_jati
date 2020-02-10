@@ -7,24 +7,18 @@ class CommentsController extends Controller
       $this->model = new Comments();
    }
    //delete comment
-   public function deleteComment($id)
+   public function deleteComment($id_movie)
    {
-      $this->model->delComment($id);
+      $this->model->delComment($id_movie);
    }
 
-   //render Posters
+   //render 
    public function index()
    {
-      
-      $OneComment = $this->model->getOneComment(4);
-      //$result = delComment($delId);
-      //$liaisonCom = $this->model->linkCommentWorks();//argument id movie
-      //$delete      = $this->model->delAllCommentFromMovie(1);//argument id movie
-      //var_dump($delete);
-      //var_dump($comments);
-      //var_dump($OneComment);
-      //var_dump($liaisonCom);
-
+      /*$OneComment = $this->model->getOneComment();
+      $result = delComment($delId);
+      $liaisonCom = $this->model->linkCommentWorks();//argument id movie
+      $delete      = $this->model->delAllCommentFromMovie(1);//argument id movie*/
       $pageTwig = 'Comments/index.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments, "OneComment" => $OneComment/*, "liaison" => $liaisonCom, "del" => $delete*/]);
@@ -32,7 +26,7 @@ class CommentsController extends Controller
    //Supprime tous les commentaire liés à id_movie
    public function delAllComByMovie($id)
    {
-      $tabCom = $this->model->linkCommentWorks($id); 
+      $tabCom = $this->model->linkCommentByMovie($id); 
       var_dump($tabCom);
       foreach ($tabCom as $k => $v) {
          $delId = $v['id_comment'];
@@ -46,9 +40,18 @@ class CommentsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments]);
    }
+   public function addComment($id_movie){
+      /*session_start();
+      var_dump($_SESSION['status']);
+      if($_SESSION['status'] != null){
+         $pseudo = $_SESSION['utilisateur'];
+
+      } else {
+         $_SESSION['tmpComment'] = $_POST['ControlText'];
+         var_dump($_SESSION['tmpComment']);
+      }*/
+   }
 }
-
-
 /*(
       'SELECT comments.* 
       FROM movies, movie_comments, comments 

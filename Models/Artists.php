@@ -15,7 +15,7 @@ class Artists extends Model
       return $req->fetchAll();
    }
 
-   // Récupère un Artiste par Id
+   // Récupère un Artiste avec Id
    public function getArtist(int $id_artist)
    {
       $req = $this->pdo->prepare(
@@ -27,7 +27,7 @@ class Artists extends Model
          return $req->fetch();
       }
 
-   // Récupère les Artistes liés au Film
+   // Récupère les Artistes liés a Id du Film
    public function getByMovie(int $id)
    {
       $req = $this->pdo->prepare(

@@ -24,6 +24,12 @@
 
    <div class="d-flex justify-content-center flex-wrap">
       {% for artists in artists %}
+   <h2>{{movie.title}}</h2>
+   <img src="{{movie.picture}}"></img>
+   <p>{{movie.year}}</p>
+   <p>{{movie.style}}</p>
+   <p>{{movie.time}}</p>
+   <p>{{movie.resume}}</p>
 
          {% if artists.role == 1 %}
             {% set role = 'Acteur' %}
@@ -42,8 +48,12 @@
       </div>
 
    {% endfor %}
+<<<<<<< HEAD
    </div>  
    <a class="text-decoration-none text-reset" href="{{baseUrl}}/Films"><input class="btn btn-primary mt-5 btn-lg" type="submit" value="Retour"></a>
 </div>
+=======
+
+>>>>>>> f2be138070a8bcc6cabc25fe8f943fe420bf064e
 {% endblock %}
 

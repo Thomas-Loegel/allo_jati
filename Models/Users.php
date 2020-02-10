@@ -1,6 +1,6 @@
 <?php
 
-class User extends Model
+class Users extends Model
 {
    public function __construct()
    {

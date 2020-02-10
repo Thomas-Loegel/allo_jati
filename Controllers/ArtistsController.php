@@ -20,7 +20,7 @@ class ArtistsController extends Controller
    // Affiche la fiche Artiste
    public function showArtist(int $id_artist)
    {
-      // Affiche les Films de Artiste par Id 
+      // Affiche les Films de Artiste par Id
       $instanceMovies = new Movies();
       $movies   = $instanceMovies->getAllMovies($id_artist);
 
