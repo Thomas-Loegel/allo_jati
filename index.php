@@ -9,7 +9,6 @@ $router = new Router($_GET['url']);
 // Route Films
 $router->get('/Films/Film_:id_movie', 'Movies.showMovie');
 $router->get('/Films/Artiste_:id_artist', 'Artists.showArtist');
-$router->get('/Films/:query', 'Movies.showAllMovies');
 $router->get('/Film_:id_movie', 'Movies.showMovie');
 $router->get('/Films', 'Movies.showAllMovies');
 
