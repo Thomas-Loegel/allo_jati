@@ -25,8 +25,9 @@ $router->get('/Connexion', 'Users.connexion');
 $router->post('/Connexion', 'Users.login');
 
 
-// Route Register
+// Route Register et forgetPassword
 $router->post('/:slug', 'Users.register');
+$router->get('/:slug', 'Users.forgetPassword');
 $router->get('/:slug', 'Users.connexion');
 
 

@@ -20,19 +20,26 @@ class UsersController extends Controller
       //$slug est null
       $title = "Connexion";
 
-      //si slug = register alors change le $title en "inscription".
-      if ($slug === "Enregistrement") {
+      //si slug = Inscription alors change le $title en "inscription".
+      if ($slug === "Inscription") {
          $title = "Inscription";
       }
 
-      //si slug est défini et différent de "register" (en gros si l'utilisateur met nimp dans l'url) alors :
-      if (isset($slug) && $slug !== "Enregistrement") {
+      //si slug = Mot-De-Passe-Oublie alors change le $title en "Mot de passe oublié".
+      if ($slug === "MotDePasseOublie") {
+         $title = "Mot de passe oublié";
+      }
+
+      //si slug est défini et différent de "Inscription" (en gros si l'utilisateur met nimp dans l'url) alors :
+      if (isset($slug) && $slug !== "Inscription") {
          //Affiche une erreur 303 dans la console :
          header("HTTP/1.0 303 Redirection");
 
          //Fait une redirection vers la page d'accueil :
          header("Location: $this->baseUrl");
       }
+
+
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
 
@@ -41,6 +48,8 @@ class UsersController extends Controller
          "title" => $title,
       ]);
    }
+
+
 
    //gestion de l'envoi du formulaire de connexion
    public function login($slug = null)
@@ -90,19 +99,37 @@ class UsersController extends Controller
    }
 
 
+   public function forgetPassword($slug = "MotDePasseOublie")
+   {
+
+      if (!empty($mail)) {}
+
+
+      //affichage
+      $pageTwig = 'Users/login.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render([
+         'slug' => $slug,
+      ]);
+   }
+
+
+
 
    //gestion de l'envoi du formulaire d'inscription
-   public function register($slug = "Enregistrement")
+   public function register($slug = "Inscription")
    {
       $generalError = "";
       $mailError = "";
       $pseudoError = "";
       $mdpError = "";
+      $avatarError = "";
 
       $mail = $_POST['mail'];
       $pseudo = $_POST['pseudo'];
       $mdp = $_POST['mdp'];
       $avatar = $_POST['avatar'];
+
 
       //les champs sont remplis ?
       if (!empty($mail) && !empty($pseudo) && !empty($mdp)) {
@@ -133,14 +160,16 @@ class UsersController extends Controller
 
                            $info = new SplFileInfo($avatar);
                            $extensionAvatar = $info->getExtension();
-                           var_dump($extensionAvatar);
+                           //var_dump($extensionAvatar);
+                           $extensionAvatar = strtolower($extensionAvatar);
+                           $extensionsAutorisees = array('jpg', 'jpeg', 'gif', 'png', 'tiff');
 
-                           if ($extensionAvatar == "JPG" OR $extensionAvatar == "JPEG") {
+                           if (in_array($extensionAvatar, $extensionsAutorisees)) {
                               //insertion des données dans la bdd
                               $this->model->insertUser($mail, $pseudo, $hashMdp, $avatar);
                               header("Location: $this->baseUrl");
                            } else {
-
+                              $avatarError = "L'extension de votre fichier n'est pas autorisée";
                            }
                         } else {
                            //insertion des données dans la bdd
@@ -167,6 +196,10 @@ class UsersController extends Controller
          $generalError = "Veuillez remplir tous les champs recquis !";
       }
 
+
+
+
+
       //affichage
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -178,6 +211,7 @@ class UsersController extends Controller
          'mdpError' => $mdpError,
          'inputMail' => $mail,
          'inputPseudo' => $pseudo,
+         'avatarError' => $avatarError,
       ]);
    }
 }
