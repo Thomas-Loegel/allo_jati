@@ -288,11 +288,11 @@ textarea.form-control {
 @keyframes box-shadow {
   0% {
       transform: translateZ(0);
-      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+      box-shadow: 0 0 0 0 rgb(0, 0, 0);
   }
   100% {
       transform: translateZ(50px);
-      box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 0 30px 0px rgb(1,1,1);
   }
 }
 /** END **/
@@ -326,7 +326,7 @@ main{
    background-color: rgba(6, 6, 6, 0.5);
    width: 100%;
    position: absolute;
-   top: 93%;
+   top: 94%;
    left: 50%;
    transform: translate(-50%, -50%);
    text-align: center;
