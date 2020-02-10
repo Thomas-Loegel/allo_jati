@@ -20,9 +20,28 @@ class Users extends Model
 
 
 
-   function insertUser($mail, $pseudo, $mdp)
+   function insertUser($mail, $pseudo, $mdp, $avatar)
    {
-      $req = $this->pdo->prepare("INSERT INTO users(mail, pseudo, mdp) VALUES ('$mail', '$pseudo', '$mdp')");
+      $req = $this->pdo->prepare("INSERT INTO users(mail, pseudo, mdp, avatar) VALUES ('$mail', '$pseudo', '$mdp', '$avatar')");
       $req->execute();
+   }
+
+
+   function pseudoExist($pseudo)
+   {
+      $req = $this->pdo->prepare("SELECT pseudo FROM users WHERE pseudo = :pseudo");
+      $req->bindValue(':pseudo', $pseudo);
+      $req->execute();
+      //$data = $req->fetch();
+      return $req->fetch();
+   }
+
+   function mailExist($mail)
+   {
+      $req = $this->pdo->prepare("SELECT mail FROM users WHERE mail = :mail");
+      $req->bindValue(':mail', $mail);
+      $req->execute();
+      //$data = $req->fetch();
+      return $req->fetch();
    }
 }

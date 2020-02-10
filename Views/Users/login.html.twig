@@ -51,24 +51,24 @@
                <div class="form-group">
                   <label for="regMail">Adresse mail *</label>
                   <input type="email" class="form-control" name="mail" value=" {{ inputMail }}">
-                  <small id="requiredField" class="form-text text-muted"> {{ mailError }}</small>
+                  <small id="requiredField" class="form-text text-danger"> {{ mailError }}</small>
                </div>
 
                <div class="form-group">
                   <label for="regPseudo">Pseudo *</label>
                   <input type="text" class="form-control" name="pseudo" value="{{ inputPseudo }}">
-                  <small id="requiredField" class="form-text text-muted"> {{ pseudoError }}</small>
+                  <small id="requiredField" class="form-text text-danger"> {{ pseudoError }}</small>
                </div>
 
                <div class="form-group">
-                  <label for="regPassword">Mot de passe *</label>
+                  <label for="regPassword">Mot de passe * </label>
                   <input type="password" class="form-control" name="mdp">
-                  <small id="requiredField" class="form-text text-muted"> {{ mdpError }}</small>
+                  <small id="requiredField" class="form-text text-danger"> {{ mdpError }}</small>
                </div>
 
                <div class="form-group">
                   <label for="photo">Photo de profil</label>
-                  <input type="file" class="form-control-file" name="photo">
+                  <input type="file" class="form-control-file" name="avatar" src="localhost/allo_jati/assets/avatar/">
                </div>
 
                <div class="form-group">

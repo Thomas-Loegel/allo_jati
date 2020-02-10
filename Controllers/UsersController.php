@@ -66,12 +66,9 @@ class UsersController extends Controller
 
                $mavariable = $_SESSION["utilisateur"];
 
-               if(!empty($mavariable)) {
+               if (!empty($mavariable)) {
                   header("Location: $this->baseUrl");
                }
-
-
-
             } else {
                $error = "Mot de passe incorrect";
             }
@@ -79,7 +76,7 @@ class UsersController extends Controller
             $error = "Vous êtes qui ?! :S";
          }
       } else {
-         $error = "Vous n'avez pas rempli tous les champs !";
+         $error = "Veuillez remplir tous les champs !";
       }
 
 
@@ -92,6 +89,8 @@ class UsersController extends Controller
       ]);
    }
 
+
+
    //gestion de l'envoi du formulaire d'inscription
    public function register($slug = "Enregistrement")
    {
@@ -100,44 +99,72 @@ class UsersController extends Controller
       $pseudoError = "";
       $mdpError = "";
 
-
       $mail = $_POST['mail'];
       $pseudo = $_POST['pseudo'];
       $mdp = $_POST['mdp'];
+      $avatar = $_POST['avatar'];
 
-      //si les champs sont remplis
+      //les champs sont remplis ?
       if (!empty($mail) && !empty($pseudo) && !empty($mdp)) {
 
-         //vérif mail
+         //mail correspond aux attentes ?
          if (preg_match("#^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$#", $mail)) {
 
-            //vérif pseudo
-            if (preg_match('`^([a-zA-Z0-9-_]{2,36})$`', $pseudo)) {
+            $userMail = $this->model->mailExist($mail);
+            //mail existe dans la bdd ?
+            if ($userMail == false) {
 
-               //vérif mot de passe
-               if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
-                  //hashage du mot de passe :
-                  $hashMdp = password_hash($mdp, PASSWORD_DEFAULT);
+               //pseudo correspond aux attentes ?
+               if (preg_match('`^([a-zA-Z0-9-_]{2,36})$`', $pseudo)) {
 
-                  //insertion des données dans la bdd
-                  $this->model->insertUser($mail, $pseudo, $hashMdp);
+                  $userPseudo = $this->model->pseudoExist($pseudo);
 
+                  //le pseudo entré existe dans la bdd ?
+                  if ($userPseudo == false) {
+
+                     //mot de passe correspond aux attentes ?
+                     if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
+
+                        //hashage du mot de passe :
+                        $hashMdp = password_hash($mdp, PASSWORD_DEFAULT);
+
+                        //une photo a été inséré dans l'insciption ?
+                        if ($avatar) {
+
+                           $info = new SplFileInfo($avatar);
+                           $extensionAvatar = $info->getExtension();
+                           var_dump($extensionAvatar);
+
+                           if ($extensionAvatar == "JPG" OR $extensionAvatar == "JPEG") {
+                              //insertion des données dans la bdd
+                              $this->model->insertUser($mail, $pseudo, $hashMdp, $avatar);
+                              header("Location: $this->baseUrl");
+                           } else {
+
+                           }
+                        } else {
+                           //insertion des données dans la bdd
+                           $this->model->insertUser($mail, $pseudo, $hashMdp, $avatar = "avatar.jpg");
+
+                           header("Location: $this->baseUrl");
+                        }
+                     } else {
+                        $mdpError = "Votre mot de passe doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 16 caractères";
+                     }
+                  } else {
+                     $pseudoError = "Ce pseudo existe déjà";
+                  }
                } else {
-                  $mdpError = "Seul les lettres en majuscule et en minuscule ainsi que les chiffres sont autorisés.
-                  Min 2 et max 16 caractères";
+                  $pseudoError = "Votre pseudo doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 36 caractères";
                }
-
             } else {
-               $pseudoError = "Seul les lettres en majuscule et en minuscule ainsi que les chiffres sont autorisés.
-               Min 2 et max 36 caractères";
+               $mailError = "Cette adresse mail possède déja un compte";
             }
-
          } else {
             $mailError = "L'adresse email '$mail' n'est pas considérée comme valide.";
          }
-
       } else {
-         $generalError = "Vous n'avez pas rempli tous les champs !";
+         $generalError = "Veuillez remplir tous les champs recquis !";
       }
 
       //affichage
