@@ -17,14 +17,16 @@
 
 <body>
    {% block header %}
-   <nav>
-      <ul>
-         <li><a href="{{baseUrl}}">Home</a></li>
-         <li><a href="{{baseUrl}}/Artistes">Artistes</a></li>
-         <li><a href="{{baseUrl}}/Films">Films</a></li>
-         <li><a href="{{baseUrl}}/Connexion">Connexion</a></li>
-      </ul>
-   </nav>
+   <header class="navbar navbar-light" style="background-color: #e3f2fd;">
+      <nav>
+         <ul>
+            <li><a href="{{baseUrl}}">Home</a></li>
+            <li><a href="{{baseUrl}}/Artistes">Artistes</a></li>
+            <li><a href="{{baseUrl}}/Films">Films</a></li>
+            <li><a href="{{baseUrl}}/Connexion">Connexion</a></li>
+         </ul>
+      </nav>
+   </header>
    {% endblock %}
 
    {% block body %}
