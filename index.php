@@ -19,15 +19,19 @@ $router->get('/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artistes', 'Artists.showAllArtists');
 
-
-// Route Register
-$router->post('/:slug', 'Users.register');
-$router->get('/:slug', 'Users.connexion');
-
-
 // Route Login
 $router->get('/Connexion', 'Users.connexion');
-$router->post('/Connexion', 'Users.login');
+$router->post('/Connexion/post', 'Users.login');
+
+// route forgetPassword
+$router->get('/MotDePasseOublie', 'Users.forgetPassword');
+$router->post('/MotDePasseOublie/post', 'Users.forgetPassword');
+
+// Route Register
+$router->get('/Inscription', 'Users.register');
+$router->post('/Inscription/post', 'Users.register');
+
+
 
 
 // Route Admin

@@ -37,8 +37,10 @@ class Controller
    }
    protected static function controlSession()
    {
+      
       session_start();  
       $session = $_SESSION;
+      var_dump($session);
       if(empty($session)){
          $_SESSION['status'] = 0;
       }

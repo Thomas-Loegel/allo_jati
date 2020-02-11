@@ -162,15 +162,10 @@ class UsersController extends Controller
 
    public function logout()
    {
-      $instance = new Controller();
-      $instance->controlSession();
-
-      if($_SESSION['status'] === 1) {
+      session_start();  
+      $session = $_SESSION;
+      if($session['status'] == 1 || $session['status'] == 2){ 
          session_destroy();
-         $instance->controlSession();
-         header("Location: $this->baseUrl");
-      }
-      else if ($_SESSION['status'] === 0){
          header("Location: $this->baseUrl");
       }
    }
