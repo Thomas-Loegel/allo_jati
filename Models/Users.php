@@ -1,11 +1,12 @@
 <?php
 
-class User extends Model
+class Users extends Model
 {
    public function __construct()
    {
       $this->pdo = parent::getPdo();
    }
+
 
    //-----> la fonction ckeckLogin : renvoi true si le pseudo entré par l'utilisateur est connu dans la bdd et renvoi un false si le pseudo entré par l'utilisateur est connu dans la bdd
    function checkLogin($pseudo)
@@ -16,10 +17,12 @@ class User extends Model
       $data = $req->fetch();
       return $data;
    }
+
+
+
    function insertUser($mail, $pseudo, $mdp)
    {
       $req = $this->pdo->prepare("INSERT INTO users(mail, pseudo, mdp) VALUES ('$mail', '$pseudo', '$mdp')");
-
       $req->execute();
    }
 }

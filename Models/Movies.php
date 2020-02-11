@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 class Movies extends Model
 {
@@ -21,8 +21,20 @@ class Movies extends Model
         'SELECT *
          FROM movies
          WHERE movies.id_movie = ?
-         AND movies.id_movie = movies.id_movie ');
+         AND movies.id_movie = movies.id_movie');
       $req->execute([$id_movie]);
       return $req->fetch();
+   }
+
+   // Recherche un Film
+   public function getBySearch($search)
+   {
+      $req = $this->pdo->prepare(
+        'SELECT *
+         FROM movies
+         WHERE title
+         LIKE "%'.$search.'%"');
+      $req->execute();
+      return $req->fetchAll();
    }
 }
