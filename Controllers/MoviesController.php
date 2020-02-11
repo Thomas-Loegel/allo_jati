@@ -89,10 +89,10 @@ class MoviesController extends ArtsController
 
       if(isset($_SESSION['tmpComment'])) {
 
-         echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status'], "tmpTitle" => $_SESSION['tmpTitle'], "tmpComment" => $_SESSION['tmpComment'], "tmpNote" => $_SESSION['tmpNote']]);
+         echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status'], "tmpTitle" => $_SESSION['tmpTitle'], "tmpComment" => $_SESSION['tmpComment'], "tmpNote" => $_SESSION['tmpNote'], "status" => $_SESSION['status'], "userLogin" => $_SESSION['utilisateur']]);
       } else {
          
-         echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status']]);
+         echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status'], "userLogin" => $_SESSION['utilisateur']]);
       }
    }
 }

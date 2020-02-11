@@ -21,48 +21,70 @@
          {% elseif artists.role == 3 %}
             {% set role = 'Réalisateur & Acteur' %}
       {% endif %}
-
       <ul>
          <li>{{role}} : <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}">{{artists.first_name}}
                {{artists.last_name}}</a></li>
       </ul>
    </div>
    {% endfor %}
+
    {% if comments %}
    <div class="container2">
+
       {% for comment in comments %}
-      
       <h2>{{ comment.title }}</h2>
          <div class="row">
             <div class="col-2">
-               <div class="row">
-                  <div class="row align-items-center">
-                     <div class="col-12">
-                        <img src="{{comment.avatar }}" class="img-thumbnail">
-                     </div>
-                  </div>
+
+               <div class="col-12">
+                  <img src="{{comment.avatar }}" class="img-thumbnail">
+                  <p class="text-center">{{ comment.id_user }}</p>
                </div>
-         </div>
       
-         <div class="col-10">
-            <div class="col-12">
-               <p>{{ comment.content }}</p>
+            </div>
+            <div class="col-10">
+               <div class="col-12">
+                  <p>{{ comment.content }}</p>
+               </div>
             </div>
          </div>
-       </div>
-            
-
-
-         
-         <p>Commentaire: N°{{ comment.id_comment }}, Utilisateur: {{ comment.id_user }} Date de publication: {{ comment.date }}</p>
-         
-         <div class="star-note">
-            {% for i in 1..comment.note %}
-            <label></label>
-            {% endfor %}
+         <div class="row">
+            <div class="col-2 d-flex justify-content-start">
+               <div class="star-note">
+                  {% for i in 1..comment.note %}
+                  <label></label>
+                  {% endfor %}
+               </div>
+            </div>
+            <div class="col-4 d-flex justify-content-center">
+               <p>Commentaire: N°{{ comment.id_comment }}</p>
+            </div>
+            <div class="col-6 d-flex justify-content-around">
+               <p>Date de publication: {{ comment.date }}</p>
+            </div>  
          </div>
-         <button type="submit" class="btn btn-success btn-sm mb-2">Poster</button>
-   
+
+         {% if status == 1 %}
+         <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6 d-flex justify-content-between">
+               <button type="submit" class="btn btn-success btn-sm mb-2">Modifier</button>
+               <button type="submit" class="btn btn-success btn-sm mb-2">Supprimer</button>
+               <button type="submit" class="btn btn-success btn-sm mb-2">Contacter</button>
+            </div>
+            <div class="col-3"></div>
+         </div>
+         {% endif %}
+         
+         {% if status == 2 and comment.id_user == userLogin %}
+         <div class="row">
+            <div class="col-3"> </div>
+            <div class="col-6 d-flex justify-content-between">
+               <button type="submit" class="btn btn-success btn-sm mb-2">Modifier</button>
+            </div>  
+            <div class="col-3"></div>
+         </div>
+         {% endif %}
       {% endfor %}
    </div>
    {% endif %}
@@ -90,13 +112,13 @@
          <div class="row">
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                <div class="form-group">
-                  {% if status == 1 %}
+                  {% if status == 1 or status == 2 %}
                      {% if tmpNote %}
                      <div id="containerstar" class="star-complet{{tmpNote}}">
                      {% else %}
                      <div id="containerstar" class="star">
-                        {% endif %}
-                  {% elseif status == 0 %}
+                     {% endif %}
+                  {% elseif status == null %}
                      <div id="containerstar" class="star">
                   {% endif %}
                      <!--System de notation par étoile-->
@@ -113,7 +135,7 @@
                   </div>
                </div>
             </div>
-         {% if status == 1 %}
+         {% if status == 1 or status == 2 %}
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                <div class="d-flex justify-content-center">
                {% for inf in user %}
@@ -131,13 +153,7 @@
             <button type="submit" class="btn btn-success btn-sm mb-2">Poster</button>   
       </form>
    </div> 
-   {#fin du block comment#} 
+   {# fin du block comment #} 
    {% endblock %}
    {# fin du block body #}
-
-
-
-
-
-
 {% endblock %}
