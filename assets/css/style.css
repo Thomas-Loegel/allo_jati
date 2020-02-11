@@ -1,3 +1,14 @@
+.img-thumbnail{
+   max-width: 75px;
+   max-height: 75px;
+   border:1px solid red;
+}
+.container-fluid{
+   margin:0;
+   padding:0;
+   border:1px solid red;
+}
+
 .radio {
    opacity: 0;
    cursor: pointer;

@@ -173,7 +173,6 @@ class UsersController extends Controller
       $id_user = $this->model->getOneIdUser($pseudo);
       //On vérifie si l'id utilisateur est Admin
       $admin = $this->model->checkAdmin($id_user['id_user']);
-      var_dump($admin['admin']);
       if($admin['admin'] == 1){
          $_SESSION['status'] = 1;
          //Redirection sur page Admin

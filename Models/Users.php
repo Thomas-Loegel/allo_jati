@@ -47,7 +47,7 @@ class User extends Model
    }
    public function getOneIdUser($pseudo)
    {
-      $req = $this->pdo->prepare('SELECT `pseudo` FROM users WHERE pseudo= ?');
+      $req = $this->pdo->prepare('SELECT `id_user` FROM users WHERE pseudo= ?');
       $req->execute([$pseudo]);
 
       return $req->fetch();
