@@ -6,7 +6,7 @@
 <div style="background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12)" >
 <div class="container rounded">
    <div class="d-flex pt-5">
-      <img class="rounded img-thumbnail" src="{{movie.picture}}" style="width:400px;height:500px;"></img>
+      <img class="rounded img-thumbnail" src="{{movie.picture}}" style="width:300px;height:400px;"></img>
       <div class="d-flex flex-column ml-5">         
          <h1 class="pb-5 text-center text-white">{{movie.title}}</h1> 
          <div class="d-flex justify-content-center">
@@ -24,12 +24,7 @@
 
    <div class="d-flex justify-content-center flex-wrap">
       {% for artists in artists %}
-   <h2>{{movie.title}}</h2>
-   <img src="{{movie.picture}}"></img>
-   <p>{{movie.year}}</p>
-   <p>{{movie.style}}</p>
-   <p>{{movie.time}}</p>
-   <p>{{movie.resume}}</p>
+ 
 
          {% if artists.role == 1 %}
             {% set role = 'Acteur' %}
@@ -48,12 +43,8 @@
       </div>
 
    {% endfor %}
-<<<<<<< HEAD
    </div>  
    <a class="text-decoration-none text-reset" href="{{baseUrl}}/Films"><input class="btn btn-primary mt-5 btn-lg" type="submit" value="Retour"></a>
 </div>
-=======
-
->>>>>>> f2be138070a8bcc6cabc25fe8f943fe420bf064e
 {% endblock %}
 

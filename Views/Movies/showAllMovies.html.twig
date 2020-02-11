@@ -7,7 +7,7 @@
       <h2 class="text-primary pb-5">Films</h2>
    </div>
 
-   <form method="get" action="{{baseUrl}}/Films/{{query}}" class="form-inline">
+   <form method="get" action="{{baseUrl}}/Films/{{query}}" class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" name="query" placeholder="Rechercher..." aria-label="Search">
       <button class="btn btn-dark my-2 my-sm-0" type="submit">Go</button>
    </form>
@@ -15,18 +15,11 @@
 
    <div class="d-flex justify-content-center flex-wrap">
       {% for movies in movies %}
-         <div class="d-flex flex-column m-5">
-            <div class="mx-auto">
-               <h3 class="text-primary">{{movies.title}}</h3>
-            </div>
-            <a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}"><img src="{{movies.picture}}" style="width:400px;height:500px;"></img></a>
-            <a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}">
-               <img src="{{movies.picture}}">
+         <div class="d-flex flex-column m-5 container-image-showallmovie shadow-drop-2-center">          
+            <a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}" class="shadow-drop-2-center">
+            <img src="{{movies.picture}}" style="width:300px;height:400px;"></img>
             </a>
-
-            <a href="{{baseUrl}}/Films/Film_{{movies.id_movie}}">
-               <p class="text-primary text-center">{{movies.title}}</p>
-            </a>
+            <p class="text-in-image m-0 pb-3 px-0 pt-3" >{{movies.title}}</p>
          </div>
       {% endfor %}
    </div>
