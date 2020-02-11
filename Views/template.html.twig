@@ -30,21 +30,16 @@
    {% endblock %}
 
    {% block body %}
-   <main>
       {# Here the main content, you can create other blocks if there are useful to you #}
-   </main>
    {% endblock %}
 
    {% block footer %}
-   {# Footer ici #}
-   {% endblock %}
-
-   {% block javascripts %}
-   {# Here you can add only the JS that you need #}
+      {# Footer ici #}
    {% endblock %}
 
    {% block javascript %}
       <script src="{{baseUrl}}/assets/js/app.js"></script>
+      <script src="{{baseUrl}}/assets/js/ajax.js"></script>
    {% endblock %}
 </body>
 </html>
