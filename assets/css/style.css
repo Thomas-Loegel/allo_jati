@@ -2,15 +2,7 @@
    opacity: 0;
    cursor: pointer;
 }
-.star-note {
-   unicode-bidi: bidi-override;
-   direction: rtl;
-}
 
-.star-note>label:before {
-   color: orange;
-   content: "\2605";
-}
 /*//////////////////////*/
 .star {
    color: orange;
@@ -31,6 +23,7 @@
    content: "\2605";
    position: absolute;
 }
+
 /*//////////////////////////////*/
 .star-complet1 {
    color: orange;

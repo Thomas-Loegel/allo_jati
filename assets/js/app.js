@@ -12,7 +12,6 @@ if (CheminRepertoire === "http://localhost/allo_jati/Films") {
    //Boucle sur éléments
    for (let inp, i = 0, iMax = inputs.length; i < iMax; ++i) {
       inp = inputs[i];
-      console.log(inp);
       //Récupère l'ID de tous les élèments dans un tableau
       tabInputs[i] = inp.id;
    }
@@ -22,7 +21,6 @@ if (CheminRepertoire === "http://localhost/allo_jati/Films") {
          element = document.getElementById(tabInputs[i]);
          star = element.value;
          el = document.getElementById('containerstar');
-         console.log(star);
          //Switch sur les étoile et colorie les étoiles en fonction de la note
          switch (star) {
             case "0":

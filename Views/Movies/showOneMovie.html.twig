@@ -3,42 +3,53 @@
 {% block title %}Film{% endblock %}
 
 {% block body %}
+<div class="container2">
 
-<h2>{{movie.title}}</h2>
-<img src="{{movie.picture}}"></img>
-<p>{{movie.year}}</p>
-<p>{{movie.style}}</p>
-<p>{{movie.time}}</p>
-<p>{{movie.resume}}</p>
+   <h2>{{movie.title}}</h2>
+   <div class="d-flex justify-content-center">
+      <img src="{{movie.picture}}"></img>
+   </div>
+   <p>{{movie.year}}</p>
+   <p>{{movie.style}}</p>
+   <p>{{movie.time}}</p>
+   <p>{{movie.resume}}</p>
 
-{% for artists in artists %}
+   {% for artists in artists %}
 
-{% if artists.role == 1 %}
-{% set role = 'Acteur' %}
+   {% if artists.role == 1 %}
+   {% set role = 'Acteur' %}
 
-{% elseif artists.role == 2 %}
-{% set role = 'Réalisateur' %}
-{% elseif artists.role == 3 %}
-{% set role = 'Réalisateur & Acteur' %}
-{% endif %}
+   {% elseif artists.role == 2 %}
+   {% set role = 'Réalisateur' %}
+   {% elseif artists.role == 3 %}
+   {% set role = 'Réalisateur & Acteur' %}
+   {% endif %}
 
-<ul>
-   <li>{{role}} : <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}">{{artists.first_name}}
-         {{artists.last_name}}</a></li>
-</ul>
-{% endfor %}
-
-{% for comment in comments %}
-
-<h2>{{ comment.title }}</h2>
-<p>{{ comment.content }}</p>
-<p>id Commentaire: {{ comment.id_comment }}, id Utilisateur: {{ comment.id_user }} Date: {{ comment.date }}</p>
-<div class="star-note">
-   {% for i in 1..comment.note %}
-   <label></label>
-   {% endfor %}
+   <ul>
+      <li>{{role}} : <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}">{{artists.first_name}}
+            {{artists.last_name}}</a></li>
+   </ul>
 </div>
 {% endfor %}
+
+{% if comments %}
+<div class="container2">
+   {% for comment in comments %}
+
+      <h2>{{ comment.title }}</h2>
+      <p>{{ comment.content }}</p>
+      <p>Commentaire: N°{{ comment.id_comment }}, Utilisateur: {{ comment.id_user }} Date de publication: {{ comment.date }}</p>
+      <div class="star-note">
+         {% for i in 1..comment.note %}
+         <label></label>
+         {% endfor %}
+      </div>
+
+   {% endfor %}
+</div>
+{% endif %}
+
+
 
 {% block comment %}
 
@@ -65,12 +76,12 @@
             <div class="form-group">
                {% if status == 1 %}
                   {% if tmpNote %}
-                  <div id="containerstar" class="d-flex justify-content-end star-complet{{tmpNote}}">
+                  <div id="containerstar" class="star-complet{{tmpNote}}">
                   {% else %}
-                  <div id="containerstar" class="d-flex justify-content-end star">
+                  <div id="containerstar" class="star">
                      {% endif %}
                {% elseif status == 0 %}
-                  <div id="containerstar" class="d-flex justify-content-end star">
+                  <div id="containerstar" class="star">
                {% endif %}
                   <!--System de notation par étoile-->
                   <label for="note-5" class="labelButon">☆</label>
