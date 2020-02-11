@@ -48,6 +48,14 @@ $router->get('/Comments/GetAll', 'Comments.getAllCom');
 $router->get('/Comments', 'Comments.index');
 
 
+// Route Deconnexion
+$router->get('/Deconnexion', 'Users.logout');
+
+
+// Route Admin
+$router->get('/Admin', 'Admin.admin');
+
+
 // Route Home
 $router->get('/', 'Home.index');
 
