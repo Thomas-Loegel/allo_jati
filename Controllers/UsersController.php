@@ -6,6 +6,7 @@ class UsersController extends Controller
    private $mdp;
    private $mail;
 
+
    public function __construct()
    {
       //$this->twig = parent::getTwig();
@@ -121,8 +122,58 @@ class UsersController extends Controller
 
                //mail existe dans la bdd ?
                if ($userMail == true) {
-                  
 
+                  //envoi d'email -> redirection vers page vide qui sert a envoyer un mail
+
+                  //header("Location: $this->baseUrl/mail");
+
+
+
+
+
+                  if ($_SERVER['SERVER_NAME'] === "localhost") {
+                      //on charge Swiftmailer
+                      require_once('vendor/autoload.php');
+
+                      //on instancie une nouvelle méthode d'envois du mail
+                      $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
+                     //Port 25 ou 465 selon votre configuration
+                  
+                     //identifiant et mote de passe pour votre swiftmailer
+                     ->setUsername('fb4412351e7042')
+                     ->setPassword('9377fb0dbcb0f8');
+
+                      //on instancie un nouveau mail
+                      $mailer = new Swift_Mailer($transport);
+                      $date = date('j, F Y h:i A');
+
+                      //on instancie un nouveau corps de document mail
+                      $message = (new Swift_Message($sujetGen))
+                         ->setFrom(['galli.johanna.g2@gmail.com'])
+                         ->setTo(['galli.johanna.g2@gmail.com'])
+                         ->setBody($mailbody);
+
+                      //on récupère et modifie le header du mail pour l'envois en HTML
+                      $type = $message->getHeaders()->get('Content-Type');
+                      $type->setValue('text/html');
+                      $type->setParameter('charset', 'utf-8');
+
+                      //On envois le mail en local
+                      $resultMail = $mailer->send($message);
+                  }
+
+
+
+
+
+
+
+
+
+                  //var_dump ($userMail);
+
+                  //redirection vers page d'accueil'
+                  //header("Location: $this->baseUrl/Connexion");
                } else {
                   $mailError = "Nous ne connaissons pas votre mail ...";
                }
@@ -131,7 +182,6 @@ class UsersController extends Controller
             $generalError = "Veuillez remplir le champ recquis !";
          }
       }
-
 
       //affichage
       $pageTwig = 'Users/login.html.twig';
@@ -144,6 +194,49 @@ class UsersController extends Controller
          'generalError' => $generalError,
       ]);
    }
+
+
+   public function ChangePassword($slug = "ChangerMotDePasse")
+   {
+      //déclaration des variables
+      $mdp = NULL;
+      $mdpError = "";
+      $generalError = "";
+
+
+      //formulaire envoyé ?
+      if (!empty($_POST)) {
+         $mail = $_POST['mdp'];
+         //var_dump($mail);
+
+         //le champ mdp est rempli ?
+         if (!empty($mdp)) {
+
+            //mot de passe correspond aux attentes ?
+            if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
+               $userMdp = $this->model->insertmdp($mdp);
+
+               //redirection vers page d'accueil'
+               header("Location: $this->baseUrl/connexion");
+            } else {
+               $mdpError = "Votre mot de passe doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 16 caractères";
+            }
+         } else {
+            $generalError = "Veuillez remplir le champ recquis !";
+         }
+      }
+
+      //affichage
+      $pageTwig = 'Users/login.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render([
+         'slug' => $slug,
+         'mdp' => $mdp,
+         'mdpError' => $mdpError,
+         'generalError' => $generalError,
+      ]);
+   }
+
 
    //gestion de l'envoi du formulaire d'inscription
    public function register($slug = "Inscription")
@@ -228,11 +321,6 @@ class UsersController extends Controller
             $generalError = "Veuillez remplir tous les champs recquis !";
          }
       }
-
-
-
-
-
 
       //affichage
       $pageTwig = 'Users/login.html.twig';

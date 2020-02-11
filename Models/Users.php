@@ -43,4 +43,16 @@ class Users extends Model
       //$data = $req->fetch();
       return $req->fetch();
    }
+
+   function recupPseudo($mail)
+   {
+      //chercher dans table users le pseudo correspondant au mail
+      $req2 = $this->pdo->prepare("SELECT pseudo FROM users WHERE mail = $mail");
+      $req2->execute();
+      $pseudo = $req2->fetch();
+      return $pseudo;
+
+      //insérer le pseudo dans la table recuperation
+
+   }
 }
