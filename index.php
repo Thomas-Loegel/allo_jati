@@ -22,13 +22,16 @@ $router->get('/Artistes', 'Artists.showAllArtists');
 
 // Route Login
 $router->get('/Connexion', 'Users.connexion');
-$router->post('/Connexion', 'Users.login');
+$router->post('/Connexion/post', 'Users.login');
 
+// route forgetPassword
+$router->get('/MotDePasseOublie', 'Users.forgetPassword');
+$router->post('/MotDePasseOublie/post', 'Users.forgetPassword');
 
-// Route Register et forgetPassword
-$router->post('/:slug', 'Users.register');
-$router->get('/:slug', 'Users.forgetPassword');
-$router->get('/:slug', 'Users.connexion');
+// Route Register
+$router->get('/Inscription', 'Users.register');
+$router->post('/Inscription/post', 'Users.register');
+
 
 
 // Route Commentaires

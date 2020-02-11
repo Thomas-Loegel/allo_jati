@@ -18,8 +18,6 @@ class Users extends Model
       return $data;
    }
 
-
-
    function insertUser($mail, $pseudo, $mdp, $avatar)
    {
       $req = $this->pdo->prepare("INSERT INTO users(mail, pseudo, mdp, avatar) VALUES ('$mail', '$pseudo', '$mdp', '$avatar')");
@@ -27,15 +25,16 @@ class Users extends Model
    }
 
 
+   //verifie si le pseudo entré existe dans la bdd
    function pseudoExist($pseudo)
    {
       $req = $this->pdo->prepare("SELECT pseudo FROM users WHERE pseudo = :pseudo");
       $req->bindValue(':pseudo', $pseudo);
       $req->execute();
-      //$data = $req->fetch();
       return $req->fetch();
    }
 
+   //verifie si le mail entré existe dans la bdd
    function mailExist($mail)
    {
       $req = $this->pdo->prepare("SELECT mail FROM users WHERE mail = :mail");

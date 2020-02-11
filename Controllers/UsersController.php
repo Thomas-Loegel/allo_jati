@@ -30,8 +30,8 @@ class UsersController extends Controller
          $title = "Mot de passe oublié";
       }
 
-      //si slug est défini et différent de "Inscription" (en gros si l'utilisateur met nimp dans l'url) alors :
-      if (isset($slug) && $slug !== "Inscription") {
+      //si slug est défini et différent de "Inscription" et différent de "MotDePasseOublie" (en gros si l'utilisateur met nimp dans l'url) alors :
+      if (isset($slug) && $slug !== "Inscription"  && $slug !== "MotDePasseOublie") {
          //Affiche une erreur 303 dans la console :
          header("HTTP/1.0 303 Redirection");
 
@@ -49,8 +49,6 @@ class UsersController extends Controller
       ]);
    }
 
-
-
    //gestion de l'envoi du formulaire de connexion
    public function login($slug = null)
    {
@@ -62,7 +60,7 @@ class UsersController extends Controller
          //$user info appelle la fonction checkLogin
          $userInfo = $this->model->checkLogin($_POST["pseudo"]);
 
-         //Si $userInfo a pour valeur true
+         //Si $userInfo a pour valeur true 
          if ($userInfo) {
             //var_dump($userInfo);
             $hashMdp = $userInfo["mdp"];
@@ -85,7 +83,7 @@ class UsersController extends Controller
             $error = "Vous êtes qui ?! :S";
          }
       } else {
-         $error = "Veuillez remplir tous les champs !";
+         $error = "Vous n'avez pas rempli tous les champs !";
       }
 
 
@@ -98,11 +96,41 @@ class UsersController extends Controller
       ]);
    }
 
-
+   //gestion de l'envoi du formulaire de Mot De Passe Oublié
    public function forgetPassword($slug = "MotDePasseOublie")
    {
+      //déclaration des variables
+      $mail = NULL;
+      $mailError = "";
+      $generalError = "";
+      $inputMail = "";
 
-      if (!empty($mail)) {}
+
+      //formulaire envoyé ?
+      if (!empty($_POST)) {
+         $mail = $_POST['mail'];
+         //var_dump($mail);
+
+         //le champ mail est rempli ?
+         if (!empty($mail)) {
+
+            $inputMail = $mail;
+
+            if (isset($mail)) {
+               $userMail = $this->model->mailExist($mail);
+
+               //mail existe dans la bdd ?
+               if ($userMail == true) {
+                  
+
+               } else {
+                  $mailError = "Nous ne connaissons pas votre mail ...";
+               }
+            }
+         } else {
+            $generalError = "Veuillez remplir le champ recquis !";
+         }
+      }
 
 
       //affichage
@@ -110,91 +138,97 @@ class UsersController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
+         'mail' => $mail,
+         'mailError' => $mailError,
+         'inputMail' => $inputMail,
+         'generalError' => $generalError,
       ]);
    }
-
-
-
 
    //gestion de l'envoi du formulaire d'inscription
    public function register($slug = "Inscription")
    {
-      $generalError = "";
-      $mailError = "";
-      $pseudoError = "";
-      $mdpError = "";
-      $avatarError = "";
+      //déclaration des variables
+      $mail = NULL;
+      $mailError = NULL;
+      $pseudo = NULL;
+      $pseudoError = NULL;
+      $mdp = NULL;
+      $mdpError = NULL;
+      $avatar = NULL;
+      $avatarError = NULL;
+      $generalError = NULL;
 
-      $mail = $_POST['mail'];
-      $pseudo = $_POST['pseudo'];
-      $mdp = $_POST['mdp'];
-      $avatar = $_POST['avatar'];
 
+      if (!empty($_POST)) {
+         $mail = $_POST['mail'];
+         $pseudo = $_POST['pseudo'];
+         $mdp = $_POST['mdp'];
+         $avatar = $_POST['avatar'];
 
-      //les champs sont remplis ?
-      if (!empty($mail) && !empty($pseudo) && !empty($mdp)) {
+         //les champs sont remplis ?
+         if (!empty($mail) && !empty($pseudo) && !empty($mdp)) {
 
-         //mail correspond aux attentes ?
-         if (preg_match("#^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$#", $mail)) {
+            //mail correspond aux attentes ?
+            if (preg_match("#^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$#", $mail)) {
+               $userMail = $this->model->mailExist($mail);
+               //mail existe dans la bdd ?
+               if ($userMail == false) {
 
-            $userMail = $this->model->mailExist($mail);
-            //mail existe dans la bdd ?
-            if ($userMail == false) {
+                  //pseudo correspond aux attentes ?
+                  if (preg_match('`^([a-zA-Z0-9-_]{2,36})$`', $pseudo)) {
+                     $userPseudo = $this->model->pseudoExist($pseudo);
 
-               //pseudo correspond aux attentes ?
-               if (preg_match('`^([a-zA-Z0-9-_]{2,36})$`', $pseudo)) {
+                     //le pseudo entré existe dans la bdd ?
+                     if ($userPseudo == false) {
 
-                  $userPseudo = $this->model->pseudoExist($pseudo);
+                        //mot de passe correspond aux attentes ?
+                        if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
 
-                  //le pseudo entré existe dans la bdd ?
-                  if ($userPseudo == false) {
+                           //hashage du mot de passe :
+                           $hashMdp = password_hash($mdp, PASSWORD_DEFAULT);
 
-                     //mot de passe correspond aux attentes ?
-                     if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
+                           //une photo a été inséré dans l'insciption ?
+                           if ($avatar) {
+                              $info = new SplFileInfo($avatar);
+                              $extensionAvatar = $info->getExtension();
+                              //var_dump($extensionAvatar);
+                              $extensionAvatar = strtolower($extensionAvatar);
+                              $extensionsAutorisees = array('jpg', 'jpeg', 'gif', 'png', 'tiff');
 
-                        //hashage du mot de passe :
-                        $hashMdp = password_hash($mdp, PASSWORD_DEFAULT);
-
-                        //une photo a été inséré dans l'insciption ?
-                        if ($avatar) {
-
-                           $info = new SplFileInfo($avatar);
-                           $extensionAvatar = $info->getExtension();
-                           //var_dump($extensionAvatar);
-                           $extensionAvatar = strtolower($extensionAvatar);
-                           $extensionsAutorisees = array('jpg', 'jpeg', 'gif', 'png', 'tiff');
-
-                           if (in_array($extensionAvatar, $extensionsAutorisees)) {
-                              //insertion des données dans la bdd
-                              $this->model->insertUser($mail, $pseudo, $hashMdp, $avatar);
-                              header("Location: $this->baseUrl");
+                              if (in_array($extensionAvatar, $extensionsAutorisees)) {
+                                 //insertion des données dans la bdd
+                                 $this->model->insertUser($mail, $pseudo, $hashMdp, $avatar);
+                                 header("Location: $this->baseUrl");
+                              } else {
+                                 $avatarError = "L'extension de votre fichier n'est pas autorisée";
+                              }
                            } else {
-                              $avatarError = "L'extension de votre fichier n'est pas autorisée";
+                              //insertion des données dans la bdd
+                              $this->model->insertUser($mail, $pseudo, $hashMdp, $avatar = "avatar.jpg");
+
+                              header("Location: $this->baseUrl");
                            }
                         } else {
-                           //insertion des données dans la bdd
-                           $this->model->insertUser($mail, $pseudo, $hashMdp, $avatar = "avatar.jpg");
-
-                           header("Location: $this->baseUrl");
+                           $mdpError = "Votre mot de passe doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 16 caractères";
                         }
                      } else {
-                        $mdpError = "Votre mot de passe doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 16 caractères";
+                        $pseudoError = "Ce pseudo existe déjà";
                      }
                   } else {
-                     $pseudoError = "Ce pseudo existe déjà";
+                     $pseudoError = "Votre pseudo doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 36 caractères";
                   }
                } else {
-                  $pseudoError = "Votre pseudo doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 36 caractères";
+                  $mailError = "Cette adresse mail possède déja un compte";
                }
             } else {
-               $mailError = "Cette adresse mail possède déja un compte";
+               $mailError = "L'adresse email '$mail' n'est pas considérée comme valide.";
             }
          } else {
-            $mailError = "L'adresse email '$mail' n'est pas considérée comme valide.";
+            $generalError = "Veuillez remplir tous les champs recquis !";
          }
-      } else {
-         $generalError = "Veuillez remplir tous les champs recquis !";
       }
+
 
 
 

@@ -10,14 +10,13 @@
 		<p>{{pseudo.pseudo}}</p>
 	{% endfor %}
 
-
 	{% if slug is null %}
 
 		<h2>Connectez-vous :</h2>
 
 		<div class="container">
 			<div class="row">
-				<form name="login" class="col-4" method="POST" action="{{baseUrl}}/Connexion">
+				<form name="login" class="col-4" method="POST" action="{{baseUrl}}/Connexion/post">
 
 					<div class="form-group">
 						<label for="pseudo">
@@ -37,7 +36,7 @@
 					</div>
 
 					<div class="form-group">
-						<a href="{{baseUrl}}/Inscription" class="badge badge-light col">Pas encore inscrit ?! :o</a>
+						<a href="{{ baseUrl }}/Inscription" class="badge badge-light col">Pas encore inscrit ?! :o</a>
 						<button type="submit" class="btn btn-outline-info col">Se connecter</button>
 						<p class="text-danger text-center col">{{error}}</p>
 					</div>
@@ -45,9 +44,8 @@
 				</form>
 			</div>
 		</div>
-	{% endif %}
 
-	{% if (slug == 'MotDePasseOublie') %}
+	{% elseif (slug == 'MotDePasseOublie') %}
 
 		<h2>Mot de passe oublié</h2>
 
@@ -55,38 +53,36 @@
 
 		<div class="container">
 			<div class="row">
-				<form name="login" class="col-4" method="POST" action="{{baseUrl}}/MotDePasseOublie">
+				<form name="forgetPassword" class="col-4" method="POST" action="{{ baseUrl }}/MotDePasseOublie/post">
 
 					<div class="form-group">
 						<label for="regMail">
 							<h4>Adresse mail</h4>
 						</label>
 						<input type="email" class="form-control" name="mail" value=" {{ inputMail }}">
-						<small id="requiredField" class="form-text text-danger">
+						<small class="form-text text-danger">
 							{{ mailError }}</small>
-						<small id="requiredField" class="form-text text-danger">
-							{{ error }}</small>
 					</div>
 
 					<div class="form-group">
 						<button type="submit" class="btn btn-outline-info col">Envoyer</button>
-						<p class="text-danger text-center col">{{error}}</p>
+						<p class="text-danger text-center col">{{ generalError}}</p>
 					</div>
 
 				</form>
 			</div>
 		</div>
-	{% endif %}
 
 
 
-	{% if (slug == 'Inscription') %}
+
+	{% elseif (slug == 'Inscription') %}
 
 		<h2>Créez un compte :</h2>
 
 		<div class="container">
 			<div class="row">
-				<form name="register" class="col-4" method="POST" action="{{ baseUrl }}/Inscription">
+				<form name="register" class="col-4" method="POST" action="{{ baseUrl }}/Inscription/post">
 
 					<div class="form-group">
 						<label for="regMail">
@@ -95,8 +91,6 @@
 						<input type="email" class="form-control" name="mail" value=" {{ inputMail }}">
 						<small id="requiredField" class="form-text text-danger">
 							{{ mailError }}</small>
-						<small id="requiredField" class="form-text text-danger">
-							{{ error }}</small>
 					</div>
 
 					<div class="form-group">
