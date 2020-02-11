@@ -1,0 +1,124 @@
+.radio {
+   opacity: 0;
+   cursor: pointer;
+}
+.star-note {
+   unicode-bidi: bidi-override;
+   direction: rtl;
+}
+
+.star-note>label:before {
+   color: orange;
+   content: "\2605";
+}
+/*//////////////////////*/
+.star {
+   color: orange;
+}
+
+.star {
+   unicode-bidi: bidi-override;
+   direction: rtl;
+}
+
+.star>label {
+   display: inline-block;
+   position: relative;
+   width: 1.1em;
+}
+
+.star>label:hover:before, .star>label:hover~label:before {
+   content: "\2605";
+   position: absolute;
+}
+/*//////////////////////////////*/
+.star-complet1 {
+   color: orange;
+}
+.star-complet1 {
+   unicode-bidi: bidi-override;
+   direction: rtl;
+}
+.star-complet1>label {
+   display: inline-block;
+   position: relative;
+   width: 1.1em;
+}
+.star-complet1>label:nth-child(9):before, .star-complet1>label:nth-child(9)~label:before{
+   content: "\2605";
+   position: absolute;
+}
+/*///////////////////////////*/
+.star-complet2 {
+   color: orange;
+}
+.star-complet2 {
+   unicode-bidi: bidi-override;
+   direction: rtl;
+}
+.star-complet2>label {
+   display: inline-block;
+   position: relative;
+   width: 1.1em;
+}
+.star-complet2>label:nth-child(7):before, .star-complet2>label:nth-child(7)~label:before{
+   content: "\2605";
+   position: absolute;
+}
+/*///////////////////////////*/
+.star-complet3 {
+   color: orange;
+}
+.star-complet3 {
+   unicode-bidi: bidi-override;
+   direction: rtl;
+}
+.star-complet3>label {
+   display: inline-block;
+   position: relative;
+   width: 1.1em;
+}
+.star-complet3>label:nth-child(5):before, .star-complet3>label:nth-child(5)~label:before{
+   content: "\2605";
+   position: absolute;
+}
+/*///////////////////////////*/
+.star-complet4 {
+   color: orange;
+}
+.star-complet4 {
+   unicode-bidi: bidi-override;
+   direction: rtl;
+}
+.star-complet4>label {
+   display: inline-block;
+   position: relative;
+   width: 1.1em;
+}
+.star-complet4>label:nth-child(3):before, .star-complet4>label:nth-child(3)~label:before{
+   content: "\2605";
+   position: absolute;
+}
+/*///////////////////////////*/
+.star-complet5 {
+   color: orange;
+}
+.star-complet5 {
+   unicode-bidi: bidi-override;
+   direction: rtl;
+}
+.star-complet5>label {
+   display: inline-block;
+   position: relative;
+   width: 1.1em;
+}
+.star-complet5>label:nth-child(1):before, .star-complet5>label:nth-child(1)~label:before{
+   content: "\2605";
+   position: absolute;
+}
+
+/*/////////////////////*/
+.notif-comment{
+   font-size:30px;
+   color: #930031;;
+}

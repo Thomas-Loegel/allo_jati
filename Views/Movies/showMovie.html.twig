@@ -1,0 +1,52 @@
+{% extends "template.html.twig" %}
+
+{% block title %}Film{% endblock %}
+
+{% block body %}
+
+   <img src="{{movie.picture}}"></img>
+   <h2>{{movie.title}}</h2>
+   <p>Année : {{movie.year}}</p>
+   <p>Genre : {{movie.style}}</p>
+   <p>Durée : {{movie.time | date('H:i:s')}}</p>
+   <p>Résumé : <br> {{movie.resume}}</p>
+
+   {% for artists in artists %}
+
+      {% if artists.role == 1 %}
+         {% set role = 'Acteur' %}
+
+         {% elseif artists.role == 2 %}
+            {% set role = 'Réalisateur' %}
+         {% elseif artists.role == 3 %}
+            {% set role = 'Réalisateur & Acteur' %}
+      {% endif %}
+
+      <ul>
+         <li>{{role}} : <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}">{{artists.first_name}}
+               {{artists.last_name}}</a></li>
+      </ul>
+   {% endfor %}
+
+   {% for comment in comments %}
+
+      <h2>{{ comment.title }}</h2>
+      <p>{{ comment.content }}</p>
+      <p>id Commentaire: {{ comment.id_comment }}, id Utilisateur {{ comment.id_user }}Date: {{ comment.date }}</p>
+         <div class="star-color">
+
+         {% for i in 1..comment.note %}
+            <a>☆</a>
+         {% endfor %}
+         </div>
+   {% endfor %}
+
+   {% block comment %}
+      <form method="POST" action="{{baseUrl}}/Comments/addComment/{{movie.id_movie}}">
+        
+   {% endblock %}
+{% endblock %}
+         <li>{{role}} : <a href="{{baseUrl}}/Artiste_{{artists.id_artist}}">{{artists.first_name}} {{artists.last_name}}</a></li>
+      </ul>
+   {% endfor %}
+{% endblock %}
