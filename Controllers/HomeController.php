@@ -9,6 +9,7 @@ class HomeController extends Controller
     }
     public function index()
     {
+       
       $session = parent::controlSession();
 
       $pageTwig = 'index.html.twig';

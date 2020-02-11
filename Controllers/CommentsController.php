@@ -51,7 +51,7 @@ class CommentsController extends Controller
       //Si aucune note celle-ci vaux null
       if(!isset($_POST['note'])){ $_POST['note'] = null; } else { $note = $_POST['note']; }
       //Si l'utilisateur est connecter
-      if ($_SESSION['status'] === 1) {
+      if ($_SESSION['status'] === 2 || $_SESSION['status'] === 1) {
 
          if (!empty($_SESSION['tmpTitle']) && !empty($_SESSION['tmpComment']) && !empty($_SESSION['tmpNote'])) {
 
@@ -97,7 +97,7 @@ class CommentsController extends Controller
 
       }
       //si l'utilisateur n'est pas connecter
-      else if ($_SESSION['status'] === 0) {
+      else if ($_SESSION['status'] === null) {
          if (isset($_POST)) {
             //On sauvegarde les éléments du commentaire avant redirection
             $_SESSION['tmpTitle'] = $_POST['title'];
