@@ -116,13 +116,65 @@
    content: "\2605";
    position: absolute;
 }
+/*///////////////////////////*/
 
+.container2 {
+   padding-right: 15px;
+   padding-left: 15px;
+   margin-right: auto;
+   margin-left: auto;
+   max-width:800px;
+
+ }
+@media (max-width: 1366px) {
+
+}
+
+@media (max-width: 1280px) {
+
+}
+
+@media (max-width: 1024px) {
+
+}
+
+@media (max-width: 800px) {
+
+}
+
+@media (max-width: 768px) {
+
+}
+
+@media (max-width: 640px) {
+ 
+}
 /*/////////////////////*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .notif-comment{
    font-size:30px;
    color: #930031;;
 }
-/** INPUT BOOTSTRAP **/
+/* INPUT BOOTSTRAP */
 label {
   display: inline-block;
   margin-bottom: 0.5rem;
@@ -201,6 +253,7 @@ textarea {
   overflow: auto;
   resize: vertical;
 }
+
 .form-control {
   display: block;
   width: 100%;
@@ -406,9 +459,9 @@ textarea.form-control {
   margin-right: 0.3125rem;
   margin-left: 0;
 }
-/** END **/
+/* END */
 
-/** ANIMATION **/
+/* ANIMATION */
 @keyframes box-shadow {
   0% {
       transform: translateZ(0);
@@ -419,9 +472,9 @@ textarea.form-control {
       box-shadow: 0 0 30px 0px rgb(1,1,1);
   }
 }
-/** END **/
+/* END */
 
-/** GLOBAL **/
+/* GLOBAL */
 *:before,
 *,
 *:after{
@@ -431,10 +484,41 @@ main{
    margin-top: 50px;
    margin: 0 100px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .container{
    display: flex;
    justify-content: space-around;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .wrapper{
    display: flex;
    justify-content: center;
@@ -480,9 +564,9 @@ main{
 h2{
    padding: 50px 0;
 }
-/** END **/
+/* END */
 
-/** HEADER **/
+// HEADER //
 header{
    cursor: default;
    box-shadow: 0px 5px 5px -5px #656565;
@@ -508,31 +592,12 @@ header{
    border-bottom: 2px solid #666;
    box-shadow: 0px 10px 10px -10px #656565;
 }
-/** END **/
-
-/** RATE ICON **/
-.rating a {
-   float: left;
-   color: #aaa;
-   text-decoration: none;
-   font-size: 1.5em;
-   transition: color .4s;
-}
-.rating a:hover,
-.rating a:focus,
-.rating a:hover ~ a,
-.rating a:focus ~ a {
-   color: orange;
-   cursor: pointer;
-   text-decoration: none;
-}
-.star-color {
-   color: orange;
-}
-/** END **/
+/* END */
 
 
-/** FICHE FILM & ARTISTE **/
+
+
+/* FICHE FILM & ARTISTE */
 .wrapper-id{
    margin: 50px 0;
    display: flex;
@@ -567,4 +632,4 @@ header{
 .item-3{
 
 }
-/** END **/
+/* END */

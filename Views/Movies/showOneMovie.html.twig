@@ -42,7 +42,7 @@
 
 {% block comment %}
 
-<div class="container">
+<div class="container2">
    <form method="POST" id="comment" action="{{baseUrl}}/Comments/addComment/{{movie.id_movie}}">
       {% if status == 1 %}
          {% if tmpTitle  %}
@@ -61,16 +61,16 @@
             {{ user}}"></textarea>
       {% endif %}
       <div class="row">
-         <div class="col-sm-4">
+         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
             <div class="form-group">
                {% if status == 1 %}
                   {% if tmpNote %}
-                  <div id="containerstar" class="star-complet{{tmpNote}}">
+                  <div id="containerstar" class="d-flex justify-content-end star-complet{{tmpNote}}">
                   {% else %}
-                  <div id="containerstar" class="star">
+                  <div id="containerstar" class="d-flex justify-content-end star">
                      {% endif %}
                {% elseif status == 0 %}
-                  <div id="containerstar" class="star">
+                  <div id="containerstar" class="d-flex justify-content-end star">
                {% endif %}
                   <!--System de notation par étoile-->
                   <label for="note-5" class="labelButon">☆</label>
@@ -87,14 +87,14 @@
             </div>
          </div>
       {% if status == 1 %}
-         <div class="col-sm-4">
+         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
             <div class="d-flex justify-content-center">
             {% for inf in user %}
                <span>{{ inf.pseudo }}</span>
             {% endfor %}
             </div>
          </div>
-         <div class="col-sm-4">
+         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
             <div class="d-flex justify-content-end">
                <span>{{ datedujour }}</span>
             </div>

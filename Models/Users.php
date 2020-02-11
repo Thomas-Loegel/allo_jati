@@ -1,6 +1,6 @@
 <?php
 
-class Users extends Model
+class User extends Model
 {
    public function __construct()
    {
@@ -9,7 +9,7 @@ class Users extends Model
 
 
    //-----> la fonction ckeckLogin : renvoi true si le pseudo entré par l'utilisateur est connu dans la bdd et renvoi un false si le pseudo entré par l'utilisateur est connu dans la bdd
-   function checkLogin($pseudo)
+   public function checkLogin($pseudo)
    {
       $req = $this->pdo->prepare('SELECT pseudo, mdp, admin FROM users WHERE pseudo = :pseudo');
       $req->bindValue(':pseudo', $pseudo);
@@ -20,7 +20,7 @@ class Users extends Model
 
 
 
-   function insertUser($mail, $pseudo, $mdp)
+   public function insertUser($mail, $pseudo, $mdp)
    {
       $req = $this->pdo->prepare("INSERT INTO users(mail, pseudo, mdp) VALUES ('$mail', '$pseudo', '$mdp')");
       $req->execute();

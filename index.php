@@ -36,15 +36,11 @@ $router->get('/Comments/Delete_:id_movie', 'Comments.delAllComByMovie');
 $router->get('/Comments/GetAll', 'Comments.getAllCom');
 $router->get('/Comments', 'Comments.index');
 
-$router->post('/Connexion/register', 'Users.register');
-$router->post('/Connexion/login', 'Users.login');
-$router->get('/Connexion/:slug', 'Users.index');
-$router->get('/Connexion', 'Users.index');
 
 $router->get('/Deconnexion', 'Users.logout');
 
 
-
+// Route Home
 $router->get('/', 'Home.index');
 
 
