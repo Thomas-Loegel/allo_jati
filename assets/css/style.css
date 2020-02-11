@@ -149,27 +149,9 @@
 }
 
 @media (max-width: 640px) {
- 
+
 }
 /*/////////////////////*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 .notif-comment{
@@ -487,39 +469,10 @@ main{
    margin: 0 100px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .container{
    display: flex;
    justify-content: space-around;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .wrapper{
    display: flex;

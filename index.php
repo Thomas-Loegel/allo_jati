@@ -20,14 +20,21 @@ $router->get('/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artistes', 'Artists.showAllArtists');
 
 
+// Route Register
+$router->post('/:slug', 'Users.register');
+$router->get('/:slug', 'Users.connexion');
+
+
 // Route Login
 $router->get('/Connexion', 'Users.connexion');
 $router->post('/Connexion', 'Users.login');
 
 
-// Route Register
-$router->post('/:slug', 'Users.register');
-$router->get('/:slug', 'Users.connexion');
+// Route Admin
+$router->get('/Admin', 'Admin.index');
+
+// Route Deconnexion
+$router->get('/Deconnexion', 'Users.logout');
 
 
 // Route Commentaires
@@ -35,9 +42,6 @@ $router->post('/Comments/addComment/:id_movie', 'Comments.addComment');
 $router->get('/Comments/Delete_:id_movie', 'Comments.delAllComByMovie');
 $router->get('/Comments/GetAll', 'Comments.getAllCom');
 $router->get('/Comments', 'Comments.index');
-
-
-$router->get('/Deconnexion', 'Users.logout');
 
 
 // Route Home
