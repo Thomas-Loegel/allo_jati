@@ -44,8 +44,12 @@ class MoviesController extends ArtsController
       $instanceComments = new Comments();
       $comments = $instanceComments->linkCommentByMovie($id_movie);
 
-      $instanceUser = new User();
 
+
+
+
+
+      $instanceUser = new User();
       session_start();
       //On affiche une alerte si un commentaire vide a été publié
       if(isset($_SESSION['alert'])) {
@@ -54,10 +58,17 @@ class MoviesController extends ArtsController
       }
       //On récupère l'id_user des commentaire et l'on recherche le pseudo leur appartenant
       for($i = 0; $i < count($comments) ; $i++){
+         //On récupère l'id_user de tous les commentaire
          $id_user = $comments[$i]['id_user'];
+         //On récupère le pseudo par l'id_user
          $user = $instanceUser->getOnePseudo($id_user);
          //On affecte le pseudo a la place de l'id_user
-         $comments[$i]['id_user'] = $user[0]['pseudo'];
+         $comments[$i]['id_user'] = $user['pseudo'];
+
+         $avatar = $instanceUser->searchAvatar($id_user);
+         $comments[$i]['avatar'] = $this->baseUrl . "/assets/avatar/" .$avatar['avatar'];
+ 
+         
       } 
 
       //Défini la date local en europe
@@ -76,7 +87,6 @@ class MoviesController extends ArtsController
       $pageTwig = 'Movies/showMovie.html.twig';
       $template = $this->twig->load($pageTwig);
 
-      
       if(isset($_SESSION['tmpComment'])) {
 
          echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status'], "tmpTitle" => $_SESSION['tmpTitle'], "tmpComment" => $_SESSION['tmpComment'], "tmpNote" => $_SESSION['tmpNote']]);
