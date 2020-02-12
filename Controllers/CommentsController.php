@@ -119,14 +119,6 @@ class CommentsController extends Controller
       } 
    }
    public function modifyComment($id_movie, $id_comment){
-
-      var_dump($id_movie . " " . $id_comment);
-      /*if(isset($_POST['controlText'])){
-
-      }*/
-
-
-
    }
    public function postAfterLogin(){
       //Si les 3 champs sont bien remplis on peut publier le commentaire
@@ -139,9 +131,3 @@ class CommentsController extends Controller
       }
    }
 }
-/*(
-      'SELECT comments.* 
-      FROM movies, movie_comments, comments 
-      WHERE movies.id_movie = 1 
-      AND movies.id_movie = movie_comments.id_movie 
-      AND comments.id_comment = movie_comments.id_comment');*/
