@@ -116,6 +116,16 @@ class CommentsController extends Controller
          echo $template->render();
       } 
    }
+   public function modifyComment($id_movie, $id_comment){
+
+      var_dump($id_movie . " " . $id_comment);
+      /*if(isset($_POST['controlText'])){
+
+      }*/
+
+
+
+   }
    public function postAfterLogin(){
       //Si les 3 champs sont bien remplis on peut publier le commentaire
       if(!empty($_SESSION['tmpTitle']) && !empty($_SESSION['tmpComment']) && !empty($_SESSION['tmpNote'])) {

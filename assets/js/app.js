@@ -1,7 +1,85 @@
+//Déclaration des constantes
 const CheminComplet = document.location.href;
 const CheminRepertoire = CheminComplet.substring(0, CheminComplet.lastIndexOf("/"));
-//Si nous somme bien sur la page Films
+//const textArea = document.getElementById("controlText");
+//const btnmodify = document.getElementById("btnmodify");
 
+let tabButton = [];
+let btn = []
+let tabcontent = document.getElementsByClassName("name");
+
+for (i = 0; i < tabcontent.length; i++) {
+   tabButton[i] = tabcontent[i].getElementsByTagName("button");
+}
+console.log(tabButton);
+
+
+for (let i = 0, iMax = tabButton.length; i < iMax; ++i) {
+   for (j = 0; j < tabButton[i].length; j++) {
+      //Récupère l'ID de tous les élèments dans un tableau
+      let id = tabButton[i][j].id;
+      document.getElementById(id).addEventListener("click", function () {
+         
+
+         let id_elem = id;
+
+         let btn_name = id_elem.split(i + 1);
+
+         switch (btn_name[0]) {
+            case "btnmodify":
+               i++;
+
+
+
+               let controlText = document.getElementById("controlComment" + i);
+               let tmp = controlText.innerText;
+               controlText.innerHTML = ' ';
+               let p = controlText.getElementsByTagName("p");
+
+               console.log(p);
+               
+               
+
+               let dataBase = controlText.dataset.base;
+               let dataIdMovie = controlText.dataset.idmovie;
+               let dataIdComment = controlText.dataset.idcomment;
+               
+
+               controlText.innerHTML = '<form method="POST" id="comment" action="' + dataBase +'/Comments/modifyComment/' + dataIdMovie + '/' + dataIdComment + '"><textarea class="form-control" name="controlText" id="ControlText" rows="3">'+ tmp + '</p></textarea>';
+
+               let controlBtn = document.getElementById("contenaireBtn" + i);
+               controlBtn.innerHTML = " ";
+               console.log(controlBtn);
+
+               controlBtn.innerHTML += '<button type="submit" id="btnmodify' + i  + '" class="btn btn-success btn-sm mb-2">Publier</button>',
+               controlBtn.innerHTML += '<button type="submit" id="btndelete' + i  + '" class="btn btn-success btn-sm mb-2">Supprimer</button>', 
+               controlBtn.innerHTML += '<button type="submit" id="btncontact' + i + '" class="btn btn-success btn-sm mb-2">Contacter</button></form>',
+
+               
+
+               console.log(dataIdComment);
+               
+
+
+
+
+            /*
+            <div id="contenaireBtn{{ loop.index }}" class="col-6 d-flex justify-content-between name">
+               <button type="submit" id="btnmodify{{ loop.index }}" class="btn btn-success btn-sm mb-2">Modifier</button>
+               <button type="submit" id="btndelete{{ loop.index }}" class="btn btn-success btn-sm mb-2">Supprimer</button>
+               <button type="submit" id="btncontact{{ loop.index }}" class="btn btn-success btn-sm mb-2">Contacter</button>*/
+
+               break;
+            case "btndelete":
+               break;
+            case "btncontact":
+               break;
+         }
+      });
+   }
+}
+
+//Si nous somme bien sur la page Films
 if (CheminRepertoire === "http://localhost/allo_jati/Films") {
    let tabInputs = [];
    let conteneur = document.getElementById('containerstar');
@@ -45,6 +123,10 @@ if (CheminRepertoire === "http://localhost/allo_jati/Films") {
       });
    }
 }
+/*
+btnmodify.addEventListener("click", function () {
+   textArea
+});*/
 
 /*
 let NomDuFichier     = CheminComplet.substring(CheminComplet.lastIndexOf( "/" )+1 );
