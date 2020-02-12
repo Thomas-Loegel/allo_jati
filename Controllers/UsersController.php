@@ -80,7 +80,7 @@ class UsersController extends Controller
                } else {
                   //Sinon on redirige l'utilisateur sur la page d'accueil
                   if (!empty($_SESSION["utilisateur"])) {
-                     //header("Location: $this->baseUrl");
+                     header("Location: $this->baseUrl");
                   }
                }
 
