@@ -3,25 +3,19 @@
 {% block title %}Artistes{% endblock %}
 
 {% block body %}
-<main>
-   <div class="title-center" >
-      <h2>Artistes</h2>
+
+   <div class="d-flex justify-content-center" >
+      <h2 class="text-primary pb-5">Artistes</h2>
    </div>
 
-   <div class="container">
+   <div class="d-flex justify-content-center flex-wrap">
       {% for artists in artists %}
-         <div class="box-shadow">
-            <a href="{{baseUrl}}/Artistes/Artiste_{{artists.id_artist}}">
-               <img src="{{ artists.picture }}">
+         <div class="d-flex flex-column m-5 container-image-showallmovie shadow-drop-2-center position-relative ">          
+            <a href="{{baseUrl}}/Artiste_{{artists.id_artist}}" class="shadow-drop-2-center">
+            <img src="{{artists.picture}}" style="width:300px;height:400px;"></img>
             </a>
-
-            <div class="box-title">
-               <a href="{{baseUrl}}/Artistes/Artiste_{{artists.id_artist}}">
-                  <p>{{ artists.first_name }} {{ artists.last_name }}</p>
-               </a>
-            </div>
+            <p class="text-in-image m-0 pb-3 px-0 pt-3 text-center font-weight-bold" >{{ artists.first_name}} {{ artists.last_name}}</p>
          </div>
       {% endfor %}
    </div>
-</main>
 {% endblock %}

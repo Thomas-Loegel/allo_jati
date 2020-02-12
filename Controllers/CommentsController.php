@@ -21,13 +21,13 @@ class CommentsController extends Controller
       $delete      = $this->model->delAllCommentFromMovie(1);//argument id movie*/
       $pageTwig = 'Comments/index.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render([/*"comments" => $comments, "OneComment" => $OneComment, "liaison" => $liaisonCom, "del" => $delete*/]);
+      echo $template->render(["comments" => $comments, "OneComment" => $OneComment/*, "liaison" => $liaisonCom, "del" => $delete*/]);
    }
    //Supprime tous les commentaire liés à id_movie
    public function delAllComByMovie($id)
    {
-      $tabCom = $this->model->linkCommentByMovie($id);
-
+      $tabCom = $this->model->linkCommentByMovie($id); 
+      var_dump($tabCom);
       foreach ($tabCom as $k => $v) {
          $delId = $v['id_comment'];
          $this->model->delComment($delId);
@@ -40,6 +40,12 @@ class CommentsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments]);
    }
+   public function addComment($id_movie){
+      /*session_start();
+      var_dump($_SESSION['status']);
+      if($_SESSION['status'] != null){
+         $pseudo = $_SESSION['utilisateur'];
+
    public function addComment($id_movie)
    {
       session_start();
@@ -51,7 +57,7 @@ class CommentsController extends Controller
       //Si aucune note celle-ci vaux null
       if(!isset($_POST['note'])){ $_POST['note'] = null; } else { $note = $_POST['note']; }
       //Si l'utilisateur est connecter
-      if ($_SESSION['status'] === 1) {
+      if ($_SESSION['status'] === 2 || $_SESSION['status'] === 1) {
 
          if (!empty($_SESSION['tmpTitle']) && !empty($_SESSION['tmpComment']) && !empty($_SESSION['tmpNote'])) {
 
@@ -97,7 +103,7 @@ class CommentsController extends Controller
 
       }
       //si l'utilisateur n'est pas connecter
-      else if ($_SESSION['status'] === 0) {
+      else if ($_SESSION['status'] === null) {
          if (isset($_POST)) {
             //On sauvegarde les éléments du commentaire avant redirection
             $_SESSION['tmpTitle'] = $_POST['title'];
@@ -122,11 +128,14 @@ class CommentsController extends Controller
          $id_movie = $_SESSION['idMovie'];
          $this->addComment($id_movie);
       } else {
-         $_SESSION['alert'] = "<script>alert(\"Veuillez vérifié votre commentaire avant de le publié, celui-ci n'est pas complet\")</script>";
-      }
-      //Sinon en redirige vers la page du film pour compléter le commentaire
-      $adressPage = $_SESSION['location'];
-      header("Location: $adressPage");
+         $_SESSION['tmpComment'] = $_POST['ControlText'];
+         var_dump($_SESSION['tmpComment']);
+      }*/
    }
-
 }
+/*(
+      'SELECT comments.* 
+      FROM movies, movie_comments, comments 
+      WHERE movies.id_movie = 1 
+      AND movies.id_movie = movie_comments.id_movie 
+      AND comments.id_comment = movie_comments.id_comment');*/
