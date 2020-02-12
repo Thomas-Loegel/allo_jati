@@ -1,5 +1,6 @@
 <?php
 
+
 class AdminController extends UsersController
 {
    public function __construct()

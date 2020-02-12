@@ -10,7 +10,7 @@ class UsersController extends Controller
    {
       //$this->twig = parent::getTwig();
       parent::__construct();
-      $this->model = new User();
+      $this->model = new Users();
    }
 
 
@@ -46,6 +46,7 @@ class UsersController extends Controller
    public function login($slug = null)
    {
       $error = "";
+      $mavariable = "";
       // si l'input pseudo et mdp n'est pas vide
       if (!empty($_POST['pseudo']) && !empty($_POST['mdp'])) {
 
@@ -66,6 +67,10 @@ class UsersController extends Controller
                $_SESSION["status"] = 2;
                $_SESSION["utilisateur"] = $_POST['pseudo'];
 
+               $mavariable = $_SESSION["utilisateur"];
+
+               if(!empty($mavariable)) {
+                  header("Location: $this->baseUrl");
                $this->checkAdministrator($_SESSION["utilisateur"]);
 
                //Si location existe on redirige vers postAfterLogin()
@@ -78,7 +83,9 @@ class UsersController extends Controller
                      //header("Location: $this->baseUrl");
                   }
                }
-               /*******************************************************/
+
+
+
             } else {
                $error = "Mot de passe incorrect";
             }
@@ -154,7 +161,6 @@ class UsersController extends Controller
          'mdpError' => $mdpError,
          'inputMail' => $mail,
          'inputPseudo' => $pseudo,
-
       ]);
    }
    /********************************************************************/

@@ -7,14 +7,20 @@ class HomeController extends Controller
     {
         $this->twig = parent::getTwig();
     }
-    public function index()
-    {
-       
-      $session = parent::controlSession();
-
+    
+   public function index()
+   {
       $pageTwig = 'index.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['session' => $session]);
-    }
 
+
+
+      session_start();
+      //session_destroy();
+      $test = $_SESSION;
+
+      //parent::test();
+
+      echo $template->render(['test' => $test]);
+   }
 }
