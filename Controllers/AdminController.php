@@ -1,18 +1,16 @@
 <?php
 
-class Admin extends User
+class AdminController extends UsersController
 {
-/*
    public function __construct()
-    {
-        $this->twig = parent::getTwig();
-    }
+   {
+      $this->twig = parent::getTwig();
+   }
 
-    public function index()
-    {
-        $pageTwig = 'index.html.twig';
-        $template = $this->twig->load($pageTwig);
-        echo $template->render();
-    }
-    */
+   public function admin()
+   {
+     $pageTwig = 'Admin/admin.html.twig';
+     $template = $this->twig->load($pageTwig);
+     echo $template->render();
+   }
 }
