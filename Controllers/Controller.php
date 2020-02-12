@@ -26,18 +26,20 @@ class Controller
         return self::$_twig;
     }
 
-    protected static function getBaseUrl() {
-        if (is_null(self::$_baseUrl)) {
-            $config = json_decode(file_get_contents(self::CONFIG));
-            self::$_baseUrl = $config->baseUrl;
-        }
-        return self::$_baseUrl;
-    }
-
-
-    /*
-    protected static function test()
-    {
-      var_dump("test");
-    }*/
+   protected static function getBaseUrl()
+   {
+      if (is_null(self::$_baseUrl)) {
+         $config = json_decode(file_get_contents(self::CONFIG));
+         self::$_baseUrl = $config->baseUrl;
+      }
+      return self::$_baseUrl;
+   }
+   protected static function controlSession()
+   {
+      session_start(); 
+      $session = $_SESSION;
+      if(empty($session)){
+         $_SESSION['status'] = null;
+      }
+   }
 }

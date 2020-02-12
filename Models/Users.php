@@ -26,4 +26,47 @@ class Users extends Model
 
       $req->execute();
    }
+
+
+
+
+   /***************************************************************** */
+   public function getOneUser($pseudo)
+   {
+      $req = $this->pdo->prepare('SELECT * FROM users WHERE pseudo= ?');
+      $req->execute([$pseudo]);
+
+      return $req->fetch();
+   }
+
+   public function getOnePseudo($id_user)
+   {
+      $req = $this->pdo->prepare('SELECT pseudo FROM users WHERE id_user= ?');
+      $req->execute([$id_user]);
+
+      return $req->fetch();
+   }
+   public function getOneIdUser($pseudo)
+   {
+      $req = $this->pdo->prepare('SELECT `id_user` FROM users WHERE pseudo= ?');
+      $req->execute([$pseudo]);
+
+      return $req->fetch();
+   }
+   public function checkAdmin($id_user)
+   {
+      $req = $this->pdo->prepare('SELECT `admin` FROM users WHERE id_user= ?');
+      $req->execute([$id_user]);
+
+      return $req->fetch();
+   }
+   public function searchAvatar($id_user)
+   {
+      $req = $this->pdo->prepare('SELECT `avatar` FROM users WHERE id_user= ?');
+      $req->execute([$id_user]);
+
+      return $req->fetch();
+   }
+   
+   /****************************************************************** */
 }

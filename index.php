@@ -20,22 +20,30 @@ $router->get('/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artistes', 'Artists.showAllArtists');
 
-
 // Route Login
 $router->get('/Connexion', 'Users.connexion');
-$router->post('/Connexion', 'Users.login');
+$router->post('/Connexion/post', 'Users.login');
 
+// route forgetPassword
+$router->get('/MotDePasseOublie', 'Users.forgetPassword');
+$router->post('/MotDePasseOublie/post', 'Users.forgetPassword');
 
 // Route Register
-$router->post('/:slug', 'Users.register');
-$router->get('/:slug', 'Users.connexion');
-
+$router->get('/Inscription', 'Users.register');
+$router->post('/Inscription/post', 'Users.register');
 
 // Route Commentaires
 $router->post('/Comments/addComment/:id_movie', 'Comments.addComment');
 $router->get('/Comments/Delete_:id_movie', 'Comments.delAllComByMovie');
 $router->get('/Comments/GetAll', 'Comments.getAllCom');
 $router->get('/Comments', 'Comments.index');
+
+// Route Deconnexion
+$router->get('/Deconnexion', 'Users.logout');
+
+
+// Route Admin
+$router->get('/Admin', 'Admin.admin');
 
 
 // Route Home

@@ -60,14 +60,28 @@ class UsersController extends Controller
 
             //si le mot de passe est bon
             if (password_verify($_POST['mdp'], $hashMdp)) {
+               /*******************************************************/
+               parent::controlSession();
 
-               session_start();
+               //On défini l'utilisateur a l'état de connecter
+               $_SESSION["status"] = 2;
                $_SESSION["utilisateur"] = $_POST['pseudo'];
 
                $mavariable = $_SESSION["utilisateur"];
 
                if(!empty($mavariable)) {
                   header("Location: $this->baseUrl");
+               $this->checkAdministrator($_SESSION["utilisateur"]);
+
+               //Si location existe on redirige vers postAfterLogin()
+               if (isset($_SESSION['location'])) {
+                  $instanceComments = new CommentsController();
+                  $instanceComments->postAfterLogin();
+               } else {
+                  //Sinon on redirige l'utilisateur sur la page d'accueil
+                  if (!empty($_SESSION["utilisateur"])) {
+                     //header("Location: $this->baseUrl");
+                  }
                }
 
 
@@ -121,21 +135,17 @@ class UsersController extends Controller
 
                   //insertion des données dans la bdd
                   $this->model->insertUser($mail, $pseudo, $hashMdp);
-
                } else {
                   $mdpError = "Seul les lettres en majuscule et en minuscule ainsi que les chiffres sont autorisés.
                   Min 2 et max 16 caractères";
                }
-
             } else {
                $pseudoError = "Seul les lettres en majuscule et en minuscule ainsi que les chiffres sont autorisés.
                Min 2 et max 36 caractères";
             }
-
          } else {
             $mailError = "L'adresse email '$mail' n'est pas considérée comme valide.";
          }
-
       } else {
          $generalError = "Vous n'avez pas rempli tous les champs !";
       }
@@ -152,5 +162,31 @@ class UsersController extends Controller
          'inputMail' => $mail,
          'inputPseudo' => $pseudo,
       ]);
+   }
+   /********************************************************************/
+   public function logout()
+   {
+      session_start();
+      $session = $_SESSION;
+      if ($session['status'] == 1 || $session['status'] == 2) {
+         session_destroy();
+      }
+      header("Location: $this->baseUrl");
+   }
+   public function checkAdministrator($pseudo)
+   {
+      //On récupère l'id utilisateur par le pseudo
+      $id_user = $this->model->getOneIdUser($pseudo);
+      //On vérifie si l'id utilisateur est Admin
+      $admin = $this->model->checkAdmin($id_user['id_user']);
+      if($admin['admin'] == 1){
+         $_SESSION['status'] = 1;
+         //Redirection sur page Admin
+         header("Location: $this->baseUrl/Admin");
+      } else {
+         $_SESSION['status'] = 2;
+         //Redirection sur page Home
+         header("Location: $this->baseUrl");
+      }
    }
 }
