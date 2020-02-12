@@ -1,10 +1,6 @@
 <?php
 class UsersController extends Controller
 {
-   private $admin;
-   private $pseudo;
-   private $mdp;
-   private $mail;
 
    public function __construct()
    {
