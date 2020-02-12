@@ -3,6 +3,41 @@
 {% block title %}Film{% endblock %}
 
 {% block body %}
+   <div class="container">
+      <div class="flex-column align-items-start bd-highlight">
+         <div class="d-flex pt-5">
+            <div class="d-flex flex-column">
+               <img class="rounded mb-5" src="{{movie.picture}}" style="width:300px;height:400px;">
+               <p><span class="font-weight-bold">Année : </span>{{movie.year}}</p>
+               <p><span class="font-weight-bold">Genre : </span>{{movie.style}}</p>
+               <p><span class="font-weight-bold">Durée : </span>{{movie.time | date('H:i:s')}}</p>
+               <!-- Défini le role de l'artiste -->
+               {% for artists in artists %}
+                  {% if artists.role == 1 %}
+                     {% set role = 'Acteur' %}
+                        {% elseif artists.role == 2 %}
+                           {% set role = 'Réalisateur' %}
+                              {% elseif artists.role == 3 %}
+                                 {% set role = 'Réalisateur & Acteur' %}
+               {% endif %}
+               <p><br><span class="font-weight-bold">{{role}}</span></h6>
+               <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}">{{artists.first_name}} {{artists.last_name}}</a>
+            </div>
+            <div class="d-flex flex-column ml-5">
+               <h2 class="pb-5 text-center">{{movie.title}}</h2>
+               <p class=" text-break"> {{movie.resume}}</p>
+
+            </div>
+         </div>
+         <div class="mx-auto text-center bd-highlight mt-5">
+            <a class="text-decoration-none text-reset " href="{{baseUrl}}/Films">
+               <input class="btn btn-primary mb-5 btn-lg " type="submit" value="Retour">
+            </a>
+         </div>
+      </div>
+   </div>
+{% endfor %}
+
 <div class="container2">
    <img src="{{movie.picture}}"></img>
    <h2>{{movie.title}}</h2>
@@ -28,7 +63,7 @@
    </div>
    {% endfor %}
    {% block comment %}
-   
+
    <div class="container2">
       <form method="POST" id="comment" action="{{baseUrl}}/Comments/addComment/{{movie.id_movie}}">
          {% if status == 1 %}
@@ -85,13 +120,13 @@
                <div class="d-flex justify-content-end">
                   <span>{{ datedujour }}</span>
                </div>
-            </div> 
+            </div>
          {% endif %}
          </div>
             <button type="submit" id="btnpost" class="btn btn-success btn-sm mb-2">Poster</button>
       </form>
-   </div> 
-   {# fin du block comment #} 
+   </div>
+   {# fin du block comment #}
    {% endblock %}
    {# fin du block body #}
    {% if comments %}
@@ -101,43 +136,25 @@
       {{ loop.index }}
       <h2>{{ comment.title }}</h2>
          <div class="row">
-
-
-
             <div class="col-2">
-
                <div class="col-12">
                   <img src="{{comment.avatar }}" class="img-thumbnail">
                   <p class="text-center">{{ comment.id_user }}</p>
                </div>
-      
             </div>
-
-
             <div class="col-10">
-               <div class="col-12">
-
-                  
+               <div class="col-12">    
                   <div data-idcomment="{{ comment.id_comment }}" data-base="{{baseUrl}}" data-idmovie="{{movie.id_movie}}" id="controlComment{{ loop.index }}">
                   <p>{{ comment.content }}</p>
-
-
                   <div id="contenaireBtn{{ loop.index }}" class="col-6 d-flex justify-content-between name">
                      <button type="submit" id="btnmodify{{ loop.index }}" class="btn btn-success btn-sm mb-2">Modifier</button>
                      <button type="submit" id="btndelete{{ loop.index }}" class="btn btn-success btn-sm mb-2">Supprimer</button>
                      <button type="submit" id="btncontact{{ loop.index }}" class="btn btn-success btn-sm mb-2">Contacter</button>
                   </div>
-
-
-
                   </div>
                </div>
             </div>
          </div>
-
-
-         
-
          {% if status == 1 %}
          <div class="row">
             <div class="col-3"></div>

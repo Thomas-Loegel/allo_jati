@@ -9,6 +9,7 @@ $router = new Router($_GET['url']);
 // Route Films
 $router->get('/Films/Film_:id_movie', 'Movies.showMovie');
 $router->get('/Films/Artiste_:id_artist', 'Artists.showArtist');
+$router->get('/Films/:query', 'Movies.showAllMovies');
 $router->get('/Film_:id_movie', 'Movies.showMovie');
 $router->get('/Films', 'Movies.showAllMovies');
 
@@ -43,6 +44,11 @@ $router->get('/Deconnexion', 'Users.logout');
 
 // Route Admin
 $router->get('/Admin', 'Admin.admin');
+$router->get('/Admin/:slug', 'Admin.editUtilisateurs');
+$router->get('/Admin/:slug', 'Admin.editFilms');
+$router->get('/Admin/:slug', 'Admin.editArtistes');
+$router->get('/Admin/:slug', 'Admin.addFilm');
+$router->get('/Admin/:slug', 'Admin.addArtiste');
 
 
 // Route Home

@@ -10,7 +10,7 @@ class Comments extends Model
    public function getAllComments()
    {
       $req = $this->pdo->prepare('SELECT * FROM comments');
-      $req->execute();
+      $resultat = $req->execute();
 
       return $req->fetchAll();
    }
@@ -19,7 +19,8 @@ class Comments extends Model
    public function getOneComment($id)
    {
       $req = $this->pdo->prepare('SELECT * FROM comments WHERE id_user= ?');
-      $req->execute([$id]);
+      $resultat = $req->execute([$id]);
+
       return $req->fetchAll();
    }
    //suppression commentaire par id_comment
@@ -45,16 +46,7 @@ class Comments extends Model
       $req = $this->pdo->prepare('INSERT INTO users_comments (id_user, id_comment)
       VALUE (?, ?)');
       return $req->execute([$id_user, $id_comment]);
-
    }
-   //insert dans la table users_comments le dernier commentaire publier
-   public function addMovieComments($id_movie, $id_comment){
-      $req = $this->pdo->prepare('INSERT INTO movie_comments (id_movie, id_comment)
-      VALUE (?, ?)');
-      return $req->execute([$id_movie, $id_comment]);
-
-   }
-
    //recherche la liste des commentaire par id_movie
    public function linkCommentByMovie($id)
    {
@@ -68,21 +60,4 @@ class Comments extends Model
 
       return $req->fetchAll();
    }
-
-   public function getOneUser($pseudo)
-   {
-      $req = $this->pdo->prepare('SELECT * FROM users WHERE pseudo= ?');
-      $req->execute([$pseudo]);
-
-      return $req->fetchAll();
-   }
-
-   public function getOnePseudo($id_user)
-   {
-      $req = $this->pdo->prepare('SELECT * FROM users WHERE id_user= ?');
-      $req->execute([$id_user]);
-
-      return $req->fetchAll();
-   }
-
 }

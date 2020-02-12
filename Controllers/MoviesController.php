@@ -13,28 +13,17 @@ class MoviesController extends ArtsController
       $this->model = new Movies();
    }
 
-   // Affiche les Films
-   public function showAllMovies($search = null)
+   // Affiche tout les Films
+   public function showAllMovies()
    {
-      if (isset($_GET['search']) && !empty($_GET['search'])) {
-
-         // Affiche la recherche Film
-         $search = $_GET['search'];
-         $search = $this->model->getBySearch($search);
-      }
-
       $movies   = $this->model->getAllMovies();
       $pageTwig = 'Movies/showAllMovies.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render([
-         "movies" => $movies,
-         "search" => $search,
-      ]);
+      echo $template->render(["movies" => $movies]);
    }
 
-   // Affiche un Film avec son ID
-   public function showMovie($id_movie)
-   {
+   // Affiche un Film avec son Id
+   public function showMovie($id_movie) {
 
       // Affiche les Artistes liés a Id Film
       $instanceArtists = new Artists();
@@ -44,6 +33,11 @@ class MoviesController extends ArtsController
       $instanceComments = new Comments();
       $comments = $instanceComments->linkCommentByMovie($id_movie);
 
+
+      $movie = $this->model->getMovie($id_movie);
+      $pageTwig = 'Movies/showMovie.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments]);
 
 
 
@@ -67,9 +61,9 @@ class MoviesController extends ArtsController
 
          $avatar = $instanceUser->searchAvatar($id_user);
          $comments[$i]['avatar'] = $this->baseUrl . "/assets/avatar/" .$avatar['avatar'];
- 
-         
-      } 
+
+
+      }
 
       //Défini la date local en europe
       date_default_timezone_set('Europe/Paris');
@@ -91,7 +85,7 @@ class MoviesController extends ArtsController
 
          echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status'], "tmpTitle" => $_SESSION['tmpTitle'], "tmpComment" => $_SESSION['tmpComment'], "tmpNote" => $_SESSION['tmpNote'], "status" => $_SESSION['status'], "userLogin" => $_SESSION['utilisateur']]);
       } else {
-         
+
          echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status'], "userLogin" => $_SESSION['utilisateur']]);
       }
    }
