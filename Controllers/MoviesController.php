@@ -56,7 +56,7 @@ class MoviesController extends ArtsController
          $user = $instanceComments->getOnePseudo($id_user);
          //On affecte le pseudo a la place de l'id_user
          $comments[$i]['id_user'] = $user[0]['pseudo'];
-      } 
+      }
 
       //Défini la date local en europe
       date_default_timezone_set('Europe/Paris');
@@ -71,15 +71,15 @@ class MoviesController extends ArtsController
          $user = "Vous devez être connecté pour déposer un commentaire";
       }
       $movie = $this->model->getMovie($id_movie);
-      $pageTwig = 'Movies/showOneMovie.html.twig';
+      $pageTwig = 'Movies/showMovie.html.twig';
       $template = $this->twig->load($pageTwig);
 
-      
+
       if(isset($_SESSION['tmpComment'])) {
 
          echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status'], "tmpTitle" => $_SESSION['tmpTitle'], "tmpComment" => $_SESSION['tmpComment'], "tmpNote" => $_SESSION['tmpNote']]);
       } else {
-         
+
          echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status']]);
       }
    }

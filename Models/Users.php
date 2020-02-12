@@ -18,11 +18,16 @@ class User extends Model
       return $data;
    }
 
-
-
    public function insertUser($mail, $pseudo, $mdp)
    {
       $req = $this->pdo->prepare("INSERT INTO users(mail, pseudo, mdp) VALUES ('$mail', '$pseudo', '$mdp')");
       $req->execute();
+   }
+
+   public function getAllUsers()
+   {
+      $req = $this->pdo->prepare('SELECT * FROM users');
+      $req->execute();
+      $req->fetchAll();
    }
 }
