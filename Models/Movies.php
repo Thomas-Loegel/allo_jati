@@ -27,14 +27,14 @@ class Movies extends Model
    }
 
    // Recherche un Film
-   public function getBySearch($query)
+   public function getBySearch($search)
    {
       $req = $this->pdo->prepare(
-        'SELECT title
+        'SELECT *
          FROM movies
          WHERE title
-         LIKE "%?%"');
-      $req->execute([$query]);
-      return $req->fetch();
+         LIKE "%'.$search.'%"');
+      $req->execute();
+      return $req->fetchAll();
    }
 }
