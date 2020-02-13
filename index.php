@@ -45,10 +45,10 @@ $router->get('/Deconnexion', 'Users.logout');
 // Route Admin
 $router->get('/Admin', 'Admin.admin');
 $router->get('/Admin/:slug', 'Admin.editUsers');
-$router->get('/Admin/:slug', 'Admin.editFilms');
-$router->get('/Admin/:slug', 'Admin.editArtistes');
-$router->get('/Admin/:slug', 'Admin.addFilm');
-$router->get('/Admin/:slug', 'Admin.addArtiste');
+$router->get('/Admin/:slug', 'Admin.editMovies');
+$router->get('/Admin/:slug', 'Admin.editArtists');
+$router->get('/Admin/:slug', 'Admin.addMovie');
+$router->get('/Admin/:slug', 'Admin.addArtist');
 
 
 // Route Home

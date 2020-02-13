@@ -40,9 +40,6 @@ class MoviesController extends ArtsController
       echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments]);
 
 
-
-
-
       $instanceUser = new User();
       session_start();
       //On affiche une alerte si un commentaire vide a été publié
@@ -61,8 +58,6 @@ class MoviesController extends ArtsController
 
          $avatar = $instanceUser->searchAvatar($id_user);
          $comments[$i]['avatar'] = $this->baseUrl . "/assets/avatar/" .$avatar['avatar'];
-
-
       }
 
       //Défini la date local en europe

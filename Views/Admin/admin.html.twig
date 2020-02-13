@@ -49,16 +49,16 @@
                   </thead>
 
                   <tbody>
+                     {% for users in users %}
                      <tr>
-                        {% for users in users %}
                         <th scope="row">{{users.id_user}}</th>
-                        <td scope="row">{{users.admin}}</td>
-                        <td scope="row">{{users.pseudo}}</td>
-                        <td scope="row">{{users.mdp}}</td>
-                        <td scope="row">{{users.mail}}</td>
-                        <td scope="row">{{users.avatar}}</td>
-                        {% endfor %}
+                        <td>{{users.admin}}</td>
+                        <td>{{users.pseudo}}</td>
+                        <td>{{users.mdp}}</td>
+                        <td>{{users.mail}}</td>
+                        <td>{{users.avatar}}</td>
                      </tr>
+                     {% endfor %}
                   </tbody>
                </table>
             </div>
@@ -83,15 +83,18 @@
                   </thead>
 
                   <tbody>
+                     {{dump(movies)}}
+                     {% for movies in movies %}
                      <tr>
-                        <th scope="row"></th>
-                        <td scope="row"></td>
-                        <td scope="row"></td>
-                        <td scope="row"></td>
-                        <td scope="row"></td>
-                        <td scope="row"></td>
-                        <td scope="row"></td>
+                        <th scope="row">{{movies.id_movie}}</th>
+                        <td>{{movies.title}}</td>
+                        <td>{{movies.year}}</td>
+                        <td>{{movies.style}}</td>
+                        <td>{{movies.resume}}</td>
+                        <td>{{movies.time}}</td>
+                        <td>{{movies.picture}}</td>
                      </tr>
+                     {% endfor %}
                   </tbody>
                </table>
             </div>
@@ -116,14 +119,15 @@
                   </thead>
 
                   <tbody>
+                     {{dump(artists)}}
                      <tr>
                         <th scope="row"></th>
-                        <td scope="row"></td>
-                        <td scope="row"></td>
-                        <td scope="row"></td>
-                        <td scope="row"></td>
-                        <td scope="row"></td>
-                        <td scope="row"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                      </tr>
                   </tbody>
                </table>

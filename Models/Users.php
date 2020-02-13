@@ -25,9 +25,13 @@ class User extends Model
       $req->execute();
    }
 
-
-
-
+   // Récupère les Utilisateurs
+   public function getAllUsers()
+   {
+      $req = $this->pdo->prepare('SELECT * FROM users');
+      $req->execute();
+      return $req->fetchAll();
+   }
 
    /***************************************************************** */
    public function getOneUser($pseudo)
