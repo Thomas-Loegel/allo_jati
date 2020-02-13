@@ -16,7 +16,7 @@ class MoviesController extends ArtsController
    /**
    *  Affiche tout les Films
    */
-   public function showAllMovies()
+   public function showAllMovies($search = null)
    {
       if (isset($_GET['search']) && !empty($_GET['search'])) {
 
