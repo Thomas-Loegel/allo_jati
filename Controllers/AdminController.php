@@ -1,6 +1,5 @@
 <?php
 
-
 class AdminController extends Controller
 {
    public function __construct()
@@ -20,10 +19,12 @@ class AdminController extends Controller
    }
 
    /**
-   *
+   *  Affiche la liste de tout les Utilisateurs
    */
-   public function editUsers($slug = 'Liste_Utilisateurs')
+   public function editUsers()
    {
+      $slug = 'Liste_Utilisateurs';
+
       $instanceUsers = new User();
       $users = $instanceUsers->getAllUsers();
 
@@ -36,13 +37,14 @@ class AdminController extends Controller
    }
 
    /**
-   *
+   *  Affiche la liste de tout les Films
    */
-   public function editMovies($slug = 'Liste_Films')
+   public function editMovies()
    {
+      $slug = 'Liste_Films';
+
       $instanceMovies = new Movies();
       $movies = $instanceMovies->getAllMovies();
-      var_dump($movies);
 
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -53,13 +55,14 @@ class AdminController extends Controller
    }
 
    /**
-   *
+   *  Affiche la liste de tout les Artistes
    */
-   public function editArtists($slug = 'Liste_Artistes')
+   public function editArtists()
    {
+      $slug = 'Liste_Artistes';
+
       $instanceArtists = new Artists();
       $artists = $instanceArtists->getAllArtists();
-      var_dump($artists);
 
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -70,10 +73,11 @@ class AdminController extends Controller
    }
 
    /**
-   *
+   *  Ajoute un nouveau Film
    */
-   public function addMovie($slug = 'Ajout_Film')
+   public function addMovie()
    {
+      $slug = 'Ajout_Film';
 
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -81,11 +85,12 @@ class AdminController extends Controller
    }
 
    /**
-   *
+   *  Ajoute un nouvel Artiste
    */
-   public function addArtist($slug = 'Ajout_Artiste')
+   public function addArtist()
    {
-
+      $slug = 'Ajout_Artiste';
+      
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(['slug' => $slug]);

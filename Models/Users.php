@@ -8,8 +8,8 @@ class User extends Model
    }
 
    /**
-   *  la fonction ckeckLogin : renvoi true si le pseudo entré par l'utilisateur est connu dans la bdd et renvoi
-   *  false si le pseudo entré par l'utilisateur est inconnu dans la bdd
+   *  Renvoi true si Pseudo est connu dans la bdd,
+   *  Renvoi false si Pseudo est inconnu dans la bdd
    */
    public function ckeckLogin(){
       $req = $this->pdo->prepare('SELECT pseudo, mdp, admin FROM users WHERE pseudo = :pseudo');
@@ -20,12 +20,11 @@ class User extends Model
    }
 
    /**
-   *
+   *  Ajoute un nouveau User
    */
    public function insertUser($mail, $pseudo, $mdp)
    {
       $req = $this->pdo->prepare("INSERT INTO users(mail, pseudo, mdp) VALUES ('$mail', '$pseudo', '$mdp')");
-
       $req->execute();
    }
 
@@ -46,7 +45,6 @@ class User extends Model
    {
       $req = $this->pdo->prepare('SELECT * FROM users WHERE pseudo= ?');
       $req->execute([$pseudo]);
-
       return $req->fetch();
    }
 
@@ -57,7 +55,6 @@ class User extends Model
    {
       $req = $this->pdo->prepare('SELECT pseudo FROM users WHERE id_user= ?');
       $req->execute([$id_user]);
-
       return $req->fetch();
    }
 
@@ -68,7 +65,6 @@ class User extends Model
    {
       $req = $this->pdo->prepare('SELECT `id_user` FROM users WHERE pseudo= ?');
       $req->execute([$pseudo]);
-
       return $req->fetch();
    }
 
@@ -79,7 +75,6 @@ class User extends Model
    {
       $req = $this->pdo->prepare('SELECT `admin` FROM users WHERE id_user= ?');
       $req->execute([$id_user]);
-
       return $req->fetch();
    }
 
@@ -90,7 +85,6 @@ class User extends Model
    {
       $req = $this->pdo->prepare('SELECT `avatar` FROM users WHERE id_user= ?');
       $req->execute([$id_user]);
-
       return $req->fetch();
    }
 }

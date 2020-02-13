@@ -83,7 +83,6 @@
                   </thead>
 
                   <tbody>
-                     {{dump(movies)}}
                      {% for movies in movies %}
                      <tr>
                         <th scope="row">{{movies.id_movie}}</th>
@@ -94,7 +93,7 @@
                         <td>{{movies.time}}</td>
                         <td>{{movies.picture}}</td>
                      </tr>
-                     {% endfor %}
+                  {% endfor %}
                   </tbody>
                </table>
             </div>
@@ -119,16 +118,17 @@
                   </thead>
 
                   <tbody>
-                     {{dump(artists)}}
+                     {% for artists in artists %}
                      <tr>
-                        <th scope="row"></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <th scope="row">{{artists.id_artist}}</th>
+                        <td>{{artists.first_name}}</td>
+                        <td>{{artists.last_name}}</td>
+                        <td>{{artists.birth_day}}</td>
+                        <td>{{artists.bio}}</td>
+                        <td>{{artists.role}}</td>
+                        <td>{{artists.picture}}</td>
                      </tr>
+                     {% endfor %}
                   </tbody>
                </table>
             </div>
