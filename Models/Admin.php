@@ -7,10 +7,14 @@ class Admin extends Model
       $this->pdo = parent::getPdo();
    }
 
-   public function getAllUsers()
+   /**
+   *  Ajoute un Film dans la BDD
+   */
+   public function addMovie()
    {
-      $req = $this->pdo->prepare('SELECT * FROM users');
-      $req->execute();
-      $req->fetchAll();
+      $req = $this->pdo->prepare(
+        'INSERT INTO movies(picture, title, year, style, resume, time)
+         VALUES ('$picture','$title','$year','$style','$resume','$time',)');
+      $req = execute();
    }
 }

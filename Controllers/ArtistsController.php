@@ -17,7 +17,9 @@ class ArtistsController extends Controller
       $this->model = new Artists();
    }
 
-   // Affiche la fiche Artiste
+   /**
+   *  Affiche la fiche Artiste
+   */
    public function showArtist(int $id_artist)
    {
       // Affiche les Films de Artiste par Id
@@ -30,7 +32,9 @@ class ArtistsController extends Controller
       echo $template->render(['artist' => $artist, "movies" => $movies]);
    }
 
-   // Affiche les Artistes
+   /**
+   *  Affiche la fiche Artiste
+   */
    public function showAllArtists()
    {
       $artists  = $this->model->getAllArtists();
@@ -39,7 +43,9 @@ class ArtistsController extends Controller
       echo $template->render(['artists' => $artists]);
    }
 
-   // Affiche les Artistes du Film
+   /**
+   *  Affiche les Artistes du Film
+   */
    public function showByMovie()
    {
       $artists  = $this->model->getByFilm();

@@ -13,8 +13,10 @@ class MoviesController extends ArtsController
       $this->model = new Movies();
    }
 
-   // Affiche tout les Films
-   public function showAllMovies($search = null)
+   /**
+   *  Affiche tout les Films
+   */
+   public function showAllMovies()
    {
       if (isset($_GET['search']) && !empty($_GET['search'])) {
 
@@ -32,7 +34,9 @@ class MoviesController extends ArtsController
       ]);
    }
 
-   // Affiche un Film avec son Id
+   /**
+   *  Affiche un Film avec son Id
+   */
    public function showMovie($id_movie) {
 
       // Affiche les Artistes liés a Id Film
@@ -49,10 +53,7 @@ class MoviesController extends ArtsController
       $template = $this->twig->load($pageTwig);
       echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments]);
 
-
-
-
-
+      // ?
       $instanceUser = new User();
       session_start();
       //On affiche une alerte si un commentaire vide a été publié
@@ -60,7 +61,8 @@ class MoviesController extends ArtsController
          echo $_SESSION['alert'];
          unset($_SESSION['alert']);
       }
-      //On récupère l'id_user des commentaire et l'on recherche le pseudo leur appartenant
+
+      // On récupère l'id_user des commentaire et l'on recherche le pseudo leur appartenant
       for($i = 0; $i < count($comments) ; $i++){
          //On récupère l'id_user de tous les commentaire
          $id_user = $comments[$i]['id_user'];
@@ -71,16 +73,14 @@ class MoviesController extends ArtsController
 
          $avatar = $instanceUser->searchAvatar($id_user);
          $comments[$i]['avatar'] = $this->baseUrl . "/assets/avatar/" .$avatar['avatar'];
-
-
       }
 
-      //Défini la date local en europe
+      // Défini la date local en europe
       date_default_timezone_set('Europe/Paris');
       setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 
       $user = null;
-      //Affiche l'utilisateur connecté
+      // Affiche l'utilisateur connecté
       if (isset($_SESSION['status']) &&  $_SESSION['status'] === 1) {
          $user = $instanceUser->getOneUser($_SESSION['utilisateur']);
 

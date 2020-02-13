@@ -1,15 +1,16 @@
 <?php
 
-
 class AdminController extends Controller
 {
    public function __construct()
    {
       $this->twig = parent::getTwig();
       parent::__construct();
-      $this->model = new Admin();
    }
 
+   /**
+   *
+   */
    public function admin()
    {
       $pageTwig = 'Admin/admin.html.twig';
@@ -17,45 +18,79 @@ class AdminController extends Controller
       echo $template->render();
    }
 
-   public function editUsers($slug = 'Liste_Utilisateurs')
+   /**
+   *  Affiche la liste de tout les Utilisateurs
+   */
+   public function editUsers()
    {
-      $users   = $this->model->getAllUsers();
+      $slug = 'Liste_Utilisateurs';
+
+      $instanceUsers = new User();
+      $users = $instanceUsers->getAllUsers();
 
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
-         'users'=> $users
+         'users' => $users
       ]);
    }
 
-   public function editFilms($slug = 'Liste_Films')
+   /**
+   *  Affiche la liste de tout les Films
+   */
+   public function editMovies()
    {
+      $slug = 'Liste_Films';
+
+      $instanceMovies = new Movies();
+      $movies = $instanceMovies->getAllMovies();
+
+      $pageTwig = 'Admin/admin.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render([
+         'slug' => $slug,
+         'movies' => $movies
+      ]);
+   }
+
+   /**
+   *  Affiche la liste de tout les Artistes
+   */
+   public function editArtists()
+   {
+      $slug = 'Liste_Artistes';
+
+      $instanceArtists = new Artists();
+      $artists = $instanceArtists->getAllArtists();
+
+      $pageTwig = 'Admin/admin.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render([
+         'slug' => $slug,
+         'artists' => $artists
+      ]);
+   }
+
+   /**
+   *  Ajoute un nouveau Film
+   */
+   public function addMovie()
+   {
+      $slug = 'Ajout_Film';
 
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(['slug' => $slug]);
    }
 
-   public function editArtistes($slug = 'Liste_Artistes')
+   /**
+   *  Ajoute un nouvel Artiste
+   */
+   public function addArtist()
    {
-
-      $pageTwig = 'Admin/admin.html.twig';
-      $template = $this->twig->load($pageTwig);
-      echo $template->render(['slug' => $slug]);
-   }
-
-   public function addFilm($slug = 'Ajout_Film')
-   {
-
-      $pageTwig = 'Admin/admin.html.twig';
-      $template = $this->twig->load($pageTwig);
-      echo $template->render(['slug' => $slug]);
-   }
-
-   public function addArtiste($slug = 'Ajout_Artiste')
-   {
-
+      $slug = 'Ajout_Artiste';
+      
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(['slug' => $slug]);
