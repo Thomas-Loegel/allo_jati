@@ -7,10 +7,11 @@ class User extends Model
       $this->pdo = parent::getPdo();
    }
 
-
-   //-----> la fonction ckeckLogin : renvoi true si le pseudo entré par l'utilisateur est connu dans la bdd et renvoi un false si le pseudo entré par l'utilisateur est connu dans la bdd
-   function checkLogin($pseudo)
-   {
+   /**
+   *  la fonction ckeckLogin : renvoi true si le pseudo entré par l'utilisateur est connu dans la bdd et renvoi
+   *  false si le pseudo entré par l'utilisateur est inconnu dans la bdd
+   */
+   public function ckeckLogin(){
       $req = $this->pdo->prepare('SELECT pseudo, mdp, admin FROM users WHERE pseudo = :pseudo');
       $req->bindValue(':pseudo', $pseudo);
       $req->execute();
@@ -18,6 +19,9 @@ class User extends Model
       return $data;
    }
 
+   /**
+   *
+   */
    public function insertUser($mail, $pseudo, $mdp)
    {
       $req = $this->pdo->prepare("INSERT INTO users(mail, pseudo, mdp) VALUES ('$mail', '$pseudo', '$mdp')");
@@ -25,7 +29,9 @@ class User extends Model
       $req->execute();
    }
 
-   // Récupère les Utilisateurs
+   /**
+   *  Récupère les Utilisateurs
+   */
    public function getAllUsers()
    {
       $req = $this->pdo->prepare('SELECT * FROM users');
@@ -33,7 +39,9 @@ class User extends Model
       return $req->fetchAll();
    }
 
-   /***************************************************************** */
+   /**
+   *
+   */
    public function getOneUser($pseudo)
    {
       $req = $this->pdo->prepare('SELECT * FROM users WHERE pseudo= ?');
@@ -42,6 +50,9 @@ class User extends Model
       return $req->fetch();
    }
 
+   /**
+   *
+   */
    public function getOnePseudo($id_user)
    {
       $req = $this->pdo->prepare('SELECT pseudo FROM users WHERE id_user= ?');
@@ -49,6 +60,10 @@ class User extends Model
 
       return $req->fetch();
    }
+
+   /**
+   *
+   */
    public function getOneIdUser($pseudo)
    {
       $req = $this->pdo->prepare('SELECT `id_user` FROM users WHERE pseudo= ?');
@@ -56,6 +71,10 @@ class User extends Model
 
       return $req->fetch();
    }
+
+   /**
+   *
+   */
    public function checkAdmin($id_user)
    {
       $req = $this->pdo->prepare('SELECT `admin` FROM users WHERE id_user= ?');
@@ -63,6 +82,10 @@ class User extends Model
 
       return $req->fetch();
    }
+
+   /**
+   *
+   */
    public function searchAvatar($id_user)
    {
       $req = $this->pdo->prepare('SELECT `avatar` FROM users WHERE id_user= ?');
@@ -70,6 +93,4 @@ class User extends Model
 
       return $req->fetch();
    }
-
-   /****************************************************************** */
 }

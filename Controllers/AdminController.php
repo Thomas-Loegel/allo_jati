@@ -9,6 +9,9 @@ class AdminController extends Controller
       parent::__construct();
    }
 
+   /**
+   *
+   */
    public function admin()
    {
       $pageTwig = 'Admin/admin.html.twig';
@@ -16,6 +19,9 @@ class AdminController extends Controller
       echo $template->render();
    }
 
+   /**
+   *
+   */
    public function editUsers($slug = 'Liste_Utilisateurs')
    {
       $instanceUsers = new User();
@@ -29,6 +35,9 @@ class AdminController extends Controller
       ]);
    }
 
+   /**
+   *
+   */
    public function editMovies($slug = 'Liste_Films')
    {
       $instanceMovies = new Movies();
@@ -43,6 +52,9 @@ class AdminController extends Controller
       ]);
    }
 
+   /**
+   *
+   */
    public function editArtists($slug = 'Liste_Artistes')
    {
       $instanceArtists = new Artists();
@@ -57,6 +69,9 @@ class AdminController extends Controller
       ]);
    }
 
+   /**
+   *
+   */
    public function addMovie($slug = 'Ajout_Film')
    {
 
@@ -65,6 +80,9 @@ class AdminController extends Controller
       echo $template->render(['slug' => $slug]);
    }
 
+   /**
+   *
+   */
    public function addArtist($slug = 'Ajout_Artiste')
    {
 
