@@ -1,11 +1,13 @@
 <?php
 
 
-class AdminController extends UsersController
+class AdminController extends Controller
 {
    public function __construct()
    {
       $this->twig = parent::getTwig();
+      parent::__construct();
+      $this->model = new Admin();
    }
 
    public function admin()
@@ -15,10 +17,9 @@ class AdminController extends UsersController
       echo $template->render();
    }
 
-   public function editUtilisateurs($slug = 'Liste_Utilisateurs')
+   public function editUsers($slug = 'Liste_Utilisateurs')
    {
-      $instanceUsers = new User();
-      $users = $instanceUsers->getAllUsers();
+      $users   = $this->model->getAllUsers();
 
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);

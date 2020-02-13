@@ -10,7 +10,7 @@ class UsersController extends Controller
    {
       //$this->twig = parent::getTwig();
       parent::__construct();
-      $this->model = new Users();
+      $this->model = new User();
    }
 
 
@@ -107,7 +107,7 @@ class UsersController extends Controller
    }
 
    //gestion de l'envoi du formulaire d'inscription
-   public function register($slug = "Enregistrement")
+   public function register ($slug = "Enregistrement")
    {
       $generalError = "";
       $mailError = "";

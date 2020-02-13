@@ -44,7 +44,7 @@ $router->get('/Deconnexion', 'Users.logout');
 
 // Route Admin
 $router->get('/Admin', 'Admin.admin');
-$router->get('/Admin/:slug', 'Admin.editUtilisateurs');
+$router->get('/Admin/:slug', 'Admin.editUsers');
 $router->get('/Admin/:slug', 'Admin.editFilms');
 $router->get('/Admin/:slug', 'Admin.editArtistes');
 $router->get('/Admin/:slug', 'Admin.addFilm');

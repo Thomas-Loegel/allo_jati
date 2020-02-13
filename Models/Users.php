@@ -1,6 +1,6 @@
 <?php
 
-class Users extends Model
+class User extends Model
 {
    public function __construct()
    {
@@ -24,13 +24,8 @@ class Users extends Model
 
       $req->execute();
    }
-   
-   public function getAllUsers()
-   {
-      $req = $this->pdo->prepare('SELECT * FROM users');
-      $req->execute();
-      $req->fetchAll();
-   }
+
+
 
 
 
