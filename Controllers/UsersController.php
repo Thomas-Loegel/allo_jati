@@ -107,6 +107,7 @@ class UsersController extends Controller
       $inputMail = "";
 
 
+
       //formulaire envoyé ?
       if (!empty($_POST)) {
          $mail = $_POST['mail'];
@@ -116,6 +117,7 @@ class UsersController extends Controller
          if (!empty($mail)) {
 
             $inputMail = $mail;
+      
 
             if (isset($mail)) {
                $userMail = $this->model->mailExist($mail);
@@ -123,51 +125,53 @@ class UsersController extends Controller
                //mail existe dans la bdd ?
                if ($userMail == true) {
 
-                  //envoi d'email -> redirection vers page vide qui sert a envoyer un mail
-
-                  //header("Location: $this->baseUrl/mail");
-
-
-
-
-
                   if ($_SERVER['SERVER_NAME'] === "localhost") {
-                      //on charge Swiftmailer
-                      require_once('vendor/autoload.php');
-
-                      //on instancie une nouvelle méthode d'envois du mail
-                      $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
-                     //Port 25 ou 465 selon votre configuration
+                     
                   
-                     //identifiant et mote de passe pour votre swiftmailer
-                     ->setUsername('fb4412351e7042')
-                     ->setPassword('9377fb0dbcb0f8');
+                     //on charge Swiftmailer
+                     require_once('vendor/autoload.php');
 
-                      //on instancie un nouveau mail
-                      $mailer = new Swift_Mailer($transport);
-                      $date = date('j, F Y h:i A');
+                     //on instancie une nouvelle méthode d'envois du mail
+                     $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
+                        //Port 25 ou 465 selon votre configuration
 
-                      //on instancie un nouveau corps de document mail
-                      $message = (new Swift_Message($sujetGen))
-                         ->setFrom(['galli.johanna.g2@gmail.com'])
-                         ->setTo(['galli.johanna.g2@gmail.com'])
-                         ->setBody($mailbody);
+                        //identifiant et mote de passe pour votre swiftmailer
+                        ->setUsername('fb4412351e7042')
+                        ->setPassword('9377fb0dbcb0f8');
 
-                      //on récupère et modifie le header du mail pour l'envois en HTML
-                      $type = $message->getHeaders()->get('Content-Type');
-                      $type->setValue('text/html');
-                      $type->setParameter('charset', 'utf-8');
+                     //on instancie un nouveau mail
+                     $mailer = new Swift_Mailer($transport);
 
-                      //On envois le mail en local
-                      $resultMail = $mailer->send($message);
+                     //contenu mail
+                     $date = date('j, F Y h:i A');  
+                     $sujet = "Mot de passe oublié";
+                     $userPseudo = $this->model->recupPseudo($mail);
+                     var_dump($userPseudo);
+                     $userId = 1;
+                     $mailBody = "
+                     <h2>Bonjour!</h2>
+                     <p>Vous avez demandé à changer de mot de passe.</p>
+                     <br>
+                     <a href='http://localhost/allo_jati/ChangerMotDePasse/$idUser'>Changer de mot de passe</a>
+                     ";
+
+
+                     //on instancie un nouveau corps de document mail
+                     $message = (new Swift_Message($sujet))
+                        ->setFrom(['galli.johanna.g2@gmail.com'])
+                        ->setTo(['galli.johanna.g2@gmail.com'])
+                        ->setBody($mailBody, 'text/html');
+
+                     //on récupère et modifie le header du mail pour l'envois en HTML
+                     $type = $message->getHeaders()->get('Content-Type');
+                     $type->setValue('text/html');
+                     $type->setParameter('charset', 'utf-8');
+
+                     //On envois le mail en local
+                     $mailer->send($message);
+                  } else {
+                     echo "nous ne pouvons pas vous envoyer de mail car nous utilisons swiftmailer";
                   }
-
-
-
-
-
-
-
 
 
                   //var_dump ($userMail);
@@ -189,6 +193,7 @@ class UsersController extends Controller
       echo $template->render([
          'slug' => $slug,
          'mail' => $mail,
+
          'mailError' => $mailError,
          'inputMail' => $inputMail,
          'generalError' => $generalError,
