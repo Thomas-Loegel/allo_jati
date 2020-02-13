@@ -29,8 +29,9 @@ $router->get('/MotDePasseOublie', 'Users.forgetPassword');
 $router->post('/MotDePasseOublie/post', 'Users.forgetPassword');
 
 // Route ChangePassword
-$router->get('/ChangerMotDePasse', 'Users.ChangePassword');
-$router->post('/ChangerMotDePasse/post', 'Users.ChangePassword');
+$router->post('/ChangerMotDePasse/:userPseudo/post', 'Users.changePassword');
+$router->get('/ChangerMotDePasse/:userPseudo', 'Users.changePassword');
+
 
 // Route Register
 $router->get('/Inscription', 'Users.register');

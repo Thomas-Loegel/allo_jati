@@ -47,11 +47,23 @@ class Users extends Model
    function recupPseudo($mail)
    {
       //chercher dans table users le pseudo correspondant au mail
-      $req = $this->pdo->prepare("SELECT pseudo, id FROM users WHERE mail = :mail");
+      $req = $this->pdo->prepare("SELECT pseudo FROM users WHERE mail = :mail");
       $req->bindValue(':mail', $mail);
       $req->execute();
-      $pseudo = $req->fetch("pseudo");
+      $pseudo = $req->fetch();
 
       return $pseudo;
+   }
+
+
+   function returnUrl()
+   {
+      $adresse = $_SERVER['PHP_SELF'];
+      $i = 0;
+      foreach ($_GET as $cle => $valeur) {
+         $adresse .= ($i == 0 ? '?' : '&') . $cle . ($valeur ? '=' . $valeur : '');
+         $i++;
+      }
+      return substr($adresse, 48);
    }
 }

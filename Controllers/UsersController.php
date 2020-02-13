@@ -26,13 +26,18 @@ class UsersController extends Controller
          $title = "Inscription";
       }
 
-      //si slug = Mot-De-Passe-Oublie alors change le $title en "Mot de passe oublié".
+      //si slug = MotDePasseOublie alors change le $title en "Mot de passe oublié".
       if ($slug === "MotDePasseOublie") {
          $title = "Mot de passe oublié";
       }
 
+       //si slug = ChangerMotDePasse alors change le $title en "Changer de mot de passe".
+       if ($slug === "ChangerMotDePasse/user=") {
+         $title = "Changer de mot de passe";
+      }
+
       //si slug est défini et différent de "Inscription" et différent de "MotDePasseOublie" (en gros si l'utilisateur met nimp dans l'url) alors :
-      if (isset($slug) && $slug !== "Inscription"  && $slug !== "MotDePasseOublie") {
+      if (isset($slug) && $slug !== "Inscription"  && $slug !== "MotDePasseOublie" && $slug !== "ChangerMotDePasse/:?") {
          //Affiche une erreur 303 dans la console :
          header("HTTP/1.0 303 Redirection");
 
@@ -41,6 +46,7 @@ class UsersController extends Controller
       }
 
 
+      //Affichage
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
 
@@ -106,8 +112,6 @@ class UsersController extends Controller
       $generalError = "";
       $inputMail = "";
 
-
-
       //formulaire envoyé ?
       if (!empty($_POST)) {
          $mail = $_POST['mail'];
@@ -145,15 +149,16 @@ class UsersController extends Controller
                      //contenu mail
                      $date = date('j, F Y h:i A');  
                      $sujet = "Mot de passe oublié";
+
                      $userPseudo = $this->model->recupPseudo($mail);
-                     var_dump($userPseudo);
-                     $userId = 1;
-                     $mailBody = "
-                     <h2>Bonjour!</h2>
+                     $userPseudo = $userPseudo["pseudo"];
+
+                     //var_dump($userPseudo);
+
+                     $mailBody = "<h2>Bonjour " . $userPseudo . "!</h2>
                      <p>Vous avez demandé à changer de mot de passe.</p>
                      <br>
-                     <a href='http://localhost/allo_jati/ChangerMotDePasse/$idUser'>Changer de mot de passe</a>
-                     ";
+                     <a href='http://localhost/allo_jati/ChangerMotDePasse/user=$userPseudo'>Changer de mot de passe</a>";
 
 
                      //on instancie un nouveau corps de document mail
@@ -200,18 +205,22 @@ class UsersController extends Controller
       ]);
    }
 
+   
 
-   public function ChangePassword($slug = "ChangerMotDePasse")
+   public function changePassword($slug = "ChangerMotDePasse" )
    {
-      //déclaration des variables
-      $mdp = NULL;
+     
+      //déclaration des variables 
+      $mdp = "";
       $mdpError = "";
       $generalError = "";
+      $userPseudo = $this->model->returnUrl();
+      var_dump($userPseudo);
 
 
       //formulaire envoyé ?
       if (!empty($_POST)) {
-         $mail = $_POST['mdp'];
+         $mdp = $_POST['mdp'];
          //var_dump($mail);
 
          //le champ mdp est rempli ?
@@ -221,7 +230,7 @@ class UsersController extends Controller
             if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
                $userMdp = $this->model->insertmdp($mdp);
 
-               //redirection vers page d'accueil'
+               //redirection vers page de connexion
                header("Location: $this->baseUrl/connexion");
             } else {
                $mdpError = "Votre mot de passe doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 16 caractères";
@@ -229,6 +238,8 @@ class UsersController extends Controller
          } else {
             $generalError = "Veuillez remplir le champ recquis !";
          }
+      } else {
+         echo "test";
       }
 
       //affichage
@@ -236,6 +247,7 @@ class UsersController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
+         'userPseudo' => $userPseudo,
          'mdp' => $mdp,
          'mdpError' => $mdpError,
          'generalError' => $generalError,
