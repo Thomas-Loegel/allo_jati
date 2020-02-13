@@ -90,7 +90,7 @@ class AdminController extends Controller
    public function addArtist()
    {
       $slug = 'Ajout_Artiste';
-      
+
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(['slug' => $slug]);

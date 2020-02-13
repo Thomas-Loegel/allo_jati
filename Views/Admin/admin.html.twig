@@ -123,7 +123,7 @@
                         <th scope="row">{{artists.id_artist}}</th>
                         <td>{{artists.first_name}}</td>
                         <td>{{artists.last_name}}</td>
-                        <td>{{artists.birth_day}}</td>
+                        <td>{{artists.birth_day | date("d/m/Y") }}</td>
                         <td>{{artists.bio}}</td>
                         <td>{{artists.role}}</td>
                         <td>{{artists.picture}}</td>
