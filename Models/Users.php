@@ -11,7 +11,8 @@ class User extends Model
    *  Renvoi true si Pseudo est connu dans la bdd,
    *  Renvoi false si Pseudo est inconnu dans la bdd
    */
-   public function ckeckLogin(){
+   public function ckeckLogin($pseudo)
+   {
       $req = $this->pdo->prepare('SELECT pseudo, mdp, admin FROM users WHERE pseudo = :pseudo');
       $req->bindValue(':pseudo', $pseudo);
       $req->execute();

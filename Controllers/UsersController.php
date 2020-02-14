@@ -82,15 +82,17 @@ class UsersController extends Controller
                parent::controlSession();
 
                // On défini l'utilisateur a l'état de connecter
+
                $_SESSION["status"] = 2;
                $_SESSION["utilisateur"] = $_POST['pseudo'];
 
                $mavariable = $_SESSION["utilisateur"];
 
                if (!empty($mavariable)) {
-                  header("Location: $this->baseUrl");
-               $this->checkAdministrator($_SESSION["utilisateur"]);
+                   header("Location: $this->baseUrl");
 
+                   $this->checkAdministrator($_SESSION["utilisateur"]);
+               }
                // Si location existe on redirige vers postAfterLogin()
                if (isset($_SESSION['location'])) {
                   $instanceComments = new CommentsController();
@@ -98,7 +100,7 @@ class UsersController extends Controller
                } else {
                   // Sinon on redirige l'utilisateur sur la page d'accueil
                   if (!empty($_SESSION["utilisateur"])) {
-                     //header("Location: $this->baseUrl");
+                     header("Location: $this->baseUrl");
                   }
                }
             } else {
@@ -119,123 +121,108 @@ class UsersController extends Controller
       ]);
    }
 
-   //gestion de l'envoi du formulaire de Mot De Passe Oublié
-   public function forgetPassword($slug = "MotDePasseOublie")
-   {
-      //déclaration des variables
-      $mail = NULL;
-      $mailError = "";
-      $generalError = "";
-      $inputMail = "";
-
-      //formulaire envoyé ?
-      if (!empty($_POST)) {
-         $mail = $_POST['mail'];
-         //var_dump($mail);
-
-         //le champ mail est rempli ?
-         if (!empty($mail)) {
-
-            $inputMail = $mail;
-      
-
-            if (isset($mail)) {
-               $userMail = $this->model->mailExist($mail);
-
-               //mail existe dans la bdd ?
-               if ($userMail == true) {
-
-                  if ($_SERVER['SERVER_NAME'] === "localhost") {
+      //gestion de l'envoi du formulaire de Mot De Passe Oublié
+      public function forgetPassword($slug = "MotDePasseOublie")
+      {
+         //déclaration des variables
+         $mail = NULL;
+         $mailError = "";
+         $generalError = "";
+         $inputMail = "";
+   
+         //formulaire envoyé ?
+         if (!empty($_POST)) {
+            $mail = $_POST['mail'];
+            //var_dump($mail);
+   
+            //le champ mail est rempli ?
+            if (!empty($mail)) {
+   
+               $inputMail = $mail;
+         
+   
+               if (isset($mail)) {
+                  $userMail = $this->model->mailExist($mail);
+   
+                  //mail existe dans la bdd ?
+                  if ($userMail == true) {
+   
+                     if ($_SERVER['SERVER_NAME'] === "localhost") {
+                        
                      
-                  
-                     //on charge Swiftmailer
-                     require_once('vendor/autoload.php');
-
-                     //on instancie une nouvelle méthode d'envois du mail
-                     $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
-                        //Port 25 ou 465 selon votre configuration
-
-      // si les champs sont remplis
-      if (!empty($mail) && !empty($pseudo) && !empty($mdp)) {
-
-         // vérif mail
-         if (preg_match("#^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$#", $mail)) {
-
-            // vérif pseudo
-            if (preg_match('`^([a-zA-Z0-9-_]{2,36})$`', $pseudo)) {
-
-               // vérif mot de passe
-               if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
-                  // hashage du mot de passe :
-                  $hashMdp = password_hash($mdp, PASSWORD_DEFAULT);
-
-                  // insertion des données dans la bdd
-                  $this->model->insertUser($mail, $pseudo, $hashMdp);
-                        //identifiant et mote de passe pour votre swiftmailer
-                        ->setUsername('fb4412351e7042')
-                        ->setPassword('9377fb0dbcb0f8');
-
-                     //on instancie un nouveau mail
-                     $mailer = new Swift_Mailer($transport);
-
-                     //contenu mail
-                     $date = date('j, F Y h:i A');  
-                     $sujet = "Mot de passe oublié";
-
-                     $userPseudo = $this->model->recupPseudo($mail);
-                     $userPseudo = $userPseudo["pseudo"];
-
-                     //var_dump($userPseudo);
-
-                     $mailBody = "<h2>Bonjour " . $userPseudo . "!</h2>
-                     <p>Vous avez demandé à changer de mot de passe.</p>
-                     <br>
-                     <a href='http://localhost/allo_jati/ChangerMotDePasse/user=$userPseudo'>Changer de mot de passe</a>";
-
-
-                     //on instancie un nouveau corps de document mail
-                     $message = (new Swift_Message($sujet))
-                        ->setFrom(['galli.johanna.g2@gmail.com'])
-                        ->setTo(['galli.johanna.g2@gmail.com'])
-                        ->setBody($mailBody, 'text/html');
-
-                     //on récupère et modifie le header du mail pour l'envois en HTML
-                     $type = $message->getHeaders()->get('Content-Type');
-                     $type->setValue('text/html');
-                     $type->setParameter('charset', 'utf-8');
-
-                     //On envois le mail en local
-                     $mailer->send($message);
+                        //on charge Swiftmailer
+                        require_once('vendor/autoload.php');
+   
+                        //on instancie une nouvelle méthode d'envois du mail
+                        $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
+                           //Port 25 ou 465 selon votre configuration
+   
+                           //identifiant et mote de passe pour votre swiftmailer
+                           ->setUsername('fb4412351e7042')
+                           ->setPassword('9377fb0dbcb0f8');
+   
+                        //on instancie un nouveau mail
+                        $mailer = new Swift_Mailer($transport);
+   
+                        //contenu mail
+                        $date = date('j, F Y h:i A');  
+                        $sujet = "Mot de passe oublié";
+   
+                        $userPseudo = $this->model->recupPseudo($mail);
+                        $userPseudo = $userPseudo["pseudo"];
+   
+                        //var_dump($userPseudo);
+   
+                        $mailBody = "<h2>Bonjour " . $userPseudo . "!</h2>
+                        <p>Vous avez demandé à changer de mot de passe.</p>
+                        <br>
+                        <a href='http://localhost/allo_jati/ChangerMotDePasse/user=$userPseudo'>Changer de mot de passe</a>";
+   
+   
+                        //on instancie un nouveau corps de document mail
+                        $message = (new Swift_Message($sujet))
+                           ->setFrom(['galli.johanna.g2@gmail.com'])
+                           ->setTo(['galli.johanna.g2@gmail.com'])
+                           ->setBody($mailBody, 'text/html');
+   
+                        //on récupère et modifie le header du mail pour l'envois en HTML
+                        $type = $message->getHeaders()->get('Content-Type');
+                        $type->setValue('text/html');
+                        $type->setParameter('charset', 'utf-8');
+   
+                        //On envois le mail en local
+                        $mailer->send($message);
+                     } else {
+                        echo "nous ne pouvons pas vous envoyer de mail car nous utilisons swiftmailer";
+                     }
+   
+   
+                     //var_dump ($userMail);
+   
+                     //redirection vers page d'accueil'
+                     //header("Location: $this->baseUrl/Connexion");
                   } else {
-                     echo "nous ne pouvons pas vous envoyer de mail car nous utilisons swiftmailer";
+                     $mailError = "Nous ne connaissons pas votre mail ...";
                   }
-
-
-                  //var_dump ($userMail);
-
-                  //redirection vers page d'accueil'
-                  //header("Location: $this->baseUrl/Connexion");
-               } else {
-                  $mailError = "Nous ne connaissons pas votre mail ...";
                }
+            } else {
+               $generalError = "Veuillez remplir le champ recquis !";
             }
-         } else {
-            $generalError = "Veuillez remplir le champ recquis !";
          }
+   
+         //affichage
+         $pageTwig = 'Users/login.html.twig';
+         $template = $this->twig->load($pageTwig);
+         echo $template->render([
+            'slug' => $slug,
+            'mail' => $mail,
+   
+            'mailError' => $mailError,
+            'inputMail' => $inputMail,
+            'generalError' => $generalError,
+         ]);
       }
-
-      //affichage
-      $pageTwig = 'Users/login.html.twig';
-      $template = $this->twig->load($pageTwig);
-      echo $template->render([
-         'slug' => $slug,
-         'mail' => $mail,
-
-         'mailError' => $mailError,
-         'inputMail' => $inputMail,
-         'generalError' => $generalError,
-      ]);
-   }
+   
 
    
 
@@ -263,7 +250,7 @@ class UsersController extends Controller
                $userMdp = $this->model->insertmdp($mdp);
 
                //redirection vers page de connexion
-               header("Location: $this->baseUrl/connexion");
+               header("Location: $this->baseUrl/Connexion");
             } else {
                $mdpError = "Votre mot de passe doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 16 caractères";
             }
