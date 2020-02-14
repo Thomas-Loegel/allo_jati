@@ -33,6 +33,9 @@
                <li class="nav-item active">
                   <a class="nav-link hover-menu" href="{{baseUrl}}/Connexion">CONNEXION</a>
                </li>
+               <li class="nav-item shadow-drop-2-bottom active">
+                  <a class="nav-link hover-menu" href="{{baseUrl}}/Deconnexion">DECONNEXION</a>
+               </li>
                <li class="nav-item active">
                   <a class="nav-link hover-menu" href="{{baseUrl}}/Admin">ADMIN</a>
                </li>
@@ -56,6 +59,7 @@
    {% endblock %}
 
    {% block javascripts %}
+   <script src="{{baseUrl}}/assets/js/app.js"></script>
    {# Here you can add only the JS that you need #}
    {% endblock %}
 </body>

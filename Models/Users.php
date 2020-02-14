@@ -1,17 +1,16 @@
 <?php
 
-class Users extends Model
+class User extends Model
 {
    public function __construct()
    {
       $this->pdo = parent::getPdo();
    }
 
-   /**
-   *  Renvoi true si Pseudo est connu dans la bdd,
-   *  Renvoi false si Pseudo est inconnu dans la bdd
-   */
-   public function ckeckLogin(){
+
+   //-----> la fonction ckeckLogin : renvoi true si le pseudo entré par l'utilisateur est connu dans la bdd et renvoi un false si le pseudo entré par l'utilisateur est connu dans la bdd
+   function checkLogin($pseudo)
+   {
       $req = $this->pdo->prepare('SELECT pseudo, mdp, admin FROM users WHERE pseudo = :pseudo');
       $req->bindValue(':pseudo', $pseudo);
       $req->execute();
@@ -53,12 +52,9 @@ class Users extends Model
       //chercher dans table users le pseudo correspondant au mail
       $req = $this->pdo->prepare("SELECT pseudo FROM users WHERE mail = :mail");
       $req->bindValue(':mail', $mail);
-      $req->execute();
-      $pseudo = $req->fetch();
-
-      return $pseudo;
    }
-
+ 
+  
 
    public function returnUrl()
    {
@@ -130,4 +126,6 @@ class Users extends Model
       $req->execute([$id_user]);
       return $req->fetch();
    }
+
+   /****************************************************************** */
 }
