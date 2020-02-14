@@ -16,21 +16,38 @@ class MoviesController extends ArtsController
    /**
    *  Affiche tout les Films
    */
-   public function showAllMovies($search = null)
+   public function showAllMovies()
    {
-      if (isset($_GET['search']) && !empty($_GET['search'])) {
-
-         // Affiche la recherche Film
-         $search = $_GET['search'];
-         $search = $this->model->getBySearch($search);
-      }
-
-      $movies   = $this->model->getAllMovies();
       $pageTwig = 'Movies/showAllMovies.html.twig';
       $template = $this->twig->load($pageTwig);
+      $movies   = $this->model->getAllMovies();
       echo $template->render([
          'movies' => $movies,
-         'search' => $search
+      ]);
+   }
+
+   public function search($slug = "Recherche", $search = null)
+   {
+      $notFound = null;
+
+      if (isset($_POST['search']) && !empty($_POST['search'])) {
+
+         // Affiche la recherche Film
+         $search = $_POST['search'];
+         $search = $this->model->getBySearch($search);
+
+      }else{
+         $notFound = "Nous n'avons pas encore ce film, mais vous pouvez nous envoyer des suggestion via le formulaire !";
+      }
+
+      $pageTwig = 'Movies/showAllMovies.html.twig';
+      $template = $this->twig->load($pageTwig);
+      $movies   = $this->model->getAllMovies();
+      echo $template->render([
+         'slug' => $slug,
+         'movies' => $movies,
+         'search' => $search,
+         'notFound' => $notFound,
       ]);
    }
 
@@ -54,7 +71,7 @@ class MoviesController extends ArtsController
       echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments]);
 
       // ?
-      $instanceUser = new User();
+      $instanceUser = new Users();
       session_start();
       //On affiche une alerte si un commentaire vide a été publié
       if(isset($_SESSION['alert'])) {
