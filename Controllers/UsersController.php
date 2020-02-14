@@ -64,15 +64,15 @@ class UsersController extends Controller
       // si l'input pseudo et mdp n'est pas vide
       if (!empty($_POST['pseudo']) && !empty($_POST['mdp'])) {
 
-         //$user info appelle la fonction checkLogin
+         // $user info appelle la fonction checkLogin
          $userInfo = $this->model->checkLogin($_POST["pseudo"]);
 
-         //Si $userInfo a pour valeur true
+         // Si $userInfo a pour valeur true
          if ($userInfo) {
-            //var_dump($userInfo);
+
             $hashMdp = $userInfo["mdp"];
 
-            //si le mot de passe est bon
+            // si le mot de passe est bon
             if (password_verify($_POST['mdp'], $hashMdp)) {
 
                session_start();
@@ -93,8 +93,6 @@ class UsersController extends Controller
          $error = "Vous n'avez pas rempli tous les champs !";
       }
 
-
-      //affichage
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
@@ -103,7 +101,7 @@ class UsersController extends Controller
       ]);
    }
 
-   //gestion de l'envoi du formulaire de Mot De Passe Oublié
+   // gestion de l'envoi du formulaire de Mot De Passe Oublié
    public function forgetPassword($slug = "MotDePasseOublie")
    {
       //déclaration des variables
@@ -178,9 +176,6 @@ class UsersController extends Controller
                      echo "nous ne pouvons pas vous envoyer de mail car nous utilisons swiftmailer";
                   }
 
-
-                  //var_dump ($userMail);
-
                   //redirection vers page d'accueil'
                   //header("Location: $this->baseUrl/Connexion");
                } else {
@@ -192,7 +187,7 @@ class UsersController extends Controller
          }
       }
 
-      //affichage
+
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
@@ -210,7 +205,7 @@ class UsersController extends Controller
    public function changePassword($slug = "ChangerMotDePasse" )
    {
 
-      //déclaration des variables
+      // déclaration des variables
       $mdp = "";
       $mdpError = "";
       $generalError = "";
@@ -218,19 +213,18 @@ class UsersController extends Controller
       var_dump($userPseudo);
 
 
-      //formulaire envoyé ?
+      // formulaire envoyé ?
       if (!empty($_POST)) {
          $mdp = $_POST['mdp'];
-         //var_dump($mail);
 
-         //le champ mdp est rempli ?
+         // le champ mdp est rempli ?
          if (!empty($mdp)) {
 
-            //mot de passe correspond aux attentes ?
+            // mot de passe correspond aux attentes ?
             if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
                $userMdp = $this->model->insertmdp($mdp);
 
-               //redirection vers page de connexion
+               // redirection vers page de connexion
                header("Location: $this->baseUrl/connexion");
             } else {
                $mdpError = "Votre mot de passe doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 16 caractères";
@@ -242,7 +236,7 @@ class UsersController extends Controller
          echo "test";
       }
 
-      //affichage
+
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
@@ -255,10 +249,10 @@ class UsersController extends Controller
    }
 
 
-   //gestion de l'envoi du formulaire d'inscription
+   // gestion de l'envoi du formulaire d'inscription
    public function register($slug = "Inscription")
    {
-      //déclaration des variables
+      // déclaration des variables
       $mail = NULL;
       $mailError = NULL;
       $pseudo = NULL;
@@ -276,45 +270,44 @@ class UsersController extends Controller
          $mdp = $_POST['mdp'];
          $avatar = $_POST['avatar'];
 
-         //les champs sont remplis ?
+         // les champs sont remplis ?
          if (!empty($mail) && !empty($pseudo) && !empty($mdp)) {
 
-            //mail correspond aux attentes ?
+            // mail correspond aux attentes ?
             if (preg_match("#^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$#", $mail)) {
                $userMail = $this->model->mailExist($mail);
-               //mail existe dans la bdd ?
+               // mail existe dans la bdd ?
                if ($userMail == false) {
 
-                  //pseudo correspond aux attentes ?
+                  // pseudo correspond aux attentes ?
                   if (preg_match('`^([a-zA-Z0-9-_]{2,36})$`', $pseudo)) {
                      $userPseudo = $this->model->pseudoExist($pseudo);
 
-                     //le pseudo entré existe dans la bdd ?
+                     // le pseudo entré existe dans la bdd ?
                      if ($userPseudo == false) {
 
-                        //mot de passe correspond aux attentes ?
+                        // mot de passe correspond aux attentes ?
                         if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
 
-                           //hashage du mot de passe :
+                           // hashage du mot de passe :
                            $hashMdp = password_hash($mdp, PASSWORD_DEFAULT);
 
-                           //une photo a été inséré dans l'insciption ?
+                           // une photo a été inséré dans l'insciption ?
                            if ($avatar) {
                               $info = new SplFileInfo($avatar);
                               $extensionAvatar = $info->getExtension();
-                              //var_dump($extensionAvatar);
                               $extensionAvatar = strtolower($extensionAvatar);
                               $extensionsAutorisees = array('jpg', 'jpeg', 'gif', 'png', 'tiff');
 
                               if (in_array($extensionAvatar, $extensionsAutorisees)) {
-                                 //insertion des données dans la bdd
+                                 // insertion des données dans la bdd
                                  $this->model->insertUser($mail, $pseudo, $hashMdp, $avatar);
                                  header("Location: $this->baseUrl");
                               } else {
                                  $avatarError = "L'extension de votre fichier n'est pas autorisée";
                               }
                            } else {
-                              //insertion des données dans la bdd
+                              // insertion des données dans la bdd
                               $this->model->insertUser($mail, $pseudo, $hashMdp, $avatar = "avatar.jpg");
 
                               header("Location: $this->baseUrl");
@@ -339,7 +332,6 @@ class UsersController extends Controller
          }
       }
 
-      //affichage
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([

@@ -25,7 +25,7 @@ class AdminController extends Controller
    {
       $slug = 'Liste_Utilisateurs';
 
-      $instanceUsers = new User();
+      $instanceUsers = new Users();
       $users = $instanceUsers->getAllUsers();
 
       $pageTwig = 'Admin/admin.html.twig';
