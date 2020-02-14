@@ -11,16 +11,14 @@ class UsersController extends Controller
    {
       //$this->twig = parent::getTwig();
       parent::__construct();
-      $this->model = new User();
+      $this->model = new Users();
    }
 
 
-   /**
-   *  Affichage du template pour $slug = null (formulaire de connexion)
-   */
+   // Affichage du template pour $slug = null (formulaire de connexion)
    public function connexion($slug = null)
    {
-      // $slug est null
+      //$slug est null
       $title = "Connexion";
 
       //si slug = Inscription alors change le $title en "inscription".
@@ -43,7 +41,7 @@ class UsersController extends Controller
          //Affiche une erreur 303 dans la console :
          header("HTTP/1.0 303 Redirection");
 
-         // Fait une redirection vers la page d'accueil :
+         //Fait une redirection vers la page d'accueil :
          header("Location: $this->baseUrl");
       }
 
@@ -58,9 +56,7 @@ class UsersController extends Controller
       ]);
    }
 
-   /**
-   *  gestion de l'envoi du formulaire de connexion
-   */
+   //gestion de l'envoi du formulaire de connexion
    public function login($slug = null)
    {
       $error = "";
@@ -71,7 +67,7 @@ class UsersController extends Controller
          //$user info appelle la fonction checkLogin
          $userInfo = $this->model->checkLogin($_POST["pseudo"]);
 
-         //Si $userInfo a pour valeur true 
+         //Si $userInfo a pour valeur true
          if ($userInfo) {
             //var_dump($userInfo);
             $hashMdp = $userInfo["mdp"];
@@ -79,27 +75,13 @@ class UsersController extends Controller
             //si le mot de passe est bon
             if (password_verify($_POST['mdp'], $hashMdp)) {
 
-               parent::controlSession();
-
-               // On défini l'utilisateur a l'état de connecter
-               $_SESSION["status"] = 2;
+               session_start();
                $_SESSION["utilisateur"] = $_POST['pseudo'];
 
                $mavariable = $_SESSION["utilisateur"];
 
                if (!empty($mavariable)) {
                   header("Location: $this->baseUrl");
-               $this->checkAdministrator($_SESSION["utilisateur"]);
-
-               // Si location existe on redirige vers postAfterLogin()
-               if (isset($_SESSION['location'])) {
-                  $instanceComments = new CommentsController();
-                  $instanceComments->postAfterLogin();
-               } else {
-                  // Sinon on redirige l'utilisateur sur la page d'accueil
-                  if (!empty($_SESSION["utilisateur"])) {
-                     //header("Location: $this->baseUrl");
-                  }
                }
             } else {
                $error = "Mot de passe incorrect";
@@ -111,6 +93,8 @@ class UsersController extends Controller
          $error = "Vous n'avez pas rempli tous les champs !";
       }
 
+
+      //affichage
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
@@ -137,7 +121,7 @@ class UsersController extends Controller
          if (!empty($mail)) {
 
             $inputMail = $mail;
-      
+
 
             if (isset($mail)) {
                $userMail = $this->model->mailExist($mail);
@@ -146,8 +130,8 @@ class UsersController extends Controller
                if ($userMail == true) {
 
                   if ($_SERVER['SERVER_NAME'] === "localhost") {
-                     
-                  
+
+
                      //on charge Swiftmailer
                      require_once('vendor/autoload.php');
 
@@ -155,22 +139,6 @@ class UsersController extends Controller
                      $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
                         //Port 25 ou 465 selon votre configuration
 
-      // si les champs sont remplis
-      if (!empty($mail) && !empty($pseudo) && !empty($mdp)) {
-
-         // vérif mail
-         if (preg_match("#^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$#", $mail)) {
-
-            // vérif pseudo
-            if (preg_match('`^([a-zA-Z0-9-_]{2,36})$`', $pseudo)) {
-
-               // vérif mot de passe
-               if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
-                  // hashage du mot de passe :
-                  $hashMdp = password_hash($mdp, PASSWORD_DEFAULT);
-
-                  // insertion des données dans la bdd
-                  $this->model->insertUser($mail, $pseudo, $hashMdp);
                         //identifiant et mote de passe pour votre swiftmailer
                         ->setUsername('fb4412351e7042')
                         ->setPassword('9377fb0dbcb0f8');
@@ -179,7 +147,7 @@ class UsersController extends Controller
                      $mailer = new Swift_Mailer($transport);
 
                      //contenu mail
-                     $date = date('j, F Y h:i A');  
+                     $date = date('j, F Y h:i A');
                      $sujet = "Mot de passe oublié";
 
                      $userPseudo = $this->model->recupPseudo($mail);
@@ -237,12 +205,12 @@ class UsersController extends Controller
       ]);
    }
 
-   
+
 
    public function changePassword($slug = "ChangerMotDePasse" )
    {
-     
-      //déclaration des variables 
+
+      //déclaration des variables
       $mdp = "";
       $mdpError = "";
       $generalError = "";
@@ -371,6 +339,7 @@ class UsersController extends Controller
          }
       }
 
+      //affichage
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
@@ -383,38 +352,5 @@ class UsersController extends Controller
          'inputPseudo' => $pseudo,
          'avatarError' => $avatarError,
       ]);
-   }
-
-   /**
-   *
-   */
-   public function logout()
-   {
-      session_start();
-      $session = $_SESSION;
-      if ($session['status'] == 1 || $session['status'] == 2) {
-         session_destroy();
-      }
-      header("Location: $this->baseUrl");
-   }
-   
-   /**
-   *
-   */
-   public function checkAdministrator($pseudo)
-   {
-      //On récupère l'id utilisateur par le pseudo
-      $id_user = $this->model->getOneIdUser($pseudo);
-      //On vérifie si l'id utilisateur est Admin
-      $admin = $this->model->checkAdmin($id_user['id_user']);
-      if($admin['admin'] == 1){
-         $_SESSION['status'] = 1;
-         //Redirection sur page Admin
-         header("Location: $this->baseUrl/Admin");
-      } else {
-         $_SESSION['status'] = 2;
-         //Redirection sur page Home
-         header("Location: $this->baseUrl");
-      }
    }
 }
