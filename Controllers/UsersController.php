@@ -17,18 +17,19 @@ class UsersController extends Controller
       $title = "Connexion";
 
       //si slug = register alors change le $title en "inscription".
-      if ($slug === "Enregistrement") {
+      if ($slug === "Inscription") {
          $title = "Inscription";
       }
 
       //si slug est défini et différent de "register" (en gros si l'utilisateur met nimp dans l'url) alors :
-      if (isset($slug) && $slug !== "Enregistrement") {
+      if (isset($slug) && $slug !== "Inscription") {
          //Affiche une erreur 303 dans la console :
          header("HTTP/1.0 303 Redirection");
 
          //Fait une redirection vers la page d'accueil :
          header("Location: $this->baseUrl");
       }
+
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
 
@@ -55,26 +56,29 @@ class UsersController extends Controller
 
             //si le mot de passe est bon
             if (password_verify($_POST['mdp'], $hashMdp)) {
-               /*******************************************************/
-               parent::controlSession();
+               /*********************ANTHONY************************ */
+               //On démarre une session 
+               session_start();
 
                //On défini l'utilisateur a l'état de connecter
                $_SESSION["status"] = 2;
                $_SESSION["utilisateur"] = $_POST['pseudo'];
-
+               //on recherche si l'utilisateur conncté est administrateur
                $this->checkAdministrator($_SESSION["utilisateur"]);
 
-               //Si location existe on redirige vers postAfterLogin()
+               //Si location existe on redirige vers postAfterLogin() pour publier le commentaire
                if (isset($_SESSION['location'])) {
                   $instanceComments = new CommentsController();
                   $instanceComments->postAfterLogin();
+               /****************************************************/
                } else {
+               
                   //Sinon on redirige l'utilisateur sur la page d'accueil
                   if (!empty($_SESSION["utilisateur"])) {
-                     //header("Location: $this->baseUrl");
-                  }
+
+                     header("Location: $this->baseUrl");
+                  }       
                }
-               /*******************************************************/
             } else {
                $error = "Mot de passe incorrect";
             }
@@ -84,25 +88,23 @@ class UsersController extends Controller
       } else {
          $error = "Vous n'avez pas rempli tous les champs !";
       }
-
-
       //affichage
-      $pageTwig = 'Users/login.html.twig';
+      /*$pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
          'error' => $error,
-      ]);
+      ]);*/
    }
 
    //gestion de l'envoi du formulaire d'inscription
-   public function register($slug = "Enregistrement")
+   public function register($slug = "Inscription")
    {
-      $generalError = "";
+      /*$generalError = "";
       $mailError = "";
       $pseudoError = "";
       $mdpError = "";
-
+      var_dump($_SESSION);
 
       $mail = $_POST['mail'];
       $pseudo = $_POST['pseudo'];
@@ -138,39 +140,38 @@ class UsersController extends Controller
       } else {
          $generalError = "Vous n'avez pas rempli tous les champs !";
       }
-
+*/
       //affichage
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render([
+      echo $template->render(/*[
          'slug' => $slug,
          'generalError' => $generalError,
          'mailError' => $mailError,
          'pseudoError' => $pseudoError,
          'mdpError' => $mdpError,
          'inputMail' => $mail,
-         'inputPseudo' => $pseudo,
-
-      ]);
+      'inputPseudo' => $pseudo,]*/);
    }
-   /********************************************************************/
+   /********************************ANTHONY************************************/
+   //On déconnecte la SESSION
    public function logout()
    {
-      session_start();
-      $session = $_SESSION;
-      if ($session['status'] == 1 || $session['status'] == 2) {
-         session_destroy();
-      }
+      $instance = new HomeController();
+      $instance->destroy();
+      var_dump($_SESSION['utilisateur']);
       header("Location: $this->baseUrl");
    }
+
    public function checkAdministrator($pseudo)
    {
       //On récupère l'id utilisateur par le pseudo
       $id_user = $this->model->getOneIdUser($pseudo);
       //On vérifie si l'id utilisateur est Admin
       $admin = $this->model->checkAdmin($id_user['id_user']);
-      if($admin['admin'] == 1){
+      if ($admin['admin'] == 1) {
          $_SESSION['status'] = 1;
+         
          //Redirection sur page Admin
          header("Location: $this->baseUrl/Admin");
       } else {
@@ -178,5 +179,6 @@ class UsersController extends Controller
          //Redirection sur page Home
          header("Location: $this->baseUrl");
       }
+      var_dump($_SESSION['utilisateur']);
    }
 }

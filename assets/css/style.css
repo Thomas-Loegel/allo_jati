@@ -1,144 +1,146 @@
+
+/*******************************************************CSS ANTHONY COMMENTS**********************************************/
 .img-thumbnail{
-   max-width: 75px;
-   max-height: 75px;
-   border:1px solid red;
+  max-width: 75px;
+  max-height: 75px;
+  border:1px solid red;
 }
 .container-fluid{
-   margin:0;
-   padding:0;
-   border:1px solid red;
+  margin:0;
+  padding:0;
+  border:1px solid red;
 }
 
 .radio {
-   opacity: 0;
-   cursor: pointer;
+  opacity: 0;
+  cursor: pointer;
 }
 .star-note {
-   unicode-bidi: bidi-override;
-   direction: rtl;
+  unicode-bidi: bidi-override;
+  direction: rtl;
 }
 
 .star-note>label:before {
-   color: orange;
-   content: "\2605";
+  color: orange;
+  content: "\2605";
 }
 
 /*//////////////////////*/
 .star {
-   color: orange;
+  color: orange;
 }
 
 .star {
-   unicode-bidi: bidi-override;
-   direction: rtl;
+  unicode-bidi: bidi-override;
+  direction: rtl;
 }
 
 .star>label {
-   display: inline-block;
-   position: relative;
-   width: 1.1em;
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
 }
 
 .star>label:hover:before, .star>label:hover~label:before {
-   content: "\2605";
-   position: absolute;
+  content: "\2605";
+  position: absolute;
 }
 
 /*//////////////////////////////*/
 .star-complet1 {
-   color: orange;
+  color: orange;
 }
 .star-complet1 {
-   unicode-bidi: bidi-override;
-   direction: rtl;
+  unicode-bidi: bidi-override;
+  direction: rtl;
 }
 .star-complet1>label {
-   display: inline-block;
-   position: relative;
-   width: 1.1em;
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
 }
 .star-complet1>label:nth-child(9):before, .star-complet1>label:nth-child(9)~label:before{
-   content: "\2605";
-   position: absolute;
+  content: "\2605";
+  position: absolute;
 }
 /*///////////////////////////*/
 .star-complet2 {
-   color: orange;
+  color: orange;
 }
 .star-complet2 {
-   unicode-bidi: bidi-override;
-   direction: rtl;
+  unicode-bidi: bidi-override;
+  direction: rtl;
 }
 .star-complet2>label {
-   display: inline-block;
-   position: relative;
-   width: 1.1em;
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
 }
 .star-complet2>label:nth-child(7):before, .star-complet2>label:nth-child(7)~label:before{
-   content: "\2605";
-   position: absolute;
+  content: "\2605";
+  position: absolute;
 }
 /*///////////////////////////*/
 .star-complet3 {
-   color: orange;
+  color: orange;
 }
 .star-complet3 {
-   unicode-bidi: bidi-override;
-   direction: rtl;
+  unicode-bidi: bidi-override;
+  direction: rtl;
 }
 .star-complet3>label {
-   display: inline-block;
-   position: relative;
-   width: 1.1em;
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
 }
 .star-complet3>label:nth-child(5):before, .star-complet3>label:nth-child(5)~label:before{
-   content: "\2605";
-   position: absolute;
+  content: "\2605";
+  position: absolute;
 }
 /*///////////////////////////*/
 .star-complet4 {
-   color: orange;
+  color: orange;
 }
 .star-complet4 {
-   unicode-bidi: bidi-override;
-   direction: rtl;
+  unicode-bidi: bidi-override;
+  direction: rtl;
 }
 .star-complet4>label {
-   display: inline-block;
-   position: relative;
-   width: 1.1em;
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
 }
 .star-complet4>label:nth-child(3):before, .star-complet4>label:nth-child(3)~label:before{
-   content: "\2605";
-   position: absolute;
+  content: "\2605";
+  position: absolute;
 }
 /*///////////////////////////*/
 .star-complet5 {
-   color: orange;
+  color: orange;
 }
 .star-complet5 {
-   unicode-bidi: bidi-override;
-   direction: rtl;
+  unicode-bidi: bidi-override;
+  direction: rtl;
 }
 .star-complet5>label {
-   display: inline-block;
-   position: relative;
-   width: 1.1em;
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
 }
 .star-complet5>label:nth-child(1):before, .star-complet5>label:nth-child(1)~label:before{
-   content: "\2605";
-   position: absolute;
+  content: "\2605";
+  position: absolute;
 }
 /*///////////////////////////*/
 
 .container2 {
-   padding-right: 15px;
-   padding-left: 15px;
-   margin-right: auto;
-   margin-left: auto;
-   max-width:800px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  max-width:800px;
 
- }
+}
 @media (max-width: 1366px) {
 
 }
@@ -162,12 +164,10 @@
 @media (max-width: 640px) {
 
 }
-/*/////////////////////*/
-
-
+/*/////////////////////////////////////////////////////////////FIN DE COMMENTS///////////////////////////////////////////////////////////////*/
 .notif-comment{
    font-size:30px;
-   color: #930031;;
+   color: #930031;
 }
 /* INPUT BOOTSTRAP */
 label {
@@ -492,110 +492,158 @@ main{
 }
 .box-shadow{
    position: relative;
-}
-.box-shadow:hover{
-	animation: box-shadow 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-.box-title{
-   background-color: rgba(6, 6, 6, 0.5);
-   width: 100%;
-   position: absolute;
-   top: 94%;
-   left: 50%;
-   transform: translate(-50%, -50%);
    text-align: center;
-}
-.box-title a{
-   text-transform: capitalize;
-   text-decoration: none;
-   font-weight: bold;
    color: white;
 }
-.form-search{
-   margin: 50px 100px;
-}
-.wrap-serach-result{
-   margin: 50px 0;
-}
-.serch-result{
-   margin: 0 100px;
-}
-.serch-result ul{
-   margin: 0;
-   padding: 0;
-}
-.title-center{
-   text-align: center;
-}
-h2{
-   padding: 50px 0;
-}
-/* END */
-
-// HEADER //
-header{
-   cursor: default;
-   box-shadow: 0px 5px 5px -5px #656565;
-   text-align: center;
-}
-.header-nav ul{
-   margin: 0;
-   padding: 0;
-}
-.header-nav ul li{
-   display: inline-block;
-   margin: 20px 20px;
-}
-.header-nav ul li a{
-   margin: 20px 20px;
-   text-transform: uppercase;
-   text-decoration: none;
-   font-weight: bold;
-   color: #333;
-}
-.header-nav ul li a:hover{
-   padding-bottom: 4px;
-   border-bottom: 2px solid #666;
-   box-shadow: 0px 10px 10px -10px #656565;
-}
-/* END */
 
 
 
+ /*-------------STYLE CSS SHOWALLMOVIES-----------/*
+/* ----------------------------------------------
+ * Generated by Animista on 2020-2-11 10:26:44
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
 
-/* FICHE FILM & ARTISTE */
-.wrapper-id{
-   margin: 50px 0;
-   display: flex;
-}
-.item-1{
-   flex-direction: row;
-   width: 20%;
-}
-.item-1 img{
-   margin-bottom: 20px;
-}
-.item-1 ul{
-   margin: 0;
-   padding: 0;
-}
-.item-1 ul li{
-   list-style: none;
-}
-.list-artists{
-   margin-top: 50px;
-}
-.item-2{
-   flex-direction: column;
-   padding: 0 50px;
-   width: 80%;
-}
-.item-2 h3{
-   margin-bottom: 50px;
-   text-align: center;
-   text-transform: uppercase;
-}
-.item-3{
+/**
+ * ----------------------------------------
+ * animation shadow-drop-2-center
+ * ----------------------------------------
+ */
+ /* ----------------------------------------------
+ * Generated by Animista on 2020-2-11 10:23:37
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
 
+/**
+ * ----------------------------------------
+ * animation text-focus-in
+ * ----------------------------------------
+ */
+  /* ----------------------------------------------
+ * Generated by Animista on 2020-2-11 13:48:24
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation shadow-drop-2-bottom
+ * ----------------------------------------
+ */
+ @-webkit-keyframes shadow-drop-2-center {
+   0% {
+     -webkit-transform: translateZ(0);
+             transform: translateZ(0);
+     -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+             box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+   }
+   100% {
+     -webkit-transform: translateZ(50px);
+             transform: translateZ(50px);
+     -webkit-box-shadow: 0 0 40px 0px rgba(0, 0, 0, 0.5);
+             box-shadow: 0 0 40px 0px rgba(0, 0, 0, 0.5);
+   }
+ }
+ @keyframes shadow-drop-2-center {
+   0% {
+     -webkit-transform: translateZ(0);
+             transform: translateZ(0);
+     -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+             box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+   }
+   100% {
+     -webkit-transform: translateZ(50px);
+             transform: translateZ(50px);
+     -webkit-box-shadow: 0 0 40px 0px rgba(0, 0, 0, 0.5);
+             box-shadow: 0 0 40px 0px rgba(0, 0, 0, 0.5);
+   }
+ }
+ 
+ .shadow-drop-2-center :hover{
+	-webkit-animation: shadow-drop-2-center 0.6s cubic-bezier(0.600, -0.280, 0.735, 0.045) both;
+	        animation: shadow-drop-2-center 0.6s cubic-bezier(0.600, -0.280, 0.735, 0.045) both;
 }
-/* END */
+ .text-in-image {
+   display:none;
+   position: absolute;
+   background-image: radial-gradient(circle, #535c68, #63707d, #748493, #8499a9, #95afc0);
+   width: 100%;
+   bottom: 0%;
+   left: 50%;
+   transform: translate(-50%, -0%);
+   -webkit-animation: text-focus-in 0.4s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	animation: text-focus-in 0.4s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+ }
+
+ .shadow-drop-2-center:hover + .text-in-image{
+   display: block;
+ }
+
+
+ @-webkit-keyframes text-focus-in {
+   0% {
+     -webkit-filter: blur(12px);
+             filter: blur(12px);
+     opacity: 0;
+   }
+   100% {
+     -webkit-filter: blur(0px);
+             filter: blur(0px);
+     opacity: 1;
+   }
+ }
+ @keyframes text-focus-in {
+   0% {
+     -webkit-filter: blur(12px);
+             filter: blur(12px);
+     opacity: 0;
+   }
+   100% {
+     -webkit-filter: blur(0px);
+             filter: blur(0px);
+     opacity: 1;
+   }
+ }
+
+@-webkit-keyframes shadow-drop-2-bottom {
+   0% {
+     -webkit-transform: translateZ(0) translateY(0);
+             transform: translateZ(0) translateY(0);
+     -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+             box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+   }
+   100% {
+     -webkit-transform: translateZ(50px) translateY(-12px);
+             transform: translateZ(50px) translateY(-12px);
+     -webkit-box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.705);
+             box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.705);
+   }
+ }
+ @keyframes shadow-drop-2-bottom {
+   0% {
+     -webkit-transform: translateZ(0) translateY(0);
+             transform: translateZ(0) translateY(0);
+     -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+             box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+   }
+   100% {
+     -webkit-transform: translateZ(50px) translateY(-12px);
+             transform: translateZ(50px) translateY(-12px);
+     -webkit-box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.705);
+             box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.705);
+   }
+ }
+ .shadow-drop-2-bottom{
+   border-top: solid 1px transparent;
+ }
+ .shadow-drop-2-bottom :hover {
+	-webkit-animation: shadow-drop-2-bottom 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+           animation: shadow-drop-2-bottom 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+           border-bottom:solid 1px black;
+           border-top:none;
+}
