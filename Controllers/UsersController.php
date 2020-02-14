@@ -83,9 +83,6 @@ class UsersController extends Controller
                      //header("Location: $this->baseUrl");
                   }
                }
-
-
-
             } else {
                $error = "Mot de passe incorrect";
             }
@@ -102,7 +99,7 @@ class UsersController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
-         'error' => $error,
+         'error' => $error
       ]);
    }
 

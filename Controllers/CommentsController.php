@@ -41,10 +41,12 @@ class CommentsController extends Controller
       echo $template->render(["comments" => $comments]);
    }
    public function addComment($id_movie){
-      /*session_start();
+      session_start();
       var_dump($_SESSION['status']);
       if($_SESSION['status'] != null){
          $pseudo = $_SESSION['utilisateur'];
+      }
+   }
 
    public function addComment($id_movie)
    {
@@ -130,7 +132,7 @@ class CommentsController extends Controller
       } else {
          $_SESSION['tmpComment'] = $_POST['ControlText'];
          var_dump($_SESSION['tmpComment']);
-      }*/
+      }
    }
 }
 /*(

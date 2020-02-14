@@ -51,6 +51,10 @@ $router->get('/Admin/:slug', 'Admin.addFilm');
 $router->get('/Admin/:slug', 'Admin.addArtiste');
 
 
+// Route Contact
+$router->post('/Suggestion', 'Suggestion.addSuggestion');
+$router->get('/Suggestion', 'Suggestion.suggestion');
+
 // Route Home
 $router->get('/', 'Home.index');
 
