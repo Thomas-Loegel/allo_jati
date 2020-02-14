@@ -17,6 +17,13 @@
 		{# FORMULAIRE DE CONNEXION #}
 		{% if slug is null %}
 
+      {{ dump(maildone) }}
+      {% if mailDone %}
+          {% block javascripts %}
+          <script type="text/javascript">window.alert("Verifiez vos mails ! ;)");</script>
+          {% endblock %}
+      {% endif %}
+
 			<div class="row justify-content-md-center">
 				<form name="login" class="col-4 users-form" method="POST" action="{{baseUrl}}/Connexion/post">
 

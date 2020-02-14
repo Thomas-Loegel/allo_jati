@@ -191,16 +191,30 @@ class UsersController extends Controller
                      $type->setParameter('charset', 'utf-8');
 
                      //On envois le mail en local
-                     $mailer->send($message);
+                     $result = $mailer->send($message);
+
+                     if ($result) {
+
+
+                        //$popup = '<p onload=<script type="text/javascript">window.alert("Verifiez vos mails ! ;)");</script></p>';
+
+                        $mailDone = true;
+
+
+                        $pageTwig = 'Users/login.html.twig';
+                        $template = $this->twig->load($pageTwig);
+                        echo $template->render([
+                           //'popup' => $popup,
+                           'mailDone' => $mailDone,
+                        ]);
+
+
+                     } else {
+                        echo "Votre mail n'a pas pu être envoyé";
+                     }
                   } else {
                      echo "nous ne pouvons pas vous envoyer de mail car nous utilisons swiftmailer";
                   }
-
-
-                  //var_dump ($userMail);
-
-                  //redirection vers page d'accueil'
-                  //header("Location: $this->baseUrl/Connexion");
                } else {
                   $mailError = "Nous ne connaissons pas votre mail ...";
                }
@@ -209,6 +223,9 @@ class UsersController extends Controller
             $generalError = "Veuillez remplir le champ recquis !";
          }
       }
+
+
+
 
       //affichage
       $pageTwig = 'Users/login.html.twig';
