@@ -10,7 +10,7 @@
 
 <div class="container">
 
-   <form class="mx-auto" method="POST">
+   <form class="mx-auto" method="POST" action="{{baseUrl}}/Suggestion" >
 
       <div class="form-group">
          <label for="validationDefault01">Pseudo</label>
@@ -36,14 +36,10 @@
          </textarea>
       </div>
 
-      <button type="submit" class="btn btn-primary">Submit</button>
-
+      <button type="submit" name ="submit" class="btn btn-primary">Submit</button>
+      <div role="alert" class="alert alert-success" > {{ ok }} </div>
+      
    </form>
 
-
-
-      {% for suggestion in suggestion %}
-    
-      {% endfor %}
 <div>  
 {% endblock %}

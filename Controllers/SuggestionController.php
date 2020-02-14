@@ -16,7 +16,7 @@ class SuggestionController extends Controller
 
    public function suggestion()
    {
-      $suggestion   = $this->model->suggestion();
+      $suggestion  = $this->model->suggestion();
       $pageTwig = 'Suggestion/suggestion.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(["suggestion" => $suggestion]);
@@ -24,29 +24,39 @@ class SuggestionController extends Controller
 
    public function addSuggestion()
    {
-      $to = "somebody@example.com";
-      $subject = "My subject";
-      $txt = "Hello world!";  
-      $headers = "From: webmaster@example.com" . "\r\n" .
-      "CC: somebodyelse@example.com";
-
-      $mail = mail($to,$subject,$txt,$headers);
-
-      /*$pseudo = $_POST['pseudo'];
+      $pseudo = $_POST['pseudo'];
       $email = $_POST['email'];
       $textArea = $_POST['text'];
       $file = $_POST['file'];
 
+      if ($_SERVER['SERVER_NAME'] == 'localhost'){
+         
+         $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 25))
+            ->setUsername('0cf32673dea69d')
+            ->setPassword('50f544d056b8b2');
+      }  else{
+            $transport = new Swift_SendmailTransport();
+         }
+         $mailer = new Swift_Mailer($transport);
+      
+         $message = (new Swift_Message('Suggestion site Allo_Jati'))
+            ->setFrom([$email => $pseudo])
+            ->setTo(['receiver@suggestion.org', 'allo_jati@suggestion.org' => 'A name'])
+            ->setBody($textArea.$file);
 
-       $result = mail('test@test.com', 'salut', 'je fais un test', 'From: webmaster@example.com');*/
+         $result = $mailer->send($message);
+         
+         if ($result){
+            $ok =  'merci!!!!!';
+                    
+         }else{
+            $ok =  'errrorrrrr';
 
-      if ($mail){
-         echo "thanx";
-
-      }else{
-         echo"nooooooooooooo";
       }
-   }
-
-
+      $pageTwig = 'Suggestion/suggestion.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render(["ok" =>$ok ]);
+   }          
 }
+
+
