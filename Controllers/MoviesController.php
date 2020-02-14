@@ -60,7 +60,9 @@ class MoviesController extends ArtsController
       // Affiche les Artistes liés a Id Film
       $instanceArtists = new Artists();
       $artists = $instanceArtists->getByMovie($id_movie);
-/**************************************************************ANTHONY********************************************************************************** */
+
+/******************************ANTHONY********************************* */
+
       //Instancie la class comments
       $instanceComments = new Comments();
       //Recherche les commentaire appartenant au film
@@ -104,6 +106,7 @@ class MoviesController extends ArtsController
       $template = $this->twig->load($pageTwig);
 
 
+      var_dump($comments);
 
       //Si l'utilisateur non identifié avait déjà déposer un commentaire...
       if(isset($_SESSION['tmpComment'])) {

@@ -45,7 +45,7 @@
    {% block comment %}
    {#*****************************Ajout d'un Comment****************************#}
    <div class="container2">
-      <form method="POST" id="comment" action="{{baseUrl}}/Comments/addComment/{{movie.id_movie}}">
+      <form method="POST" id="comment" action="{{baseUrl}}/Comments/addComment_{{movie.id_movie}}">
 
          {#*****************************Si nous sommes administrateur ou logger ****************************#}
          {% if status == 1 or status == 2 %}

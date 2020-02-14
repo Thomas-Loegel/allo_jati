@@ -26,8 +26,6 @@ class Users extends Model
       $req = $this->pdo->prepare("INSERT INTO users(mail, pseudo, mdp, avatar) VALUES ('$mail', '$pseudo', '$mdp', '$avatar')");
       $req->execute();
    }
-
-
    //verifie si le pseudo entré existe dans la bdd
    public function pseudoExist($pseudo)
    {
@@ -36,7 +34,6 @@ class Users extends Model
       $req->execute();
       return $req->fetch();
    }
-
    //verifie si le mail entré existe dans la bdd
    public function mailExist($mail)
    {
@@ -46,16 +43,12 @@ class Users extends Model
       //$data = $req->fetch();
       return $req->fetch();
    }
-
    public function recupPseudo($mail)
    {
       //chercher dans table users le pseudo correspondant au mail
       $req = $this->pdo->prepare("SELECT pseudo FROM users WHERE mail = :mail");
       $req->bindValue(':mail', $mail);
    }
- 
-  
-
    public function returnUrl()
    {
       $adresse = $_SERVER['PHP_SELF'];
@@ -66,7 +59,7 @@ class Users extends Model
       }
       return substr($adresse, 48);
    }
-
+/*************************Function ANTHONY********************/
    /**
    *  Récupère les Utilisateurs
    */
@@ -76,9 +69,8 @@ class Users extends Model
       $req->execute();
       return $req->fetchAll();
    }
-
    /**
-   *
+   *  Récupère l'id_user depuis son pseudo
    */
    public function getOneUser($pseudo)
    {
@@ -86,9 +78,8 @@ class Users extends Model
       $req->execute([$pseudo]);
       return $req->fetch();
    }
-
    /**
-   *
+   * Récupère le pseudo depuis l'id user
    */
    public function getOnePseudo($id_user)
    {
@@ -96,19 +87,8 @@ class Users extends Model
       $req->execute([$id_user]);
       return $req->fetch();
    }
-
    /**
-   *
-   */
-   public function getOneIdUser($pseudo)
-   {
-      $req = $this->pdo->prepare('SELECT `id_user` FROM users WHERE pseudo= ?');
-      $req->execute([$pseudo]);
-      return $req->fetch();
-   }
-
-   /**
-   *
+   *  Vérifie si l'id_user est admin
    */
    public function checkAdmin($id_user)
    {
@@ -116,9 +96,8 @@ class Users extends Model
       $req->execute([$id_user]);
       return $req->fetch();
    }
-
    /**
-   *
+   *  Récupère l'avatar depuis un id user
    */
    public function searchAvatar($id_user)
    {
@@ -126,6 +105,15 @@ class Users extends Model
       $req->execute([$id_user]);
       return $req->fetch();
    }
-
    /****************************************************************** */
+
+      /**
+   *
+   */
+  public function getOneIdUser($pseudo)
+  {
+     $req = $this->pdo->prepare('SELECT `id_user` FROM users WHERE pseudo= ?');
+     $req->execute([$pseudo]);
+     return $req->fetch();
+  }
 }
