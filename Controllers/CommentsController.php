@@ -12,7 +12,9 @@ class CommentsController extends Controller
       $this->model->delComment($id_movie);
    }
 
-   //render 
+   /**
+   *  Render
+   */
    public function index()
    {
       /*$OneComment = $this->model->getOneComment();
@@ -23,16 +25,23 @@ class CommentsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments, "OneComment" => $OneComment/*, "liaison" => $liaisonCom, "del" => $delete*/]);
    }
-   //Supprime tous les commentaire liés à id_movie
+
+   /**
+   *  Supprime tous les commentaire liés à id_movie
+   */
    public function delAllComByMovie($id)
    {
-      $tabCom = $this->model->linkCommentByMovie($id); 
+      $tabCom = $this->model->linkCommentByMovie($id);
       var_dump($tabCom);
       foreach ($tabCom as $k => $v) {
          $delId = $v['id_comment'];
          $this->model->delComment($delId);
       }
    }
+
+   /**
+   *
+   */
    public function getAllCom()
    {
       $comments   = $this->model->getAllComments();
@@ -41,11 +50,22 @@ class CommentsController extends Controller
       echo $template->render(["comments" => $comments]);
    }
 
+<<<<<<< HEAD
+=======
+   /**
+   *
+   */
+   public function addComment($id_movie){
+      /*session_start();
+      var_dump($_SESSION['status']);
+      if($_SESSION['status'] != null){
+         $pseudo = $_SESSION['utilisateur'];
+>>>>>>> 8f0137045b699dfa65499a63832d5bd43e25c280
 
    public function addComment($id_movie)
    {
       session_start();
-      //On affiche une alerte si un commentaire n'est pas complet après connexion 
+      //On affiche une alerte si un commentaire n'est pas complet après connexion
       if(isset($_SESSION['alert'])) {
          echo $_SESSION['alert'];
          unset($_SESSION['alert']);
@@ -59,7 +79,7 @@ class CommentsController extends Controller
 
             $user = $this->model->getOneUser($_SESSION['utilisateur']);
             $id_user = $user[0]['id_user'];
-   
+
             //insert le commentaire dans la table et retourne l'ID du commentaire
             $idComment = $this->model->addComment($id_user, $_SESSION['tmpTitle'], $_SESSION['tmpComment'], $_SESSION['tmpNote']);
             $this->model->addUsersComments($id_user, $idComment);
@@ -69,7 +89,7 @@ class CommentsController extends Controller
             unset($_SESSION['tmpComment']);
             unset($_SESSION['tmpNote']);
             unset($_SESSION['idMovie']);
-   
+
             header("Location: $this->baseUrl/Films/Film_$id_movie");
          }
 
@@ -81,7 +101,7 @@ class CommentsController extends Controller
             $id_user = $user[0]['id_user'];
             $title = $_POST['title'];
             $content = $_POST['controlText'];
-            
+
             var_dump($_POST);
             //insert le commentaire dans la table et retourne l'ID du commentaire
             $idComment = $this->model->addComment($id_user, $title, $content, $note);
@@ -95,7 +115,7 @@ class CommentsController extends Controller
             //Si le commentaire est vide et publié on prépare une alerte
             $_SESSION['alert'] = "<script>alert(\"Votre commentaire n'a pas été publié car il est vide\")</script>";
             header("Location: $this->baseUrl/Films/Film_$id_movie");
-         } 
+         }
 
       }
       //si l'utilisateur n'est pas connecter
@@ -116,7 +136,7 @@ class CommentsController extends Controller
          $pageTwig = 'Users/index.html.twig';
          $template = $this->twig->load($pageTwig);
          echo $template->render();
-      } 
+      }
    }
    public function modifyComment($id_movie, $id_comment){
    }
@@ -131,3 +151,12 @@ class CommentsController extends Controller
       }
    }
 }
+<<<<<<< HEAD
+=======
+/*(
+      'SELECT comments.*
+      FROM movies, movie_comments, comments
+      WHERE movies.id_movie = 1
+      AND movies.id_movie = movie_comments.id_movie
+      AND comments.id_comment = movie_comments.id_comment');*/
+>>>>>>> 8f0137045b699dfa65499a63832d5bd43e25c280
