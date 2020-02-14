@@ -14,7 +14,7 @@ class UsersController extends Controller
    // Affichage du template pour $slug = null (formulaire de connexion)
    public function connexion($slug = null)
    {
-      var_dump($_SESSION);
+      session_start();
       //$slug est null
       $title = "Connexion";
 
@@ -57,6 +57,7 @@ class UsersController extends Controller
    public function login($slug = null)
    {
       $error = "";
+      session_start();
       // si l'input pseudo et mdp n'est pas vide
       if (!empty($_POST['pseudo']) && !empty($_POST['mdp'])) {
 
@@ -72,9 +73,6 @@ class UsersController extends Controller
             if (password_verify($_POST['mdp'], $hashMdp)) {
                /*********************ANTHONY************************ */
                //On démarre une session 
-               session_start();
-
-               session_start();
                $_SESSION["utilisateur"] = $_POST['pseudo'];
                //on recherche si l'utilisateur conncté est administrateur
                $this->checkAdministrator($_SESSION["utilisateur"]);
@@ -113,6 +111,7 @@ class UsersController extends Controller
    //gestion de l'envoi du formulaire de Mot De Passe Oublié
    public function forgetPassword($slug = "MotDePasseOublie")
    {
+      session_start();
       //déclaration des variables
       $mail = NULL;
       $mailError = "";
@@ -216,7 +215,7 @@ class UsersController extends Controller
 
    public function changePassword($slug = "ChangerMotDePasse" )
    {
-
+      session_start();
       //déclaration des variables
       $mdp = "";
       $mdpError = "";
@@ -265,6 +264,7 @@ class UsersController extends Controller
    //gestion de l'envoi du formulaire d'inscription
    public function register($slug = "Inscription")
    {
+      session_start();
       //déclaration des variables
       $mail = NULL;
       $mailError = NULL;
@@ -345,18 +345,18 @@ class UsersController extends Controller
             $generalError = "Veuillez remplir tous les champs recquis !";
          }
       }
-*/
+
       //affichage
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(/*[
+      echo $template->render([
          'slug' => $slug,
          'generalError' => $generalError,
          'mailError' => $mailError,
          'pseudoError' => $pseudoError,
          'mdpError' => $mdpError,
          'inputMail' => $mail,
-      'inputPseudo' => $pseudo,]*/);
+      'inputPseudo' => $pseudo,]);
    }
    /********************************ANTHONY************************************/
    //On déconnecte la SESSION
