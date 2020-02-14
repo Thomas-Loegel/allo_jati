@@ -27,6 +27,14 @@ $router->post('/Connexion/post', 'Users.login');
 $router->get('/MotDePasseOublie', 'Users.forgetPassword');
 $router->post('/MotDePasseOublie/post', 'Users.forgetPassword');
 
+// Route ChangePassword
+$router->post('/ChangerMotDePasse/:userPseudo/post', 'Users.changePassword');
+$router->get('/ChangerMotDePasse/:userPseudo', 'Users.changePassword');
+
+// route forgetPassword
+$router->get('/MotDePasseOublie', 'Users.forgetPassword');
+$router->post('/MotDePasseOublie/post', 'Users.forgetPassword');
+
 // Route Register
 $router->get('/Inscription', 'Users.register');
 $router->post('/Inscription/post', 'Users.register');
