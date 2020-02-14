@@ -55,6 +55,7 @@ $router->get('/Admin/Liste_Utilisateurs', 'Admin.editUsers');
 $router->get('/Admin/Liste_Films', 'Admin.editMovies');
 $router->get('/Admin/Liste_Artistes', 'Admin.editArtists');
 $router->get('/Admin/Ajout_Film', 'Admin.addMovie');
+$router->post('/Admin/Ajout_Film/Add', 'Admin.addMovie');
 $router->get('/Admin/Ajout_Artiste', 'Admin.addArtist');
 
 

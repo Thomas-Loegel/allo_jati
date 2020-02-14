@@ -139,52 +139,58 @@
             {% if (slug == 'Ajout_Film') %}
             <h3>Ajoutez un Film</h3>
             <div id="ajout-film">
-               <form>
+               <form name="addMovie" method ="POST" action="{{baseUrl}}/Admin/Ajout_Film/Add">
                   <div class="form-row">
                      <div class="col-md-4 mb-3">
-                        <input type="text" class="form-control" placeholder="Titre">
+                        <input type="text" class="form-control" value="{{title}}" name ="title" placeholder="Titre">
                      </div>
 
                      <div class="col-md-4 mb-3">
-                        <input type="text" class="form-control" placeholder="Date de sortie (JJ/MM/AAAA)">
+                        <input type="text" class="form-control" value="{{year}}"name ="year" placeholder="Date de sortie (AAAA)">
                      </div>
 
                      <div class="col-md-4 mb-3">
-                        <input type="text" class="form-control" placeholder="Durée (HH/MM/SS)">
+                        <input type="text" class="form-control" value="{{time}}" name ="time" placeholder="Durée (HH:MM:SS)">
                      </div>
                   </div>
 
                   <div class="form-row">
                      <div class="col-md-6 mb-3">
-                        <input type="text" class="form-control" placeholder="Affiche (URL)">
+                        <input type="text" class="form-control" value="{{picture}}" name ="picture" placeholder="Affiche (URL)">
                      </div>
 
                      <div class="col-md-6 mb-3">
-                        <select class="custom-select">
-                           <option selected disabled value="">Genre</option>
-                           <option>Action</option>
-                           <option>Annimation</option>
-                           <option>Catasrophe</option>
-                           <option>Comédie</option>
-                           <option>Dramatique</option>
-                           <option>Documentaire</option>
-                           <option>Historique</option>
-                           <option>Horreur</option>
-                           <option>Romantique</option>
-                           <option>Sience-Fiction</option>
-
+                        <select class="custom-select" name ="style">
+                           <option>Genre</option>
+                           <option value="Action">Action</option>
+                           <option value="Annimation">Annimation</option>
+                           <option value="Catasrophe">Catasrophe</option>
+                           <option value="Comédie">Comédie</option>
+                           <option value="Dramatique">Dramatique</option>
+                           <option value="Documentaire">Documentaire</option>
+                           <option value="Historique">Historique</option>
+                           <option value="Horreur">Horreur</option>
+                           <option value="Romantique">Romantique</option>
+                           <option value="Sience-Fiction">Sience-Fiction</option>
                         </select>
                      </div>
                   </div>
 
                   <div class="form-row">
                      <div class="col-md-12 mb-3">
-                        <textarea class="form-control" placeholder="Résumé" rows="3"></textarea>
+                        <textarea class="form-control" name ="resume" placeholder="Résumé" rows="3">{{resume}}</textarea>
                      </div>
                   </div>
 
                   <button class="btn btn-primary" type="submit">Editer</button>
                </form>
+
+               <div>
+                  <p class="text-success">{{success}}</p>
+               </div>
+               <div>
+                  <p class="text-danger">{{error}}</p>
+               </div>
             </div>
             {% endif %}
 
