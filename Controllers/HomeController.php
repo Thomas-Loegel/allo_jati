@@ -8,10 +8,11 @@ class HomeController extends Controller
       $this->twig = parent::getTwig();
    }
 
+   /**
+   *
+   */
    public function index()
    {
-
-      
       $pageTwig = 'index.html.twig';
       $template = $this->twig->load($pageTwig);
 
@@ -19,7 +20,6 @@ class HomeController extends Controller
       //session_destroy();
       $test = $_SESSION;
       //parent::test();
-
       echo $template->render(['test' => $test]);
    }
 }

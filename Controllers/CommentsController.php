@@ -12,7 +12,9 @@ class CommentsController extends Controller
       $this->model->delComment($id_movie);
    }
 
-   //render 
+   /**
+   *  Render
+   */
    public function index()
    {
       /*$OneComment = $this->model->getOneComment();
@@ -23,16 +25,23 @@ class CommentsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments, "OneComment" => $OneComment/*, "liaison" => $liaisonCom, "del" => $delete*/]);
    }
-   //Supprime tous les commentaire liés à id_movie
+
+   /**
+   *  Supprime tous les commentaire liés à id_movie
+   */
    public function delAllComByMovie($id)
    {
-      $tabCom = $this->model->linkCommentByMovie($id); 
+      $tabCom = $this->model->linkCommentByMovie($id);
       var_dump($tabCom);
       foreach ($tabCom as $k => $v) {
          $delId = $v['id_comment'];
          $this->model->delComment($delId);
       }
    }
+
+   /**
+   *
+   */
    public function getAllCom()
    {
       $comments   = $this->model->getAllComments();
@@ -40,12 +49,97 @@ class CommentsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments]);
    }
+
+   /**
+   *
+   */
    public function addComment($id_movie){
       /*session_start();
       var_dump($_SESSION['status']);
       if($_SESSION['status'] != null){
          $pseudo = $_SESSION['utilisateur'];
 
+   public function addComment($id_movie)
+   {
+      session_start();
+      //On affiche une alerte si un commentaire n'est pas complet après connexion
+      if(isset($_SESSION['alert'])) {
+         echo $_SESSION['alert'];
+         unset($_SESSION['alert']);
+      }
+      //Si aucune note celle-ci vaux null
+      if(!isset($_POST['note'])){ $_POST['note'] = null; } else { $note = $_POST['note']; }
+      //Si l'utilisateur est connecter
+      if ($_SESSION['status'] === 2 || $_SESSION['status'] === 1) {
+
+         if (!empty($_SESSION['tmpTitle']) && !empty($_SESSION['tmpComment']) && !empty($_SESSION['tmpNote'])) {
+
+            $user = $this->model->getOneUser($_SESSION['utilisateur']);
+            $id_user = $user[0]['id_user'];
+
+            //insert le commentaire dans la table et retourne l'ID du commentaire
+            $idComment = $this->model->addComment($id_user, $_SESSION['tmpTitle'], $_SESSION['tmpComment'], $_SESSION['tmpNote']);
+            $this->model->addUsersComments($id_user, $idComment);
+            //insert le commentaire dans la table movie_comments
+            $postComment = $this->model->addMovieComments($id_movie, $idComment);
+            unset($_SESSION['tmpTitle']);
+            unset($_SESSION['tmpComment']);
+            unset($_SESSION['tmpNote']);
+            unset($_SESSION['idMovie']);
+
+            header("Location: $this->baseUrl/Films/Film_$id_movie");
+         }
+
+         else if (!empty($_POST['title']) && !empty($_POST['controlText'])) {
+
+            //On recherche l'id de l'utilisateur connecté
+            $user = $this->model->getOneUser($_SESSION['utilisateur']);
+
+            $id_user = $user[0]['id_user'];
+            $title = $_POST['title'];
+            $content = $_POST['controlText'];
+
+            var_dump($_POST);
+            //insert le commentaire dans la table et retourne l'ID du commentaire
+            $idComment = $this->model->addComment($id_user, $title, $content, $note);
+            //insert dans la table users_comment l'ID du commentaire
+            $this->model->addUsersComments($id_user, $idComment);
+            //insert le commentaire dans la table movie_comments
+            $this->model->addMovieComments($id_movie, $idComment);
+
+            header("Location: $this->baseUrl/Films/Film_$id_movie");
+         } else {
+            //Si le commentaire est vide et publié on prépare une alerte
+            $_SESSION['alert'] = "<script>alert(\"Votre commentaire n'a pas été publié car il est vide\")</script>";
+            header("Location: $this->baseUrl/Films/Film_$id_movie");
+         }
+
+      }
+      //si l'utilisateur n'est pas connecter
+      else if ($_SESSION['status'] === null) {
+         if (isset($_POST)) {
+            //On sauvegarde les éléments du commentaire avant redirection
+            $_SESSION['tmpTitle'] = $_POST['title'];
+            $_SESSION['tmpComment'] = $_POST['controlText'];
+            $_SESSION['tmpNote'] = $_POST['note'];
+            $_SESSION['idMovie'] = $id_movie;
+         }
+
+         //Initialise la variable $adressPage à la page courante
+         $adressPage = "$this->baseUrl/Films/Film_$id_movie";
+         $_SESSION['location'] = $adressPage;
+
+         //On renvois l'utilisateur a la page login
+         $pageTwig = 'Users/index.html.twig';
+         $template = $this->twig->load($pageTwig);
+         echo $template->render();
+      }
+   }
+   public function postAfterLogin(){
+      //Si les 3 champs sont bien remplis on peut publier le commentaire
+      if(!empty($_SESSION['tmpTitle']) && !empty($_SESSION['tmpComment']) && !empty($_SESSION['tmpNote'])) {
+         $id_movie = $_SESSION['idMovie'];
+         $this->addComment($id_movie);
       } else {
          $_SESSION['tmpComment'] = $_POST['ControlText'];
          var_dump($_SESSION['tmpComment']);
@@ -53,8 +147,8 @@ class CommentsController extends Controller
    }
 }
 /*(
-      'SELECT comments.* 
-      FROM movies, movie_comments, comments 
-      WHERE movies.id_movie = 1 
-      AND movies.id_movie = movie_comments.id_movie 
+      'SELECT comments.*
+      FROM movies, movie_comments, comments
+      WHERE movies.id_movie = 1
+      AND movies.id_movie = movie_comments.id_movie
       AND comments.id_comment = movie_comments.id_comment');*/
