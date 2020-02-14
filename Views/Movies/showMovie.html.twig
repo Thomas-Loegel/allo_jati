@@ -3,184 +3,194 @@
 {% block title %}Film{% endblock %}
 
 {% block body %}
-<div class="container">
-   <div class="flex-column align-items-start bd-highlight">
-      <div class="d-flex pt-5">
-         <div class="d-flex flex-column">
-            <img class="rounded mb-5" src="{{movie.picture}}" style="width:300px;height:400px;">
-            <p><span class="font-weight-bold">Année : </span>{{movie.year}}</p>
-            <p><span class="font-weight-bold">Genre : </span>{{movie.style}}</p>
-            <p><span class="font-weight-bold">Durée : </span>{{movie.time | date('H:i:s')}}</p>
-            <!-- Défini le role de l'artiste -->
-            {% for artists in artists %}
-            {% if artists.role == 1 %}
-            {% set role = 'Acteur' %}
-            {% elseif artists.role == 2 %}
-            {% set role = 'Réalisateur' %}
-            {% elseif artists.role == 3 %}
-            {% set role = 'Réalisateur & Acteur' %}
-            {% endif %}
-            <p><br><span class="font-weight-bold">{{role}}</span></h6>
-               <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}">{{artists.first_name}}
-                  {{artists.last_name}}</a>
-         </div>
-         <div class="d-flex flex-column ml-5">
-            <h2 class="pb-5 text-center">{{movie.title}}</h2>
-            <p class=" text-break"> {{movie.resume}}</p>
-
-         </div>
-      </div>
-      <div class="mx-auto text-center bd-highlight mt-5">
-         <a class="text-decoration-none text-reset " href="{{baseUrl}}/Films">
-            <input class="btn btn-primary mb-5 btn-lg " type="submit" value="Retour">
-         </a>
-      </div>
-   </div>
-</div>
-{% endfor %}
-
-
-{#*****************************************************************************ANTHONY****************************************************#}
-{% block comment %}
-{#***********************************************************************Ajout d'un Comment***********************************************#}
-
-<div class="container2">
-   <form method="POST" id="comment" action="{{baseUrl}}/Comments/addComment/{{movie.id_movie}}">
-      {% if status == 1 %}
-      {% if tmpTitle  %}
-      <input class="form-control" type="text" name="title" placeholder="{{ tmpTitle }}" value="{{ tmpTitle }}">
-      {% else %}
-      <input class="form-control" type="text" name="title" placeholder="Titre">
-      {% endif %}
-      {% if tmpComment %}
-      <textarea class="form-control" name="controlText" id="ControlText{{ loop.index }}" rows="3"
-         placeholder="{{ tmpComment }}" value="{{ tmpComment }}"></textarea>
-      {% else %}
-      <textarea class="form-control" name="controlText" id="ControlText{{ loop.index }}" rows="3"
-         placeholder="Votre commentaire"></textarea>
-      {% endif %}
-      {% else %}
-      <input class="form-control" type="text" name="title" placeholder="Titre">
-      <textarea class="form-control" name="controlText" id="ControlText{{ loop.index }}" rows="3" placeholder="
-               {{ user}}"></textarea>
-      {% endif %}
-      <div class="row">
-         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-            <div class="form-group">
-               {% if status == 1 or status == 2 %}
-               {% if tmpNote %}
-               <div id="containerstar" class="star-complet{{tmpNote}}">
-                  {% else %}
-                  <div id="containerstar" class="star">
-                     {% endif %}
-                     {% elseif status == null %}
-                     <div id="containerstar" class="star">
-                        {% endif %}
-                        <!--System de notation par étoile-->
-                        <label for="note-5" class="labelButon">☆</label>
-                        <input class="radio" type="radio" name="note" id="note-5" value="5">
-                        <label for="note-4" class="labelButon">☆</label>
-                        <input class="radio" type="radio" name="note" id="note-4" value="4">
-                        <label for="note-3" class="labelButon">☆</label>
-                        <input class="radio" type="radio" name="note" id="note-3" value="3">
-                        <label for="note-2" class="labelButon">☆</label>
-                        <input class="radio" type="radio" name="note" id="note-2" value="2">
-                        <label for="note-1" class="labelButon">☆</label>
-                        <input class="radio" type="radio" name="note" id="note-1" value="1">
-                     </div>
-                  </div>
-               </div>
-               {% if status == 1 or status == 2 %}
-               <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                  <div class="d-flex justify-content-center">
-                    
-                     <span>{{ user.pseudo }}</span> 
-                    
-                  </div>
-               </div>
-               <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                  <div class="d-flex justify-content-end">
-                     <span>{{ datedujour }}</span>
-                  </div>
-               </div>
+   <div class="container">
+      <div class="flex-column align-items-start bd-highlight">
+         <div class="d-flex pt-5">
+            <div class="d-flex flex-column">
+               <img class="rounded mb-5" src="{{movie.picture}}" style="width:300px;height:400px;">
+               <p><span class="font-weight-bold">Année : </span>{{movie.year}}</p>
+               <p><span class="font-weight-bold">Genre : </span>{{movie.style}}</p>
+               <p><span class="font-weight-bold">Durée : </span>{{movie.time | date('H:i:s')}}</p>
+               <!-- Défini le role de l'artiste -->
+               {% for artists in artists %}
+               {% if artists.role == 1 %}
+               {% set role = 'Acteur' %}
+               {% elseif artists.role == 2 %}
+               {% set role = 'Réalisateur' %}
+               {% elseif artists.role == 3 %}
+               {% set role = 'Réalisateur & Acteur' %}
                {% endif %}
+               <p><br><span class="font-weight-bold">{{role}}</span></h6>
+                  <a href="{{baseUrl}}/Films/Artiste_{{artists.id_artist}}">{{artists.first_name}}
+                     {{artists.last_name}}</a>
             </div>
-            <button type="submit" id="btnpost" class="btn btn-success btn-sm mb-2">Poster</button>
-   </form>
-</div>
+            <div class="d-flex flex-column ml-5">
+               <h2 class="pb-5 text-center">{{movie.title}}</h2>
+               <p class=" text-break"> {{movie.resume}}</p>
 
-{% endblock %}
-{# *****************fin du block comment début de la liste des comments***************************#}
-{% if comments %}
-<div class="container2">
-
-   {% for comment in comments %}
-   <h2>{{ comment.title }}</h2>
-   <div class="row">
-      <div class="col-2">
-         <div class="col-12" >
-            <img src="{{comment.avatar }}" class="img-thumbnail">
-            <p class="text-center">{{ comment.id_user }}</p>
-         </div>
-      </div>
-
-      <div class="col-10">
-         <div class="col-12">
-
-
-            <div id="controlComment{{ loop.index }}" data-idcomment="{{ comment.id_comment }}" data-base="{{baseUrl}}" data-idmovie="{{movie.id_movie}}">
-               <p id="pComment{{ loop.index }}">{{ comment.content }}</p>
-           
-
-               {# *******************si l'on est admin cette partie nous est réserver*****************#}
-               {% if status == 1 %}
-
-               <div id="contenaireBtn{{ loop.index }}" class="col-12 d-flex justify-content-between name">
-                  <button type="submit" id="btnmodify{{ loop.index }}"
-                     class="btn btn-success btn-sm mb-2">Editer</button>
-                  <button type="submit" id="btndelete{{ loop.index }}"
-                     class="btn btn-success btn-sm mb-2" onclick="location.href='{{baseUrl}}/Comments/deleteComment_{{ comment.id_comment }}'">Supprimer</button>
-                  <button type="submit" id="btncontact{{ loop.index }}"
-                     class="btn btn-success btn-sm mb-2" data-user="{{ comment.id_user }}" data>Contacter</button>
-               </div>
-
-               {% endif %}
             </div>
-
-
          </div>
-      </div>
-   </div>
-   {# *******************fin de la partie admin***********************************#}
-
-   {% if status == 2 and comment.id_user == userLogin %}
-   <div class="row">
-      <div class="col-3"> </div>
-      <div id="contenaireBtn{{ loop.index }}" class="col-6 d-flex justify-content-between name">
-         <button type="submit" id="btnmodify{{ loop.index }}" class="btn btn-success btn-sm mb-2">Modifier</button>
-      </div>
-      <div class="col-3"></div>
-   </div>
-   {% endif %}
-   <div class="row">
-      <div class="col-2 d-flex justify-content-start">
-         <div class="star-note">
-            {% for i in 1..comment.note %}
-            <label></label>
-            {% endfor %}
+         <div class="mx-auto text-center bd-highlight mt-5">
+            <a class="text-decoration-none text-reset " href="{{baseUrl}}/Films">
+               <input class="btn btn-primary mb-5 btn-lg " type="submit" value="Retour">
+            </a>
          </div>
-      </div>
-      <div class="col-4 d-flex justify-content-center">
-         <p>Commentaire: N°{{ comment.id_comment }}</p>
-      </div>
-      <div class="col-6 d-flex justify-content-around">
-         <p>Date de publication: {{ comment.date }}</p>
       </div>
    </div>
    {% endfor %}
-</div>
-{% endif %}
-{#*********************************************************************ANTHONY*******************************************************#}
 
+
+   {#**********************************ANTHONY**********************************#}
+   {% block comment %}
+   {#*****************************Ajout d'un Comment****************************#}
+   <div class="container2">
+      <form method="POST" id="comment" action="{{baseUrl}}/Comments/addComment/{{movie.id_movie}}">
+
+         {#*****************************Si nous sommes administrateur ou logger ****************************#}
+         {% if status == 1 or status == 2 %}
+               {#*****Si un titre a été placés en temporaire avant login*****#}
+               {% if tmpTitle  %}
+                  <input class="form-control" type="text" name="title" value="{{ tmpTitle }}">
+               {% else %}
+                  <input class="form-control" type="text" name="title" placeholder="Titre">
+               {% endif %}
+               {#*****Si un commentaire a été placés en temporaire avant login*****#}
+               {% if tmpComment %}
+                  <textarea class="form-control" name="controlText" id="ControlText{{ loop.index }}" rows="3"
+                  placeholder="{{ tmpComment }}" value="{{ tmpComment }}"></textarea>
+               {% else %}
+               <textarea class="form-control" name="controlText" id="ControlText{{ loop.index }}" rows="3"
+                  placeholder="Votre commentaire"></textarea>
+               {% endif %}
+         {#*****************************Si l'utilisateur n'est que visiteur ****************************#}
+         {% else %}
+            <input class="form-control" type="text" name="title" placeholder="Titre">
+            <textarea class="form-control" name="controlText" id="ControlText{{ loop.index }}" rows="3" placeholder="{{ user }}"></textarea>
+         {% endif %}
+
+         <div class="row">
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+               <div class="form-group">
+                  {#*****************************Si nous sommes administrateur ou logger ****************************#}
+                  {% if status == 1 or status == 2 %}
+                  {#*****Si une note a été placés en temporaire avant login*****#}
+                     {% if tmpNote %}
+                     <div id="containerstar" class="star-complet{{tmpNote}}">
+                     {% else %}
+                     <div id="containerstar" class="star">
+                     {% endif %}
+
+                  {% else %}
+                     <div id="containerstar" class="star">
+                  {% endif %}
+                              <!--System de notation par étoile-->
+                              <label for="note-5" class="labelButon">☆</label>
+                              <input class="radio" type="radio" name="note" id="note-5" value="5">
+                              <label for="note-4" class="labelButon">☆</label>
+                              <input class="radio" type="radio" name="note" id="note-4" value="4">
+                              <label for="note-3" class="labelButon">☆</label>
+                              <input class="radio" type="radio" name="note" id="note-3" value="3">
+                              <label for="note-2" class="labelButon">☆</label>
+                              <input class="radio" type="radio" name="note" id="note-2" value="2">
+                              <label for="note-1" class="labelButon">☆</label>
+                              <input class="radio" type="radio" name="note" id="note-1" value="1">
+                           </div>
+                        </div>
+                     </div>
+                  {#*****************************Si nous sommes administrateur ou logger on affiche le pseudo****************************#}
+                  {% if status == 1 or status == 2 %}
+                  <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                     <div class="d-flex justify-content-center">
+                        <span>{{ user.pseudo }}</span> 
+                     </div>
+                  </div>
+                  {% else %}
+                  {#*****************************Sinon nous sommes visiteur****************************#}
+                  <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                     <div class="d-flex justify-content-center">
+                        <span>{{ 'Visiteur' }}</span> 
+                     </div>
+                  </div>
+                  {% endif %}
+
+                  <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                     <div class="d-flex justify-content-end">
+                        <span>{{ datedujour }}</span>
+                     </div>
+                  </div>
+               </div>
+               <button type="submit" id="btnpost" class="btn btn-success btn-sm mb-2">Poster</button>
+         </form>
+      </div>
+   {% endblock %}
+
+   {# *************************début de la liste des comments***************************#}
+
+   {% block listComment %}
+
+      {% if comments %}
+         <div class="container2">
+         {# *************************on affiche l'avatar du propriétaire du commentaire***************************#}
+         {% for comment in comments %}
+            <h2>{{ comment.title }}</h2>
+            <div class="row">
+               <div class="col-2">
+                  <div class="col-12" >
+                     <img src="{{comment.avatar }}" class="img-thumbnail">
+                     <p class="text-center">{{ comment.id_user }}</p>
+                  </div>
+               </div>
+            {# *************************on affiche son commentaire***************************#}
+            <div class="col-10">
+               <div class="col-12">
+                  <div id="controlComment{{ loop.index }}" data-idcomment="{{ comment.id_comment }}" data-base="{{baseUrl}}" data-idmovie="{{movie.id_movie}}">
+                     <p id="pComment{{ loop.index }}">{{ comment.content }}</p>
+                     {# *******************si l'on est admin on peux modifier/supprimer le commentaire *****************#}
+                     {% if status == 1 %}
+                     <div id="contenaireBtn{{ loop.index }}" class="col-12 d-flex justify-content-between name">
+                        <button type="submit" id="btnmodify{{ loop.index }}"
+                           class="btn btn-success btn-sm mb-2">Editer</button>
+                        <button type="submit" id="btndelete{{ loop.index }}"
+                           class="btn btn-success btn-sm mb-2" onclick="location.href='{{baseUrl}}/Comments/deleteComment_{{ comment.id_comment }}'">Supprimer</button>
+                        {# *******************On peux envoyer un email a l'utilisateur *****************#}
+                           <button type="submit" id="btncontact{{ loop.index }}"
+                           class="btn btn-success btn-sm mb-2" data-user="{{ comment.id_user }}" data>Contacter</button>
+                     </div>
+                     {% endif %}
+                  </div>
+               </div>
+            </div>
+            </div>
+            {# *******************si l'on est logger on peux modifier ses propres commentaire***********************************#}
+
+            {% if status == 2 and comment.id_user == userLogin %}
+            <div class="row">
+               <div class="col-3"> </div>
+               <div id="contenaireBtn{{ loop.index }}" class="col-6 d-flex justify-content-between name">
+                  <button type="submit" id="btnmodify{{ loop.index }}" class="btn btn-success btn-sm mb-2">Modifier</button>
+               </div>
+               <div class="col-3"></div>
+            </div>
+            {# *******************On affiche la note du film, l'id du commentaire et sa date de publication*****************#}
+            {% endif %}
+            <div class="row">
+               <div class="col-2 d-flex justify-content-start">
+                  <div class="star-note">
+                     {% for i in 1..comment.note %}
+                     <label></label>
+                     {% endfor %}
+                  </div>
+               </div>
+               <div class="col-4 d-flex justify-content-center">
+                  <p>Commentaire: N°{{ comment.id_comment }}</p>
+               </div>
+               <div class="col-6 d-flex justify-content-around">
+                  <p>Date de publication: {{ comment.date }}</p>
+               </div>
+            </div>
+         {% endfor %}
+      </div>
+      {% endif %}
+   {% endblock %}
 
 {% endblock %}
