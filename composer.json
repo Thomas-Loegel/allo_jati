@@ -1,19 +1,20 @@
 {
-   "name": "project/allo_jati",
-   "authors": [
-      {
-         "name": "ilias-imoula",
-         "email": "iliasimoula97@gmail.com"
-      }
-   ],
-   "require": {
-      "twig/twig": "^3.0"
-   },
-   "autoload": {
-      "classmap": [
-         "Controllers/",
-         "Models/",
-         "Router/"
-      ]
-   }
+    "name": "arteast/twig",
+    "authors": [
+        {
+            "name": "Thomas Loegel",
+            "email": "t.loegel@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0",
+        "swiftmailer/swiftmailer": "^6.2"
+    },
+    "autoload": {
+        "classmap": [
+            "Router",
+            "Controllers",
+            "Models"
+        ]
+    }
 }
