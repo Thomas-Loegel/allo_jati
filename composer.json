@@ -1,15 +1,19 @@
 {
-    "name": "project/allo_jati",
+    "name": "arteast/twig",
     "authors": [
         {
-            "name": "jad67tony",
-            "email": "anthony.montmirail@gmail.com"
+            "name": "Thomas Loegel",
+            "email": "t.loegel@gmail.com"
         }
     ],
     "require": {
-        "twig/twig": "3.0"
+        "twig/twig": "^3.0"
     },
     "autoload": {
-        "classmap":["Router/", "Controllers/", "Models/"] 
+        "classmap": [
+            "Router",
+            "Controllers",
+            "Models"
+        ]
     }
 }
