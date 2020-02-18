@@ -129,6 +129,7 @@ class UsersController extends Controller
       $mailError = "";
       $generalError = "";
       $inputMail = "";
+      $mailDone = NULL;
 
       //formulaire envoyé ?
       if (!empty($_POST)) {
@@ -198,17 +199,32 @@ class UsersController extends Controller
 
                         //$popup = '<p onload=<script type="text/javascript">window.alert("Verifiez vos mails ! ;)");</script></p>';
 
-                        $mailDone = true;
+                        //$mailDone = true;
+                        $slug = NULL;
+
+                        //var_dump($mailDone);
+
+                        ?>
+                           <script type="text/javascript">
+
+                              document.location.href="http://localhost/allo_jati/Connexion";
+                              
+                              window.alert("Verifiez vos mails ! ;)");
+                              
+                           </script>
+                        <?php
+                        
+
 
 
                         $pageTwig = 'Users/login.html.twig';
                         $template = $this->twig->load($pageTwig);
+
                         echo $template->render([
                            //'popup' => $popup,
+                           'slug' => $slug,
                            'mailDone' => $mailDone,
                         ]);
-
-
                      } else {
                         echo "Votre mail n'a pas pu être envoyé";
                      }
@@ -233,6 +249,8 @@ class UsersController extends Controller
       echo $template->render([
          'slug' => $slug,
          'mail' => $mail,
+
+         //'mailDone' => $mailDone,
 
          'mailError' => $mailError,
          'inputMail' => $inputMail,

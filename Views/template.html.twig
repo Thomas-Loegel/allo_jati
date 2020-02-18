@@ -1,62 +1,64 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <link rel='icon' href='https://i.ibb.co/RSYk2Kw/jatilogo.png' type='image/x-icon'/ >
-   <title>{% block title %}Allo Jati{% endblock %}</title>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link rel='icon' href='https://i.ibb.co/RSYk2Kw/jatilogo.png' type='image/x-icon'>
+		<title>
+			{% block title %}Allo Jati
+			{% endblock %}
+		</title>
 
-   {% block stylesheets %}
-   <link rel="stylesheet" href="{{baseUrl}}/assets/css/style.css">
-   <link rel="stylesheet" href="{{baseUrl}}/assets/css/bootstrap+reboot.css">
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{baseUrl}}/assets/css/style.css">
+			<link rel="stylesheet" href="{{baseUrl}}/assets/css/bootstrap+reboot.css">
 
-   {% endblock %}
-</head>
+		{% endblock %}
+	</head>
 
-<body>
-   {% block header %}
-   <header>
-      <nav class="header-nav navbar navbar-expand-lg mb-5 p-0">
-         <a class="navbar-brand ml-5" href="{{baseUrl}}">
-            <img src="https://i.ibb.co/RSYk2Kw/jatilogo.png" width="100" height="100" class="d-inline-block align-top" alt="">
-         </a>
-         <div class="collapse navbar-collapse " id="navbarText">
-            <ul class="navbar-nav mx-auto font-weight-bold p-0">
-               <li class="nav-item active">
-                  <a class="nav-link hover-menu" href="{{baseUrl}}/Artistes">ARTISTES</a>
-               </li>
-               <li class="nav-item active">
-                  <a class="nav-link hover-menu" href="{{baseUrl}}/Films">FILMS</a>
-               </li>
-               <li class="nav-item active">
-                  <a class="nav-link hover-menu" href="{{baseUrl}}/Connexion">CONNEXION</a>
-               </li>
-               <li class="nav-item active">
-                  <a class="nav-link hover-menu" href="{{baseUrl}}/Admin">ADMIN</a>
-               </li>
-            </ul>
-         </div>
-      </nav>
-   </header>
-   {% endblock %}
+	<body>
+		{% block header %}
+			<header>
+				<nav class="header-nav navbar navbar-expand-lg mb-5 p-0">
+					<a class="navbar-brand ml-5" href="{{baseUrl}}">
+						<img src="https://i.ibb.co/RSYk2Kw/jatilogo.png" width="100" height="100" class="d-inline-block align-top" alt="">
+					</a>
+					<div class="collapse navbar-collapse " id="navbarText">
+						<ul class="navbar-nav mx-auto font-weight-bold p-0">
+							<li class="nav-item active">
+								<a class="nav-link hover-menu" href="{{baseUrl}}/Artistes">ARTISTES</a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link hover-menu" href="{{baseUrl}}/Films">FILMS</a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link hover-menu" href="{{baseUrl}}/Connexion">CONNEXION</a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link hover-menu" href="{{baseUrl}}/Admin">ADMIN</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</header>
+		{% endblock %}
 
-   {% block body %}
-   <main>
-      {# Here the main content, you can create other blocks if there are useful to you #}
-   </main>
-   {% endblock %}
+		{% block body %}
+			<main>
+				{# Here the main content, you can create other blocks if there are useful to you #}
+			</main>
+		{% endblock %}
 
-   {% block footer %}
-   {# Footer ici #}
-   <footer>
+		{% block footer %}
+			{# Footer ici #}
+			<footer></footer>
+		{% endblock %}
 
-   </footer>
-   {% endblock %}
-
-   {% block javascripts %}
-   {# Here you can add only the JS that you need #}
-   {% endblock %}
-</body>
+		{% block javascripts %}
+			{# Here you can add only the JS that you need #}
+			
+		{% endblock %}
+	</body>
 </html>

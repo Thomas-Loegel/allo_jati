@@ -6,58 +6,63 @@
 
 {% block body %}
 
-	{% for login in utilisateur %}
-		<p>{{pseudo.pseudo}}</p>
-	{% endfor %}
+{% for login in utilisateur %}
+	<p>{{pseudo.pseudo}}</p>
+{% endfor %}
 
 
-	<div
-		class="container">
+<div
+	class="container">
 
-		{# FORMULAIRE DE CONNEXION #}
-		{% if slug is null %}
 
-      {{ dump(maildone) }}
-      {% if mailDone %}
-          {% block javascripts %}
-          <script type="text/javascript">window.alert("Verifiez vos mails ! ;)");</script>
-          {% endblock %}
-      {% endif %}
+	{# FORMULAIRE DE CONNEXION #}
+	{% if slug is null %}
 
-			<div class="row justify-content-md-center">
-				<form name="login" class="col-4 users-form" method="POST" action="{{baseUrl}}/Connexion/post">
 
-					<h2>Connectez-vous :</h2>
+		<div class="row justify-content-md-center">
+			<form name="login" class="col-4 users-form" method="POST" action="{{baseUrl}}/Connexion/post">
 
-					{# PSEUDO #}
-					<div class="form-group users">
-						<label for="pseudo">
-							<h4>Pseudo</h4>
-						</label>
-						<input type="text" name="pseudo" class="form-control" id="pseudo">
-					</div>
-					{# MOT DE PASSE #}
-					<div class="form-group users">
-						<label for="mdp">
-							<h4>Mot de passe</h4>
-						</label>
-						<input type="password" class="form-control" name="mdp">
-						<p>
-							<a href="{{baseUrl}}/MotDePasseOublie" id="lien-vers-mdp-oublie">J'ai oublié mon mot de passe :'(</a>
-						</p>
-					</div>
-					<div
-						class="form-group users">
-						{# LIEN VERS FORMULAIRE INSCRIPTION #}
-						<a href="{{ baseUrl }}/Inscription" class="badge badge-light col">Pas encore inscrit ?! :o</a>
+				<h2>Connectez-vous :</h2>
 
-						{# SUBMIT #}
-						<button type="submit" class="btn btn-outline jati-colors-btn col">Se connecter</button>
-						<p class="text-danger text-center col">{{error}}</p>
-					</div>
-				</form>
-			</div>
+				{# PSEUDO #}
+				<div class="form-group users">
+					<label for="pseudo">
+						<h4>Pseudo</h4>
+					</label>
+					<input type="text" name="pseudo" class="form-control" id="pseudo">
+				</div>
+				{# MOT DE PASSE #}
+				<div class="form-group users">
+					<label for="mdp">
+						<h4>Mot de passe</h4>
+					</label>
+					<input type="password" class="form-control" name="mdp">
+					<p>
+						<a href="{{baseUrl}}/MotDePasseOublie" id="lien-vers-mdp-oublie">J'ai oublié mon mot de passe :'(</a>
+					</p>
+				</div>
+				<div
+					class="form-group users">
+					{# LIEN VERS FORMULAIRE INSCRIPTION #}
+					<a href="{{ baseUrl }}/Inscription" class="badge badge-light col">Pas encore inscrit ?! :o</a>
 
+					{# SUBMIT #}
+					<button type="submit" class="btn btn-outline jati-colors-btn col">Se connecter</button>
+					<p class="text-danger text-center col">{{error}}</p>
+				</div>
+			</form>
+		</div>
+
+		{#
+         {{ dump(maildone) }}
+			   {% if mailDone %}
+			   	{% block javascripts %}
+                    <script type="text/javascript">
+		   		      window.alert("Verifiez vos mails ! ;)");
+		      	      </script>
+               {% endblock %}
+		   	{% endif %}
+       #}
 
 			{# FORMULAIRE DE MOT DE PASSE OUBLIÉ #}
 		{% elseif (slug == 'MotDePasseOublie') %}
