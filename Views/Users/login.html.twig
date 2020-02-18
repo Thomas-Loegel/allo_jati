@@ -6,59 +6,59 @@
 
 {% block body %}
 
-{% for login in utilisateur %}
-	<p>{{pseudo.pseudo}}</p>
-{% endfor %}
+	{% for login in utilisateur %}
+		<p>{{pseudo.pseudo}}</p>
+	{% endfor %}
 
 
-<div
-	class="container">
+	<div
+		class="container">
 
 
-	{# FORMULAIRE DE CONNEXION #}
-	{% if slug is null %}
+		{# FORMULAIRE DE CONNEXION #}
+		{% if slug is null %}
 
 
-		<div class="row justify-content-md-center">
-			<form name="login" class="col-4 users-form" method="POST" action="{{baseUrl}}/Connexion/post">
+			<div class="row justify-content-md-center">
+				<form name="login" class="col-4 users-form" method="POST" action="{{baseUrl}}/Connexion/post">
 
-				<h2>Connectez-vous :</h2>
+					<h2>Connectez-vous :</h2>
 
-				{# PSEUDO #}
-				<div class="form-group users">
-					<label for="pseudo">
-						<h4>Pseudo</h4>
-					</label>
-               
-					<input type="text" maxlength="15" value="{{ inputPseudo }}" name="pseudo" class="form-control d-inline" id="pseudo" {% if errorPseudo %} style="border-color: red;"{% endif %}>
-               <p class="text-danger d-inline position-static">{{ errorPseudo }}</p>
-               
-               
-				</div>
-				{# MOT DE PASSE #}
-				<div class="form-group users">
-					<label for="mdp">
-						<h4>Mot de passe</h4>
-					</label>
-					<input type="password" class="form-control" name="mdp" {% if errorMdp %} style="border-color: red;"{% endif %}>
-               <div>
-               <p class="text-danger d-inline position-static">{{ errorMdp }}</p>
-               </div>
-					
-				</div>
-				<div
-					class="form-group users">
-					{# LIEN VERS FORMULAIRE INSCRIPTION #}
-					<a href="{{ baseUrl }}/Inscription" class="badge badge-light col">Pas encore inscrit ?! :o</a>
+					{# PSEUDO #}
+					<div class="form-group users">
+						<label for="pseudo">
+							<h4>Pseudo</h4>
+						</label>
 
-					{# SUBMIT #}
-					<button type="submit" class="btn btn-outline jati-colors-btn col">Se connecter</button>
-               <p>
-						<a href="{{baseUrl}}/MotDePasseOublie" id="lien-vers-mdp-oublie">J'ai oublié mon mot de passe :'(</a>
-					</p>
-				</div>
-			</form>
-		</div>
+						<input type="text" maxlength="16" value="{{ inputPseudo }}" name="pseudo" class="form-control d-inline" id="pseudo" {% if errorPseudo %} style="border-color: #FF2E63;" {% endif %}>
+						<p class="text-danger d-inline position-static">{{ errorPseudo }}</p>
+
+
+					</div>
+					{# MOT DE PASSE #}
+					<div class="form-group users">
+						<label for="mdp">
+							<h4>Mot de passe</h4>
+						</label>
+						<input type="password" maxlength="16" class="form-control" name="mdp" {% if errorMdp %} style="border-color: #FF2E63;" {% endif %}>
+						<div>
+							<p class="text-danger d-inline position-static">{{ errorMdp }}</p>
+						</div>
+
+					</div>
+					<div
+						class="form-group users">
+						{# LIEN VERS FORMULAIRE INSCRIPTION #}
+						<a href="{{ baseUrl }}/Inscription" class="badge badge-light col">Pas encore inscrit ?! :o</a>
+
+						{# SUBMIT #}
+						<button type="submit" class="btn btn-outline jati-colors-btn col">Se connecter</button>
+						<p>
+							<a href="{{baseUrl}}/MotDePasseOublie" id="lien-vers-mdp-oublie">J'ai oublié mon mot de passe :'(</a>
+						</p>
+					</div>
+				</form>
+			</div>
 
 			{# FORMULAIRE DE MOT DE PASSE OUBLIÉ #}
 		{% elseif (slug == 'MotDePasseOublie') %}
@@ -75,7 +75,7 @@
 						<label for="regMail">
 							<h4>Adresse mail</h4>
 						</label>
-						<input type="email" class="form-control" name="mail" value=" {{ mail }}">
+						<input type="email" class="form-control" maxlength="64" name="mail" value=" {{ mail }}" {% if errorMail %} style="border-color: #FF2E63;" {% endif %}>
 						<small class="form-text text-danger">
 							{{ errorMail }}</small>
 					</div>
@@ -90,7 +90,7 @@
 
 
 			{# FORMULAIRE POUR CHANGER MOT DE PASSE #}
-		{% elseif (slug == slugurl) %}
+		{% elseif (slug == randomString) %}
 
 
 			<div class="row justify-content-md-center">
@@ -102,18 +102,37 @@
 
 					{# MOT DE PASSE #}
 					<div class="form-group users">
-						<input type="password" class="form-control" name="mdp">
+						<input type="password" maxlength="16" class="form-control" name="mdp" {% if errorMdp %} style="border-color: #FF2E63;" {% endif %}>
 						<small class="form-text text-danger">
-							{{ mdpError }}</small>
+							{{ errorMdp }}</small>
 					</div>
 
 					{# SUBMIT #}
 					<div class="form-group users">
 						<button type="submit" class="btn btn-outline jati-colors-btn col">Envoyer</button>
-						<p class="text-danger text-center col">{{ generalError }}</p>
 					</div>
 
 				</form>
+			</div>
+
+			{# EMAIL ENVOYE SUR DEMANDE #}
+		{% elseif (slug == 'mailEnvoye') %}
+
+
+			<div class="row justify-content-md-center">
+				<div
+					class="col-4 users-form">
+
+					{# message de Mail envoyé #}
+					<div class="form-group users">
+						<p>Un mail vous à été envoyé pour réinitialiser votre mot de passe</p>
+					</div>
+
+					{# direction page accueuil #}
+					<div class="form-group users">
+                  <a href="{{ baseUrl }}" class="btn btn-outline jati-colors-btn col">Revenir sur la page d'accueil</a>
+					</div>
+				</div>
 			</div>
 
 

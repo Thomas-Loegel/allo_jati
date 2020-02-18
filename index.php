@@ -19,7 +19,7 @@ $router->get('/Artistes/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artistes', 'Artists.showAllArtists');
 
-// Route Login
+// Route Login 
 $router->get('/Connexion', 'Users.connexion');
 $router->post('/Connexion/post', 'Users.login');
 
@@ -27,13 +27,16 @@ $router->post('/Connexion/post', 'Users.login');
 $router->get('/MotDePasseOublie', 'Users.forgetPassword');
 $router->post('/MotDePasseOublie/post', 'Users.forgetPassword');
 
+// route MailEnvoyé
+$router->get('/mailEnvoye', 'Users.mailEnvoye');
+
 // Route ChangePassword
-$router->post('/ChangerMotDePasse/:userPseudo/post', 'Users.changePassword');
-$router->get('/ChangerMotDePasse/:userPseudo', 'Users.changePassword');
+$router->get('/ChangerMotDePasse/:randomString', 'Users.updatePassword');
+$router->post('/ChangerMotDePasse/:slugurl/post', 'Users.updatePassword');
 
 // route forgetPassword
 $router->get('/MotDePasseOublie', 'Users.forgetPassword');
-$router->post('/MotDePasseOublie/post', 'Users.forgetPassword');
+$router->post('/Connexion/post', 'Users.forgetPassword');
 
 // Route Register
 $router->get('/Inscription', 'Users.register');
