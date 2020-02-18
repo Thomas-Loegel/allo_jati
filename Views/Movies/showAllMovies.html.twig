@@ -3,14 +3,16 @@
 {% block title %}Films{% endblock %}
 
 {% block body %}
-   <div class="d-flex justify-content-center pt-5" >
-      <h2 class="pb-5">Films</h2>
+   <div class="d-flex justify-content-center pt-5">
+      <h2>Films</h2>
    </div>
 
-   <form method="POST" action="{{baseUrl}}/Films/Recherche" class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" name="search" placeholder="Rechercher ..." aria-label="Search">
-      <button class="btn btn-dark my-2 my-sm-0" type="submit">Go</button>
-   </form>
+   <div class="d-flex justify-content-center pt-5 pb-5">
+      <form method="POST" action="{{baseUrl}}/Films/Recherche" class="form-inline my-2 my-lg-0">
+         <input class="form-control mr-sm-2" type="search" name="search" placeholder="Rechercher ..." aria-label="Search">
+         <button class="btn btn-dark my-2 my-sm-0" type="submit">Go</button>
+      </form>
+   </div>
 
    <!-- Affichage Classique -->
    {% if slug is null %}
@@ -27,17 +29,16 @@
 
    <!-- Affichage avec Search -->
    {% elseif (slug == "Recherche") %}
-      {% for search in search %}
-         <div class="d-flex justify-content-center flex-wrap">
+      <div class="d-flex justify-content-center flex-wrap">
+         {% for search in search %}
             <div class="d-flex flex-column m-5 container-image-showallmovie shadow-drop-2-center position-relative">
                <a href="{{baseUrl}}/Films/Film_{{search.id_movie}}" class="shadow-drop-2-center">
                <img src="{{search.picture}}" style="width:300px;height:400px;"></img>
                </a>
                <p class="text-in-image m-0 pb-3 px-0 pt-3 text-center font-weight-bold" >{{search.title}}</p>
             </div>
-         </div>
-      {% endfor %}
-      <p>{{notFound}}</p>
+         {% endfor %}
       </div>
+      <p>{{notFound}}</p>
    {% endif %}
 {% endblock %}

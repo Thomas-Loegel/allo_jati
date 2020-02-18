@@ -37,7 +37,7 @@ class Movies extends Model
    public function getBySearch($search)
    {
       $req = $this->pdo->prepare(
-         'SELECT title
+         'SELECT *
          FROM movies
          WHERE title
          LIKE "%'.$search.'%"');
