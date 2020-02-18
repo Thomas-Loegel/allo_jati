@@ -38,16 +38,10 @@ $router->post('/Inscription/post', 'Users.register');
 // Route Commentaires
 $router->post('/Comments/modifyComment_:id_movie/:id_comment', 'Comments.modifyComment');
 $router->post('/Comments/addComment_:id_movie', 'Comments.addComment');
-
-
-
 $router->get('/Commentaires/EffacerCommentaire_:id_comment_:id_user', 'Comments.deleteComment');
 $router->get('/Commentaires/EffacerCommentaire_:id_movie', 'Comments.deleteComment');
-
-
-
-$router->post('/Commentaires/Utilisateur', 'Comments.searchAllCommByUser');
-$router->get('/Commentaires/Tous', 'Comments.getAllCom');
+$router->post('/Admin/Utilisateur', 'Comments.searchAllCommByUser');
+$router->get('/Admin/Tous', 'Comments.getAllCom');
 $router->get('/Commentaires', 'Comments.index');
 
 // Route Deconnexion

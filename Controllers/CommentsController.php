@@ -46,17 +46,16 @@ class CommentsController extends Controller
     */
     public function refreshAfterDeteleCommByUser($id_user){
       $comments = $this->model->searchAllCommById($id_user);
-      $pageTwig = 'Comments/index.html.twig';
+      $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur']);
-
    }
    /**
     * Rafraichit la liste des comme par utilisateur (pseudo)
     */
    public function refreshUserForCommByUser($pseudo){
       $comments = $this->model->searchAllCommByUser($pseudo);
-      $pageTwig = 'Comments/index.html.twig';
+      $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur']);
    }
@@ -78,7 +77,7 @@ class CommentsController extends Controller
    public function getAllCom()
    {
       $comments   = $this->model->getAllComments();
-      $pageTwig = 'Comments/index.html.twig';
+      $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments, 'slug' => 'Tous']);
    }
