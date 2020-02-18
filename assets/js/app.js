@@ -93,6 +93,4 @@ if (CheminRepertoire === "http://localhost/allo_jati/Films") {
       });
    }
 }
-/*
-let NomDuFichier     = CheminComplet.substring(CheminComplet.lastIndexOf( "/" )+1 );
-alert ('NomDuFichier : \n'+NomDuFichier+ ' \n\n CheminRepertoire : \n' +CheminRepertoire+ ' \n\n CheminComplet :\n ' +CheminComplet);*/
+

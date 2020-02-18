@@ -14,7 +14,7 @@ class UsersController extends Controller
    // Affichage du template pour $slug = null (formulaire de connexion)
    public function connexion($slug = null)
    {
-      session_start();
+      var_dump("connexion");
       //$slug est null
       $title = "Connexion";
 
@@ -57,6 +57,7 @@ class UsersController extends Controller
    public function login($slug = null)
    {
       $error = "";
+      var_dump("login");
       session_start();
       // si l'input pseudo et mdp n'est pas vide
       if (!empty($_POST['pseudo']) && !empty($_POST['mdp'])) {
@@ -71,25 +72,28 @@ class UsersController extends Controller
 
             // si le mot de passe est bon
             if (password_verify($_POST['mdp'], $hashMdp)) {
+
                /*********************ANTHONY************************ */
-               //On démarre une session
-               $_SESSION["utilisateur"] = $_POST['pseudo'];
-               //on recherche si l'utilisateur conncté est administrateur
-               $this->checkAdministrator($_SESSION["utilisateur"]);
+               $instanceHome = new HomeController();
+               $instanceHome->__set('utilisateur', $_POST['pseudo']);
+
+               //on recherche si l'utilisateur connecté et administrateur
+               $this->checkAdministrator($instanceHome->__get('utilisateur'));
 
                //Si location existe on redirige vers postAfterLogin() pour publier le commentaire
-               if (isset($_SESSION['location'])) {
+               if ($instanceHome->__isset('location') === true) {
+                  //var_dump("ok");
                   $instanceComments = new CommentsController();
                   $instanceComments->postAfterLogin();
                /****************************************************/
                } else {
 
                   //Sinon on redirige l'utilisateur sur la page d'accueil
-                  if (!empty($_SESSION["utilisateur"])) {
-
+                  if (!$instanceHome->__empty('utilisateur')){                     
                      header("Location: $this->baseUrl");
                   }
                }
+
             } else {
                $error = "Mot de passe incorrect";
             }
@@ -100,12 +104,12 @@ class UsersController extends Controller
          $error = "Vous n'avez pas rempli tous les champs !";
       }
 
-      $pageTwig = 'Users/login.html.twig';
+      /*$pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
          'error' => $error,
-      ]);
+      ]);*/
    }
 
    // gestion de l'envoi du formulaire de Mot De Passe Oublié
@@ -356,28 +360,27 @@ class UsersController extends Controller
    //On déconnecte la SESSION
    public function logout()
    {
-      $instance = new HomeController();
-      $instance->destroy();
+      $instanceHome = new HomeController();
+      $instanceHome->destroy();
       var_dump($_SESSION['utilisateur']);
       header("Location: $this->baseUrl");
    }
 
    public function checkAdministrator($pseudo)
    {
+
       //On récupère l'id utilisateur par le pseudo
       $id_user = $this->model->getOneIdUser($pseudo);
       //On vérifie si l'id utilisateur est Admin
       $admin = $this->model->checkAdmin($id_user['id_user']);
-      if ($admin['admin'] == 1) {
-         $_SESSION['status'] = 1;
+      
+      $instanceHome = new HomeController();
 
-         //Redirection sur page Admin
-         header("Location: $this->baseUrl/Admin");
+      if ($admin['admin'] == 1) {
+         $instanceHome->__set('status', 1);
       } else {
-         $_SESSION['status'] = 2;
-         //Redirection sur page Home
-         header("Location: $this->baseUrl");
+         $instanceHome->__set('status', 2);
       }
-      var_dump($_SESSION['utilisateur']);
+      var_dump($instanceHome->__get('status'));
    }
 }
