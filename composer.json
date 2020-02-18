@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "name": "project/allo_jati",
     "authors": [
         {
@@ -12,23 +11,5 @@
     },
     "autoload": {
         "classmap":["Router/", "Controllers/", "Models/"] 
-=======
-    "name": "arteast/twig",
-    "authors": [
-        {
-            "name": "Thomas Loegel",
-            "email": "t.loegel@gmail.com"
-        }
-    ],
-    "require": {
-        "twig/twig": "^3.0"
-    },
-    "autoload": {
-        "classmap": [
-            "Router",
-            "Controllers",
-            "Models"
-        ]
->>>>>>> 8f0137045b699dfa65499a63832d5bd43e25c280
     }
 }

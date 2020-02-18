@@ -60,21 +60,15 @@ class MoviesController extends ArtsController
       // Affiche les Artistes liés a Id Film
       $instanceArtists = new Artists();
       $artists = $instanceArtists->getByMovie($id_movie);
-/**************************************************************ANTHONY********************************************************************************** */
+
+/******************************ANTHONY********************************* */
+
       //Instancie la class comments
       $instanceComments = new Comments();
       //Recherche les commentaire appartenant au film
       $comments = $instanceComments->linkCommentByMovie($id_movie);
-
-
-      $movie = $this->model->getMovie($id_movie);
-      $pageTwig = 'Movies/showMovie.html.twig';
-      $template = $this->twig->load($pageTwig);
-      echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments]);
-
       // ?
       $instanceUser = new Users();
-      session_start();
       //On affiche une alerte si un commentaire vide a été publié
       if(isset($_SESSION['alert'])) {
          echo $_SESSION['alert'];
@@ -112,6 +106,7 @@ class MoviesController extends ArtsController
       $template = $this->twig->load($pageTwig);
 
 
+      var_dump($comments);
 
       //Si l'utilisateur non identifié avait déjà déposer un commentaire...
       if(isset($_SESSION['tmpComment'])) {

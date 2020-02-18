@@ -7,7 +7,7 @@ class UsersController extends Controller
    {
       //$this->twig = parent::getTwig();
       parent::__construct();
-      $this->model = new User();
+      $this->model = new Users();
    }
 
 
@@ -105,7 +105,7 @@ class UsersController extends Controller
       echo $template->render([
          'slug' => $slug,
          'error' => $error,
-      ]);*/
+      ]);
    }
 
    // gestion de l'envoi du formulaire de Mot De Passe Oublié
