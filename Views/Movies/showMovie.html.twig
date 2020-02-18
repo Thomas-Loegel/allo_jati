@@ -5,7 +5,10 @@
 {% block body %}
    <div class="container">
       <div class="flex-column align-items-start bd-highlight">
-         <h2>{{movie.title}}</h2>
+         <div class="d-flex justify-content-center pt-5">
+            <h2>{{movie.title}}</h2>
+         </div>
+         
          <div class="d-flex pt-5">
             <div class="d-flex flex-column">
                <img class="rounded mb-5" src="{{movie.picture}}" style="width:300px;height:400px;">
@@ -102,14 +105,14 @@
                   {% if status == 1 or status == 2 %}
                   <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                      <div class="d-flex justify-content-center">
-                        <span>{{ user.pseudo }}</span> 
+                        <span>{{ user.pseudo }}</span>
                      </div>
                   </div>
                   {% else %}
                   {#*****************************Sinon nous sommes visiteur****************************#}
                   <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                      <div class="d-flex justify-content-center">
-                        <span>{{ 'Visiteur' }}</span> 
+                        <span>{{ 'Visiteur' }}</span>
                      </div>
                   </div>
                   {% endif %}
