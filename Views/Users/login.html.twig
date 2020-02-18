@@ -29,17 +29,22 @@
 					<label for="pseudo">
 						<h4>Pseudo</h4>
 					</label>
-					<input type="text" name="pseudo" class="form-control" id="pseudo">
+               
+					<input type="text" maxlength="15" value="{{ inputPseudo }}" name="pseudo" class="form-control d-inline" id="pseudo" {% if errorPseudo %} style="border-color: red;"{% endif %}>
+               <p class="text-danger d-inline position-static">{{ errorPseudo }}</p>
+               
+               
 				</div>
 				{# MOT DE PASSE #}
 				<div class="form-group users">
 					<label for="mdp">
 						<h4>Mot de passe</h4>
 					</label>
-					<input type="password" class="form-control" name="mdp">
-					<p>
-						<a href="{{baseUrl}}/MotDePasseOublie" id="lien-vers-mdp-oublie">J'ai oublié mon mot de passe :'(</a>
-					</p>
+					<input type="password" class="form-control" name="mdp" {% if errorMdp %} style="border-color: red;"{% endif %}>
+               <div>
+               <p class="text-danger d-inline position-static">{{ errorMdp }}</p>
+               </div>
+					
 				</div>
 				<div
 					class="form-group users">
@@ -48,21 +53,12 @@
 
 					{# SUBMIT #}
 					<button type="submit" class="btn btn-outline jati-colors-btn col">Se connecter</button>
-					<p class="text-danger text-center col">{{error}}</p>
+               <p>
+						<a href="{{baseUrl}}/MotDePasseOublie" id="lien-vers-mdp-oublie">J'ai oublié mon mot de passe :'(</a>
+					</p>
 				</div>
 			</form>
 		</div>
-
-		{#
-         {{ dump(maildone) }}
-			   {% if mailDone %}
-			   	{% block javascripts %}
-                    <script type="text/javascript">
-		   		      window.alert("Verifiez vos mails ! ;)");
-		      	      </script>
-               {% endblock %}
-		   	{% endif %}
-       #}
 
 			{# FORMULAIRE DE MOT DE PASSE OUBLIÉ #}
 		{% elseif (slug == 'MotDePasseOublie') %}
@@ -146,7 +142,7 @@
 						<label for="regPseudo">
 							<h4>Pseudo *</h4>
 						</label>
-						<input type="text" class="form-control" name="pseudo" value="{{ inputPseudo }}">
+						<input type="text" maxlength="15" class="form-control" name="pseudo" value="{{ inputPseudo }}">
 						<small id="requiredField" class="form-text text-danger">
 							{{ pseudoError }}</small>
 					</div>

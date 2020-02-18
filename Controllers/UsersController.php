@@ -58,27 +58,55 @@ class UsersController extends Controller
       ]);
    }
 
-   /**
-    *  gestion de l'envoi du formulaire de connexion
-    */
+
+
+   // gestion de l'envoi du formulaire de connexion
+
    public function login($slug = null)
    {
-      $error = "";
-      $mavariable = "";
+      $errorMdp = NULL;
+      $errorPseudo = NULL;
+      $mavariable = NULL;
+      $userInfo = NULL;
+      $inputPseudo = NULL;
+
+      //si pseudo vide
+      if (empty($_POST['pseudo'])) {
+         $errorPseudo = "Champ vide !";
+      }
+      //si mdp vide
+      if (empty($_POST['mdp'])) {
+         $errorMdp = "Champ vide !";
+      }
+
+      //si mdp vide et pseudo non vide
+      if (empty($_POST['mdp']) && !empty($_POST['pseudo'])) {
+         $userInfo = $this->model->checkLogin($_POST["pseudo"]);
+
+         //si le pseudo est connu de la bdd
+         if ($userInfo) {
+            $inputPseudo = $_POST['pseudo'];
+         } else {
+            $inputPseudoFalse = $_POST['pseudo'];
+            $errorPseudo = "Le pseudo : '$inputPseudoFalse' est inconnu de la base de donnée";
+         }
+      }
+
+
       // si l'input pseudo et mdp n'est pas vide
-      if (!empty($_POST['pseudo']) && !empty($_POST['mdp'])) {
+      if (!empty($_POST['mdp']) && !empty($_POST['pseudo'])) {
 
          //$user info appelle la fonction checkLogin
          $userInfo = $this->model->checkLogin($_POST["pseudo"]);
 
-         //Si $userInfo a pour valeur true 
+         //Si $userInfo a pour valeur true
          if ($userInfo) {
+            $inputPseudo = $_POST['pseudo'];
             //var_dump($userInfo);
             $hashMdp = $userInfo["mdp"];
 
             //si le mot de passe est bon
             if (password_verify($_POST['mdp'], $hashMdp)) {
-
                parent::controlSession();
 
                // On défini l'utilisateur a l'état de connecter
@@ -104,22 +132,55 @@ class UsersController extends Controller
                   }
                }
             } else {
-               $error = "Mot de passe incorrect";
+               $errorMdp = "Mot de passe incorrect";
             }
          } else {
-            $error = "Vous êtes qui ?! :S";
+            $errorPseudo = "Vous êtes qui ?! :S";
          }
-      } else {
-         $error = "Vous n'avez pas rempli tous les champs !";
       }
+
 
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
-         'error' => $error,
+         'errorMdp' => $errorMdp,
+         'errorPseudo' => $errorPseudo,
+         'inputPseudo' => $inputPseudo,
       ]);
    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
    //gestion de l'envoi du formulaire de Mot De Passe Oublié
    public function forgetPassword($slug = "MotDePasseOublie")
@@ -204,18 +265,13 @@ class UsersController extends Controller
 
                         //var_dump($mailDone);
 
-                        ?>
-                           <script type="text/javascript">
+?>
+                        <script type="text/javascript">
+                           document.location.href = "http://localhost/allo_jati/Connexion";
 
-                              document.location.href="http://localhost/allo_jati/Connexion";
-                              
-                              window.alert("Verifiez vos mails ! ;)");
-                              
-                           </script>
-                        <?php
-                        
-
-
+                           window.alert("Verifiez vos mails ! ;)");
+                        </script>
+<?php
 
                         $pageTwig = 'Users/login.html.twig';
                         $template = $this->twig->load($pageTwig);
@@ -351,7 +407,7 @@ class UsersController extends Controller
                if ($userMail == false) {
 
                   //pseudo correspond aux attentes ?
-                  if (preg_match('`^([a-zA-Z0-9-_]{2,36})$`', $pseudo)) {
+                  if (preg_match('`^([a-zA-Z0-9-_]{2,15})$`', $pseudo)) {
                      $userPseudo = $this->model->pseudoExist($pseudo);
 
                      //le pseudo entré existe dans la bdd ?
