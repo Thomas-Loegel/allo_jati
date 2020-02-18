@@ -63,7 +63,6 @@
 			{# FORMULAIRE DE MOT DE PASSE OUBLIÉ #}
 		{% elseif (slug == 'MotDePasseOublie') %}
 
-
 			<div class="row justify-content-md-center">
 				<form name="forgetPassword" class="col-4 users-form" method="POST" action="{{ baseUrl }}/MotDePasseOublie/post">
 
@@ -76,15 +75,14 @@
 						<label for="regMail">
 							<h4>Adresse mail</h4>
 						</label>
-						<input type="email" class="form-control" name="mail" value=" {{ inputMail }}">
+						<input type="email" class="form-control" name="mail" value=" {{ mail }}">
 						<small class="form-text text-danger">
-							{{ mailError }}</small>
+							{{ errorMail }}</small>
 					</div>
 
 					{# SUBMIT #}
 					<div class="form-group users">
 						<button type="submit" class="btn btn-outline jati-colors-btn col">Envoyer</button>
-						<p class="text-danger text-center col">{{ generalError}}</p>
 					</div>
 
 				</form>
