@@ -349,3 +349,8 @@ header {
 .shadow-drop-2-bottom {
   border-top: solid 1px transparent;
 }
+
+main{
+   height: calc(100vh - 110px);
+   background: center / 100% url("../avatar/central_cinema.jpg");
+}
