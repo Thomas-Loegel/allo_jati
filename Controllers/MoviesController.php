@@ -57,6 +57,8 @@ class MoviesController extends ArtsController
    */
    public function showMovie($id_movie) {
       session_start();
+
+
       // Affiche les Artistes liés a Id Film
       $instanceArtists = new Artists();
       $artists = $instanceArtists->getByMovie($id_movie);
@@ -94,7 +96,8 @@ class MoviesController extends ArtsController
 
       $user = null;
       //Affiche l'utilisateur connecté ou celle de l'admin
-      if (isset($_SESSION['status']) && ($_SESSION['status'] === 2 || $_SESSION['status'] === 1)) {
+      if ($_SESSION['status'] === 2 ||   $_SESSION['status'] === 1) {
+
          $user = $instanceUser->getOneUser($_SESSION['utilisateur']);
       } else {
          //si le visiteur n'est pas administrateur ou identifier alors on lui indique qu'il doit s'identifier
@@ -104,9 +107,6 @@ class MoviesController extends ArtsController
       $movie = $this->model->getMovie($id_movie);
       $pageTwig = 'Movies/showMovie.html.twig';
       $template = $this->twig->load($pageTwig);
-
-
-      var_dump($comments);
 
       //Si l'utilisateur non identifié avait déjà déposer un commentaire...
       if(isset($_SESSION['tmpComment'])) {

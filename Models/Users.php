@@ -105,10 +105,8 @@ class Users extends Model
       $req->execute([$id_user]);
       return $req->fetch();
    }
-   /****************************************************************** */
-
       /**
-   *
+   * Récupère l'id d'un utilisateur depuis son pseudo
    */
   public function getOneIdUser($pseudo)
   {
@@ -116,4 +114,5 @@ class Users extends Model
      $req->execute([$pseudo]);
      return $req->fetch();
   }
+  /****************************************************************** */
 }

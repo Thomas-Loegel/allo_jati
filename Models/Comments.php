@@ -55,7 +55,7 @@ class Comments extends Model
       return $req->execute([$content, $id_comment]);
    }
    /** 
-   *  insert dans la table users_comments le dernier commentaire publier
+   *  insert dans la table users_comments le dernier commentaire publié
    */
    public function addUsersComments($id_user, $id_comment){
       $req = $this->pdo->prepare('INSERT INTO users_comments (id_user, id_comment)
@@ -63,7 +63,7 @@ class Comments extends Model
       return $req->execute([$id_user, $id_comment]);
    }
    /** 
-   *   insert dans la table users_comments le dernier commentaire publier
+   *   insert dans la table users_comments le dernier commentaire publié
    */
    
     public function addMovieComments($id_movie, $id_comment){

@@ -3,10 +3,9 @@
 class HomeController extends Controller
 {
 
-    private $SESSION_STARTED = TRUE;
-    private $SESSION_NOT_STARTED = FALSE;
+
     private $sessionState = false;
-    private static $instance;
+    private static $instanceSession;
 
 
     public function __construct()
@@ -16,51 +15,68 @@ class HomeController extends Controller
 
     public static function getInstance()
     {
-        if (!isset(self::$instance)) {
-            self::$instance = new self;
+        if (!isset(self::$instanceSession)) {
+            self::$instanceSession = new self;
         }
-        self::$instance->startSession();
-        var_dump(self::$instance);
-
-        return self::$instance;
+        self::$instanceSession->startSession();
+        return self::$instanceSession;
     }
-
+    public function sessionState(){
+        return $this->sessionState;
+    }
     public function startSession()
     {
         if (false == $this->sessionState) {
-
             $_SESSION['status'] = null;
             $_SESSION['utilisateur'] = "Visiteur";
             $this->sessionState = true;
         }
         return $this->sessionState;
     }
-
     public function __set($name, $value)
     {
-        $_SESSION[$name] = $value;
+        $_SESSION[$name] = $value; 
     }
-
-
     public function __get($name)
     {
         if (isset($_SESSION[$name])) {
             return $_SESSION[$name];
         }
     }
-
-
+    public function __getPOST($name)
+    {
+        if (isset($_POST[$name])) {
+            return $_POST[$name];
+        }
+    }
+    public function __empty($name)
+    {
+        return empty($_SESSION[$name]);
+    }
     public function __isset($name)
     {
         return isset($_SESSION[$name]);
     }
-
-
+    public function __unsetTab()
+    {
+        $erase = false;
+        for($i = 0; $i < count($_SESSION['tabSession']); $i++){
+            $name = $_SESSION['tabSession'][$i];
+            $this->__unset($name);
+            if(false === $this->__isset($name)) {
+                $erase = true;
+            } else {
+                $erase =false;
+            } 
+        }
+        if($erase === true) {
+            unset($_SESSION['tabSession']);
+        }
+    }
     public function __unset($name)
     {
         unset($_SESSION[$name]);
     }
-
     public function destroy()
     {
         session_start();
@@ -72,9 +88,16 @@ class HomeController extends Controller
         $_SESSION['status'] = null;
         $_SESSION['utilisateur'] = "Visiteur";
     }
+
+    public function __alert($alert)
+    {
+        if (isset($_SESSION[$alert])) {
+            echo $_SESSION[$alert];
+            //$this->__unset($alert);
+        }
+    }
     public function index()
     {
-
         $pageTwig = 'index.html.twig';
         $template = $this->twig->load($pageTwig);
         echo $template->render();
