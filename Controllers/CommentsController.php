@@ -38,7 +38,9 @@ class CommentsController extends Controller
          $this->model->delComment($id_comment);
          $this->refreshAfterDeteleCommByUser($id_user);
       } else {
+         var_dump("test");
          $this->model->delComment($id_comment);
+         $this->getAllCom();
       } 
    }
    /**

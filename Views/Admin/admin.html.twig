@@ -173,6 +173,7 @@
                      <th scope="col">Commentaire</th>
                      <th scope="col">Note</th>
                      <th scope="col">Date</th>
+                     <th scope="col">Suppression</th>
                  </tr>
              </thead>
              <tbody>
@@ -184,6 +185,7 @@
                      <td>{{comment.content}}</td>
                      <td>{{comment.note}}</td>
                      <td>{{comment.date}}</td>
+                     <td><a href="{{baseUrl}}/Admin/EffacerCommentaire_{{comment.id_comment}}">Supprimer</a></td>
                  </tr>
                  {% endfor %}
              </tbody>
@@ -215,7 +217,7 @@
                      <td>{{comment.content}}</td>
                      <td>{{comment.note}}</td>
                      <td>{{comment.date}}</td>
-                     <td><a href="{{baseUrl}}/Commentaires/EffacerCommentaire_{{comment.id_comment}}{{comment.id_user}}">Supprimer</a></td>
+                     <td><a href="{{baseUrl}}/Admin/EffacerCommentaire_{{comment.id_comment}}{{comment.id_user}}">Supprimer</a></td>
                  </tr>
                  {% endfor %}
              </tbody>
