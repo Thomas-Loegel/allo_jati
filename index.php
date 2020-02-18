@@ -38,14 +38,18 @@ $router->post('/Inscription/post', 'Users.register');
 // Route Commentaires
 $router->post('/Comments/modifyComment_:id_movie/:id_comment', 'Comments.modifyComment');
 $router->post('/Comments/addComment_:id_movie', 'Comments.addComment');
-$router->get('/Comments/deleteComment_:id_movie', 'Comments.deleteComment');
-$router->get('/Comments/GetAll', 'Comments.getAllCom');
-$router->get('/Comments', 'Comments.index');
+$router->get('/Commentaires/EffacerCommentaire_:id_movie', 'Comments.deleteComment');
+$router->get('/Commentaires', 'Comments.index');
 
 // Route Deconnexion
 $router->get('/Deconnexion', 'Users.logout');
 
 // Route Admin
+$router->get('/Admin/EffacerCommentaire_:id_comment_:id_user', 'Comments.deleteComment');
+$router->get('/Admin/EffacerCommentaire_:id_comment', 'Comments.deleteComment');
+$router->post('/Admin/Utilisateur', 'Comments.searchAllCommByUser');
+$router->get('/Admin/Tous', 'Comments.getAllCom');
+
 $router->get('/Admin', 'Admin.admin');
 $router->get('/Admin/Liste_Utilisateurs', 'Admin.editUsers');
 $router->get('/Admin/Liste_Films', 'Admin.editMovies');
