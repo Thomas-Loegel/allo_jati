@@ -18,20 +18,23 @@
 <body>
    {% block header %}
    <header>
-      <nav class="header-nav navbar navbar-expand-lg mb-5 p-0">
+      <nav class="header-nav navbar navbar-expand-lg mb-0 p-0">
          <a class="navbar-brand ml-5" href="{{baseUrl}}">
             <img src="https://i.ibb.co/RSYk2Kw/jatilogo.png" width="100" height="100" class="d-inline-block align-top" alt="">
          </a>
          <div class="collapse navbar-collapse " id="navbarText">
             <ul class="navbar-nav mx-auto font-weight-bold p-0">
                <li class="nav-item active">
-                  <a class="nav-link hover-menu" href="{{baseUrl}}/Artistes">ARTISTES</a>
-               </li>
-               <li class="nav-item active">
                   <a class="nav-link hover-menu" href="{{baseUrl}}/Films">FILMS</a>
                </li>
                <li class="nav-item active">
+                  <a class="nav-link hover-menu" href="{{baseUrl}}/Artistes">ARTISTES</a>
+               </li>
+               <li class="nav-item active">
                   <a class="nav-link hover-menu" href="{{baseUrl}}/Connexion">CONNEXION</a>
+               </li>
+               <li class="nav-item active">
+                  <a class="nav-link hover-menu" href="{{baseUrl}}/Deconnexion">DECONNEXION</a>
                </li>
                <li class="nav-item active">
                   <a class="nav-link hover-menu" href="{{baseUrl}}/Admin">ADMIN</a>
@@ -43,20 +46,15 @@
    {% endblock %}
 
    {% block body %}
-   <main>
       {# Here the main content, you can create other blocks if there are useful to you #}
-   </main>
    {% endblock %}
 
    {% block footer %}
-   {# Footer ici #}
-   <footer>
-
-   </footer>
+      {# Footer ici #}
    {% endblock %}
 
    {% block javascripts %}
-   {# Here you can add only the JS that you need #}
+      <script src="{{baseUrl}}/assets/js/app.js"></script>
    {% endblock %}
 </body>
 </html>

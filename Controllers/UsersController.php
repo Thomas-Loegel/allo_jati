@@ -1,26 +1,21 @@
 <?php
 class UsersController extends Controller
 {
-   private $admin;
-   private $pseudo;
-   private $mdp;
-   private $mail;
 
 
    public function __construct()
    {
       //$this->twig = parent::getTwig();
       parent::__construct();
-      $this->model = new User();
+      $this->model = new Users();
    }
 
 
-   /**
-   *  Affichage du template pour $slug = null (formulaire de connexion)
-   */
+   // Affichage du template pour $slug = null (formulaire de connexion)
    public function connexion($slug = null)
    {
-      // $slug est null
+      var_dump("connexion");
+      //$slug est null
       $title = "Connexion";
 
       //si slug = Inscription alors change le $title en "inscription".
@@ -43,7 +38,7 @@ class UsersController extends Controller
          //Affiche une erreur 303 dans la console :
          header("HTTP/1.0 303 Redirection");
 
-         // Fait une redirection vers la page d'accueil :
+         //Fait une redirection vers la page d'accueil :
          header("Location: $this->baseUrl");
       }
 
@@ -58,36 +53,43 @@ class UsersController extends Controller
       ]);
    }
 
-   /**
-   *  gestion de l'envoi du formulaire de connexion
-   */
+   //gestion de l'envoi du formulaire de connexion
    public function login($slug = null)
    {
       $error = "";
-      $mavariable = "";
+      var_dump("login");
+      session_start();
       // si l'input pseudo et mdp n'est pas vide
       if (!empty($_POST['pseudo']) && !empty($_POST['mdp'])) {
 
-         //$user info appelle la fonction checkLogin
+         // $user info appelle la fonction checkLogin
          $userInfo = $this->model->checkLogin($_POST["pseudo"]);
 
-         //Si $userInfo a pour valeur true 
+         // Si $userInfo a pour valeur true
          if ($userInfo) {
-            //var_dump($userInfo);
+
             $hashMdp = $userInfo["mdp"];
 
-            //si le mot de passe est bon
+            // si le mot de passe est bon
             if (password_verify($_POST['mdp'], $hashMdp)) {
 
+<<<<<<< HEAD
                parent::controlSession();
 
                // On défini l'utilisateur a l'état de connecter
 
                $_SESSION["status"] = 2;
                $_SESSION["utilisateur"] = $_POST['pseudo'];
+=======
+               /*********************ANTHONY************************ */
+               $instanceHome = new HomeController();
+               $instanceHome->__set('utilisateur', $_POST['pseudo']);
+>>>>>>> 589041837a04a1bf4b797666d0c3ef9083fe28aa
 
-               $mavariable = $_SESSION["utilisateur"];
+               //on recherche si l'utilisateur connecté et administrateur
+               $this->checkAdministrator($instanceHome->__get('utilisateur'));
 
+<<<<<<< HEAD
                if (!empty($mavariable)) {
                    header("Location: $this->baseUrl");
 
@@ -95,14 +97,27 @@ class UsersController extends Controller
                }
                // Si location existe on redirige vers postAfterLogin()
                if (isset($_SESSION['location'])) {
+=======
+               //Si location existe on redirige vers postAfterLogin() pour publier le commentaire
+               if ($instanceHome->__isset('location') === true) {
+                  //var_dump("ok");
+>>>>>>> 589041837a04a1bf4b797666d0c3ef9083fe28aa
                   $instanceComments = new CommentsController();
                   $instanceComments->postAfterLogin();
+               /****************************************************/
                } else {
+<<<<<<< HEAD
                   // Sinon on redirige l'utilisateur sur la page d'accueil
                   if (!empty($_SESSION["utilisateur"])) {
+=======
+
+                  //Sinon on redirige l'utilisateur sur la page d'accueil
+                  if (!$instanceHome->__empty('utilisateur')){                     
+>>>>>>> 589041837a04a1bf4b797666d0c3ef9083fe28aa
                      header("Location: $this->baseUrl");
                   }
                }
+
             } else {
                $error = "Mot de passe incorrect";
             }
@@ -113,14 +128,15 @@ class UsersController extends Controller
          $error = "Vous n'avez pas rempli tous les champs !";
       }
 
-      $pageTwig = 'Users/login.html.twig';
+      /*$pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
          'error' => $error,
-      ]);
+      ]);*/
    }
 
+<<<<<<< HEAD
       //gestion de l'envoi du formulaire de Mot De Passe Oublié
       public function forgetPassword($slug = "MotDePasseOublie")
       {
@@ -201,9 +217,91 @@ class UsersController extends Controller
    
                      //redirection vers page d'accueil'
                      //header("Location: $this->baseUrl/Connexion");
+=======
+   // gestion de l'envoi du formulaire de Mot De Passe Oublié
+   public function forgetPassword($slug = "MotDePasseOublie")
+   {
+      session_start();
+      //déclaration des variables
+      $mail = NULL;
+      $mailError = "";
+      $generalError = "";
+      $inputMail = "";
+
+      //formulaire envoyé ?
+      if (!empty($_POST)) {
+         $mail = $_POST['mail'];
+         //var_dump($mail);
+
+         //le champ mail est rempli ?
+         if (!empty($mail)) {
+
+            $inputMail = $mail;
+
+
+            if (isset($mail)) {
+               $userMail = $this->model->mailExist($mail);
+
+               //mail existe dans la bdd ?
+               if ($userMail == true) {
+
+                  if ($_SERVER['SERVER_NAME'] === "localhost") {
+
+
+                     //on charge Swiftmailer
+                     require_once('vendor/autoload.php');
+
+                     //on instancie une nouvelle méthode d'envois du mail
+                     $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
+                        //Port 25 ou 465 selon votre configuration
+
+                        //identifiant et mote de passe pour votre swiftmailer
+                        ->setUsername('fb4412351e7042')
+                        ->setPassword('9377fb0dbcb0f8');
+
+                     //on instancie un nouveau mail
+                     $mailer = new Swift_Mailer($transport);
+
+                     //contenu mail
+                     $date = date('j, F Y h:i A');
+                     $sujet = "Mot de passe oublié";
+
+                     $userPseudo = $this->model->recupPseudo($mail);
+                     $userPseudo = $userPseudo["pseudo"];
+
+                     //var_dump($userPseudo);
+
+                     $mailBody = "<h2>Bonjour " . $userPseudo . "!</h2>
+                     <p>Vous avez demandé à changer de mot de passe.</p>
+                     <br>
+                     <a href='http://localhost/allo_jati/ChangerMotDePasse/user=$userPseudo'>Changer de mot de passe</a>";
+
+
+                     //on instancie un nouveau corps de document mail
+                     $message = (new Swift_Message($sujet))
+                        ->setFrom(['galli.johanna.g2@gmail.com'])
+                        ->setTo(['galli.johanna.g2@gmail.com'])
+                        ->setBody($mailBody, 'text/html');
+
+                     //on récupère et modifie le header du mail pour l'envois en HTML
+                     $type = $message->getHeaders()->get('Content-Type');
+                     $type->setValue('text/html');
+                     $type->setParameter('charset', 'utf-8');
+
+                     //On envois le mail en local
+                     $mailer->send($message);
+>>>>>>> 589041837a04a1bf4b797666d0c3ef9083fe28aa
                   } else {
                      $mailError = "Nous ne connaissons pas votre mail ...";
                   }
+<<<<<<< HEAD
+=======
+
+                  //redirection vers page d'accueil'
+                  //header("Location: $this->baseUrl/Connexion");
+               } else {
+                  $mailError = "Nous ne connaissons pas votre mail ...";
+>>>>>>> 589041837a04a1bf4b797666d0c3ef9083fe28aa
                }
             } else {
                $generalError = "Veuillez remplir le champ recquis !";
@@ -222,14 +320,30 @@ class UsersController extends Controller
             'generalError' => $generalError,
          ]);
       }
+<<<<<<< HEAD
    
+=======
 
-   
+
+      $pageTwig = 'Users/login.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render([
+         'slug' => $slug,
+         'mail' => $mail,
+
+         'mailError' => $mailError,
+         'inputMail' => $inputMail,
+         'generalError' => $generalError,
+      ]);
+   }
+>>>>>>> 589041837a04a1bf4b797666d0c3ef9083fe28aa
+
+
 
    public function changePassword($slug = "ChangerMotDePasse" )
    {
-     
-      //déclaration des variables 
+      session_start();
+      //déclaration des variables
       $mdp = "";
       $mdpError = "";
       $generalError = "";
@@ -237,20 +351,24 @@ class UsersController extends Controller
       var_dump($userPseudo);
 
 
-      //formulaire envoyé ?
+      // formulaire envoyé ?
       if (!empty($_POST)) {
          $mdp = $_POST['mdp'];
-         //var_dump($mail);
 
-         //le champ mdp est rempli ?
+         // le champ mdp est rempli ?
          if (!empty($mdp)) {
 
-            //mot de passe correspond aux attentes ?
+            // mot de passe correspond aux attentes ?
             if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
                $userMdp = $this->model->insertmdp($mdp);
 
+<<<<<<< HEAD
                //redirection vers page de connexion
                header("Location: $this->baseUrl/Connexion");
+=======
+               // redirection vers page de connexion
+               header("Location: $this->baseUrl/connexion");
+>>>>>>> 589041837a04a1bf4b797666d0c3ef9083fe28aa
             } else {
                $mdpError = "Votre mot de passe doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 16 caractères";
             }
@@ -261,7 +379,7 @@ class UsersController extends Controller
          echo "test";
       }
 
-      //affichage
+
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
@@ -274,9 +392,10 @@ class UsersController extends Controller
    }
 
 
-   //gestion de l'envoi du formulaire d'inscription
+   // gestion de l'envoi du formulaire d'inscription
    public function register($slug = "Inscription")
    {
+      session_start();
       //déclaration des variables
       $mail = NULL;
       $mailError = NULL;
@@ -295,45 +414,44 @@ class UsersController extends Controller
          $mdp = $_POST['mdp'];
          $avatar = $_POST['avatar'];
 
-         //les champs sont remplis ?
+         // les champs sont remplis ?
          if (!empty($mail) && !empty($pseudo) && !empty($mdp)) {
 
-            //mail correspond aux attentes ?
+            // mail correspond aux attentes ?
             if (preg_match("#^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$#", $mail)) {
                $userMail = $this->model->mailExist($mail);
-               //mail existe dans la bdd ?
+               // mail existe dans la bdd ?
                if ($userMail == false) {
 
-                  //pseudo correspond aux attentes ?
+                  // pseudo correspond aux attentes ?
                   if (preg_match('`^([a-zA-Z0-9-_]{2,36})$`', $pseudo)) {
                      $userPseudo = $this->model->pseudoExist($pseudo);
 
-                     //le pseudo entré existe dans la bdd ?
+                     // le pseudo entré existe dans la bdd ?
                      if ($userPseudo == false) {
 
-                        //mot de passe correspond aux attentes ?
+                        // mot de passe correspond aux attentes ?
                         if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
 
-                           //hashage du mot de passe :
+                           // hashage du mot de passe :
                            $hashMdp = password_hash($mdp, PASSWORD_DEFAULT);
 
-                           //une photo a été inséré dans l'insciption ?
+                           // une photo a été inséré dans l'insciption ?
                            if ($avatar) {
                               $info = new SplFileInfo($avatar);
                               $extensionAvatar = $info->getExtension();
-                              //var_dump($extensionAvatar);
                               $extensionAvatar = strtolower($extensionAvatar);
                               $extensionsAutorisees = array('jpg', 'jpeg', 'gif', 'png', 'tiff');
 
                               if (in_array($extensionAvatar, $extensionsAutorisees)) {
-                                 //insertion des données dans la bdd
+                                 // insertion des données dans la bdd
                                  $this->model->insertUser($mail, $pseudo, $hashMdp, $avatar);
                                  header("Location: $this->baseUrl");
                               } else {
                                  $avatarError = "L'extension de votre fichier n'est pas autorisée";
                               }
                            } else {
-                              //insertion des données dans la bdd
+                              // insertion des données dans la bdd
                               $this->model->insertUser($mail, $pseudo, $hashMdp, $avatar = "avatar.jpg");
 
                               header("Location: $this->baseUrl");
@@ -367,41 +485,33 @@ class UsersController extends Controller
          'pseudoError' => $pseudoError,
          'mdpError' => $mdpError,
          'inputMail' => $mail,
-         'inputPseudo' => $pseudo,
-         'avatarError' => $avatarError,
-      ]);
+      'inputPseudo' => $pseudo,]);
    }
-
-   /**
-   *
-   */
+   /********************************ANTHONY************************************/
+   //On déconnecte la SESSION
    public function logout()
    {
-      session_start();
-      $session = $_SESSION;
-      if ($session['status'] == 1 || $session['status'] == 2) {
-         session_destroy();
-      }
+      $instanceHome = new HomeController();
+      $instanceHome->destroy();
+      var_dump($_SESSION['utilisateur']);
       header("Location: $this->baseUrl");
    }
-   
-   /**
-   *
-   */
+
    public function checkAdministrator($pseudo)
    {
+
       //On récupère l'id utilisateur par le pseudo
       $id_user = $this->model->getOneIdUser($pseudo);
       //On vérifie si l'id utilisateur est Admin
       $admin = $this->model->checkAdmin($id_user['id_user']);
-      if($admin['admin'] == 1){
-         $_SESSION['status'] = 1;
-         //Redirection sur page Admin
-         header("Location: $this->baseUrl/Admin");
+      
+      $instanceHome = new HomeController();
+
+      if ($admin['admin'] == 1) {
+         $instanceHome->__set('status', 1);
       } else {
-         $_SESSION['status'] = 2;
-         //Redirection sur page Home
-         header("Location: $this->baseUrl");
+         $instanceHome->__set('status', 2);
       }
+      var_dump($instanceHome->__get('status'));
    }
 }

@@ -28,30 +28,52 @@ class Comments extends Model
 
       return $req->fetchAll();
    }
-
    /**
    *  suppression commentaire par id_comment
    */
-   public function delComment($id)
+   public function delComment($id_comment)
    {
-      $req = $this->pdo->prepare('DELETE FROM comments WHERE id_comment = ?');
-      $result = $req->execute([$id]);
-
-      return $result;
+      $req = $this->pdo->prepare('DELETE FROM comments 
+      WHERE id_comment = ?');
+      return $req->execute([$id_comment]);
    }
-
-   /*
-   *  Ajouter un commentaire
+   /** 
+   *  insert dans la table comments la publication 
    */
-   public function addComment(){
-      $req = $this->pdo->prepare('INSERT INTO comments (id_user, title, content, note, date
-      VALUE (:id_user, :title, :content, :note, :date');
-      $result = $req->execute();
-
-      return $result;
+   public function addComment($id_user, $title, $content, $note){
+      $req = $this->pdo->prepare('INSERT INTO comments (id_user, title, content, note)
+      VALUE (?, ?, ?, ?)');
+      $req->execute([$id_user, $title, $content, $note]);
+      //Récupère l'id de l'insertion dans la table
+      return $this->pdo->lastInsertId();
    }
-
-   //recherche la liste des commentaire par id_movie
+   /** 
+   *  edite un commentaire 
+   */
+   public function modifyComment($content, $id_comment){
+      $req = $this->pdo->prepare('UPDATE comments SET content=? WHERE id_comment=?');
+      return $req->execute([$content, $id_comment]);
+   }
+   /** 
+   *  insert dans la table users_comments le dernier commentaire publié
+   */
+   public function addUsersComments($id_user, $id_comment){
+      $req = $this->pdo->prepare('INSERT INTO users_comments (id_user, id_comment)
+      VALUE (?, ?)');
+      return $req->execute([$id_user, $id_comment]);
+   }
+   /** 
+   *   insert dans la table users_comments le dernier commentaire publié
+   */
+   
+    public function addMovieComments($id_movie, $id_comment){
+      $req = $this->pdo->prepare('INSERT INTO movie_comments (id_movie, id_comment)
+      VALUE (?, ?)');
+      return $req->execute([$id_movie, $id_comment]);
+   }
+   /** 
+   *  recherche la liste des commentaire par id_movie
+   */
    public function linkCommentByMovie($id)
    {
       $req = $this->pdo->prepare(
