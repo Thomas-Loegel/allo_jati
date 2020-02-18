@@ -10,11 +10,11 @@ class Admin extends Model
    /**
    *  Ajoute un Film dans la BDD
    */
-   public function addMovie()
+   public function addMovie($picture,$title,$year,$style,$resume,$time)
    {
       $req = $this->pdo->prepare(
-        'INSERT INTO movies(picture, title, year, style, resume, time)
-         VALUES ('$picture','$title','$year','$style','$resume','$time',)');
-      $req = execute();
+        "INSERT INTO movies(picture,title,year,style,resume,time)
+         VALUES (?,?,?,?,?,?)");
+      $req->execute([$picture,$title,$year,$style,$resume,$time]);
    }
 }

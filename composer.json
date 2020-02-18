@@ -1,9 +1,9 @@
 {
-    "name": "arteast/twig",
+    "name": "project/allo_jati",
     "authors": [
         {
-            "name": "Thomas Loegel",
-            "email": "t.loegel@gmail.com"
+            "name": "jad67tony",
+            "email": "anthony.montmirail@gmail.com"
         }
     ],
     "require": {
@@ -11,10 +11,6 @@
         "swiftmailer/swiftmailer": "^6.2"
     },
     "autoload": {
-        "classmap": [
-            "Router",
-            "Controllers",
-            "Models"
-        ]
+        "classmap":["Router/", "Controllers/", "Models/"] 
     }
 }

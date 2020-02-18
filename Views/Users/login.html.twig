@@ -10,52 +10,61 @@
 		<p>{{pseudo.pseudo}}</p>
 	{% endfor %}
 
-	{% if slug is null %}
 
-		<h2>Connectez-vous :</h2>
+	<div
+		class="container">
 
-		<div class="container">
-			<div class="row">
-				<form name="login" class="col-4" method="POST" action="{{baseUrl}}/Connexion/post">
+		{# FORMULAIRE DE CONNEXION #}
+		{% if slug is null %}
 
-					<div class="form-group">
+			<div class="row justify-content-md-center">
+				<form name="login" class="col-4 users-form" method="POST" action="{{baseUrl}}/Connexion/post">
+
+					<h2>Connectez-vous :</h2>
+
+					{# PSEUDO #}
+					<div class="form-group users">
 						<label for="pseudo">
 							<h4>Pseudo</h4>
 						</label>
 						<input type="text" name="pseudo" class="form-control" id="pseudo">
 					</div>
-
-					<div class="form-group">
+					{# MOT DE PASSE #}
+					<div class="form-group users">
 						<label for="mdp">
 							<h4>Mot de passe</h4>
 						</label>
 						<input type="password" class="form-control" name="mdp">
 						<p>
-							<a href="{{baseUrl}}/MotDePasseOublie">J'ai oublié mon mot de passe :'(</a>
+							<a href="{{baseUrl}}/MotDePasseOublie" id="lien-vers-mdp-oublie">J'ai oublié mon mot de passe :'(</a>
 						</p>
 					</div>
-
-					<div class="form-group">
+					<div
+						class="form-group users">
+						{# LIEN VERS FORMULAIRE INSCRIPTION #}
 						<a href="{{ baseUrl }}/Inscription" class="badge badge-light col">Pas encore inscrit ?! :o</a>
-						<button type="submit" class="btn btn-outline-info col">Se connecter</button>
+
+						{# SUBMIT #}
+						<button type="submit" class="btn btn-outline jati-colors-btn col">Se connecter</button>
 						<p class="text-danger text-center col">{{error}}</p>
 					</div>
-
 				</form>
 			</div>
-		</div>
 
-	{% elseif (slug == 'MotDePasseOublie') %}
 
-		<h2>Mot de passe oublié</h2>
+			{# FORMULAIRE DE MOT DE PASSE OUBLIÉ #}
+		{% elseif (slug == 'MotDePasseOublie') %}
 
-		<p>Donnez nous votre adresse mail, et nous vous enverrons un mail afin que vous puissiez changer votre mot de passe</p>
 
-		<div class="container">
-			<div class="row">
-				<form name="forgetPassword" class="col-4" method="POST" action="{{ baseUrl }}/MotDePasseOublie/post">
+			<div class="row justify-content-md-center">
+				<form name="forgetPassword" class="col-4 users-form" method="POST" action="{{ baseUrl }}/MotDePasseOublie/post">
 
-					<div class="form-group">
+					<h2>Mot de passe oublié</h2>
+
+					<p>Changez de mot de passe grâce a votre adresse mail !</p>
+
+					{# MAIL #}
+					<div class="form-group users">
 						<label for="regMail">
 							<h4>Adresse mail</h4>
 						</label>
@@ -64,58 +73,54 @@
 							{{ mailError }}</small>
 					</div>
 
-					<div class="form-group">
-						<button type="submit" class="btn btn-outline-info col">Envoyer</button>
+					{# SUBMIT #}
+					<div class="form-group users">
+						<button type="submit" class="btn btn-outline jati-colors-btn col">Envoyer</button>
 						<p class="text-danger text-center col">{{ generalError}}</p>
 					</div>
 
 				</form>
 			</div>
-		</div>
 
 
+			{# FORMULAIRE POUR CHANGER MOT DE PASSE #}
+		{% elseif (slug == slugurl) %}
 
-   {% elseif (slug == 'user=user2') %}
 
+			<div class="row justify-content-md-center">
+				<form name="changePassword" class="col-4 users-form" method="POST" action="{{ baseUrl }}/ChangerMotDePasse/post">
 
-		<h2>Nouveau mot de passe</h2>
+					<h2>Nouveau mot de passe :</h2>
 
-		<p>Insérez votre nouveau mot de passe ici</p>
+					<p>{{ userPseudo }}, veuillez entrer un nouveau mot de passe ici :</p>
 
-		<div class="container">
-			<div class="row">
-				<form name="changePassword" class="col-4" method="POST" action="{{ baseUrl }}/ChangerMotDePasse/post">
-
-					<div class="form-group">
-
-						<label for="regMail">
-							<h4>Mot de passe :</h4>
-						</label>
-
+					{# MOT DE PASSE #}
+					<div class="form-group users">
 						<input type="password" class="form-control" name="mdp">
-
 						<small class="form-text text-danger">
 							{{ mdpError }}</small>
 					</div>
 
-					<div class="form-group">
-						<button type="submit" class="btn btn-outline-info col">Envoyer</button>
-
+					{# SUBMIT #}
+					<div class="form-group users">
+						<button type="submit" class="btn btn-outline jati-colors-btn col">Envoyer</button>
 						<p class="text-danger text-center col">{{ generalError }}</p>
 					</div>
+
 				</form>
 			</div>
-		</div>
 
-	{% elseif (slug == 'Inscription') %}
 
-		<h2>Créez un compte :</h2>
+			{# FORMULAIRE D'INSCRIPTION #}
+		{% elseif (slug == 'Inscription') %}
 
-		<div class="container">
-			<div class="row">
-				<form name="register" class="col-4" method="POST" action="{{ baseUrl }}/Inscription/post">
+			<div class="row justify-content-md-center">
+				<form name="register" class="col-4 users-form" method="POST" action="{{ baseUrl }}/Inscription/post">
 
-					<div class="form-group">
+					<h2>Créez un compte :</h2>
+
+					{# MAIL #}
+					<div class="form-group users">
 						<label for="regMail">
 							<h4>Adresse mail *</h4>
 						</label>
@@ -124,7 +129,8 @@
 							{{ mailError }}</small>
 					</div>
 
-					<div class="form-group">
+					{# PSEUDO #}
+					<div class="form-group users">
 						<label for="regPseudo">
 							<h4>Pseudo *</h4>
 						</label>
@@ -133,7 +139,8 @@
 							{{ pseudoError }}</small>
 					</div>
 
-					<div class="form-group">
+					{# MOT DE PASSE #}
+					<div class="form-group users">
 						<label for="regPassword">
 							<h4>Mot de passe *</h4>
 						</label>
@@ -142,27 +149,26 @@
 							{{ mdpError }}</small>
 					</div>
 
-					<div class="form-group">
-						<label for="photo">
-							<h4>Photo de profil</h4>
-						</label>
-						<input type="file" class="form-control-file" name="avatar" src="localhost/allo_jati/assets/avatar/">
+					{# Photo de profile #}
+					<div class="form-group users">
+
+						<input type="file" name="file" id="file" class="inputfile"/>
+						<label for="file">Photo de profile</label>
+
 						<small id="requiredField" class="form-text text-danger">
 							{{ avatarError }}</small>
 					</div>
 
-					<div class="form-group">
-						<button type="submit" class="btn btn-outline-info col">S'inscrire</button>
+					{# SUBMIT #}
+					<div class="form-group users">
+						<button type="submit" class="btn btn-outline jati-colors-btn col">S'inscrire</button>
 						<p class="text-danger text-center col">{{ generalError }}</p>
 					</div>
 
 					<small id="requiredField" class="form-text text-muted">Champs obligatoires *</small>
 				</form>
 			</div>
-		</div>
-	{% endif %}	
+		{% endif %}
 
-
+	</div>
 {% endblock %}
-
-

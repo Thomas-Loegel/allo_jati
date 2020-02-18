@@ -1,4 +1,5 @@
 <?php
+/********************************Controller dev par ANTHONY******************** */
 class CommentsController extends Controller
 {
    public function __construct()
@@ -6,17 +7,12 @@ class CommentsController extends Controller
       parent::__construct();
       $this->model = new Comments();
    }
-   //delete comment
-   public function deleteComment($id_movie)
-   {
-      $this->model->delComment($id_movie);
-   }
-
    /**
-   *  Render
+   *  render index
    */
    public function index()
    {
+      session_start();
       /*$OneComment = $this->model->getOneComment();
       $result = delComment($delId);
       $liaisonCom = $this->model->linkCommentWorks();//argument id movie
@@ -25,23 +21,30 @@ class CommentsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments, "OneComment" => $OneComment/*, "liaison" => $liaisonCom, "del" => $delete*/]);
    }
-
+   /**
+   *  delete comment
+   */
+   
+   public function deleteComment($id_comment)
+   {
+      $this->model->delComment($id_comment);
+   }
    /**
    *  Supprime tous les commentaire liés à id_movie
    */
    public function delAllComByMovie($id)
    {
-      $tabCom = $this->model->linkCommentByMovie($id);
+      $tabCom = $this->model->linkCommentByMovie($id); 
       var_dump($tabCom);
       foreach ($tabCom as $k => $v) {
          $delId = $v['id_comment'];
          $this->model->delComment($delId);
       }
    }
-
-   /**
-   *
+   /** 
+   *  Recherche tous les commentaires
    */
+   
    public function getAllCom()
    {
       $comments   = $this->model->getAllComments();
@@ -49,21 +52,16 @@ class CommentsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments]);
    }
-
-   /**
-   *
+   /** 
+   *  Ajoute un commentaire
    */
-   public function addComment($id_movie){
-      session_start();
-      var_dump($_SESSION['status']);
-      if($_SESSION['status'] != null){
-         $pseudo = $_SESSION['utilisateur'];
-      }
-   }
-
    public function addComment($id_movie)
    {
       session_start();
+      var_dump($_POST);
+      var_dump($_SESSION['utilisateur']);
+      
+      
       //On affiche une alerte si un commentaire n'est pas complet après connexion
       if(isset($_SESSION['alert'])) {
          echo $_SESSION['alert'];
@@ -81,7 +79,9 @@ class CommentsController extends Controller
 
             //insert le commentaire dans la table et retourne l'ID du commentaire
             $idComment = $this->model->addComment($id_user, $_SESSION['tmpTitle'], $_SESSION['tmpComment'], $_SESSION['tmpNote']);
+
             $this->model->addUsersComments($id_user, $idComment);
+
             //insert le commentaire dans la table movie_comments
             $postComment = $this->model->addMovieComments($id_movie, $idComment);
             unset($_SESSION['tmpTitle']);
@@ -93,15 +93,18 @@ class CommentsController extends Controller
          }
 
          else if (!empty($_POST['title']) && !empty($_POST['controlText'])) {
-
+           
             //On recherche l'id de l'utilisateur connecté
-            $user = $this->model->getOneUser($_SESSION['utilisateur']);
+            $instanceUsers = new Users();
+            $user = $instanceUsers->getOneUser($_SESSION['utilisateur']);
+            var_dump($user);
 
-            $id_user = $user[0]['id_user'];
+
+            $id_user = $user['id_user'];
+            var_dump($id_user);
             $title = $_POST['title'];
             $content = $_POST['controlText'];
 
-            var_dump($_POST);
             //insert le commentaire dans la table et retourne l'ID du commentaire
             $idComment = $this->model->addComment($id_user, $title, $content, $note);
             //insert dans la table users_comment l'ID du commentaire
@@ -117,7 +120,9 @@ class CommentsController extends Controller
          }
 
       }
-      //si l'utilisateur n'est pas connecter
+   /** 
+   *  si l'utilisateur n'est pas connecter
+   */
       else if ($_SESSION['status'] === null) {
          if (isset($_POST)) {
             //On sauvegarde les éléments du commentaire avant redirection
@@ -137,6 +142,20 @@ class CommentsController extends Controller
          echo $template->render();
       }
    }
+   /** 
+   *  Modification d'un commentaire
+   */
+   public function modifyComment($id_movie, $id_comment){
+      $content = $_POST['controlText'];
+      $result = $this->model->modifyComment($content, $id_comment);
+      if($result == true) {
+         echo "<script>alert(\"Votre commentaire a bien été modifier\")</script>";
+      }
+      header("Location: $this->baseUrl/Films/Film_$id_movie");
+   }
+   /** 
+   *  publie un commentaire écrit et mis en temporaire avant login
+   */
    public function postAfterLogin(){
       //Si les 3 champs sont bien remplis on peut publier le commentaire
       if(!empty($_SESSION['tmpTitle']) && !empty($_SESSION['tmpComment']) && !empty($_SESSION['tmpNote'])) {
@@ -148,9 +167,4 @@ class CommentsController extends Controller
       }
    }
 }
-/*(
-      'SELECT comments.*
-      FROM movies, movie_comments, comments
-      WHERE movies.id_movie = 1
-      AND movies.id_movie = movie_comments.id_movie
-      AND comments.id_comment = movie_comments.id_comment');*/
+
