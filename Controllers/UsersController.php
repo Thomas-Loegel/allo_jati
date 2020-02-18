@@ -14,7 +14,6 @@ class UsersController extends Controller
    // Affichage du template pour $slug = null (formulaire de connexion)
    public function connexion($slug = null)
    {
-      var_dump("connexion");
       //$slug est null
       $title = "Connexion";
 
@@ -42,7 +41,6 @@ class UsersController extends Controller
          header("Location: $this->baseUrl");
       }
 
-
       //Affichage
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -57,7 +55,7 @@ class UsersController extends Controller
    public function login($slug = null)
    {
       $error = "";
-      var_dump("login");
+
       session_start();
       // si l'input pseudo et mdp n'est pas vide
       if (!empty($_POST['pseudo']) && !empty($_POST['mdp'])) {
@@ -205,7 +203,6 @@ class UsersController extends Controller
       echo $template->render([
          'slug' => $slug,
          'mail' => $mail,
-
          'mailError' => $mailError,
          'inputMail' => $inputMail,
          'generalError' => $generalError,

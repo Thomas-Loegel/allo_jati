@@ -19,22 +19,47 @@ class Comments extends Model
    }
 
    /**
-   *  recherche un commentaire par id_user
+   *  recherche un commentaire par id_user dans la table comment
    */
-   public function getOneComment($id)
+   public function getOneComment($id_user)
    {
       $req = $this->pdo->prepare('SELECT * FROM comments WHERE id_user= ?');
-      $resultat = $req->execute([$id]);
+      $req->execute([$id_user]);
 
       return $req->fetchAll();
    }
+
+/**
+   *  recherche tous les commentaires d'un user par son id_user
+   */
+  public function searchAllCommById($id_user)
+  {
+     $req = $this->pdo->prepare('SELECT * FROM comments WHERE id_user= ?');
+     $req->execute([$id_user]);
+     return $req->fetchAll();
+  }
+
+   /**
+   *  recherche tous les commentaires d'un user par son pseudo
+   */
+  public function searchAllCommByUser($pseudo)
+  {
+     $instanceUsers = new Users();
+     $user = $instanceUsers->getOneUser($pseudo);
+     $id_user = $user['id_user'];
+
+     $req = $this->pdo->prepare('SELECT * FROM comments WHERE id_user = ?');
+     $req->execute([$id_user]);
+
+     return $req->fetchAll();
+  }
+
    /**
    *  suppression commentaire par id_comment
    */
    public function delComment($id_comment)
    {
-      $req = $this->pdo->prepare('DELETE FROM comments 
-      WHERE id_comment = ?');
+      $req = $this->pdo->prepare('DELETE FROM comments WHERE id_comment = ?');
       return $req->execute([$id_comment]);
    }
    /** 

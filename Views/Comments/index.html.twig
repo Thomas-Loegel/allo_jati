@@ -3,28 +3,131 @@
 {% block title %}Commentaires{% endblock %}
 
 {% block body %}
-
 <h2>Bienvenue sur la page des Commentaires</h2>
-<p>
-    Ici on présente les commentaire !
-</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm">
+            <nav>
+                <ul>
+                    <li>Tous les commentaires:</li>
+                    <ul>
+                        <li><a href="{{baseUrl}}/Commentaires/Tous">Commentaires</a></li>
+                    </ul>
+
+
+                    <li>Par pseudo:</li>
+                    <form name="search" method="POST" action="{{baseUrl}}/Commentaires/Utilisateur">
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" class="form-control" name="pseudo" placeholder="Pseudo">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Rechercher</button>
+                    </form>
+
+
+
+                    <li>Par Id Film:</li>
+                    <form name="idMovie" method="POST" action="{{baseUrl}}/Commentaires/Utilisateur">
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" class="form-control" name="idMovie" placeholder="Id movie">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Rechercher</button>
+                    </form>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-sm">
+            {#}
+            <!-- Tous les commentaires -->
+            {% if (slug == 'Tous') %}
+            <h3>Commentaires</h3>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col"># ID Commentaire</th>
+                        <th scope="col"># ID Utilisateur</th>
+                        <th scope="col">Titre Commentaire</th>
+                        <th scope="col">Commentaire</th>
+                        <th scope="col">Note</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for comment in comments %}
+                    <tr>
+                        <th scope="row">{{comment.id_comment}}</th>
+                        <td>{{comment.id_user}}</td>
+                        <td>{{comment.title}}</td>
+                        <td>{{comment.content}}</td>
+                        <td>{{comment.note}}</td>
+                        <td>{{comment.date}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            #}
+
+            <!-- Commentaire par utilisateurs -->
+            {% if (slug == 'Utilisateur') %}
+            <h3>Commentaires par Utilisateur</h3>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col"># ID Commentaire</th>
+                        <th scope="col"># ID Utilisateur</th>
+                        <th scope="col">Titre Commentaire</th>
+                        <th scope="col">Commentaire</th>
+                        <th scope="col">Note</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Suppression</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for comment in comments %}
+                    <tr>
+                        <th scope="row">{{comment.id_comment}}</th>
+                        <td>{{comment.id_user}}</td>
+                        <td>{{comment.title}}</td>
+                        <td>{{comment.content}}</td>
+                        <td>{{comment.note}}</td>
+                        <td>{{comment.date}}</td>
+                        <td><a href="{{baseUrl}}/Commentaires/EffacerCommentaire_{{comment.id_comment}}{{comment.id_user}}">Supprimer</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{#}
 
 {% for comment in comments %}
 <h2>{{ comment.title }}</h2>
 <p>{{ comment.content }}</p>
-<p>id Commentaire: {{ comment.id_comment }}, id Utilisateur {{ comment.id_user }}Date: {{ comment.date }}Notes: {{ comment.note }}</p>
+<p>id Commentaire: {{ comment.id_comment }}, id Utilisateur {{ comment.id_user }}Date:
+    {{ comment.date }}Notes: {{ comment.note }}</p>
 {% endfor %}
 
 {% for theComment in OneComment %}
 <h2 style="color:red">{{ theComment.title }}</h2>
 <p>{{ theComment.content }}</p>
-<p>id Commentaire: {{ theComment.id_comment }}, id Utilisateur {{ theComment.id_user }} Date: {{ theComment.date }}Notes: {{ theComment.note }}</p>
+<p>id Commentaire: {{ theComment.id_comment }}, id Utilisateur {{ theComment.id_user }} Date:
+    {{ theComment.date }}Notes: {{ theComment.note }}</p>
 {% endfor %}
 
-{#{ dump(liaison) }#}
+
 {% for commOfWorks in liaison %}
 <h2 style="color:green">Commentaire {{ commOfWorks.id_comment}}</h2>
 {% endfor %}
+#}
 
 
 
