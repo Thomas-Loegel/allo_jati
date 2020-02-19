@@ -11,9 +11,6 @@ class MoviesController extends ArtsController
       //$this->twig = parent::getTwig();
       parent::__construct();
       $this->model = new Movies();
-     
-      
-
    }
 
    /**
@@ -63,14 +60,12 @@ class MoviesController extends ArtsController
    *  Affiche un Film avec son Id
    */
    public function showMovie($id_movie) {
-      session_start();
-
 
       // Affiche les Artistes liés a Id Film
       $instanceArtists = new Artists();
       $artists = $instanceArtists->getByMovie($id_movie);
 
-      /******************************ANTHONY********************************* */
+      /******************************ANTHONY**********************************/
 
       //Instancie la class comments
       $instanceComments = new Comments();

@@ -287,7 +287,7 @@ class UsersController extends Controller
    */
    public function register($slug = "Inscription")
    {
-      session_start();
+
       //déclaration des variables
 
       $mail = NULL;
@@ -304,7 +304,7 @@ class UsersController extends Controller
          $mail = $_POST['mail'];
          $pseudo = $_POST['pseudo'];
          $mdp = $_POST['mdp'];
-         
+
 
          // les champs sont remplis ?
          if (!empty($mail) && !empty($pseudo) && !empty($mdp)) {
