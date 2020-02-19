@@ -17,19 +17,27 @@ $router->get('/Films', 'Movies.showAllMovies');
 // Route Artistes
 $router->get('/Artistes/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artiste_:id_artist', 'Artists.showArtist');
+$router->post('/Artistes/Recherche', 'Artists.search');
 $router->get('/Artistes', 'Artists.showAllArtists');
 
-// Route Login
+// Route Login 
 $router->get('/Connexion', 'Users.connexion');
 $router->post('/Connexion/post', 'Users.login');
-
-// Route ChangePassword
-$router->post('/ChangerMotDePasse/:userPseudo/post', 'Users.changePassword');
-$router->get('/ChangerMotDePasse/:userPseudo', 'Users.changePassword');
 
 // route forgetPassword
 $router->get('/MotDePasseOublie', 'Users.forgetPassword');
 $router->post('/MotDePasseOublie/post', 'Users.forgetPassword');
+
+// route MailEnvoyé
+$router->get('/mailEnvoye', 'Users.mailEnvoye');
+
+// Route ChangePassword
+$router->get('/ChangerMotDePasse/:randomString', 'Users.updatePassword');
+$router->post('/ChangerMotDePasse/:slugurl/post', 'Users.updatePassword');
+
+// route forgetPassword
+$router->get('/MotDePasseOublie', 'Users.forgetPassword');
+$router->post('/Connexion/post', 'Users.forgetPassword');
 
 // Route Register
 $router->get('/Inscription', 'Users.register');
@@ -57,6 +65,11 @@ $router->get('/Admin/Liste_Artistes', 'Admin.editArtists');
 $router->get('/Admin/Ajout_Film', 'Admin.addMovie');
 $router->post('/Admin/Ajout_Film/Add', 'Admin.addMovie');
 $router->get('/Admin/Ajout_Artiste', 'Admin.addArtist');
+
+
+// Route Contact
+$router->post('/Suggestion', 'Suggestion.addSuggestion');
+$router->get('/Suggestion', 'Suggestion.suggestion');
 
 // Route Home
 $router->get('/', 'Home.index');

@@ -48,7 +48,7 @@ class ArtistsController extends Controller
       ]);
    }
    /**
-   *  Affiche la fiche Artiste
+   *  Affiche les artistes
    */
    public function showAllArtists()
    { 
@@ -73,6 +73,35 @@ class ArtistsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(["artists" => $artists, 
       'status' => $_SESSION['status']
+      ]);
+   }
+
+   /**
+   *  Affiche les films en fonction de la recherhce
+   */
+   public function search($search = null)
+   {
+      $slug = "Recherche";
+      $notFound = null;
+
+      if (isset($_POST['search']) && !empty($_POST['search'])) {
+
+         // Affiche la recherche Film
+         $search = $_POST['search'];
+         $search = $this->model->getBySearch($search);
+
+      }else{
+         $notFound = "L'artiste recherché n'est pas répertorié, mais vous pouvez nous envoyer des suggestion via le formulaire !";
+      }
+
+      $pageTwig = 'Artists/showAllArtists.html.twig';
+      $template = $this->twig->load($pageTwig);
+      $artists  = $this->model->getAllArtists();
+      echo $template->render([
+         'slug' => $slug,
+         'artists' => $artists,
+         'search' => $search,
+         'notFound' => $notFound,
       ]);
    }
 }

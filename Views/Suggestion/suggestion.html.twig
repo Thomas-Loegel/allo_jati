@@ -1,0 +1,53 @@
+{% extends "template.html.twig" %}
+
+{% block title %}Suggestion{% endblock %}
+
+{% block body %}
+
+   <div class="d-flex justify-content-center">
+      <h2 class="text-primary pb-5">Suggestion</h2>
+   </div>
+
+<div class="container">
+
+   <form class="mx-auto" method="POST" action="{{baseUrl}}/Suggestion" enctype="multipart/form-data">
+
+      <div class="form-group">
+         <label for="validationDefault01">Pseudo</label>
+         <input type="text" class="form-control" name="pseudo" id="validationDefault01" required>
+      </div>
+
+      <div class="form-group">
+         <label for="exampleFormControlFile1">Example file input</label>
+         <input type="file" class="form-control-file input-file" name="zip_file[]" id="exampleFormControlFile1" multiple="multiple">
+      </div>
+
+      <div class="form-group">
+         <label for="exampleInputEmail1">Email</label>
+         <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+
+      <div class="form-group">
+         <label for="validationTextarea">Text</label>
+         <textarea required class="form-control" name="text" id="validationTextarea" placeholder="Required example textarea" >
+         </textarea>
+      </div>
+
+      <button type="submit" name ="submit" class="btn btn-primary">Submit</button>
+      {% if  alertsEmail is empty %}
+            
+      {% elseif alertsEmail == 'yes' %}
+         <div class="alert alert-success mt-4 d-flex" role="alert"><span class="mx-auto font-weight-bold">
+         Merci de nous aider à améliorer, votre message s'est bien passé! </span></div> 
+
+      {% elseif alertsEmail == 'no' %}  
+         <div class="alert alert-danger mt-4 d-flex" role="alert"><span class="mx-auto font-weight-bold">
+         Votre message n'a pas été transmis, veuillez réessayer</span></div>  
+
+      {% endif %}
+         
+   </form>
+
+<div>  
+{% endblock %}

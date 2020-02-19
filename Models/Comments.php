@@ -29,30 +29,30 @@ class Comments extends Model
       return $req->fetchAll();
    }
 
-/**
+   /**
    *  recherche tous les commentaires d'un user par son id_user
    */
-  public function searchAllCommById($id_user)
-  {
+   public function searchAllCommById($id_user)
+   {
      $req = $this->pdo->prepare('SELECT * FROM comments WHERE id_user= ?');
      $req->execute([$id_user]);
      return $req->fetchAll();
-  }
+   }
 
    /**
    *  recherche tous les commentaires d'un user par son pseudo
    */
-  public function searchAllCommByUser($pseudo)
-  {
-     $instanceUsers = new Users();
-     $user = $instanceUsers->getOneUser($pseudo);
-     $id_user = $user['id_user'];
+   public function searchAllCommByUser($pseudo)
+   {
+      $instanceUsers = new Users();
+      $user = $instanceUsers->getOneUser($pseudo);
+      $id_user = $user['id_user'];
 
-     $req = $this->pdo->prepare('SELECT * FROM comments WHERE id_user = ?');
-     $req->execute([$id_user]);
+      $req = $this->pdo->prepare('SELECT * FROM comments WHERE id_user = ?');
+      $req->execute([$id_user]);
 
-     return $req->fetchAll();
-  }
+      return $req->fetchAll();
+   }
 
    /**
    *  suppression commentaire par id_comment
@@ -62,8 +62,9 @@ class Comments extends Model
       $req = $this->pdo->prepare('DELETE FROM comments WHERE id_comment = ?');
       return $req->execute([$id_comment]);
    }
-   /** 
-   *  insert dans la table comments la publication 
+
+   /**
+   *  insert dans la table comments la publication
    */
    public function addComment($id_user, $title, $content, $note){
       $req = $this->pdo->prepare('INSERT INTO comments (id_user, title, content, note)
@@ -72,14 +73,16 @@ class Comments extends Model
       //Récupère l'id de l'insertion dans la table
       return $this->pdo->lastInsertId();
    }
-   /** 
-   *  edite un commentaire 
+
+   /**
+   *  edite un commentaire
    */
    public function modifyComment($content, $id_comment){
       $req = $this->pdo->prepare('UPDATE comments SET content=? WHERE id_comment=?');
       return $req->execute([$content, $id_comment]);
    }
-   /** 
+
+   /**
    *  insert dans la table users_comments le dernier commentaire publié
    */
    public function addUsersComments($id_user, $id_comment){
@@ -87,16 +90,17 @@ class Comments extends Model
       VALUE (?, ?)');
       return $req->execute([$id_user, $id_comment]);
    }
-   /** 
+
+   /**
    *   insert dans la table users_comments le dernier commentaire publié
    */
-   
-    public function addMovieComments($id_movie, $id_comment){
+   public function addMovieComments($id_movie, $id_comment){
       $req = $this->pdo->prepare('INSERT INTO movie_comments (id_movie, id_comment)
       VALUE (?, ?)');
       return $req->execute([$id_movie, $id_comment]);
    }
-   /** 
+   
+   /**
    *  recherche la liste des commentaire par id_movie
    */
    public function linkCommentByMovie($id)

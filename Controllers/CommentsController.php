@@ -8,30 +8,32 @@ class CommentsController extends Controller
       parent::__construct();
       $this->model = new Comments();
    }
+
    /**
-    *  render index
-    */
+   *  render index
+   */
    public function index()
    {
       $pageTwig = 'Comments/index.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render();
    }
-   
+
    /**
    *  Affiche tous les commentaire d'un utilisateur
    */
-  public function searchAllCommByUser()
-  {
-     $instanceHome = new HomeController();
-     if(isset($_POST) && !empty($instanceHome->__getPOST('pseudo'))){
-        $pseudo = $instanceHome->__getPOST('pseudo');
-        $this->refreshUserForCommByUser($pseudo);
-     }
-  }
+   public function searchAllCommByUser()
+   {
+      $instanceHome = new HomeController();
+      if(isset($_POST) && !empty($instanceHome->__getPOST('pseudo'))){
+         $pseudo = $instanceHome->__getPOST('pseudo');
+         $this->refreshUserForCommByUser($pseudo);
+      }
+   }
+
    /**
-    *  Supprime un commentaire
-    */
+   *  Supprime un commentaire
+   */
    public function deleteComment($id_comment, $id_user = null)
    {
       if($id_user != null){
@@ -40,8 +42,9 @@ class CommentsController extends Controller
       } else {
          $this->model->delComment($id_comment);
          $this->getAllCom();
-      } 
+      }
    }
+
    /**
     * Rafraichit la liste après suppression
     */
@@ -53,9 +56,10 @@ class CommentsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur', 'status' => $_SESSION['status']]);
    }
+
    /**
-    * Rafraichit la liste des comme par utilisateur (pseudo)
-    */
+   * Rafraichit la liste des comme par utilisateur (pseudo)
+   */
    public function refreshUserForCommByUser($pseudo){
       session_start();
       $comments = $this->model->searchAllCommByUser($pseudo);
@@ -63,10 +67,10 @@ class CommentsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur', 'status' => $_SESSION['status']]);
    }
-   
+
    /**
-    *  Supprime tous les commentaire liés à id_movie
-    */
+   *  Supprime tous les commentaire liés à id_movie
+   */
    public function delAllComByMovie($id)
    {
       $tabCom = $this->model->linkCommentByMovie($id);
@@ -75,9 +79,10 @@ class CommentsController extends Controller
          $this->model->delComment($delId);
       }
    }
-   /** 
-    *  Recherche tous les commentaires
-    */
+
+   /**
+   *  Recherche tous les commentaires
+   */
    public function getAllCom()
    {
       session_start();
@@ -86,9 +91,10 @@ class CommentsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(["comments" => $comments, 'slug' => 'Tous', 'status' => $_SESSION['status']]);
    }
-   /** 
-    *  Mise en temporaire de la publication
-    */
+
+   /**
+   *  Mise en temporaire de la publication
+   */
    public function temporaryFiles($id_movie)
    {
 
@@ -108,9 +114,10 @@ class CommentsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render();
    }
-   /** 
-    *  Ajoute un commentaire
-    */
+
+   /**
+   *  Ajoute un commentaire
+   */
    public function addComment($id_movie)
    {
 
@@ -162,6 +169,9 @@ class CommentsController extends Controller
       }
    }
 
+   /**
+   *
+   */
    public function postAfterLogin()
    {
 
@@ -196,18 +206,18 @@ class CommentsController extends Controller
                // On affiche une alerte
                $instanceHome->__set('alert', "<script>alert(\"Votre commentaire a bien été publié. Merci.\")</script>");
                $instanceHome->__alert('alert');
-               // On efface toutes les super-global 
+               // On efface toutes les super-global
                $location = $instanceHome->__get('location');
                $instanceHome->__unsetTab();
-            } 
+            }
          }
          if ($result ===false) {
             // Si une erreur surviens lors de l'ajout du commentaire a la BDD
             $instanceHome->__set('alert', "<script>alert(\"Un erreur est survenu lors de la connexion a la base de données.Veuillez recommencer\")</script>");
             $instanceHome->__alert('alert');
-            // On efface toutes les super-global 
+            // On efface toutes les super-global
             $location = $instanceHome->__get('location');
-         } 
+         }
          header("Location: $location");
       }
    }

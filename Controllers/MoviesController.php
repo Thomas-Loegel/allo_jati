@@ -28,6 +28,9 @@ class MoviesController extends ArtsController
       ]);
    }
 
+   /**
+   *  Affiche les films en fonction de la recherhce
+   */
    public function search($search = null)
    {
       $slug = "Recherche";
@@ -65,7 +68,7 @@ class MoviesController extends ArtsController
       $instanceArtists = new Artists();
       $artists = $instanceArtists->getByMovie($id_movie);
 
-/******************************ANTHONY********************************* */
+      /******************************ANTHONY********************************* */
 
       //Instancie la class comments
       $instanceComments = new Comments();
