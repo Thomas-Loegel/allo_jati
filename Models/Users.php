@@ -7,8 +7,10 @@ class Users extends Model
       $this->pdo = parent::getPdo();
    }
 
-
-   //-----> la fonction ckeckLogin : renvoi true si le pseudo entré par l'utilisateur est connu dans la bdd et renvoi un false si le pseudo entré par l'utilisateur est connu dans la bdd
+   /**
+   *  Renvoi true si pseudo entré par l'utilisateur est connu dans la bdd
+   *  Renvoi false si pseudo entré par l'utilisateur est inconnu dans la bdd
+   */
    function checkLogin($pseudo)
    {
       $req = $this->pdo->prepare('SELECT pseudo, mdp, admin FROM users WHERE pseudo = :pseudo');
@@ -21,12 +23,15 @@ class Users extends Model
    /**
    *  Ajoute un nouveau User
    */
-  public function insertUser($mail, $pseudo, $mdp, $avatar)
+   public function insertUser($mail, $pseudo, $mdp, $avatar)
    {
       $req = $this->pdo->prepare("INSERT INTO users(mail, pseudo, mdp, avatar) VALUES ('$mail', '$pseudo', '$mdp', '$avatar')");
       $req->execute();
    }
-   //verifie si le pseudo entré existe dans la bdd
+
+   /**
+   *  Verifie si le pseudo entré existe dans la bdd
+   */
    public function pseudoExist($pseudo)
    {
       $req = $this->pdo->prepare("SELECT pseudo FROM users WHERE pseudo = :pseudo");
@@ -34,7 +39,10 @@ class Users extends Model
       $req->execute();
       return $req->fetch();
    }
-   //verifie si le mail entré existe dans la bdd
+
+   /**
+   *  Verifie si le mail entré existe dans la bdd
+   */
    public function mailExist($mail)
    {
       $req = $this->pdo->prepare("SELECT mail FROM users WHERE mail = :mail");
@@ -43,12 +51,20 @@ class Users extends Model
       //$data = $req->fetch();
       return $req->fetch();
    }
+
+   /**
+   *
+   */
    public function recupPseudo($mail)
    {
       //chercher dans table users le pseudo correspondant au mail
       $req = $this->pdo->prepare("SELECT pseudo FROM users WHERE mail = :mail");
       $req->bindValue(':mail', $mail);
    }
+
+   /**
+   *
+   */
    public function returnUrl()
    {
       $adresse = $_SERVER['PHP_SELF'];
@@ -59,7 +75,8 @@ class Users extends Model
       }
       return substr($adresse, 48);
    }
-/*************************Function ANTHONY********************/
+
+   /*************************Function ANTHONY********************/
    /**
    *  Récupère les Utilisateurs
    */
@@ -69,6 +86,7 @@ class Users extends Model
       $req->execute();
       return $req->fetchAll();
    }
+
    /**
    *  Récupère l'id_user depuis son pseudo
    */
@@ -78,6 +96,7 @@ class Users extends Model
       $req->execute([$pseudo]);
       return $req->fetch();
    }
+
    /**
    * Récupère le pseudo depuis l'id user
    */
@@ -87,6 +106,7 @@ class Users extends Model
       $req->execute([$id_user]);
       return $req->fetch();
    }
+
    /**
    *  Vérifie si l'id_user est admin
    */
@@ -96,6 +116,7 @@ class Users extends Model
       $req->execute([$id_user]);
       return $req->fetch();
    }
+
    /**
    *  Récupère l'avatar depuis un id user
    */
@@ -105,14 +126,15 @@ class Users extends Model
       $req->execute([$id_user]);
       return $req->fetch();
    }
-      /**
+
+   /**
    * Récupère l'id d'un utilisateur depuis son pseudo
    */
-  public function getOneIdUser($pseudo)
-  {
+   public function getOneIdUser($pseudo)
+   {
      $req = $this->pdo->prepare('SELECT `id_user` FROM users WHERE pseudo= ?');
      $req->execute([$pseudo]);
      return $req->fetch();
-  }
-  /****************************************************************** */
+   }
+   /*******************************************************************/
 }

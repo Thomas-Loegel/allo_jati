@@ -10,8 +10,9 @@ class UsersController extends Controller
       $this->model = new Users();
    }
 
-
-   // Affichage du template pour $slug = null (formulaire de connexion)
+   /**
+   *  Affichage du template pour $slug = null (formulaire de connexion)
+   */
    public function connexion($slug = null)
    {
       //$slug est null
@@ -51,7 +52,9 @@ class UsersController extends Controller
       ]);
    }
 
-   //gestion de l'envoi du formulaire de connexion
+   /**
+   *  Gestion de l'envoi du formulaire de connexion
+   */
    public function login($slug = null)
    {
       $error = "";
@@ -87,7 +90,7 @@ class UsersController extends Controller
                } else {
 
                   //Sinon on redirige l'utilisateur sur la page d'accueil
-                  if (!$instanceHome->__empty('utilisateur')){                     
+                  if (!$instanceHome->__empty('utilisateur')){
                      header("Location: $this->baseUrl");
                   }
                }
@@ -110,7 +113,9 @@ class UsersController extends Controller
       ]);*/
    }
 
-   // gestion de l'envoi du formulaire de Mot De Passe Oublié
+   /**
+   *  Gestion de l'envoi du formulaire de Mot De Passe Oublié
+   */
    public function forgetPassword($slug = "MotDePasseOublie")
    {
       session_start();
@@ -209,8 +214,9 @@ class UsersController extends Controller
       ]);
    }
 
-
-
+   /**
+   *
+   */
    public function changePassword($slug = "ChangerMotDePasse" )
    {
       session_start();
@@ -257,8 +263,9 @@ class UsersController extends Controller
       ]);
    }
 
-
-   // gestion de l'envoi du formulaire d'inscription
+   /**
+   *  gestion de l'envoi du formulaire d'inscription
+   */
    public function register($slug = "Inscription")
    {
       session_start();
@@ -353,8 +360,11 @@ class UsersController extends Controller
          'inputMail' => $mail,
       'inputPseudo' => $pseudo,]);
    }
+
    /********************************ANTHONY************************************/
-   //On déconnecte la SESSION
+   /**
+   *  On déconnecte la SESSION
+   */
    public function logout()
    {
       $instanceHome = new HomeController();
@@ -363,6 +373,9 @@ class UsersController extends Controller
       header("Location: $this->baseUrl");
    }
 
+   /**
+   *
+   */
    public function checkAdministrator($pseudo)
    {
 
@@ -370,7 +383,7 @@ class UsersController extends Controller
       $id_user = $this->model->getOneIdUser($pseudo);
       //On vérifie si l'id utilisateur est Admin
       $admin = $this->model->checkAdmin($id_user['id_user']);
-      
+
       $instanceHome = new HomeController();
 
       if ($admin['admin'] == 1) {
