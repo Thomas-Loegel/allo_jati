@@ -40,6 +40,7 @@ class UsersController extends Controller
     */
    public function login($slug = null)
    {
+      var_dump("test");
       $errorMdp = null;
       $errorPseudo = null;
       $userInfo = null;
@@ -85,6 +86,7 @@ class UsersController extends Controller
             if (password_verify($_POST['mdp'], $hashMdp)) {
 
                /*********************ANTHONY*************************/
+               
                $instanceHome = new HomeController();
                $instanceHome->__set('utilisateur', $_POST['pseudo']);
 

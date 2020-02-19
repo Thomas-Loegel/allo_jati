@@ -15,6 +15,7 @@ class HomeController extends Controller
     */
    public function startSession()
    {
+      var_dump($_SESSION['status']);
       if (!isset($_SESSION['status'])) {
          $_SESSION['status'] = null;
          $_SESSION['utilisateur'] = "Visiteur";

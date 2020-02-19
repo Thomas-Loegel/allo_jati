@@ -49,7 +49,11 @@ $router->post('/Commentaires/Ajouter_:id_movie', 'Comments.addComment');
 $router->get('/Commentaires', 'Comments.index');
 
 // Route Profile
-$router->get('/Profile/Modifier_:user', 'Profils.modify');
+$router->get('/Profile/ModifierPseudo_:user', 'Profils.modifyPseudo');
+$router->get('/Profile/ModifierAvatar_:avatar', 'Profils.modifyAvatar');
+$router->get('/Profile/ModifierMdp_:mdp', 'Profils.modifymdp');
+$router->get('/Profile/ModifierCompte_:id_user', 'Profils.modifymdp');
+
 $router->get('/Profile', 'Profils.profil');
 
 // Route Deconnexion
