@@ -20,7 +20,7 @@ $router->post('/Artistes/Recherche', 'Artists.search');
 $router->get('/Artistes', 'Artists.showAllArtists');
 
 // Route Login 
-$router->get('/Connexion', 'Users.connexion');
+$router->get('/Connection', 'Users.connexion');
 $router->post('/', 'Users.login');
 
 // route forgetPassword
