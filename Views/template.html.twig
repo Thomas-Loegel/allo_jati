@@ -18,6 +18,7 @@
 <body>
    {% block header %}
 
+      <!-- HEADER VISITEUR  -->
       {% if status is null %}
          <header>
             <nav class="header-nav navbar navbar-expand-lg mb-0 p-0">
@@ -40,6 +41,8 @@
             </nav>
          </header>
 
+
+      <!-- HEADER ADMIN  -->
       {% elseif status == 1 %}
          <header>
             <nav class="header-nav navbar navbar-expand-lg mb-0 p-0">
@@ -68,6 +71,7 @@
             </nav>
          </header>
 
+      <!-- HEADER USER  -->
       {% elseif status == 2 %}
       <header>
          <nav class="header-nav navbar navbar-expand-lg mb-0 p-0">
@@ -99,7 +103,7 @@
    {% endblock %}
    {% block body %}
       {# Here the main content, you can create other blocks if there are useful to you #}
-     
+
    {% endblock %}
 
    {% block footer %}
