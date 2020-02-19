@@ -12,8 +12,7 @@ class Controller
       $this->twig = self::getTwig();
       $this->baseUrl = self::getBaseUrl();
       session_start();
-      var_dump($_SESSION['utilisateur']);
-
+      //var_dump($_SESSION['utilisateur']);
    }
 
    protected static function getTwig()
