@@ -8,6 +8,7 @@ $router = new Router($_GET['url']);
 $router->get('/Films/Film_:id_movie', 'Movies.showMovie');
 $router->get('/Films/Artiste_:id_artist', 'Artists.showArtist');
 $router->post('/Films/Recherche', 'Movies.search');
+$router->post('/Films/Genre', 'Movies.genre');
 $router->get('/Film_:id_movie', 'Movies.showMovie');
 $router->get('/Films', 'Movies.showAllMovies');
 
@@ -36,7 +37,7 @@ $router->post('/ChangerMotDePasse/:slugurl/post', 'Users.updatePassword');
 
 // route forgetPassword
 $router->get('/MotDePasseOublie', 'Users.forgetPassword');
-$router->post('/Connexion/post', 'Users.forgetPassword');
+$router->post('/Connection/post', 'Users.forgetPassword');
 
 // Route Register
 $router->get('/Inscription', 'Users.register');
@@ -53,7 +54,7 @@ $router->get('/Profile/Modifier_:user', 'Profils.modify');
 $router->get('/Profile', 'Profils.profil');
 
 // Route Deconnexion
-$router->get('/Deconnexion', 'Users.logout');
+$router->get('/Deconnection', 'Users.logout');
 
 // Route Admin
 $router->get('/Admin/Effacer_:id_comment/:id_movie/:id_user', 'Comments.deleteComment');
@@ -67,6 +68,7 @@ $router->get('/Admin/Liste_Films', 'Admin.editMovies');
 $router->get('/Admin/Liste_Artistes', 'Admin.editArtists');
 $router->get('/Admin/Ajout_Film', 'Admin.addMovie');
 $router->post('/Admin/Ajout_Film/Add', 'Admin.addMovie');
+$router->post('/Admin/Ajout_Artiste/Add', 'Admin.addArtist');
 $router->get('/Admin/Ajout_Artiste', 'Admin.addArtist');
 
 

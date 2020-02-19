@@ -11,9 +11,6 @@ class MoviesController extends ArtsController
       //$this->twig = parent::getTwig();
       parent::__construct();
       $this->model = new Movies();
-     
-      
-
    }
 
    /**
@@ -35,17 +32,20 @@ class MoviesController extends ArtsController
    */
    public function search($search = null)
    {
-      $slug = "Recherche";
+      $slug = null;
       $notFound = null;
 
-      if (isset($_POST['search']) && !empty($_POST['search'])) {
+      // Recherche par nom
+      if ($slug = "Recherche") {
 
-         // Affiche la recherche Film
-         $search = $_POST['search'];
-         $search = $this->model->getBySearch($search);
+         if (!empty($_POST['search'])) {
 
-      }else{
-         $notFound = "Nous n'avons pas encore ce film, mais vous pouvez nous envoyer des suggestion via le formulaire !";
+            $search = $_POST['search'];
+            $search = $this->model->getBySearch($search);
+
+         }else{
+            $notFound = "Nous n'avons pas ce film !";
+         }
       }
 
       $pageTwig = 'Movies/showAllMovies.html.twig';
@@ -60,6 +60,38 @@ class MoviesController extends ArtsController
    }
 
    /**
+   *  Affiche les films par genre
+   */
+   public function genre($style = null)
+   {
+      $slug = null;
+      $notFound = null;
+
+      // Recherche par Genre
+      if ($slug = "Genre") {
+
+         if (!empty($_POST['style'])) {
+
+            $style = $_POST['style'];
+            $style = $this->model->getByStyle($style);
+
+         }else{
+            $notFound = "Nous n'avons pas de films dans cette catégorie !";
+         }
+      }
+
+      $pageTwig = 'Movies/showAllMovies.html.twig';
+      $template = $this->twig->load($pageTwig);
+      $movies   = $this->model->getAllMovies();
+      echo $template->render([
+         'slug' => $slug,
+         'movies' => $movies,
+         'style' => $style,
+         'notFound' => $notFound,
+      ]);
+   }
+
+   /**
    *  Affiche un Film avec son Id
    */
    public function showMovie($id_movie) {
@@ -67,7 +99,7 @@ class MoviesController extends ArtsController
       $instanceArtists = new Artists();
       $artists = $instanceArtists->getByMovie($id_movie);
 
-      /******************************ANTHONY********************************* */
+      /******************************ANTHONY**********************************/
 
       //Instancie la class comments
       $instanceComments = new Comments();

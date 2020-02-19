@@ -283,7 +283,7 @@ class UsersController extends Controller
     */
    public function register($slug = "Inscription")
    {
-      session_start();
+
       //déclaration des variables
 
       $mail = NULL;

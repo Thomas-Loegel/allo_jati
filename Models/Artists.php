@@ -48,7 +48,7 @@ class Artists extends Model
    }
 
    /**
-   *  Recherche un Artiste
+   *  Recherche un Artiste par nom ou prénom
    */
    public function getBySearch($search)
    {
@@ -56,6 +56,8 @@ class Artists extends Model
          'SELECT *
          FROM artists
          WHERE first_name
+         LIKE "%'.$search.'%"
+         OR last_name
          LIKE "%'.$search.'%"');
       $req->execute();
       return $req->fetchAll();
