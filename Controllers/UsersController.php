@@ -102,7 +102,6 @@ class UsersController extends Controller
                   /****************************************************/
 
                } else {
-
                   //Sinon on redirige l'utilisateur sur la page d'accueil
                   if (!$instanceHome->__empty('utilisateur')){
 
@@ -414,10 +413,8 @@ class UsersController extends Controller
 
       if ($admin['admin'] == 1) {
          $_SESSION['status'] = 1;
-         //Redirection sur page Admin
-         header("Location: $this->baseUrl/Admin");
       } else {
-         $instanceHome->__set('status', 2);
+         $_SESSION['status'] = 2;
       }
    }
 }

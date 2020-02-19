@@ -50,7 +50,6 @@ class CommentsController extends Controller
     */
     
     public function refreshAfterDeteleCommByUser($id_user){
-      session_start();
       $comments = $this->model->searchAllCommById($id_user);
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -61,7 +60,6 @@ class CommentsController extends Controller
    * Rafraichit la liste des comme par utilisateur (pseudo)
    */
    public function refreshUserForCommByUser($pseudo){
-      session_start();
       $comments = $this->model->searchAllCommByUser($pseudo);
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -85,7 +83,6 @@ class CommentsController extends Controller
    */
    public function getAllCom()
    {
-      session_start();
       $comments   = $this->model->getAllComments();
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -122,8 +119,6 @@ class CommentsController extends Controller
    {
 
       $instanceHome = new HomeController();
-      session_start();
-
       $instanceHome->__set('id_movie', $id_movie);
 
       //si location n'existe pas et que nous somme connecter on traite le commentaire
@@ -134,8 +129,6 @@ class CommentsController extends Controller
 
          //Si le post existe et que les champs ne sont pas vide
          if (isset($_POST) && !empty($instanceHome->__getPOST('title')) && !empty($instanceHome->__getPOST('controlText'))) {
-            var_dump('test0');
-
             //On recherche l'id de l'utilisateur connecté
             $title = $instanceHome->__getPOST('title');
             $content = $instanceHome->__getPOST('controlText');
@@ -152,7 +145,6 @@ class CommentsController extends Controller
          }
          // Si le post existe mais que l'une ou l'autre information manque on les mets en temporaire
          else {
-            var_dump("test1");
             // On affiche une alerte
             $instanceHome->__set('alert', "<script>alert(\"Votre commentaire n'a pas été publié car il est incomplet\")</script>");
             $instanceHome->__alert('alert');
@@ -160,7 +152,6 @@ class CommentsController extends Controller
             $this->temporaryFiles($id_movie);
          }
       } else {
-         var_dump("test3");
          // On affiche une alerte
          $instanceHome->__set('alert', "<script>alert(\"Vous devez vous identifier vous publier.\")</script>");
          $instanceHome->__alert('alert');
@@ -179,7 +170,6 @@ class CommentsController extends Controller
       //Si l'un ou l'autre champ est vide on affiche une alerte
 
       if (empty($_SESSION['tmpTitle']) || empty($_SESSION['tmpComment'])) {
-         var_dump("postAfterLogin1");
          // On affiche une alerte
          $instanceHome->__set('alert', "<script>alert(\"Votre commentaire n'a pas été publié car il est incomplet.Veuillez-vérifié.\")</script>");
          $instanceHome->__alert('alert');
@@ -187,8 +177,6 @@ class CommentsController extends Controller
          $location = $instanceHome->__get('location');
          header("Location: $location");
       } else {
-
-         var_dump("postAfterLogin2");
          $instanceUsers = new Users();
          // On recherche les infos de l'utilisateur
          $user = $instanceUsers->getOneUser($instanceHome->__get('utilisateur'));

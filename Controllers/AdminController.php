@@ -14,7 +14,6 @@ class AdminController extends Controller
    */
    public function admin()
    {
-      session_start();
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(['status' => $_SESSION['status']]);
@@ -25,7 +24,6 @@ class AdminController extends Controller
    */
    public function editUsers()
    {
-      session_start();
       $slug = 'Liste_Utilisateurs';
 
       $instanceUsers = new Users();
@@ -45,7 +43,6 @@ class AdminController extends Controller
    */
    public function editMovies()
    {
-      session_start();
       $slug = 'Liste_Films';
 
       $instanceMovies = new Movies();
@@ -65,7 +62,6 @@ class AdminController extends Controller
    */
    public function editArtists()
    {
-      session_start();
       $slug = 'Liste_Artistes';
 
       $instanceArtists = new Artists();
@@ -85,7 +81,6 @@ class AdminController extends Controller
    */
    public function addMovie()
    {
-      session_start();
       $slug = 'Ajout_Film';
       $error   = null;
       $success = null;
@@ -153,9 +148,7 @@ class AdminController extends Controller
    */
    public function addArtist()
    {
-      session_start();
       $slug = 'Ajout_Artiste';
-
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(['slug' => $slug, 'status' => $_SESSION['status']]);

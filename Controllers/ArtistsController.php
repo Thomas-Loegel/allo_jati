@@ -22,7 +22,6 @@ class ArtistsController extends Controller
    */
    public function showArtist(int $id_artist)
    {
-      session_start();
       // Affiche les Films de Artiste par Id
       $instanceMovies = new Movies();
       $movies = $instanceMovies->getAllMovies($id_artist);
@@ -52,7 +51,6 @@ class ArtistsController extends Controller
    */
    public function showAllArtists()
    { 
-      session_start();
       $artists  = $this->model->getAllArtists();
       $pageTwig = 'Artists/showAllArtists.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -67,7 +65,6 @@ class ArtistsController extends Controller
    */
    public function showByMovie()
    {
-      session_start();
       $artists  = $this->model->getByFilm();
       $pageTwig = 'Artists/showByMovie.html.twig';
       $template = $this->twig->load($pageTwig);

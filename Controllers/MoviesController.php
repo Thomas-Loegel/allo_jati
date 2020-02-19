@@ -11,6 +11,9 @@ class MoviesController extends ArtsController
       //$this->twig = parent::getTwig();
       parent::__construct();
       $this->model = new Movies();
+     
+      
+
    }
 
    /**
@@ -18,7 +21,6 @@ class MoviesController extends ArtsController
    */
    public function showAllMovies()
    {
-      session_start();
       $pageTwig = 'Movies/showAllMovies.html.twig';
       $template = $this->twig->load($pageTwig);
       $movies   = $this->model->getAllMovies();
