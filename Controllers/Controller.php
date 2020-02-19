@@ -11,9 +11,6 @@ class Controller
    {
       $this->twig = self::getTwig();
       $this->baseUrl = self::getBaseUrl();
-      session_start();
-      var_dump($_SESSION['utilisateur']);
-
    }
 
    protected static function getTwig()
@@ -27,7 +24,6 @@ class Controller
          ]);
          self::$_twig->addExtension(new \Twig\Extension\DebugExtension());
          self::$_twig->addGlobal('baseUrl', self::getBaseUrl());
-
       }
 
       return self::$_twig;

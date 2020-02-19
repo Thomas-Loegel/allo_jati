@@ -9,8 +9,8 @@ class UsersController extends Controller
    }
 
    /**
-   *  Affichage du template pour $slug = null (formulaire de connexion)
-   */
+    *  Affichage du template pour $slug = null (formulaire de connexion)
+    */
    public function connexion($slug = null)
    {
       //$slug est null
@@ -36,103 +36,99 @@ class UsersController extends Controller
    }
 
    /**
-   *  Gestion de l'envoi du formulaire de connexion
-   */
-   public function login($slug = null)
-   {
-      $errorMdp = null;
-      $errorPseudo = null;
-      $mavariable = null;
-      $userInfo = null;
-      $inputPseudo = null;
-
-      //si pseudo vide
-      if (empty($_POST['pseudo'])) {
-         $errorPseudo = " ";
-      }
-      //si mdp vide
-      if (empty($_POST['mdp'])) {
-         $errorMdp = " ";
-      }
-
-      //si mdp vide et pseudo non vide
-      if (empty($_POST['mdp']) && !empty($_POST['pseudo'])) {
-         $userInfo = $this->model->checkLogin($_POST["pseudo"]);
-
-         //si le pseudo est connu de la bdd
-         if ($userInfo) {
-            $inputPseudo = $_POST['pseudo'];
-         } else {
-            $inputPseudoFalse = $_POST['pseudo'];
-            $errorPseudo = "Le pseudo : '$inputPseudoFalse' est inconnu de la base de donnée";
-         }
-      }
-
-      // si l'input pseudo et mdp n'est pas vide
-      if (!empty($_POST['mdp']) && !empty($_POST['pseudo'])) {
-
-         // $user info appelle la fonction checkLogin
-         $userInfo = $this->model->checkLogin($_POST["pseudo"]);
-
-         //Si $userInfo a pour valeur true
-         if ($userInfo) {
-            $inputPseudo = $_POST['pseudo'];
-            //var_dump($userInfo);
-            $hashMdp = $userInfo["mdp"];
-
-            // si le mot de passe est bon
-            if (password_verify($_POST['mdp'], $hashMdp)) {
-
-               /*********************ANTHONY*************************/
-               $instanceHome = new HomeController();
-               $instanceHome->__set('utilisateur', $_POST['pseudo']);
-
-               //on recherche si l'utilisateur connecté et administrateur
-               $this->checkAdministrator($instanceHome->__get('utilisateur'));
-
-               if (!empty($mavariable)) {
-                  header("Location: $this->baseUrl");
-
-                  $this->checkAdministrator($_SESSION["utilisateur"]);
-               }
-               // Si location existe on redirige vers postAfterLogin()
-               if (isset($_SESSION['location'])) {
-                  $instanceComments = new CommentsController();
-                  $instanceComments->postAfterLogin();
-                  /****************************************************/
-
-               } else {
-                  //Sinon on redirige l'utilisateur sur la page d'accueil
-                  if (!$instanceHome->__empty('utilisateur')){
-
-                     $pageTwig = 'index.html.twig';
-                     $template = $this->twig->load($pageTwig);
-                     echo $template->render(['status' => $_SESSION['status']]);
-                  }
-               }
-            } else {
-               $errorMdp = "Mot de passe incorrect";
-            }
-         } else {
-            $errorPseudo = "Vous êtes qui ?! :S";
-         }
-      }
-
-      $title = "Connexion";
-
-      $pageTwig = 'Users/login.html.twig';
-      $template = $this->twig->load($pageTwig);
-      echo $template->render([
-         'slug' => $slug,
-         'title' => $title,
-         'errorMdp' => $errorMdp,
-         'errorPseudo' => $errorPseudo,
-         'inputPseudo' => $inputPseudo,
-      ]);
-   }
+    *  Gestion de l'envoi du formulaire de connexion
+    */
+    public function login($slug = null)
+    {
+       $errorMdp = null;
+       $errorPseudo = null;
+       $userInfo = null;
+       $inputPseudo = null;
+ 
+       //si pseudo vide
+       if (empty($_POST['pseudo'])) {
+          $errorPseudo = " ";
+       }
+ 
+       //si mdp vide
+       if (empty($_POST['mdp'])) {
+          $errorMdp = " ";
+       }
+ 
+       //si mdp vide et pseudo non vide
+       if (empty($_POST['mdp']) && !empty($_POST['pseudo'])) {
+          $userInfo = $this->model->checkLogin($_POST["pseudo"]);
+ 
+          //si le pseudo est connu de la bdd
+          if ($userInfo) {
+             $inputPseudo = $_POST['pseudo'];
+          } else {
+             $inputPseudoFalse = $_POST['pseudo'];
+             $errorPseudo = "Le pseudo : '$inputPseudoFalse' est inconnu de la base de donnée";
+          }
+       }
+ 
+ 
+       // si l'input pseudo et mdp n'est pas vide
+       else if (!empty($_POST['mdp']) && !empty($_POST['pseudo'])) {
+ 
+          // $user info appelle la fonction checkLogin
+          $userInfo = $this->model->checkLogin($_POST["pseudo"]);
+ 
+          //Si $userInfo a pour valeur true
+          if ($userInfo) {
+             $inputPseudo = $_POST['pseudo'];
+             //var_dump($userInfo);
+             $hashMdp = $userInfo["mdp"];
+ 
+             // si le mot de passe est bon
+             if (password_verify($_POST['mdp'], $hashMdp)) {
+ 
+                /*********************ANTHONY*************************/
+                $instanceHome = new HomeController();
+                $instanceHome->__set('utilisateur', $_POST['pseudo']);
+ 
+                //on recherche si l'utilisateur connecté est administrateur
+                $this->checkAdministrator($instanceHome->__get('utilisateur'));
+ 
+                // Si location existe on redirige vers postAfterLogin()
+                if (isset($_SESSION['location'])) {
+                   $instanceComments = new CommentsController();
+                   $instanceComments->postAfterLogin();
+                   /****************************************************/
+                } else {
+                   //Sinon on redirige l'utilisateur sur la page d'accueil
+                   if (!$instanceHome->__empty('utilisateur')) {
+ 
+                      $pageTwig = 'index.html.twig';
+                      $template = $this->twig->load($pageTwig);
+                      echo $template->render(['status' => $_SESSION['status']]);
+                      exit;
+                   }
+                }
+             } else {
+                $errorMdp = "Mot de passe incorrect";
+             }
+          } else {
+             $errorPseudo = "Vous êtes qui ?! :S";
+          }
+       }
+ 
+       $title = "Connexion";
+ 
+       $pageTwig = 'Users/login.html.twig';
+       $template = $this->twig->load($pageTwig);
+       echo $template->render([
+          'slug' => $slug,
+          'title' => $title,
+          'errorMdp' => $errorMdp,
+          'errorPseudo' => $errorPseudo,
+          'inputPseudo' => $inputPseudo,
+       ]);
+    }
    /**
-   *  Gestion de l'envoi du formulaire de Mot De Passe Oublié
-   */
+    *  Gestion de l'envoi du formulaire de Mot De Passe Oublié
+    */
    public function forgetPassword($slug = "MotDePasseOublie")
    {
       //déclaration des variables
@@ -175,17 +171,17 @@ class UsersController extends Controller
 
                //on instancie une nouvelle méthode d'envois du mail
                $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
-               //Port 25 ou 465 selon votre configuration
-               //identifiant et mote de passe pour votre swiftmailer
-               ->setUsername('fb4412351e7042')
-               ->setPassword('9377fb0dbcb0f8');
+                  //Port 25 ou 465 selon votre configuration
+                  //identifiant et mote de passe pour votre swiftmailer
+                  ->setUsername('fb4412351e7042')
+                  ->setPassword('9377fb0dbcb0f8');
                //on instancie un nouveau mail
                $mailer = new Swift_Mailer($transport);
                //on instancie un nouveau corps de document mail
                $message = (new Swift_Message($sujet))
-               ->setFrom(['galli.johanna.g2@gmail.com'])
-               ->setTo(['galli.johanna.g2@gmail.com'])
-               ->setBody($mailBody, 'text/html');
+                  ->setFrom(['galli.johanna.g2@gmail.com'])
+                  ->setTo(['galli.johanna.g2@gmail.com'])
+                  ->setBody($mailBody, 'text/html');
                //on récupère et modifie le header du mail pour l'envois en HTML
                $type = $message->getHeaders()->get('Content-Type');
                $type->setValue('text/html');
@@ -242,9 +238,9 @@ class UsersController extends Controller
    }
 
    /**
-   *
-   */
-   public function changePassword($slug = "ChangerMotDePasse" )
+    *
+    */
+   public function changePassword($slug = "ChangerMotDePasse")
    {
       //déclaration des variables
       $mdp = "";
@@ -283,8 +279,8 @@ class UsersController extends Controller
    }
 
    /**
-   *  gestion de l'envoi du formulaire d'inscription
-   */
+    *  gestion de l'envoi du formulaire d'inscription
+    */
    public function register($slug = "Inscription")
    {
       session_start();
@@ -304,7 +300,7 @@ class UsersController extends Controller
          $mail = $_POST['mail'];
          $pseudo = $_POST['pseudo'];
          $mdp = $_POST['mdp'];
-         
+
 
          // les champs sont remplis ?
          if (!empty($mail) && !empty($pseudo) && !empty($mdp)) {
@@ -389,19 +385,18 @@ class UsersController extends Controller
 
    /********************************ANTHONY************************************/
    /**
-   *  On déconnecte la SESSION
-   */
+    *  On déconnecte la SESSION
+    */
    public function logout()
    {
       $instanceHome = new HomeController();
       $instanceHome->destroy();
-      var_dump($_SESSION['utilisateur']);
       header("Location: $this->baseUrl");
    }
 
    /**
-   *
-   */
+    *
+    */
    public function checkAdministrator($pseudo)
    {
       $instanceHome = new HomeController();

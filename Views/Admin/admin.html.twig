@@ -208,6 +208,7 @@
          </thead>
 
          <tbody>
+            {% set id_movie = 0 %}
             {% for comment in comments %}
             <tr>
                <th scope="row">{{comment.id_comment}}</th>
@@ -217,7 +218,7 @@
                <td>{{comment.note}}</td>
                <td>{{comment.date}}</td>
                <td><a
-                     href="{{baseUrl}}/Admin/EffacerCommentaire_{{comment.id_comment}}{{comment.id_user}}">Supprimer</a>
+                     href="{{baseUrl}}/Admin/Effacer_{{comment.id_comment}}/{{id_movie}}/{{comment.id_user}}">Supprimer</a>
                </td>
             </tr>
             {% endfor %}

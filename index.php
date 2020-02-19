@@ -1,10 +1,8 @@
 <?php
 require_once('vendor/autoload.php');
-
-//echo password_hash("mdp", PASSWORD_DEFAULT);
+session_start();
 
 $router = new Router($_GET['url']);
-
 
 // Route Films
 $router->get('/Films/Film_:id_movie', 'Movies.showMovie');
@@ -22,7 +20,8 @@ $router->get('/Artistes', 'Artists.showAllArtists');
 
 // Route Login 
 $router->get('/Connexion', 'Users.connexion');
-$router->post('/Connexion/post', 'Users.login');
+$router->post('/', 'Users.login');
+//$router->post('/Connexion/post', 'Users.login');
 
 // route forgetPassword
 $router->get('/MotDePasseOublie', 'Users.forgetPassword');
@@ -44,17 +43,21 @@ $router->get('/Inscription', 'Users.register');
 $router->post('/Inscription/post', 'Users.register');
 
 // Route Commentaires
-$router->post('/Comments/modifyComment_:id_movie/:id_comment', 'Comments.modifyComment');
-$router->post('/Comments/addComment_:id_movie', 'Comments.addComment');
-$router->get('/Commentaires/EffacerCommentaire_:id_movie', 'Comments.deleteComment');
+$router->get('/Commentaires/Effacer_:id_comment/:id_movie', 'Comments.deleteComment');
+$router->post('/Commentaires/Modifier_:id_movie/:id_comment', 'Comments.modifyComment');
+$router->post('/Commentaires/Ajouter_:id_movie', 'Comments.addComment');
 $router->get('/Commentaires', 'Comments.index');
+
+// Route Profile
+$router->get('/Profile/Modifier_:user', 'Profils.modify');
+$router->get('/Profile', 'Profils.profil');
 
 // Route Deconnexion
 $router->get('/Deconnexion', 'Users.logout');
 
 // Route Admin
-$router->get('/Admin/EffacerCommentaire_:id_comment_:id_user', 'Comments.deleteComment');
-$router->get('/Admin/EffacerCommentaire_:id_comment', 'Comments.deleteComment');
+$router->get('/Admin/Effacer_:id_comment/:id_movie/:id_user', 'Comments.deleteComment');
+$router->get('/Admin/Effacer_:id_comment', 'Comments.deleteComment');
 $router->post('/Admin/Utilisateur', 'Comments.searchAllCommByUser');
 $router->get('/Admin/Tous', 'Comments.getAllCom');
 
@@ -73,6 +76,7 @@ $router->get('/Suggestion', 'Suggestion.suggestion');
 
 // Route Home
 $router->get('/', 'Home.index');
+
 
 
 // Route RUN
