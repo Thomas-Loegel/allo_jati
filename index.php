@@ -66,6 +66,11 @@ $router->get('/Admin/Ajout_Film', 'Admin.addMovie');
 $router->post('/Admin/Ajout_Film/Add', 'Admin.addMovie');
 $router->get('/Admin/Ajout_Artiste', 'Admin.addArtist');
 
+
+// Route Contact
+$router->post('/Suggestion', 'Suggestion.addSuggestion');
+$router->get('/Suggestion', 'Suggestion.suggestion');
+
 // Route Home
 $router->get('/', 'Home.index');
 
