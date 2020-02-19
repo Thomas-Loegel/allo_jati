@@ -13,30 +13,61 @@ class CommentsController extends Controller
     */
    public function index()
    {
-
-      /*$OneComment = $this->model->getOneComment();
-      $result = delComment($delId);
-      $liaisonCom = $this->model->linkCommentWorks();//argument id movie
-      $delete      = $this->model->delAllCommentFromMovie(1);//argument id movie*/
       $pageTwig = 'Comments/index.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render();
    }
+   
    /**
-    *  delete comment
+   *  Affiche tous les commentaire d'un utilisateur
+   */
+  public function searchAllCommByUser()
+  {
+     $instanceHome = new HomeController();
+     if(isset($_POST) && !empty($instanceHome->__getPOST('pseudo'))){
+        $pseudo = $instanceHome->__getPOST('pseudo');
+        $this->refreshUserForCommByUser($pseudo);
+     }
+  }
+   /**
+    *  Supprime un commentaire
     */
-
-   public function deleteComment($id_comment)
+   public function deleteComment($id_comment, $id_user = null)
    {
-      $this->model->delComment($id_comment);
+      if($id_user != null){
+         $this->model->delComment($id_comment);
+         $this->refreshAfterDeteleCommByUser($id_user);
+      } else {
+         var_dump("test");
+         $this->model->delComment($id_comment);
+         $this->getAllCom();
+      } 
    }
+   /**
+    * Rafraichit la liste après suppression
+    */
+    public function refreshAfterDeteleCommByUser($id_user){
+      $comments = $this->model->searchAllCommById($id_user);
+      $pageTwig = 'Admin/admin.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur']);
+   }
+   /**
+    * Rafraichit la liste des comme par utilisateur (pseudo)
+    */
+   public function refreshUserForCommByUser($pseudo){
+      $comments = $this->model->searchAllCommByUser($pseudo);
+      $pageTwig = 'Admin/admin.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur']);
+   }
+   
    /**
     *  Supprime tous les commentaire liés à id_movie
     */
    public function delAllComByMovie($id)
    {
       $tabCom = $this->model->linkCommentByMovie($id);
-      var_dump($tabCom);
       foreach ($tabCom as $k => $v) {
          $delId = $v['id_comment'];
          $this->model->delComment($delId);
@@ -48,9 +79,9 @@ class CommentsController extends Controller
    public function getAllCom()
    {
       $comments   = $this->model->getAllComments();
-      $pageTwig = 'Comments/index.html.twig';
+      $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["comments" => $comments]);
+      echo $template->render(["comments" => $comments, 'slug' => 'Tous']);
    }
    /** 
     *  Mise en temporaire de la publication

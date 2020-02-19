@@ -27,8 +27,9 @@ class MoviesController extends ArtsController
       ]);
    }
 
-   public function search($slug = "Recherche", $search = null)
+   public function search($search = null)
    {
+      $slug = "Recherche";
       $notFound = null;
 
       if (isset($_POST['search']) && !empty($_POST['search'])) {

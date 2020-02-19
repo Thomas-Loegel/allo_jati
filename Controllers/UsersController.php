@@ -1,8 +1,6 @@
 <?php
 class UsersController extends Controller
 {
-
-
    public function __construct()
    {
       //$this->twig = parent::getTwig();
@@ -10,13 +8,11 @@ class UsersController extends Controller
       $this->model = new Users();
    }
 
-
    /**
     *  Affichage du template pour $slug = null (formulaire de connexion)
     */
    public function connexion($slug = null)
    {
-      var_dump("connexion");
       //$slug est null
       $title = "Connexion";
 
@@ -126,7 +122,6 @@ class UsersController extends Controller
                      header("Location: $this->baseUrl");
                   }
                }
-
             } else {
                $errorMdp = "Mot de passe incorrect";
             }
@@ -152,7 +147,6 @@ class UsersController extends Controller
          $mail = null;
          $errorMail = "";
    
-   
          if (!empty($_POST)) {
             //si mail vide a l'envoi
             if (empty($_POST['mail'])) {
@@ -177,7 +171,6 @@ class UsersController extends Controller
                   var_dump($pseudo);
                   var_dump($randomString);
    
-   
                   //contenu mail
                   $sujet = "Mot de passe oublié";
                   $mailBody = "<h2>Bonjour " . $userPseudo . "!</h2><p>Vous avez demandé à changer de mot de passe.</p><br><a href='http://localhost/allo_jati/ChangerMotDePasse/$randomString'>Changer de mot de passe</a>";
@@ -191,34 +184,26 @@ class UsersController extends Controller
                   //on instancie une nouvelle méthode d'envois du mail
                   $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
                      //Port 25 ou 465 selon votre configuration
-   
                      //identifiant et mote de passe pour votre swiftmailer
                      ->setUsername('fb4412351e7042')
                      ->setPassword('9377fb0dbcb0f8');
-   
                   //on instancie un nouveau mail
                   $mailer = new Swift_Mailer($transport);
-   
                   //on instancie un nouveau corps de document mail
                   $message = (new Swift_Message($sujet))
                      ->setFrom(['galli.johanna.g2@gmail.com'])
                      ->setTo(['galli.johanna.g2@gmail.com'])
                      ->setBody($mailBody, 'text/html');
-   
                   //on récupère et modifie le header du mail pour l'envois en HTML
                   $type = $message->getHeaders()->get('Content-Type');
                   $type->setValue('text/html');
                   $type->setParameter('charset', 'utf-8');
-   
                   //On envois le mail en local
                   $result = $mailer->send($message);
    
                   if ($result) {
-   
                      $slug = "mailEnvoye";
-   
                      header("Location: $this->baseUrl/$slug");
-   
                   } else {
                      echo "Votre mail n'a pas pu être envoyé";
                   }
@@ -255,7 +240,6 @@ class UsersController extends Controller
       $mdp = "";
       $errorMdp = "";
       $userPseudo = "";
-
       $randomString = $this->model->returnUrl();
 
       //si le champ mdp est vide
@@ -266,7 +250,6 @@ class UsersController extends Controller
          if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
             //fonction insérer mdp
             $this->model->updateMdp($userPseudo, $mdp);
-
             //message tout est ok
             $message = 'Voici un message en javascript écrit par php';
             echo '<script type="text/javascript">window.alert("' . $message . '");</script>';
@@ -295,18 +278,13 @@ class UsersController extends Controller
       //déclaration des variables
       $mail = NULL;
       $mailError = NULL;
-
       $pseudo = NULL;
       $pseudoError = NULL;
-
       $mdp = NULL;
       $mdpError = NULL;
-
       $avatar = NULL;
       $avatarError = NULL;
-
       $generalError = NULL;
-
 
       if (!empty($_POST)) {
          $mail = $_POST['mail'];
@@ -387,6 +365,7 @@ class UsersController extends Controller
          'inputMail' => $mail,
       'inputPseudo' => $pseudo,]);
    }
+   
    /********************************ANTHONY************************************/
    //On déconnecte la SESSION
    public function logout()
