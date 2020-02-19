@@ -1,16 +1,20 @@
 {
-    "name": "project/allo_jati",
-    "authors": [
-        {
-            "name": "johanna Galli",
-            "email": "galli.johanna.g2@gmail.com"
-        }
-    ],
-    "require": {
-        "twig/twig": "3.0",
-        "swiftmailer/swiftmailer": "^6.2"
-    },
-    "autoload": {
-        "classmap":["Router/", "Controllers/", "Models/"] 
-    }
+   "name": "project/allo_jati",
+   "authors": [
+      {
+         "name": "ilias-imoula",
+         "email": "iliasimoula97@gmail.com"
+      }
+   ],
+   "require": {
+      "twig/twig": "^3.0",
+      "swiftmailer/swiftmailer": "^6.2"
+  },
+   "autoload": {
+      "classmap": [
+         "Controllers/",
+         "Models/",
+         "Router/"
+      ]
+   }
 }
