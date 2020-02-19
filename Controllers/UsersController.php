@@ -48,11 +48,11 @@ class UsersController extends Controller
 
       //si pseudo vide
       if (empty($_POST['pseudo'])) {
-         $errorPseudo = "Champ vide !";
+         $errorPseudo = " ";
       }
       //si mdp vide
       if (empty($_POST['mdp'])) {
-         $errorMdp = "Champ vide !";
+         $errorMdp = " ";
       }
 
       //si mdp vide et pseudo non vide
@@ -142,7 +142,7 @@ class UsersController extends Controller
       if (!empty($_POST)) {
          //si mail vide a l'envoi
          if (empty($_POST['mail'])) {
-            $errorMail = "Champ vide !";
+            $errorMail = " ";
          } else {
             $mail = $_POST['mail'];
 
@@ -254,7 +254,7 @@ class UsersController extends Controller
 
       //si le champ mdp est vide
       if (empty($_POST['mdp'])) {
-         $errorMdp = "Champ vide !";
+         $errorMdp = " ";
       } else {
          $mdp = $_POST['mdp'];
          if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
@@ -304,7 +304,7 @@ class UsersController extends Controller
          $mail = $_POST['mail'];
          $pseudo = $_POST['pseudo'];
          $mdp = $_POST['mdp'];
-         $avatar = $_POST['avatar'];
+         
 
          // les champs sont remplis ?
          if (!empty($mail) && !empty($pseudo) && !empty($mdp)) {
@@ -329,7 +329,8 @@ class UsersController extends Controller
                            $hashMdp = password_hash($mdp, PASSWORD_DEFAULT);
 
                            // une photo a été inséré dans l'insciption ?
-                           if ($avatar) {
+                           if ($_POST['avatar']) {
+                              $avatar = $_POST['avatar'];
                               $info = new SplFileInfo($avatar);
                               $extensionAvatar = $info->getExtension();
                               $extensionAvatar = strtolower($extensionAvatar);
@@ -368,7 +369,6 @@ class UsersController extends Controller
          }
       }
 
-
       $title = "Inscription";
 
       $pageTwig = 'Users/login.html.twig';
@@ -382,6 +382,8 @@ class UsersController extends Controller
          'mdpError' => $mdpError,
          'inputMail' => $mail,
          'inputPseudo' => $pseudo,
+         //'avatar' => $avatar,
+         'avatarError' => $avatarError,
       ]);
    }
 
