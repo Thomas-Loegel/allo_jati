@@ -88,7 +88,10 @@ class UsersController extends Controller
 
                   //Sinon on redirige l'utilisateur sur la page d'accueil
                   if (!$instanceHome->__empty('utilisateur')){                     
-                     header("Location: $this->baseUrl");
+              
+                     $pageTwig = 'template.html.twig';
+                     $template = $this->twig->load($pageTwig);
+                     echo $template->render(['status' => $_SESSION['status']]);
                   }
                }
 

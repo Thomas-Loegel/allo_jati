@@ -38,7 +38,6 @@ class CommentsController extends Controller
          $this->model->delComment($id_comment);
          $this->refreshAfterDeteleCommByUser($id_user);
       } else {
-         var_dump("test");
          $this->model->delComment($id_comment);
          $this->getAllCom();
       } 
@@ -46,20 +45,23 @@ class CommentsController extends Controller
    /**
     * Rafraichit la liste après suppression
     */
+    
     public function refreshAfterDeteleCommByUser($id_user){
+      session_start();
       $comments = $this->model->searchAllCommById($id_user);
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur']);
+      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur', 'status' => $_SESSION['status']]);
    }
    /**
     * Rafraichit la liste des comme par utilisateur (pseudo)
     */
    public function refreshUserForCommByUser($pseudo){
+      session_start();
       $comments = $this->model->searchAllCommByUser($pseudo);
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur']);
+      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur', 'status' => $_SESSION['status']]);
    }
    
    /**
@@ -78,10 +80,11 @@ class CommentsController extends Controller
     */
    public function getAllCom()
    {
+      session_start();
       $comments   = $this->model->getAllComments();
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["comments" => $comments, 'slug' => 'Tous']);
+      echo $template->render(["comments" => $comments, 'slug' => 'Tous', 'status' => $_SESSION['status']]);
    }
    /** 
     *  Mise en temporaire de la publication

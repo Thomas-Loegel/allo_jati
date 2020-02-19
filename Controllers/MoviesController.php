@@ -24,6 +24,7 @@ class MoviesController extends ArtsController
       $movies   = $this->model->getAllMovies();
       echo $template->render([
          'movies' => $movies,
+         'status' => $_SESSION['status']
       ]);
    }
 
