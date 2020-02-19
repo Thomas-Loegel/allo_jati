@@ -22,7 +22,7 @@ $router->get('/Artistes', 'Artists.showAllArtists');
 
 // Route Login 
 $router->get('/Connexion', 'Users.connexion');
-$router->post('/Connexion/post', 'Users.login');
+$router->post('/', 'Users.login');
 
 // route forgetPassword
 $router->get('/MotDePasseOublie', 'Users.forgetPassword');
@@ -32,8 +32,8 @@ $router->post('/MotDePasseOublie/post', 'Users.forgetPassword');
 $router->get('/mailEnvoye', 'Users.mailEnvoye');
 
 // Route ChangePassword
-$router->get('/ChangerMotDePasse/:randomString', 'Users.updatePassword');
-$router->post('/ChangerMotDePasse/:slugurl/post', 'Users.updatePassword');
+$router->get('/ChangerMotDePasse/:hash', 'Users.updatePassword');
+$router->post('/ChangerMotDePasse/:hash/post', 'Users.updatePassword');
 
 // route forgetPassword
 $router->get('/MotDePasseOublie', 'Users.forgetPassword');
