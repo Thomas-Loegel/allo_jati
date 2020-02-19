@@ -5,7 +5,7 @@ class UsersController extends Controller
    {
       //$this->twig = parent::getTwig();
       parent::__construct();
-      $this->model = new User();
+      $this->model = new Users();
    }
 
    /**
@@ -204,7 +204,7 @@ class UsersController extends Controller
          }
 
          $title = "Mot de passe oublié";
-   
+
          //affichage
          $pageTwig = 'Users/login.html.twig';
          $template = $this->twig->load($pageTwig);
@@ -290,7 +290,7 @@ class UsersController extends Controller
    {
       session_start();
       //déclaration des variables
-      
+
       $mail = NULL;
       $mailError = NULL;
       $pseudo = NULL;
