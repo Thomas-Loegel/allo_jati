@@ -46,4 +46,18 @@ class Artists extends Model
       $req->execute([$id]);
       return $req->fetchAll();
    }
+
+   /**
+   *  Recherche un Artiste
+   */
+   public function getBySearch($search)
+   {
+      $req = $this->pdo->prepare(
+         'SELECT *
+         FROM artists
+         WHERE first_name
+         LIKE "%'.$search.'%"');
+      $req->execute();
+      return $req->fetchAll();
+   }
 }

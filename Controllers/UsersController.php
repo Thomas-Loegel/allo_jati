@@ -9,8 +9,8 @@ class UsersController extends Controller
    }
 
    /**
-    *  Affichage du template pour $slug = null (formulaire de connexion)
-    */
+   *  Affichage du template pour $slug = null (formulaire de connexion)
+   */
    public function connexion($slug = null)
    {
       //$slug est null
@@ -50,8 +50,9 @@ class UsersController extends Controller
       ]);
    }
 
-
-   // gestion de l'envoi du formulaire de connexion
+   /**
+   *  Gestion de l'envoi du formulaire de connexion
+   */
    public function login($slug = null)
    {
       $errorMdp = null;
@@ -113,13 +114,16 @@ class UsersController extends Controller
                if (isset($_SESSION['location'])) {
                   $instanceComments = new CommentsController();
                   $instanceComments->postAfterLogin();
-               /****************************************************/
+                  /****************************************************/
 
                } else {
 
                   //Sinon on redirige l'utilisateur sur la page d'accueil
-                  if (!$instanceHome->__empty('utilisateur')){                     
-                     header("Location: $this->baseUrl");
+                  if (!$instanceHome->__empty('utilisateur')){
+
+                     $pageTwig = 'index.html.twig';
+                     $template = $this->twig->load($pageTwig);
+                     echo $template->render(['status' => $_SESSION['status']]);
                   }
                }
             } else {
@@ -139,88 +143,89 @@ class UsersController extends Controller
          'inputPseudo' => $inputPseudo,
       ]);
    }
+   /**
+   *  Gestion de l'envoi du formulaire de Mot De Passe Oublié
+   */
+   public function forgetPassword($slug = "MotDePasseOublie")
+   {
+      //déclaration des variables
+      $mail = null;
+      $errorMail = "";
 
-      //gestion de l'envoi du formulaire de Mot De Passe Oublié
-      public function forgetPassword($slug = "MotDePasseOublie")
-      {
-         //déclaration des variables
-         $mail = null;
-         $errorMail = "";
-   
-         if (!empty($_POST)) {
-            //si mail vide a l'envoi
-            if (empty($_POST['mail'])) {
-               $errorMail = "Champ vide !";
+      if (!empty($_POST)) {
+         //si mail vide a l'envoi
+         if (empty($_POST['mail'])) {
+            $errorMail = "Champ vide !";
+         } else {
+            $mail = $_POST['mail'];
+
+            $userMail = $this->model->mailExist($mail);
+
+            //mail n'existe pas dans la bdd ?
+            if ($userMail == false) {
+               $errorMail = "Le mail : $mail n'est pas connu de la base de donnée";
             } else {
-               $mail = $_POST['mail'];
-   
-               $userMail = $this->model->mailExist($mail);
-   
-               //mail n'existe pas dans la bdd ?
-               if ($userMail == false) {
-                  $errorMail = "Le mail : $mail n'est pas connu de la base de donnée";
+               //on va checher le pseudo qui correspond au mail entré
+               $pseudo = $this->model->recupPseudo($mail);
+               //on créer un nouveau numéro aléatoire
+               $randomString = $this->model->random(10);
+               //on insert les nouvelles données dans la table intermédiaire
+               $this->model->insertUsersIntermediar($randomString, $mail);
+
+               var_dump($mail);
+               var_dump($pseudo);
+               var_dump($randomString);
+
+               //contenu mail
+               $sujet = "Mot de passe oublié";
+               $mailBody = "<h2>Bonjour " . $pseudo . "!</h2><p>Vous avez demandé à changer de mot de passe.</p><br><a href='http://localhost/allo_jati/ChangerMotDePasse/$randomString'>Changer de mot de passe</a>";
+            }
+
+            //si on est en local
+            if ($_SERVER['SERVER_NAME'] === "localhost") {
+               //on charge Swiftmailer
+               require_once('vendor/autoload.php');
+
+               //on instancie une nouvelle méthode d'envois du mail
+               $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
+               //Port 25 ou 465 selon votre configuration
+               //identifiant et mote de passe pour votre swiftmailer
+               ->setUsername('fb4412351e7042')
+               ->setPassword('9377fb0dbcb0f8');
+               //on instancie un nouveau mail
+               $mailer = new Swift_Mailer($transport);
+               //on instancie un nouveau corps de document mail
+               $message = (new Swift_Message($sujet))
+               ->setFrom(['galli.johanna.g2@gmail.com'])
+               ->setTo(['galli.johanna.g2@gmail.com'])
+               ->setBody($mailBody, 'text/html');
+               //on récupère et modifie le header du mail pour l'envois en HTML
+               $type = $message->getHeaders()->get('Content-Type');
+               $type->setValue('text/html');
+               $type->setParameter('charset', 'utf-8');
+               //On envois le mail en local
+               $result = $mailer->send($message);
+
+               if ($result) {
+                  $slug = "mailEnvoye";
+                  header("Location: $this->baseUrl/$slug");
                } else {
-                  //on va checher le pseudo qui correspond au mail entré
-                  $pseudo = $this->model->recupPseudo($mail);
-                  //on créer un nouveau numéro aléatoire
-                  $randomString = $this->model->random(10);
-                  //on insert les nouvelles données dans la table intermédiaire
-                  $this->model->insertUsersIntermediar($randomString, $mail);
-   
-                  var_dump($mail);
-                  var_dump($pseudo);
-                  var_dump($randomString);
-   
-                  //contenu mail
-                  $sujet = "Mot de passe oublié";
-                  $mailBody = "<h2>Bonjour " . $pseudo . "!</h2><p>Vous avez demandé à changer de mot de passe.</p><br><a href='http://localhost/allo_jati/ChangerMotDePasse/$randomString'>Changer de mot de passe</a>";
-               }
-   
-               //si on est en local
-               if ($_SERVER['SERVER_NAME'] === "localhost") {
-                  //on charge Swiftmailer
-                  require_once('vendor/autoload.php');
-   
-                  //on instancie une nouvelle méthode d'envois du mail
-                  $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
-                     //Port 25 ou 465 selon votre configuration
-                     //identifiant et mote de passe pour votre swiftmailer
-                     ->setUsername('fb4412351e7042')
-                     ->setPassword('9377fb0dbcb0f8');
-                  //on instancie un nouveau mail
-                  $mailer = new Swift_Mailer($transport);
-                  //on instancie un nouveau corps de document mail
-                  $message = (new Swift_Message($sujet))
-                     ->setFrom(['galli.johanna.g2@gmail.com'])
-                     ->setTo(['galli.johanna.g2@gmail.com'])
-                     ->setBody($mailBody, 'text/html');
-                  //on récupère et modifie le header du mail pour l'envois en HTML
-                  $type = $message->getHeaders()->get('Content-Type');
-                  $type->setValue('text/html');
-                  $type->setParameter('charset', 'utf-8');
-                  //On envois le mail en local
-                  $result = $mailer->send($message);
-   
-                  if ($result) {
-                     $slug = "mailEnvoye";
-                     header("Location: $this->baseUrl/$slug");
-                  } else {
-                     echo "Votre mail n'a pas pu être envoyé";
-                  }
+                  echo "Votre mail n'a pas pu être envoyé";
                }
             }
          }
-   
-         //affichage
-         $pageTwig = 'Users/login.html.twig';
-         $template = $this->twig->load($pageTwig);
-         echo $template->render([
-            'slug' => $slug,
-            'mail' => $mail,
-            'errorMail' => $errorMail,
-            //'randomString' => $randomString,
-         ]);
       }
+
+      //affichage
+      $pageTwig = 'Users/login.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render([
+         'slug' => $slug,
+         'mail' => $mail,
+         'errorMail' => $errorMail,
+         //'randomString' => $randomString,
+      ]);
+   }
 
 
    public function mailEnvoye($slug = "mailEnvoye")
@@ -233,10 +238,12 @@ class UsersController extends Controller
       ]);
    }
 
-
-   public function updatePassword($slug = "ChangerMotDePasse")
+   /**
+   *
+   */
+   public function changePassword($slug = "ChangerMotDePasse" )
    {
-      //déclaration des variables 
+      //déclaration des variables
       $mdp = "";
       $errorMdp = "";
       $userPseudo = "";
@@ -270,8 +277,9 @@ class UsersController extends Controller
       ]);
    }
 
-
-   // gestion de l'envoi du formulaire d'inscription
+   /**
+   *  gestion de l'envoi du formulaire d'inscription
+   */
    public function register($slug = "Inscription")
    {
       session_start();
@@ -363,11 +371,14 @@ class UsersController extends Controller
          'pseudoError' => $pseudoError,
          'mdpError' => $mdpError,
          'inputMail' => $mail,
-      'inputPseudo' => $pseudo,]);
+         'inputPseudo' => $pseudo,
+      ]);
    }
 
    /********************************ANTHONY************************************/
-   //On déconnecte la SESSION
+   /**
+   *  On déconnecte la SESSION
+   */
    public function logout()
    {
       $instanceHome = new HomeController();
@@ -376,6 +387,9 @@ class UsersController extends Controller
       header("Location: $this->baseUrl");
    }
 
+   /**
+   *
+   */
    public function checkAdministrator($pseudo)
    {
       $instanceHome = new HomeController();
@@ -384,6 +398,9 @@ class UsersController extends Controller
       $id_user = $this->model->getOneIdUser($pseudo);
       //On vérifie si l'id utilisateur est Admin
       $admin = $this->model->checkAdmin($id_user['id_user']);
+
+      $instanceHome = new HomeController();
+
       if ($admin['admin'] == 1) {
          $_SESSION['status'] = 1;
          //Redirection sur page Admin
@@ -391,6 +408,5 @@ class UsersController extends Controller
       } else {
          $instanceHome->__set('status', 2);
       }
-      var_dump($instanceHome->__get('status'));
    }
 }

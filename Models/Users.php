@@ -104,7 +104,7 @@ class User extends Model
       return $string;
    }
 
-
+   /*************************Function ANTHONY********************/
    /**
     * insertion dans la table Users_intermediar
     */
@@ -184,11 +184,11 @@ class User extends Model
    /**
    * Récupère l'id d'un utilisateur depuis son pseudo
    */
-  public function getOneIdUser($pseudo)
-  {
+   public function getOneIdUser($pseudo)
+   {
      $req = $this->pdo->prepare('SELECT `id_user` FROM users WHERE pseudo= ?');
      $req->execute([$pseudo]);
      return $req->fetch();
-  }
-  /*******************************************************************/
+   }
+   /*******************************************************************/
 }
