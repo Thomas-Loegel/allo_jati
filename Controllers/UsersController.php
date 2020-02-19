@@ -16,23 +16,8 @@ class UsersController extends Controller
       //$slug est null
       $title = "Connexion";
 
-      //si slug = Inscription alors change le $title en "inscription".
-      if ($slug === "Inscription") {
-         $title = "Inscription";
-      }
-
-      //si slug = MotDePasseOublie alors change le $title en "Mot de passe oublié".
-      if ($slug === "MotDePasseOublie") {
-         $title = "Mot de passe oublié";
-      }
-
-      //si slug = ChangerMotDePasse alors change le $title en "Changer de mot de passe".
-      if ($slug === "ChangerMotDePasse/user=") {
-         $title = "Changer de mot de passe";
-      }
-
       //si slug est défini et différent de "Inscription" et différent de "MotDePasseOublie" (en gros si l'utilisateur met nimp dans l'url) alors :
-      if (isset($slug) && $slug !== "Inscription"  && $slug !== "MotDePasseOublie" && $slug !== "ChangerMotDePasse/:?") {
+      if (isset($slug) && $slug !== "MotDePasseOublie"  && $slug !== "mailEnvoye" && $slug !== "ChangerMotDePasse" && $slug !== "Inscription") {
          //Affiche une erreur 303 dans la console :
          header("HTTP/1.0 303 Redirection");
 
@@ -134,10 +119,13 @@ class UsersController extends Controller
          }
       }
 
+      $title = "Connexion";
+
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
+         'title' => $title,
          'errorMdp' => $errorMdp,
          'errorPseudo' => $errorPseudo,
          'inputPseudo' => $inputPseudo,
@@ -214,6 +202,19 @@ class UsersController extends Controller
                }
             }
          }
+
+         $title = "Mot de passe oublié";
+   
+         //affichage
+         $pageTwig = 'Users/login.html.twig';
+         $template = $this->twig->load($pageTwig);
+         echo $template->render([
+            'slug' => $slug,
+            'title' => $title,
+            'mail' => $mail,
+            'errorMail' => $errorMail,
+            //'randomString' => $randomString,
+         ]);
       }
 
       //affichage
@@ -230,11 +231,14 @@ class UsersController extends Controller
 
    public function mailEnvoye($slug = "mailEnvoye")
    {
+      $title = "Mail envoyé";
+
       //affichage
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
+         'title' => $title,
       ]);
    }
 
@@ -265,12 +269,14 @@ class UsersController extends Controller
          }
       }
 
+      $title = "Changer mot de passe";
+
       //affichage
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
-         //'userPseudo' => $userPseudo,
+         'title' => $title,
          'mdp' => $mdp,
          'errorMdp' => $errorMdp,
          'randomString' => $randomString,
@@ -284,6 +290,7 @@ class UsersController extends Controller
    {
       session_start();
       //déclaration des variables
+      
       $mail = NULL;
       $mailError = NULL;
       $pseudo = NULL;
@@ -362,10 +369,14 @@ class UsersController extends Controller
          }
       }
 
+
+      $title = "Inscription";
+
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
+         'title' => $title,
          'generalError' => $generalError,
          'mailError' => $mailError,
          'pseudoError' => $pseudoError,
