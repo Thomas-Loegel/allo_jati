@@ -10,6 +10,7 @@ $router = new Router($_GET['url']);
 $router->get('/Films/Film_:id_movie', 'Movies.showMovie');
 $router->get('/Films/Artiste_:id_artist', 'Artists.showArtist');
 $router->post('/Films/Recherche', 'Movies.search');
+$router->post('/Films/Genre', 'Movies.genre');
 $router->get('/Film_:id_movie', 'Movies.showMovie');
 $router->get('/Films', 'Movies.showAllMovies');
 

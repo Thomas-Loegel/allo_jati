@@ -161,6 +161,7 @@
          </table>
       </div>
       {% endif %}
+
       {#************************ANTHONY***********************#}
       <!-- Tous les commentaires -->
       {% if (slug == 'Tous') %}
@@ -256,23 +257,17 @@
 
                   <div class="col-md-6 mb-3">
                      <select class="custom-select" name="style">
-                        <option value="">-- Style --</option>
+                        <option value="" selected disabled>--Style--</option>
                         <option value="Action" {% if style == "Action" %}selected{% endif %}>Action</option>
                         <option value="Animation" {% if style == "Animation" %}selected{% endif %}>Animation</option>
-                        <option value="Catasrophe" {% if style == "Catasrophe" %}selected{% endif %}>Catasrophe
-                        </option>
+                        <option value="Catasrophe" {% if style == "Catasrophe" %}selected{% endif %}>Catasrophe</option>
                         <option value="Comédie" {% if style == "Comédie" %}selected{% endif %}>Comédie</option>
-                        <option value="Dramatique" {% if style == "Dramatique" %}selected{% endif %}>Dramatique
-                        </option>
-                        <option value="Documentaire" {% if style == "Documentaire" %}selected{% endif %}>Documentaire
-                        </option>
-                        <option value="Historique" {% if style == "Historique" %}selected{% endif %}>Historique
-                        </option>
+                        <option value="Dramatique" {% if style == "Dramatique" %}selected{% endif %}>Dramatique</option>
+                        <option value="Documentaire" {% if style == "Documentaire" %}selected{% endif %}>Documentaire</option>
+                        <option value="Historique" {% if style == "Historique" %}selected{% endif %}>Historique</option>
                         <option value="Horreur" {% if style == "Horreur" %}selected{% endif %}>Horreur</option>
-                        <option value="Romantique" {% if style == "Romantique" %}selected{% endif %}>Romantique
-                        </option>
-                        <option value="Science-Fiction" {% if style == "Science-Fiction" %}selected{% endif %}>
-                           Science-Fiction</option>
+                        <option value="Romantique" {% if style == "Romantique" %}selected{% endif %}>Romantique</option>
+                        <option value="Science-Fiction" {% if style == "Science-Fiction" %}selected{% endif %}>Science-Fiction</option>
                      </select>
                   </div>
                </div>
@@ -295,7 +290,6 @@
                <p class="text-danger">{{error}}</p>
             </div>
          </div>
-
          {% endif %}
 
 
@@ -314,7 +308,7 @@
                      </div>
 
                      <div class="col-md-4 mb-3">
-                        <input type="text" class="form-control" placeholder="Date de naissance (JJ/MM/AAAA)">
+                        <input type="text" class="form-control" placeholder="Anniversaire (JJ/MM/AAAA)">
                      </div>
                   </div>
 
@@ -325,7 +319,7 @@
 
                      <div class="col-md-6 mb-3">
                         <select class="custom-select">
-                           <option selected disabled value="">Rôle</option>
+                           <option value="" selected disabled>--Rôle--</option>
                            <option>Réalisateur & Acteur</option>
                            <option>Réalisateur</option>
                            <option>Acteur</option>
@@ -347,4 +341,4 @@
          </div>
       </div>
    </div>
-   {% endblock %}
+{% endblock %}
