@@ -5,7 +5,7 @@ class UsersController extends Controller
    {
       //$this->twig = parent::getTwig();
       parent::__construct();
-      $this->model = new Users();
+      $this->model = new User();
    }
 
    /**
@@ -173,7 +173,7 @@ class UsersController extends Controller
    
                   //contenu mail
                   $sujet = "Mot de passe oublié";
-                  $mailBody = "<h2>Bonjour " . $userPseudo . "!</h2><p>Vous avez demandé à changer de mot de passe.</p><br><a href='http://localhost/allo_jati/ChangerMotDePasse/$randomString'>Changer de mot de passe</a>";
+                  $mailBody = "<h2>Bonjour " . $pseudo . "!</h2><p>Vous avez demandé à changer de mot de passe.</p><br><a href='http://localhost/allo_jati/ChangerMotDePasse/$randomString'>Changer de mot de passe</a>";
                }
    
                //si on est en local
@@ -365,7 +365,7 @@ class UsersController extends Controller
          'inputMail' => $mail,
       'inputPseudo' => $pseudo,]);
    }
-   
+
    /********************************ANTHONY************************************/
    //On déconnecte la SESSION
    public function logout()

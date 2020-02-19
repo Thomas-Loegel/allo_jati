@@ -1,6 +1,6 @@
 <?php
 
-class Users extends Model
+class User extends Model
 {
    public function __construct()
    {
@@ -28,7 +28,10 @@ class Users extends Model
       $req = $this->pdo->prepare("INSERT INTO users(mail, pseudo, mdp, avatar) VALUES ('$mail', '$pseudo', '$mdp', '$avatar')");
       $req->execute();
    }
-   //verifie si le pseudo entré existe dans la bdd
+
+   /**
+    * verifie si le pseudo entré existe dans la bdd
+    */
    public function pseudoExist($pseudo)
    {
       $req = $this->pdo->prepare("SELECT pseudo FROM users WHERE pseudo = :pseudo");
@@ -36,7 +39,10 @@ class Users extends Model
       $req->execute();
       return $req->fetch();
    }
-   //verifie si le mail entré existe dans la bdd
+
+   /**
+    * verifie si le mail entré existe dans la bdd
+    */
    public function mailExist($mail)
    {
       $req = $this->pdo->prepare("SELECT mail FROM users WHERE mail = :mail");
@@ -49,7 +55,9 @@ class Users extends Model
 
    /**************************FONCTIONS POUR CHANGER MOT DE PASSE**************************/
 
-   //retourner le pseudo d'un utilisateur par rapport a son mail
+   /*
+    * retourner le pseudo d'un utilisateur par rapport a son mail
+    */
    public function recupPseudo($mail)
    {
       //chercher dans table users le pseudo correspondant au mail
@@ -57,7 +65,9 @@ class Users extends Model
       $req->bindValue(':mail', $mail);
    }
 
-   //changer le mot de passe d'un utilisateur par celui entré dans l'input en fonction de son pseudo
+   /*
+    * changer le mot de passe d'un utilisateur par celui entré dans l'input en fonction de son pseudo
+    */
    public function updateMdp($pseudo, $mdp)
    {
       $req = $this->pdo->prepare("UPDATE users SET mdp = :mdp WHERE pseudo= :pseudo");
@@ -66,7 +76,9 @@ class Users extends Model
       $req->execute();
    }
 
-   //va chercher des caractères dans l'url après l'emplacement donné (ici 42)
+   /*
+    * va chercher des caractères dans l'url après l'emplacement donné (ici 42)
+    */
    public function returnUrl()
    {
       $adresse = $_SERVER['PHP_SELF'];
@@ -78,7 +90,9 @@ class Users extends Model
       return substr($adresse, 43);
    }
 
-   // création de numéro aléatoire
+   /*
+    *création de numéro aléatoire
+    */
    public function random($max)
    {
       $string = "";
@@ -90,7 +104,10 @@ class Users extends Model
       return $string;
    }
 
-   //insertion dans la table Users_intermediar
+
+   /**
+    * insertion dans la table Users_intermediar
+    */
    public function insertUsersIntermediar($randomString, $mail)
    {
       //tester si le mail existe déja
@@ -114,9 +131,6 @@ class Users extends Model
 
    /*************************FIN FONCTIONS POUR CHANGER MOT DE PASSE**************************/
 
-
-
-
    /**
     *  Récupère les Utilisateurs
     */
@@ -126,6 +140,7 @@ class Users extends Model
       $req->execute();
       return $req->fetchAll();
    }
+
    /**
    *  Récupère l'id_user depuis son pseudo
    */
@@ -135,6 +150,7 @@ class Users extends Model
       $req->execute([$pseudo]);
       return $req->fetch();
    }
+
    /**
    * Récupère le pseudo depuis l'id user
    */
@@ -144,6 +160,7 @@ class Users extends Model
       $req->execute([$id_user]);
       return $req->fetch();
    }
+
    /**
     * Vérifie si l'id_user est admin
     */
@@ -153,6 +170,7 @@ class Users extends Model
       $req->execute([$id_user]);
       return $req->fetch();
    }
+
    /**
    *  Récupère l'avatar depuis un id user
    */
@@ -162,6 +180,7 @@ class Users extends Model
       $req->execute([$id_user]);
       return $req->fetch();
    }
+
    /**
    * Récupère l'id d'un utilisateur depuis son pseudo
    */
@@ -171,5 +190,5 @@ class Users extends Model
      $req->execute([$pseudo]);
      return $req->fetch();
   }
-  /****************************************************************** */
+  /*******************************************************************/
 }
