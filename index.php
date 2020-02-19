@@ -17,6 +17,7 @@ $router->get('/Films', 'Movies.showAllMovies');
 // Route Artistes
 $router->get('/Artistes/Artiste_:id_artist', 'Artists.showArtist');
 $router->get('/Artiste_:id_artist', 'Artists.showArtist');
+$router->post('/Artistes/Recherche', 'Artists.search');
 $router->get('/Artistes', 'Artists.showAllArtists');
 
 // Route Login

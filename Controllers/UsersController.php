@@ -91,7 +91,10 @@ class UsersController extends Controller
 
                   //Sinon on redirige l'utilisateur sur la page d'accueil
                   if (!$instanceHome->__empty('utilisateur')){
-                     header("Location: $this->baseUrl");
+
+                     $pageTwig = 'index.html.twig';
+                     $template = $this->twig->load($pageTwig);
+                     echo $template->render(['status' => $_SESSION['status']]);
                   }
                }
 
@@ -358,7 +361,8 @@ class UsersController extends Controller
          'pseudoError' => $pseudoError,
          'mdpError' => $mdpError,
          'inputMail' => $mail,
-      'inputPseudo' => $pseudo,]);
+         'inputPseudo' => $pseudo,
+      ]);
    }
 
    /********************************ANTHONY************************************/
@@ -391,6 +395,5 @@ class UsersController extends Controller
       } else {
          $instanceHome->__set('status', 2);
       }
-      var_dump($instanceHome->__get('status'));
    }
 }

@@ -28,7 +28,7 @@ class MoviesController extends ArtsController
    }
 
    /**
-   *
+   *  Affiche les films en fonction de la recherhce
    */
    public function search($search = null)
    {
