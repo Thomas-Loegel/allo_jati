@@ -16,7 +16,7 @@ class AdminController extends Controller
    {
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render();
+      echo $template->render(['status' => $_SESSION['status']]);
    }
 
    /**
@@ -33,7 +33,8 @@ class AdminController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
-         'users' => $users
+         'users' => $users, 
+         'status' => $_SESSION['status']
       ]);
    }
 
@@ -51,7 +52,8 @@ class AdminController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
-         'movies' => $movies
+         'movies' => $movies,
+         'status' => $_SESSION['status']
       ]);
    }
 
@@ -69,7 +71,8 @@ class AdminController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
-         'artists' => $artists
+         'artists' => $artists, 
+         'status' => $_SESSION['status']
       ]);
    }
 
@@ -123,7 +126,7 @@ class AdminController extends Controller
          $error = "Résumé non renseigné !";
       }
 
-      $addMovie = $this->model->addMovie($picture,$title,$year,$style,$resume,$time);
+      $this->model->addMovie($picture,$title,$year,$style,$resume,$time);
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
@@ -135,7 +138,8 @@ class AdminController extends Controller
          'style'   => $style,
          'resume'  => $resume,
          'error'   => $error,
-         'success' => $success
+         'success' => $success, 
+         'status' => $_SESSION['status']
       ]);
    }
 
@@ -145,9 +149,8 @@ class AdminController extends Controller
    public function addArtist()
    {
       $slug = 'Ajout_Artiste';
-
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['slug' => $slug]);
+      echo $template->render(['slug' => $slug, 'status' => $_SESSION['status']]);
    }
 }

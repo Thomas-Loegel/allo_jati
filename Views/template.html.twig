@@ -18,6 +18,7 @@
 <body>
    {% block header %}
 
+      <!-- HEADER VISITEUR  -->
       {% if status is null %}
          <header>
             <nav class="header-nav navbar navbar-expand-lg mb-0 p-0">
@@ -33,13 +34,16 @@
                         <a class="nav-link hover-menu" href="{{baseUrl}}/Artistes">ARTISTES</a>
                      </li>
                      <li class="nav-item active">
-                        <a class="nav-link hover-menu" href="{{baseUrl}}/Connexion">CONNEXION</a>
+                        <a class="nav-link hover-menu" href="{{baseUrl}}/Connection">CONNECTION</a>
+
                      </li>
                   </ul>
                </div>
             </nav>
          </header>
 
+
+      <!-- HEADER ADMIN  -->
       {% elseif status == 1 %}
          <header>
             <nav class="header-nav navbar navbar-expand-lg mb-0 p-0">
@@ -55,10 +59,10 @@
                         <a class="nav-link hover-menu" href="{{baseUrl}}/Artistes">ARTISTES</a>
                      </li>
                      <li class="nav-item active">
-                        <a class="nav-link hover-menu" href="{{baseUrl}}/Deconnexion">DECONNEXION</a>
+                        <a class="nav-link hover-menu" href="{{baseUrl}}/Deconnection">DECONNECTION</a>
                      </li>
                      <li class="nav-item active">
-                        <a class="nav-link hover-menu" href="{{baseUrl}}/Profil">PROFIL</a>
+                        <a class="nav-link hover-menu" href="{{baseUrl}}/Profile">PROFILE</a>
                      </li>
                      <li class="nav-item active">
                         <a class="nav-link hover-menu" href="{{baseUrl}}/Admin">ADMIN</a>
@@ -68,6 +72,7 @@
             </nav>
          </header>
 
+      <!-- HEADER USER  -->
       {% elseif status == 2 %}
       <header>
          <nav class="header-nav navbar navbar-expand-lg mb-0 p-0">
@@ -83,10 +88,13 @@
                      <a class="nav-link hover-menu" href="{{baseUrl}}/Artistes">ARTISTES</a>
                   </li>
                   <li class="nav-item active">
-                     <a class="nav-link hover-menu" href="{{baseUrl}}/Deconnexion">DECONNEXION</a>
+                     <a class="nav-link hover-menu" href="{{baseUrl}}/Suggestion">Suggestion</a>
                   </li>
                   <li class="nav-item active">
-                     <a class="nav-link hover-menu" href="{{baseUrl}}/Profil">PROFIL</a>
+                     <a class="nav-link hover-menu" href="{{baseUrl}}/Deconnection">DECONNECTION</a>
+                  </li>
+                  <li class="nav-item active">
+                     <a class="nav-link hover-menu" href="{{baseUrl}}/Profile">PROFILE</a>
                   </li>
                </ul>
             </div>
@@ -94,9 +102,9 @@
       </header>
       {% endif %}
    {% endblock %}
-
    {% block body %}
       {# Here the main content, you can create other blocks if there are useful to you #}
+
    {% endblock %}
 
    {% block footer %}

@@ -13,7 +13,7 @@ class Comments extends Model
    public function getAllComments()
    {
       $req = $this->pdo->prepare('SELECT * FROM comments');
-      $resultat = $req->execute();
+      $req->execute();
 
       return $req->fetchAll();
    }

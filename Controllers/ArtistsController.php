@@ -42,19 +42,22 @@ class ArtistsController extends Controller
       echo $template->render([
          'artist' => $artist,
          'movies' => $movies,
-         'role' => $role
+         'role' => $role, 
+         'status' => $_SESSION['status']
       ]);
    }
-
    /**
    *  Affiche les artistes
    */
    public function showAllArtists()
-   {
+   { 
       $artists  = $this->model->getAllArtists();
       $pageTwig = 'Artists/showAllArtists.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['artists' => $artists]);
+      echo $template->render([
+         'artists' => $artists, 
+         'status' => $_SESSION['status']
+         ]);
    }
 
    /**
@@ -65,7 +68,9 @@ class ArtistsController extends Controller
       $artists  = $this->model->getByFilm();
       $pageTwig = 'Artists/showByMovie.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["artists" => $artists]);
+      echo $template->render(["artists" => $artists, 
+      'status' => $_SESSION['status']
+      ]);
    }
 
    /**

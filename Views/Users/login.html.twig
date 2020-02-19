@@ -10,39 +10,39 @@
 		<p>{{pseudo.pseudo}}</p>
 	{% endfor %}
 
-	<div class="container">
+	<div
+		class="container">
 
 		{# FORMULAIRE DE CONNEXION #}
 		{% if slug is null %}
 
 			<div class="row justify-content-md-center">
-				<form name="login" class="col-4 users-form" method="POST" action="{{baseUrl}}/Connexion/post">
+				<form name="login" class="col-4 users-form" method="POST" action="{{baseUrl}}/Connection/post">
 					<h2>Connectez-vous :</h2>
 					{# PSEUDO #}
-					<div class="form-group users">
+					<div class="form-group-users">
 						<label for="pseudo">
 							<h4>Pseudo</h4>
 						</label>
 						<input type="text" maxlength="16" value="{{ inputPseudo }}" name="pseudo" class="form-control d-inline" id="pseudo" {% if errorPseudo %} style="border-color: #FF2E63;" {% endif %}>
-						<p class="text-danger d-inline position-static">{{ errorPseudo }}</p>
+						<p class="text-danger d-inline grp-err-1">{{ errorPseudo }}</p>
 					</div>
 					{# MOT DE PASSE #}
-					<div class="form-group users">
+					<div class="form-group-users">
 						<label for="mdp">
-							<h4>Mot de passe</h4>
+							<h4 id="titre-mdp">Mot de passe</h4>
+							{# MOT DE PASSE OUBLIE #}
+							<a href="{{baseUrl}}/MotDePasseOublie" id="lien-vers-mdp-oublie">J'ai oublié mon mot de passe :'(</a>
 						</label>
 						<input type="password" maxlength="16" class="form-control" name="mdp" {% if errorMdp %} style="border-color: #FF2E63;" {% endif %}>
-						<div>
-							<p class="text-danger d-inline position-static">{{ errorMdp }}</p>
-						</div>
+							<p class="text-danger d-inline grp-err-2">{{ errorMdp }}</p>
 					</div>
 					<div
-						class="form-group users">
-						{# LIEN VERS FORMULAIRE INSCRIPTION #}
-						<a href="{{ baseUrl }}/Inscription" class="badge badge-light col">Pas encore inscrit ?! :o</a>
+						class="form-group-users boutons-users">
 						{# SUBMIT #}
 						<button type="submit" class="btn btn-outline jati-colors-btn col">Se connecter</button>
-						<p><a href="{{baseUrl}}/MotDePasseOublie" id="lien-vers-mdp-oublie">J'ai oublié mon mot de passe :'(</a></p>
+						{# PAS ENCORE INSCRIT #}
+                  <a href="{{ baseUrl }}/Inscription" class="btn btn-outline btn-light col mt-3">Pas encore inscrit ?! :o</a>
 					</div>
 				</form>
 			</div>
@@ -56,16 +56,15 @@
 					<h2>Mot de passe oublié</h2>
 					<p>Changez de mot de passe grâce a votre adresse mail !</p>
 					{# MAIL #}
-					<div class="form-group users">
+					<div class="form-group-users">
 						<label for="regMail">
 							<h4>Adresse mail</h4>
 						</label>
 						<input type="email" class="form-control" maxlength="64" name="mail" value=" {{ mail }}" {% if errorMail %} style="border-color: #FF2E63;" {% endif %}>
-						<small class="form-text text-danger">
-							{{ errorMail }}</small>
+						<p class="text-danger d-inline grp-err-1">{{ errorMail }}</p>
 					</div>
 					{# SUBMIT #}
-					<div class="form-group users">
+					<div class="form-group-users">
 						<button type="submit" class="btn btn-outline jati-colors-btn col">Envoyer</button>
 					</div>
 				</form>
@@ -73,20 +72,19 @@
 
 
 			{# FORMULAIRE POUR CHANGER MOT DE PASSE #}
-		   {% elseif (slug == randomString) %}
+		{% elseif (slug == randomString) %}
 
 			<div class="row justify-content-md-center">
 				<form name="changePassword" class="col-4 users-form" method="POST" action="{{ baseUrl }}/ChangerMotDePasse/post">
 					<h2>Nouveau mot de passe :</h2>
 					<p>{{ userPseudo }}, veuillez entrer un nouveau mot de passe ici :</p>
 					{# MOT DE PASSE #}
-					<div class="form-group users">
+					<div class="form-group-users">
 						<input type="password" maxlength="16" class="form-control" name="mdp" {% if errorMdp %} style="border-color: #FF2E63;" {% endif %}>
-						<small class="form-text text-danger">
-							{{ errorMdp }}</small>
+						<p class="text-danger d-inline grp-err-1">{{ errorMdp }}</p>
 					</div>
 					{# SUBMIT #}
-					<div class="form-group users">
+					<div class="form-group-users">
 						<button type="submit" class="btn btn-outline jati-colors-btn col">Envoyer</button>
 					</div>
 				</form>
@@ -94,20 +92,20 @@
 
 
 			{# EMAIL ENVOYE SUR DEMANDE #}
-		   {% elseif (slug == 'mailEnvoye') %}
+		{% elseif (slug == 'mailEnvoye') %}
 
 			<div class="row justify-content-md-center">
 				<div
 					class="col-4 users-form">
 
 					{# message de Mail envoyé #}
-					<div class="form-group users">
+					<div class="form-group-users">
 						<p>Un mail vous à été envoyé pour réinitialiser votre mot de passe</p>
 					</div>
 
 					{# direction page accueuil #}
-					<div class="form-group users">
-                  <a href="{{ baseUrl }}" class="btn btn-outline jati-colors-btn col">Revenir sur la page d'accueil</a>
+					<div class="form-group-users">
+						<a href="{{ baseUrl }}" class="btn btn-outline jati-colors-btn col">Revenir sur la page d'accueil</a>
 					</div>
 				</div>
 			</div>
@@ -120,49 +118,46 @@
 				<form name="register" class="col-4 users-form" method="POST" action="{{ baseUrl }}/Inscription/post">
 					<h2>Créez un compte :</h2>
 					{# MAIL #}
-					<div class="form-group users">
+					<div class="form-group-users">
 						<label for="regMail">
 							<h4>Adresse mail *</h4>
 						</label>
 						<input type="email" class="form-control" name="mail" value=" {{ inputMail }}">
-						<small id="requiredField" class="form-text text-danger">
-							{{ mailError }}</small>
+						<p id="requiredField" class="text-danger d-inline grp-err-1">{{ mailError }}</p>
 					</div>
 					{# PSEUDO #}
-					<div class="form-group users">
+					<div class="form-group-users">
 						<label for="regPseudo">
 							<h4>Pseudo *</h4>
 						</label>
 						<input type="text" maxlength="15" class="form-control" name="pseudo" value="{{ inputPseudo }}">
-						<small id="requiredField" class="form-text text-danger">
-							{{ pseudoError }}</small>
+						<p id="requiredField" class="text-danger d-inline grp-err-2">
+							{{ pseudoError }}</p>
 					</div>
 					{# MOT DE PASSE #}
-					<div class="form-group users">
+					<div class="form-group-users">
 						<label for="regPassword">
 							<h4>Mot de passe *</h4>
 						</label>
 						<input type="password" class="form-control" name="mdp">
-						<small id="requiredField" class="form-text text-danger">
-							{{ mdpError }}</small>
+						<p id="requiredField" class="text-danger d-inline grp-err-3">
+							{{ mdpError }}</p>
 					</div>
 					{# Photo de profile #}
-					<div class="form-group users">
+					<div class="form-group-users">
 						<input type="file" name="file" id="file" class="inputfile"/>
 						<label for="file">Photo de profile</label>
-						<small id="requiredField" class="form-text text-danger">
-							{{ avatarError }}</small>
+						<p id="requiredField" class="text-danger d-inline grp-err-4">
+							{{ avatarError }}</p>
 					</div>
 					{# SUBMIT #}
-					<div class="form-group users">
+					<div class="form-group-users">
 						<button type="submit" class="btn btn-outline jati-colors-btn col">S'inscrire</button>
 						<p class="text-danger text-center col">{{ generalError }}</p>
 					</div>
 					<small id="requiredField" class="form-text text-muted">Champs obligatoires *</small>
 				</form>
 			</div>
-
 		{% endif %}
-
 	</div>
 {% endblock %}

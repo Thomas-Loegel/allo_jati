@@ -5,6 +5,7 @@ class Movies extends Model
    public function __construct()
    {
       $this->pdo = parent::getPdo();
+
    }
 
    /**
@@ -32,15 +33,29 @@ class Movies extends Model
    }
 
    /**
-   *  Recherche un Film
+   *  Recherche un Film par nom
    */
    public function getBySearch($search)
    {
       $req = $this->pdo->prepare(
-         'SELECT *
+        'SELECT *
          FROM movies
          WHERE title
          LIKE "%'.$search.'%"');
+      $req->execute();
+      return $req->fetchAll();
+   }
+
+   /**
+   *  Recherche un Film par genre
+   */
+   public function getByStyle($style)
+   {
+      $req = $this->pdo->prepare(
+        'SELECT *
+         FROM movies
+         WHERE style
+         LIKE "%'.$style.'%"');
       $req->execute();
       return $req->fetchAll();
    }

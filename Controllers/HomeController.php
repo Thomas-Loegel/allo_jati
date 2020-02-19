@@ -11,7 +11,12 @@ class HomeController extends Controller
    {
       $this->twig = parent::getTwig();
    }
-
+   /**
+   *
+   */
+  public function sessionState(){
+   return $this->sessionState;
+}
    /**
    *
    */
@@ -22,13 +27,6 @@ class HomeController extends Controller
       }
       self::$instanceSession->startSession();
       return self::$instanceSession;
-   }
-
-   /**
-   *
-   */
-   public function sessionState(){
-      return $this->sessionState;
    }
 
    /**
@@ -138,7 +136,6 @@ class HomeController extends Controller
    {
       if (isset($_SESSION[$alert])) {
          echo $_SESSION[$alert];
-         //$this->__unset($alert);
       }
    }
 
@@ -146,9 +143,7 @@ class HomeController extends Controller
    *
    */
    public function index()
-   {
-      $status =
-
+   { 
       $pageTwig = 'index.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render();
