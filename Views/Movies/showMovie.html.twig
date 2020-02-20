@@ -195,7 +195,7 @@
          <p>Commentaire: N°{{ comment.id_comment }}</p>
       </div>
       <div class="col-6 d-flex justify-content-around">
-         <p>Date de publication: {{ comment.date }}</p>
+         <p>Date de publication: {{ comment.date | date("m/d/Y", "Europe/Paris") }}</p>
       </div>
    </div>
    {% endfor %}
