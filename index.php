@@ -40,10 +40,11 @@ $router->post('/Connection/post', 'Users.forgetPassword');
 
 // Route Register
 $router->get('/Inscription', 'Users.register');
-$router->post('/Inscription/post', 'Users.register');
+$router->post('/Inscription', 'Users.register');
 
-// route bienvenu (apres inscription)
-$router->get('/bienvenue', 'Users.bienvenue');
+
+// route bienvenue (apres inscription)
+$router->post('/Bienvenue', 'Users.bienvenue');
 
 // Route Commentaires
 $router->get('/Commentaires/Effacer_:id_comment/:id_movie', 'Comments.deleteComment');

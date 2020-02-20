@@ -357,6 +357,7 @@ class UsersController extends Controller
          }
       }
 
+
       /****INSERTION DE L'UTILISATEUR****/
 
       //tous les inputs sont définis ?
@@ -367,10 +368,11 @@ class UsersController extends Controller
          if ($insert === true) {
             
             //redirection en étant connecté
-            $slug = "bienvenue";
+            $slug = "Bienvenue";
             $instanceHome = new HomeController();
             $instanceHome->__set('utilisateur', $inputPseudo);
 
+            var_dump($slug);
             if (!$instanceHome->__empty('utilisateur')) {
 
                $_SESSION['status'] = 2;
@@ -380,9 +382,12 @@ class UsersController extends Controller
                $template = $this->twig->load($pageTwig);
                echo $template->render([
                   'status' => $_SESSION['status'],
+                  'user' => $_SESSION['utilisateur'],
                   'slug' => $slug
                   ]);
                exit;
+
+               //$this->bienvenue($slug);
             }
          } else {
             $generalError = "Malheureusement nous n'avons pas pu vous créer un compte";
@@ -404,7 +409,7 @@ class UsersController extends Controller
    }
 
    
-   public function bienvenue ($slug = "bienvenue")
+   public function bienvenue ($slug = "Bienvenue")
    {
       $title = "Bienvenue chez Allo Jati";
 

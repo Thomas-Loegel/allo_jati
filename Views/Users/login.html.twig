@@ -116,7 +116,7 @@
 		{% elseif (slug == 'Inscription') %}
 
 			<div class="row justify-content-md-center">
-				<form name="register" class="col-4 users-form" method="POST" action="{{ baseUrl }}/Inscription/post">
+				<form name="register" class="col-4 users-form" method="POST"  {% if slug == "Inscription" %} action="{{ baseUrl }}/Inscription" {% elseif slug == "Bienvenue" %} action="{{ baseUrl }}/Bienvenue"  {% endif %}>
 					<h2>Créez un compte :</h2>
 					{# MAIL #}
 					<div class="form-group-users">
@@ -155,8 +155,8 @@
 			</div>
 
 
-			{# VOUS ETES INSCRIT #}
-		{% elseif (slug == 'bienvenue') %}
+			{# BIENVENUE #}
+		{% elseif (slug == 'Bienvenue') %}
 
 			<div class="row justify-content-md-center">
 				<div
@@ -171,10 +171,6 @@
 					{# direction page accueuil #}
 					<div class="form-group-users">
 						<a href="{{ baseUrl }}" class="btn btn-outline jati-colors-btn col">Revenir sur la page d'accueil</a>
-					</div>
-					{# direction page conexion #}
-					<div class="form-group-users">
-						<a href="{{ baseUrl }}/Connexion" class="btn btn-outline jati-colors-btn col">Se connecter</a>
 					</div>
 				</div>
 			</div>
