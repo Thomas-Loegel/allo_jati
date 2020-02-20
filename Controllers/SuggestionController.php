@@ -19,7 +19,8 @@ class SuggestionController extends Controller
       $suggestion  = $this->model->suggestion();
       $pageTwig = 'Suggestion/suggestion.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["suggestion" => $suggestion]);
+      echo $template->render(["suggestion" => $suggestion,
+                              "status" => $_SESSION['status']]);
    }
 
    public function addSuggestion()
@@ -27,46 +28,49 @@ class SuggestionController extends Controller
       $pseudo = $_POST['pseudo'];
       $email = $_POST['email'];
       $textArea = $_POST['text'];
-
+      
+      if(!empty($pseudo) && !empty($email) && !empty($textArea)){
       //function pour fichier zip
-      if ($_FILES && $_FILES['zip_file']) {
+         if ($_FILES && $_FILES['zip_file']) {
 
-         if (!empty($_FILES['zip_file']['name'][0])) {
-     
-            $zip = new ZipArchive();
-            $zip_name = "assets/FileZip/FileZip" .rand(0 , 999). ".zip";
-            
-            // Create a zip target
-            if ($zip->open($zip_name, ZipArchive::CREATE) !== TRUE) {
-               $error .= "Sorry ZIP creation is not working currently.<br/>";
-            }
-
-            $imageCount = count($_FILES['zip_file']['name']);
-            for ($i = 0; $i < $imageCount; $i++) {
-
-               if ($_FILES['zip_file']['tmp_name'][$i] == '') {
-                     continue;
+            if (!empty($_FILES['zip_file']['name'][0])) {
+      
+               $zip = new ZipArchive();
+               $zip_name = "assets/FileZip/FileZip" .rand(0 , 999). ".zip";
+               
+               // Create a zip target
+               if ($zip->open($zip_name, ZipArchive::CREATE) !== TRUE) {
+                  $error .= "Sorry ZIP creation is not working currently.<br/>";
                }
-               $newname = date('YmdHis', time()) . mt_rand() . '.jpg';
 
-               // Moving files to zip.
-               $zip->addFromString($_FILES['zip_file']['name'][$i], file_get_contents($_FILES['zip_file']['tmp_name'][$i]));
-            }
+               $imageCount = count($_FILES['zip_file']['name']);
+               for ($i = 0; $i < $imageCount; $i++) {
 
-            $zip->close();
+                  if ($_FILES['zip_file']['tmp_name'][$i] == '') {
+                        continue;
+                  }
+                  $newname = date('YmdHis', time()) . mt_rand() . '.jpg';
 
-            // Create HTML Link option to download zip
-            $success = basename($zip_name);
-            
-         } else {
-            $error = '<strong>Error!! </strong> Please select a file.';}                  
-      }
+                  // Moving files to zip.
+                  $zip->addFromString($_FILES['zip_file']['name'][$i], file_get_contents($_FILES['zip_file']['tmp_name'][$i]));
+               }
+
+               $zip->close();
+
+               // Create HTML Link option to download zip
+               $success = basename($zip_name);
+               
+            } else {
+               $error = '<strong>Error!! </strong> Please select a file.';}                  
+         }
+
 
       if (isset($zip_name)){
          $download = " <a href = http://localhost/allo_jati/$zip_name ><h1>Download</h1> </a>";
       }else{
          $download = "";
       }
+
 
       if ($_SERVER['SERVER_NAME'] == 'localhost'){
          
@@ -87,12 +91,27 @@ class SuggestionController extends Controller
 
          if ($result){
             $alertsEmail = 'yes';
+            $name = '';
+            $mail = '';
+            $txtAre = '';
          } else {
             $alertsEmail = 'no';
+            $name = '';
+            $mail = '';
+            $txtAre = '';
          }
-                 
+      }else{
+         $alertsEmail ='noText';
+         $name = $pseudo;
+         $mail = $email;
+         $txtAre = $textArea;
+         
+      }           
       $pageTwig = 'Suggestion/suggestion.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["alertsEmail" =>$alertsEmail]);
+      echo $template->render(["alertsEmail" => $alertsEmail,
+                              "name" => $name,
+                              "mail" => $mail,
+                              "txtAre" => $txtAre]);
    }          
 }
