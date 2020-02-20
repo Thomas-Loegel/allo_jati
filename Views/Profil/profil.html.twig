@@ -5,120 +5,194 @@
    <div class="row">
       <aside class="col-12 col-md-12 p-0 bg-dark">
          <div class="text-center text-white bg-dark font-weight-bold">GESTION PROFILE</div>
-         <div class="text-center text-white bg-dark font-weight-bold">{{user}}</div>
+         <div class="text-center text-white bg-dark font-weight-bold">
+
+
+            <img src="{{ avatar }}" class="img-thumbnail"><br>{{user}}</div>
+
          <nav class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start">
             <div class="collapse navbar-collapse">
                <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
 
                   <li class="nav-item">Connexion
                      <ul>
-                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/ModifierPseudo_{{user}}">Pseudo</a></li>
+                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Pseudo">Pseudo</a></li>
 
 
-                        {% set avatar = 'avatar' %}
-                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/ModifierAvatar_{{avatar}}">Avatar</a></li>
+                        {% set avatar = 'Avatar' %}
+                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Avatar">Avatar</a>
+                        </li>
 
-                        {% set mdp = 'mdp' %}
-                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/ModifierMdp_{{mdp}}">Mot de passe </a></li>
+                        {% set mdp = 'Mdp' %}
+                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Mdp_{{mdp}}">Mot de passe </a>
+                        </li>
                      </ul>
                   </li>
                   <li class="nav-item">Messagerie
                      <ul>
-                        <li><a class="nav-link pl-0" href="{{baseUrl}}/">Envoyer</a></li>
-                        <li><a class="nav-link pl-0" href="{{baseUrl}}/">Réception</a></li>
+                        {% set send = 'Envoyer' %}
+                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Envoyer_{{send}}">Envoyer</a>
+                        </li>
+
+                        {% set receive = 'Recevoir' %}
+                        <li><a class="nav-link pl-0"
+                              href="{{baseUrl}}/Profile/Modifier/Recevoir_{{receive}}">Réception</a></li>
                      </ul>
                   </li>
-
-                  {#************************ANTHONY************************#}
                   <li class="nav-item">Suppresion
                      <ul>
-                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/ModifierCompte_">Compte</a></li>
+                        {% set account = 'Compte' %}
+                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Compte_{{account}}">Compte</a>
+                        </li>
                      </ul>
-
-
-                     {# <form name="search" method="POST" action="{{baseUrl}}/Admin/Utilisateur">
-                        <div class="form-row">
-                           <div class="col-md-12 mb-3">
-                              <input type="text" class="form-control" name="pseudo" placeholder="Pseudo">
-                           </div>
-                        </div>
-                        <div class="row justify-content-center">
-                           <button class="btn btn-secondary" type="submit">Rechercher</button>
-                        </div>
-                     </form>
-
-                     <form name="idMovie" method="POST" action="{{baseUrl}}/Admin/Utilisateur">
-                        <div class="form-row">
-                           <div class="col-md-12 mb-3">
-                              <input type="text" class="form-control" name="idMovie" placeholder="Nom Film">
-                           </div>
-                        </div>
-                        <div class="row justify-content-center">
-                           <button class="btn btn-secondary" type="submit">Rechercher</button>
-                        </div>
-                     </form>#}
                   </li>
-                  {#******************************************************#}
                </ul>
             </div>
          </nav>
       </aside>
    </div>
-   <div class="col d-flex justify-content-center pt-5 pb-5">
-   
-      {% if (slug == 'pseudo') %}
 
-      <form name="pseudo" method="POST" action="{{baseUrl}}/">
-         <div class="form-row">
-            <div class="col-md-12 mb-3">
-               <label for="pseudo">Changer votre Pseudonyme</label>
-               <input type="text" class="form-control" name="pseudo" placeholder="{{user}}">
+   <div class="col justify-content-end">
+      <div class="col d-flex justify-content-center pt-5 pb-5">
+
+         {% if (slug == 'pseudo') %}
+         <form method="POST" action="{{baseUrl}}/Profile/Change/Pseudo">
+            <div class="form-row">
+               <div class="col-md-12 mb-3">
+                  <label for="pseudo">Changer votre Pseudonyme</label>
+                  <input type="text" class="form-control" name="pseudo" placeholder="{{user}}">
+               </div>
+            </div>
+            <div class="row justify-content-center">
+               <button class="btn btn-secondary" type="submit">Modifier</button>
             </div>
          </div>
-         <div class="row justify-content-center">
-            <button class="btn btn-secondary" type="submit">Modifier</button>
-         </div>
-      </form>
-      {% endif %}
+            <div class="row justify-content-center p-2">
+               {% if (alert == 'warning') %}
+               <div class="alert alert-warning" role="alert">
+                  Veuillez saisir un nouveau pseudo!
+               </div>
+               {% elseif (alert == 'good') %}
+               <div class="alert alert-success" role="alert">
+                  Pseudo bien modifié!
+               </div>
+               {% elseif (alert == 'empty') %}
+               <div class="alert alert-danger" role="alert">
+                  Pseudo déjà utiliser, veuillez choisir un autre!
+               </div>
+               {% endif %}
+            
+         </form>
+         {% endif %}
 
 
-      {% if (slug == 'avatar') %}
+         {% if (slug == 'avatar') %}
+         <form method="POST" enctype="multipart/form-data" action="{{baseUrl}}/Profile/Modifier/Avatar">
 
-      <form name="avatar" method="POST" action="{{baseUrl}}/">
-         <div class="form-row">
-            <div class="col-md-12 mb-3">
-               <label for="avatar">Changer votre Avatar</label>
-               <input type="text" class="form-control" name="avatar" placeholder="http://">
+            <div>
+               <input type="file" name="avatarUpload" id="file" class="inputfile" />
+               <label for="file">Photo de profile</label>
+            </div>
+
+            <div class="row justify-content-center">
+               <button class="btn btn-secondary" type="submit">Modifier</button>
             </div>
          </div>
-         <div class="row justify-content-center">
-            <button class="btn btn-secondary" type="submit">Modifier</button>
-         </div>
-      </form>
-      {% endif %}
 
-      {% if (slug == 'mdp') %}
+            <div class="row justify-content-center p-2">
 
-      <form name="mdp" method="POST" action="{{baseUrl}}/">
-         <div class="form-row">
-            <div class="col-md-12 mb-3">
-               <label for="mdp">Changer votre Mot de Passe</label>
-               <input type="text" class="form-control" name="mdp" placeholder="Nouveau mot de passe">
+               {% if (alert == 'size') %}
+               <div class="alert alert-warning" role="alert">
+                  La taille de votre avatar est trop importante!
+               </div>
+               {% elseif (alert == 'format') %}
+               <div class="alert alert-warning" role="alert">
+                  Le format de votre avatar n'est pas accepté!
+               </div>
+               {% elseif (alert == 'empty') %}
+               <div class="alert alert-danger" role="alert">
+                  veuillez indiqué un fichier!
+               </div>
+               {% elseif (alert == 'bdd') %}
+               <div class="alert alert-warning" role="alert">
+                  Une erreur de connexion est servenu.<br>Veuillez recommençer
+               </div>
+               {% elseif (alert == 'good') %}
+               <div class="alert alert-success" role="alert">
+                  Avatar bien modifié!
+               </div>
+               {% endif %}
+
+            
+         </form>
+         {% endif %}
+
+
+         {% if (slug == 'Mdp') %}
+         <form name="mdp" method="POST" action="{{baseUrl}}/Mdp">
+            <div class="form-row">
+               <div class="col-md-12 mb-3">
+                  <label for="mdp">Changer votre Mot de Passe</label>
+                  <input type="text" class="form-control" name="mdp" placeholder="Nouveau mot de passe">
+               </div>
             </div>
+            <div class="row justify-content-center">
+               <button class="btn btn-secondary" type="submit">Modifier</button>
+            </div>
+         </form>
+         {% endif %}
+
+
+
+         {% if (slug == 'Envoyer') %}
+         <div class="container" style="border:1px solid red">
+            <form name="send" method="POST" action="{{baseUrl}}/Envoyer">
+               <div class="form-row">
+                  <div class="p-2 container">
+                     <input class="form-control" name="sendMessage" id="pseudoMessage" rows="1"
+                        placeholder="Envoyer a: Pseudo?" value=""></div>
+                  <div class="p-2 container">
+                     <textarea class="form-control" name="sendMessage" id="tilteMessage" rows="1" placeholder="Titre"
+                        value=""></textarea>
+                  </div>
+                  <div class="p-2 container">
+                     <textarea class="form-control" name="sendMessage" id="Message" rows="3" placeholder="Message"
+                        value=""></textarea>
+                  </div>
+               </div>
+               <div class="row justify-content-center">
+                  <button class="btn btn-secondary" type="submit">Envoyer</button>
+               </div>
+            </form>
          </div>
-         <div class="row justify-content-center">
-            <button class="btn btn-secondary" type="submit">Modifier</button>
-         </div>
-      </form>
-      {% endif %}
+         {% endif %}
+
+
+         {% if (slug == 'Recevoir') %}
+         <form name="receive" method="POST" action="{{baseUrl}}/Recevoir">
+            <div class="form-row">
+               <div class="col-md-12 mb-12">
+                  <label for="receive">Reception Message</label>
+                  <input type="text" class="form-control" name="receive" placeholder="">
+               </div>
+            </div>
+            <div class="row justify-content-center">
+               <button class="btn btn-secondary" type="submit">Recevoir</button>
+            </div>
+         </form>
+         {% endif %}
+      </div>
 
 
 
 
 
-      {% if (slug == 'compte') %}
 
-      <form name="compte" method="POST" action="{{baseUrl}}/">
+
+
+
+      {% if (slug == 'Compte') %}
+      <form name="compte" method="POST" action="{{baseUrl}}/Compte">
          <div class="form-row">
          </div>
          <div class="row justify-content-center">

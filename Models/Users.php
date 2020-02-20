@@ -192,6 +192,14 @@ class Users extends Model
    }
 
    /**
+    * 
+    */
+   public function modifyAvatar($newAvatar, $pseudo)
+   {
+      $req = $this->pdo->prepare("UPDATE users SET avatar = ? WHERE pseudo = ?");
+      return $req->execute([$newAvatar, $pseudo]);
+   }
+   /**
     * Récupère l'id d'un utilisateur depuis son pseudo
     */
    public function getOneIdUser($pseudo)
@@ -199,6 +207,13 @@ class Users extends Model
       $req = $this->pdo->prepare('SELECT `id_user` FROM users WHERE pseudo= ?');
       $req->execute([$pseudo]);
       return $req->fetch();
+   }
+
+   
+   public function updatePseudo($newpseudo, $pseudo)
+   {
+      $req = $this->pdo->prepare("UPDATE users SET pseudo = ? WHERE pseudo = ?");
+      return $req->execute([$newpseudo, $pseudo]);
    }
    /*******************************************************************/
 }
