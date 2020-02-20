@@ -378,9 +378,11 @@ class UsersController extends Controller
          // insertion des données dans la bdd
          $insert = $this->model->insertUser($inputPseudo, $hashMdp, $inputMail, $avatar);
 
-         if ($insert) {
+         var_dump($insert);
+
+         if ($insert === true) {
             //redirigé vers page accueil
-         header("Location: $this->baseUrl");
+            header("Location: $this->baseUrl");
          } else {
             $generalError = "Malheureusement nous n'avons pas pu vous créer un compte";
          }
