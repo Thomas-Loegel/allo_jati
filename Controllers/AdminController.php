@@ -90,40 +90,47 @@ class AdminController extends Controller
       $pregUrl  = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu';
 
 
-      if (isset($_POST['title']) && !empty($_POST['title'])) {
-         $title = $_POST['title'];
+      if (empty($_POST)) {
+         $error = "Veuillez remplir tout les champs !";
       }else {
-         $error = "Titre non renseigné !";
-      }
 
-      if (isset($_POST['year']) && !empty($_POST['year']) && preg_match($pregYear,$_POST['year'])) {
-         $year = $_POST['year'];
-      }else {
-         $error = "Format date non valide (YYYY) !";
-      }
+         if (empty($_POST['title'])) {
+            $error = "Titre non renseigné !";
+         }else{
+            $title = $_POST['title'];
+         }
 
-      if (isset($_POST['time']) && !empty($_POST['time']) && preg_match($pregTime,$_POST['time'])) {
-         $time = $_POST['time'];
-      }else {
-         $error = "Format durée non valide (H:MM)!";
-      }
+         if (empty($_POST['year']) && preg_match($pregYear,$_POST['year'])) {
+            $error = "Format date non valide (YYYY) !";
+         }else{
+            $year = $_POST['year'];
+         }
 
-      if (isset($_POST['picture']) && !empty($_POST['picture']) && preg_match($pregUrl,$_POST['picture'])){
-         $picture = $_POST['picture'];
-      }else {
-         $error = "Format url non valide !";
-      }
+         if (empty($_POST['time']) && preg_match($pregTime,$_POST['time'])) {
+            $error = "Format durée non valide (H:MM)!";
+         }else{
+            $time = $_POST['time'];
+         }
 
-      if (isset($_POST['style']) && !empty($_POST['style'])){
-         $style = $_POST['style'];
-      }else {
-         $error = "Style non renseigné !";
-      }
+         if (empty($_POST['picture']) && preg_match($pregUrl,$_POST['picture'])) {
+            $error = "Format url non valide !";
+         }else{
+            $picture = $_POST['picture'];
+         }
 
-      if (isset($_POST['resume']) && !empty($_POST['resume'])){
-         $resume = $_POST['resume'];
-      }else {
-         $error = "Résumé non renseigné !";
+         if (empty($_POST['style'])) {
+            $error = "Style non renseigné !";
+         }else{
+            $style = $_POST['style'];
+         }
+
+         if (empty($_POST['resume'])) {
+            $error = "Résumé non renseigné !";
+         }else{
+            $resume = $_POST['resume'];
+         }
+
+         $success = "Votre ajout à bien été effectué !";
       }
 
       $this->model->addMovie($picture,$title,$year,$style,$resume,$time);
@@ -149,20 +156,48 @@ class AdminController extends Controller
    public function addArtist()
    {
       $slug  = 'Ajout_Artiste';
-      $picture = null;
-      $first_name = null;
-      $last_name = null;
-      $birth_day = null;
-      $bio = null;
+      $error = null;
+      $success= null;
+      $picture = $first_name = $last_name = $birth_day = $bio = null;
+      $pregUrl = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu';
 
-      if (isset($_POST)) {
-         $picture    = $_POST['picture'];
-         $first_name = $_POST['first_name'];
-         $last_name  = $_POST['last_name'];
-         $birth_day  = $_POST['birth_day'];
-         $bio        = $_POST['bio'];
+
+      if (empty($_POST)) {
+         $error = "Veuillez remplir tout les champs !";
+      }else {
+
+         if (empty($_POST['bio'])) {
+            $error = "Renseignez une bio !";
+         }else{
+            $bio = $_POST['bio'];
+         }
+
+         if (empty($_POST['picture'])) {
+            $error = "Renseignez une url !";
+         }else{
+            $picture = $_POST['picture'];
+         }
+
+         if (empty($_POST['birth_day'])) {
+            $error = "Renseignez une date de naissance !";
+         }else{
+            $birth_day = $_POST['birth_day'];
+         }
+
+         if (empty($_POST['last_name'])) {
+            $error = "Renseignez un nom !";
+         }else{
+            $last_name = $_POST['last_name'];
+         }
+
+         if (empty($_POST['first_name'])) {
+            $error = "Renseignez un prénom !";
+         }else{
+            $first_name = $_POST['first_name'];
+         }
+
+         $success = "Votre ajout à bien été effectué !";
       }
-      //var_dump($_POST);
 
 
       $this->model->addArtist($picture,$first_name,$last_name,$birth_day,$bio);
@@ -171,6 +206,8 @@ class AdminController extends Controller
       echo $template->render([
          'slug'       => $slug,
          'status'     => $_SESSION['status'],
+         'error'      => $error,
+         'success'    => $success,
          'picture'    => $picture,
          'first_name' => $first_name,
          'last_name'  => $last_name,
