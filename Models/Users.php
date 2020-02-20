@@ -23,10 +23,21 @@ class Users extends Model
    /**
     *  Ajoute un nouveau User
     */
-   public function insertUser($mail, $pseudo, $mdp, $avatar)
+   public function insertUser($pseudo, $mdp, $mail, $avatar)
    {
-      $req = $this->pdo->prepare("INSERT INTO users(mail, pseudo, mdp, avatar) VALUES ('$mail', '$pseudo', '$mdp', '$avatar')");
-      $req->execute();
+      /*
+      $req = $this->pdo->prepare("INSERT INTO users(pseudo, mdp, mail, avatar) VALUES($pseudo, $mdp, $mail, $avatar)");
+      $req->execute();*/
+
+      
+      $req = $this->pdo->prepare("INSERT INTO users(pseudo, mdp, mail, avatar) VALUES (:pseudo, :mdp, :mail, :avatar)");
+      $req->execute(array(
+         'pseudo' => $pseudo,
+         'mdp' => $mdp,
+         'mail' => $mail,
+         'avatar' => $avatar,
+      ));
+
    }
 
    /**

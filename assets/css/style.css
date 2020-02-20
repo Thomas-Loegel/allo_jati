@@ -272,7 +272,7 @@ main{
 }
 
 
-/*formulaires users*/
+/********formulaires users*********/
 
 .users-form {
    margin-top: 50px;
@@ -341,35 +341,4 @@ main{
    color: #ff2e63;
    font-size: smaller;
    margin: 0;
-}
-
-.inputfile {
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-   z-index: -1;
-}
-
-.inputfile + label {
-   padding: 0 7px;
-   font-size: 0.9em;
-   font-weight: 700;
-   color: rgb(0, 0, 0);
-   border: solid 1px;
-   border-color: #949494;
-   border-radius: 5px;
-   background-color: white;
-   display: inline-block;
-}
-
-.inputfile:focus + label,
-.inputfile + label:hover {
-   color: #991c3b;
-   border-color: #991c3b;
-}
-
-.inputfile + label {
-	cursor: pointer; /* "hand" cursor */
 }

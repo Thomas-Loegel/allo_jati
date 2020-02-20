@@ -45,7 +45,6 @@ class UsersController extends Controller
       $error = [];
       $userInfo = $this->model->checkLogin($_POST["pseudo"]);
 
-
       //pour chaque valeur d'input
       foreach ($_POST as $value) {
 
@@ -54,18 +53,17 @@ class UsersController extends Controller
             $error[] = " ";
             //Dans le formulaire si $error = " " alors le bord devient rouge
 
+
+            //Sinon UN ou DES inputs sont remplis
          } else {
             $error[] = "";
 
             //si l'input pseudo est rempli par un pseudo connu
             if ($userInfo) {
-
                //rempli l'input par cette meme valeur
                $inputPseudo = $_POST['pseudo'];
-
                if (!empty($_POST['mdp'])) {
                   $hashMdp = $userInfo["mdp"];
-
                   // si le mot de passe est bon
                   if (password_verify($_POST['mdp'], $hashMdp)) {
 
@@ -106,7 +104,7 @@ class UsersController extends Controller
             }
          }
       }
-      
+
       $title = "Connexion";
 
       $pageTwig = 'Users/login.html.twig';
@@ -283,83 +281,108 @@ class UsersController extends Controller
    {
 
       //déclaration des variables
-
-      $mail = NULL;
-      $mailError = NULL;
-      $pseudo = NULL;
-      $pseudoError = NULL;
-      $mdp = NULL;
-      $mdpError = NULL;
-      $avatar = NULL;
-      $avatarError = NULL;
+      $mail = null;
+      $pseudo = null;
+      //$avatar = NULL;
       $generalError = NULL;
-
-      if (!empty($_POST)) {
-         $mail = $_POST['mail'];
-         $pseudo = $_POST['pseudo'];
-         $mdp = $_POST['mdp'];
+      $error = [];
+      $inputMail = null;
+      $inputPseudo = null;
 
 
-         // les champs sont remplis ?
-         if (!empty($mail) && !empty($pseudo) && !empty($mdp)) {
+      //fonction mailExist retourne false si le mail n'existe pas dans la bdd
+      //$userMail = $this->model->mailExist($mail);
 
+
+
+      //pour chaque valeur d'input
+      foreach ($_POST as $value) {
+         //si la valeur de l'input est considérée comme vide
+         if (empty($value)) {
+            $error[] = " ";
+            //Dans le formulaire si $error = " " alors le bord devient rouge
+
+            //sinon UN ou DES inputs sont remplis
+         } else {
+            $error[] = "";
+
+            /****MAIL****/
+            $mail = $_POST['mail'];
             // mail correspond aux attentes ?
             if (preg_match("#^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$#", $mail)) {
                $userMail = $this->model->mailExist($mail);
-               // mail existe dans la bdd ?
-               if ($userMail == false) {
 
-                  //pseudo correspond aux attentes ?
-                  if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $pseudo)) {
-                     $userPseudo = $this->model->pseudoExist($pseudo);
-
-                     // le pseudo entré existe dans la bdd ?
-                     if ($userPseudo == false) {
-
-                        // mot de passe correspond aux attentes ?
-                        if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
-
-                           // hashage du mot de passe :
-                           $hashMdp = password_hash($mdp, PASSWORD_DEFAULT);
-
-                           // une photo a été inséré dans l'insciption ?
-                           if ($_POST['avatar']) {
-                              $avatar = $_POST['avatar'];
-                              $info = new SplFileInfo($avatar);
-                              $extensionAvatar = $info->getExtension();
-                              $extensionAvatar = strtolower($extensionAvatar);
-                              $extensionsAutorisees = array('jpg', 'jpeg', 'gif', 'png', 'tiff');
-
-                              if (in_array($extensionAvatar, $extensionsAutorisees)) {
-                                 // insertion des données dans la bdd
-                                 $this->model->insertUser($mail, $pseudo, $hashMdp, $avatar);
-                                 header("Location: $this->baseUrl");
-                              } else {
-                                 $avatarError = "L'extension de votre fichier n'est pas autorisée";
-                              }
-                           } else {
-                              // insertion des données dans la bdd
-                              $this->model->insertUser($mail, $pseudo, $hashMdp, $avatar = "avatar.jpg");
-
-                              header("Location: $this->baseUrl");
-                           }
-                        } else {
-                           $mdpError = "Votre mot de passe doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 16 caractères";
-                        }
-                     } else {
-                        $pseudoError = "Ce pseudo existe déjà";
-                     }
-                  } else {
-                     $pseudoError = "Votre pseudo doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 36 caractères";
-                  }
+               // $user mail n'existe pas dans bdd
+               if ($userMail === false) {
+                  $inputMail = $mail;
                } else {
-                  $mailError = "Cette adresse mail possède déja un compte";
+                  $error[0] = 'Le mail : "' . $_POST['mail'] . '" est existe déja';
+               }
+            } //si le pseudo est inconnu mais défini par ""
+            else {
+               if ($_POST['mail'] === "") {
+                  $error[0] = " ";
+               } else {
+                  $error[0] = 'L\'adresse mail : "' . $_POST['mail'] . '" ne correspond pas aux attentes';
+               }
+            }
+
+
+            /****PSEUDO****/
+            $pseudo = $_POST['pseudo'];
+            //pseudo correspond aux attentes ?
+            if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $pseudo)) {
+               $userPseudo = $this->model->pseudoExist($pseudo);
+               // le pseudo entré n'existe pas dans la bdd
+               if ($userPseudo == false) {
+                  $inputPseudo = $pseudo;
+               } else {
+                  //si le pseudo est inconnu mais défini par ""
+                  $error[1] = 'Ce pseudo : "' . $pseudo . '" existe déjà';
                }
             } else {
-               $mailError = "L'adresse email '$mail' n'est pas considérée comme valide.";
+               if ($_POST['pseudo'] === "") {
+                  $error[1] = " ";
+               } else {
+                  $error[1] = "2 caractères min. Autorisé : chiffres, lettres en majuscule et minuscule.";
+               }
             }
+
+
+            /****MOT DE PASSE****/
+            // mot de passe correspond aux attentes ?
+            if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $_POST['mdp'])) {
+               if ($inputPseudo && $inputMail) {
+                  $hashMdp = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
+               } else {
+                  if ($_POST === "") {
+                     $error[] = " ";
+                  }
+               }
+            } else {
+               if ($_POST['mdp'] === "") {
+                  $error[2] = " ";
+               } else {
+                  $error[2] = "2 caractères min. Autorisé : chiffres, lettres en majuscule et minuscule.";
+               }
+            }
+         }
+      }
+
+      /****INSERTION DE L'UTILISATEUR****/
+
+      //tous les inputs sont définis ?
+      if (isset($inputPseudo) && isset($hashMdp) && isset($inputMail)) {
+         $avatar = "jatilogo.png";
+
+         // insertion des données dans la bdd
+         $insert = $this->model->insertUser($inputPseudo, $hashMdp, $inputMail, $avatar);
+
+         if ($insert) {
+            //redirigé vers page accueil
+         header("Location: $this->baseUrl");
          } else {
-            $generalError = "Veuillez remplir tous les champs recquis !";
+            $generalError = "Malheureusement nous n'avons pas pu vous créer un compte";
          }
       }
 
@@ -371,16 +394,11 @@ class UsersController extends Controller
          'slug' => $slug,
          'title' => $title,
          'generalError' => $generalError,
-         'mailError' => $mailError,
-         'pseudoError' => $pseudoError,
-         'mdpError' => $mdpError,
-         'inputMail' => $mail,
-         'inputPseudo' => $pseudo,
-         //'avatar' => $avatar,
-         'avatarError' => $avatarError,
+         'error' => $error,
+         'inputMail' => $inputMail,
+         'inputPseudo' => $inputPseudo,
       ]);
    }
-
 
    /*
     *création de numéro aléatoire
@@ -395,7 +413,6 @@ class UsersController extends Controller
       }
       return $string;
    }
-
 
    /********************************ANTHONY************************************/
    /**
