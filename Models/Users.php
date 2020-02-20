@@ -132,7 +132,7 @@ class Users extends Model
       $req = $this->pdo->prepare("UPDATE users SET mdp = :mdp WHERE pseudo= :pseudo");
       $req->bindValue(':pseudo', $pseudo);
       $req->bindValue(':mdp', $mdp);
-      $req->execute();
+      return $req->execute();
    }
 
 

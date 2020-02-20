@@ -133,11 +133,11 @@
    {% block listComment %}
 
       {% if comments %}
-         <div class="container2">
+         <div class="container">
          {# *************************on affiche l'avatar du propriétaire du commentaire***************************#}
          {% for comment in comments %}
             <h2>{{ comment.title }}</h2>
-            <div class="row">
+            <div class="row border">
                <div class="col-2">
                   <div class="col-12" >
                      <img src="{{comment.avatar }}" class="img-thumbnail">
@@ -171,8 +171,17 @@
             <div class="row">
                <div class="col-3"> </div>
                <div id="contenaireBtn{{ loop.index }}" class="col-6 d-flex justify-content-between name">
-                  <button type="submit" id="btnmodify{{ loop.index }}" class="btn btn-success btn-sm mb-2">Modifier</button>
+                  <button type="submit" id="btnmodify{{ loop.index }}" class="btn btn-secondary btn-sm mb-2">Modifier</button>
                </div>
+
+
+               
+                  <button type="submit" id="contact{{ loop.index }}" class="btn btn-secondary btn-sm mb-2">Contacter</button>
+               
+
+
+
+
                <div class="col-3"></div>
             </div>
             {# *******************On affiche la note du film, l'id du commentaire et sa date de publication*****************#}

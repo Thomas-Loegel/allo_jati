@@ -73,7 +73,7 @@ class ProfilsController extends Controller
 
       if(isset($_FILES['avatarUpload']) && $_FILES['avatarUpload']['error'] == 0){
          if ($_FILES['avatarUpload']['size'] <= 2000000) {
-            
+
             $infosfichier = pathinfo($_FILES['avatarUpload']['name']);
             $extension_upload = $infosfichier['extension'];
             $extension_upload = strtolower($extension_upload);
@@ -117,17 +117,30 @@ class ProfilsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(['slug' => 'avatar', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'alert' => $alert]);
    }
-
-
-
-
-
-
-   public function modifymdp($mdp = null)
+   public function modifymdp()
    {
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['slug' => $mdp, 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar']]);
+      echo $template->render(['slug' => 'mdp', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar']]);
+   }
+   public function changemdp()
+   {
+      if(isset($_POST) && !empty($_POST['mdp'])){
+
+         $instanceUsers = new Users();
+         $hashMdp = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
+         $result = $instanceUsers->updateMdp($_SESSION['utilisateur'], $hashMdp);
+         if($result === true){
+            $alert = 'good';
+         } else {
+            $alert = 'warning';
+         }
+      } else{
+         $alert = 'empty';
+      }
+      $pageTwig = 'Profil/profil.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render(['slug' => 'mdp', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'alert' => $alert]);
    }
    public function sendMessage($send = null)
    {

@@ -119,6 +119,7 @@ class MoviesController extends ArtsController
          $id_user = $comments[$i]['id_user'];
          //On récupère le pseudo par l'id_user
          $user = $instanceUser->getOnePseudo($id_user);
+       
          //On affecte le pseudo a la place de l'id_user
          $comments[$i]['id_user'] = $user['pseudo'];
          //On recherche l'avatar appartenant a l'user qui depose un commentaire
@@ -127,7 +128,6 @@ class MoviesController extends ArtsController
          $comments[$i]['avatar'] = $this->baseUrl . "/assets/avatar/" .$avatar['avatar'];
       }
       //Défini la date local en europe pour un simple affichage de la date de dépôt du commentaire
-      var_dump($comments);
       date_default_timezone_set('Europe/Paris');
       setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 
