@@ -127,6 +127,7 @@ class MoviesController extends ArtsController
          $comments[$i]['avatar'] = $this->baseUrl . "/assets/avatar/" .$avatar['avatar'];
       }
       //Défini la date local en europe pour un simple affichage de la date de dépôt du commentaire
+      var_dump($comments);
       date_default_timezone_set('Europe/Paris');
       setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 

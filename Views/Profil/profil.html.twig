@@ -53,7 +53,7 @@
    </div>
 
    <div class="col justify-content-end">
-      <div class="col d-flex justify-content-center pt-5 pb-5" style="border:1px solid red">
+      <div class="col d-flex justify-content-center pt-5 pb-5">
 
          {% if (slug == 'pseudo') %}
          <form method="POST" action="{{baseUrl}}/Profile/Change/Pseudo">
@@ -66,39 +66,65 @@
             <div class="row justify-content-center">
                <button class="btn btn-secondary" type="submit">Modifier</button>
             </div>
+         </div>
             <div class="row justify-content-center p-2">
-               {% if (alert == 2) %}
+               {% if (alert == 'warning') %}
                <div class="alert alert-warning" role="alert">
                   Veuillez saisir un nouveau pseudo!
                </div>
-               {% elseif (alert == 1) %}
+               {% elseif (alert == 'good') %}
                <div class="alert alert-success" role="alert">
-                  Pseudo bien changé!
+                  Pseudo bien modifié!
                </div>
-               {% elseif (alert == 0) %}
+               {% elseif (alert == 'empty') %}
                <div class="alert alert-danger" role="alert">
                   Pseudo déjà utiliser, veuillez choisir un autre!
                </div>
                {% endif %}
-            </div>
+            
          </form>
          {% endif %}
 
 
          {% if (slug == 'avatar') %}
-         <div class="form-row">
-            <form method="POST" enctype="multipart/form-data" action="{{baseUrl}}/Profile/Modifier/Avatar">
-               <div class="col-md-12 mb-3">
-                  <label for="avatarUpload">Changer votre Avatar</label>
-               </div>
-               <div class="col-md-12 mb-3">
-                  <input type="file" name="avatarUpload" id="avatarUpload"><br>
-               </div>
-               <div class="row justify-content-center">
-                  <button class="btn btn-secondary" type="submit">Modifier</button>
-               </div>
-            </form>
+         <form method="POST" enctype="multipart/form-data" action="{{baseUrl}}/Profile/Modifier/Avatar">
+
+            <div>
+               <input type="file" name="avatarUpload" id="file" class="inputfile" />
+               <label for="file">Photo de profile</label>
+            </div>
+
+            <div class="row justify-content-center">
+               <button class="btn btn-secondary" type="submit">Modifier</button>
+            </div>
          </div>
+
+            <div class="row justify-content-center p-2">
+
+               {% if (alert == 'size') %}
+               <div class="alert alert-warning" role="alert">
+                  La taille de votre avatar est trop importante!
+               </div>
+               {% elseif (alert == 'format') %}
+               <div class="alert alert-warning" role="alert">
+                  Le format de votre avatar n'est pas accepté!
+               </div>
+               {% elseif (alert == 'empty') %}
+               <div class="alert alert-danger" role="alert">
+                  veuillez indiqué un fichier!
+               </div>
+               {% elseif (alert == 'bdd') %}
+               <div class="alert alert-warning" role="alert">
+                  Une erreur de connexion est servenu.<br>Veuillez recommençer
+               </div>
+               {% elseif (alert == 'good') %}
+               <div class="alert alert-success" role="alert">
+                  Avatar bien modifié!
+               </div>
+               {% endif %}
+
+            
+         </form>
          {% endif %}
 
 

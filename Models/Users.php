@@ -189,8 +189,6 @@ class Users extends Model
 
    public function modifyAvatar($newAvatar, $pseudo)
    {
-      var_dump($newAvatar);
-      var_dump($pseudo);
       $req = $this->pdo->prepare("UPDATE users SET avatar = ? WHERE pseudo = ?");
       return $req->execute([$newAvatar, $pseudo]);
    }

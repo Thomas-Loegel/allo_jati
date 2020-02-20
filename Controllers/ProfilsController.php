@@ -34,12 +34,13 @@ class ProfilsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(['slug' => 'pseudo', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar']]);
    }
+
    public function changePseudo()
    {
       $instanceUsers = new Users();
-      if (empty($_POST['pseudo'])) {
+      if (isset($_POST) && empty($_POST['pseudo'])) {
          $_POST['pseudo'] = $_SESSION['utilisateur'];
-         $alert = 2;
+         $alert = 'warning';
       } else {
          $newPseudo = $_POST['pseudo'];
          $result = $instanceUsers->pseudoExist($newPseudo);
@@ -48,10 +49,10 @@ class ProfilsController extends Controller
             if ($result === true) {
                $_SESSION['utilisateur'] = $newPseudo;
                $this->searchAvatar();
-               $alert = 1;
+               $alert = 'good';
             }
          } else if ($result['pseudo'] === $newPseudo) {
-            $alert = 0;
+            $alert = 'empty';
          }
       }
       $pageTwig = 'Profil/profil.html.twig';
@@ -72,11 +73,10 @@ class ProfilsController extends Controller
 
       if(isset($_FILES['avatarUpload']) && $_FILES['avatarUpload']['error'] == 0){
          if ($_FILES['avatarUpload']['size'] <= 2000000) {
-
+            
             $infosfichier = pathinfo($_FILES['avatarUpload']['name']);
             $extension_upload = $infosfichier['extension'];
             $extension_upload = strtolower($extension_upload);
-
 
             $extensions_autorisees = array('bmp', 'jpg', 'jpeg', 'png', 'gif', 'tiff');
             if (in_array($extension_upload, $extensions_autorisees)) {
@@ -86,30 +86,36 @@ class ProfilsController extends Controller
                 $result = move_uploaded_file($_FILES['avatarUpload']['tmp_name'], $fileDestination);
 
                 if($result === true){  
+
                   $id_user = $instanceUsers->getOneIdUser($_SESSION['utilisateur']);
                   $actualAvatar = $instanceUsers->searchAvatar($id_user['id_user']);
                   $actualAvatar = $actualAvatar['avatar'];
                   $ifExist = "assets/avatar/$actualAvatar";
-                  if($ifExist && $actualAvatar != "avatar.jpg") {
+                  if($ifExist && $actualAvatar != "jatilogo.png") {
                      unlink($ifExist);
                   } 
                   $result = $instanceUsers->modifyAvatar($fileNameNew, $_SESSION['utilisateur']);
                   if($result === true) {
                      $_SESSION['avatar'] = "$this->baseUrl/assets/avatar/$fileNameNew";
+                     $alert = 'good';
+                  } else {
+                     $alert = "bdd";
                   }
-                }  
+                } else {
+                   $alert = 'move';
+                }
+            } else {
+               $alert = 'format';
             }
+         } else {
+            $alert = 'size';
          }
       } else {
-         $result = $instanceUsers->modifyAvatar($_FILES['avatarUpload'], $_SESSION['utilisateur']);
-         var_dump($result);
+         $alert = 'empty';
       }
-
-
-
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['slug' => 'avatar', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar']]);
+      echo $template->render(['slug' => 'avatar', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'alert' => $alert]);
    }
 
 
