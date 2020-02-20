@@ -1,10 +1,8 @@
 <?php
 require_once('vendor/autoload.php');
-
-//echo password_hash("mdp", PASSWORD_DEFAULT);
+session_start();
 
 $router = new Router($_GET['url']);
-
 
 // Route Films
 $router->get('/Films/Film_:id_movie', 'Movies.showMovie');
@@ -21,9 +19,9 @@ $router->get('/Artiste_:id_artist', 'Artists.showArtist');
 $router->post('/Artistes/Recherche', 'Artists.search');
 $router->get('/Artistes', 'Artists.showAllArtists');
 
-// Route Login
+// Route Login 
 $router->get('/Connection', 'Users.connexion');
-$router->post('/Connection/post', 'Users.login');
+$router->post('/', 'Users.login');
 
 // route forgetPassword
 $router->get('/MotDePasseOublie', 'Users.forgetPassword');
@@ -33,8 +31,8 @@ $router->post('/MotDePasseOublie/post', 'Users.forgetPassword');
 $router->get('/mailEnvoye', 'Users.mailEnvoye');
 
 // Route ChangePassword
-$router->get('/ChangerMotDePasse/:randomString', 'Users.updatePassword');
-$router->post('/ChangerMotDePasse/:slugurl/post', 'Users.updatePassword');
+$router->get('/ChangerMotDePasse/:hash', 'Users.updatePassword');
+$router->post('/ChangerMotDePasse/:hash/post', 'Users.updatePassword');
 
 // route forgetPassword
 $router->get('/MotDePasseOublie', 'Users.forgetPassword');
@@ -45,17 +43,25 @@ $router->get('/Inscription', 'Users.register');
 $router->post('/Inscription/post', 'Users.register');
 
 // Route Commentaires
-$router->post('/Comments/modifyComment_:id_movie/:id_comment', 'Comments.modifyComment');
-$router->post('/Comments/addComment_:id_movie', 'Comments.addComment');
-$router->get('/Commentaires/EffacerCommentaire_:id_movie', 'Comments.deleteComment');
+$router->get('/Commentaires/Effacer_:id_comment/:id_movie', 'Comments.deleteComment');
+$router->post('/Commentaires/Modifier_:id_movie/:id_comment', 'Comments.modifyComment');
+$router->post('/Commentaires/Ajouter_:id_movie', 'Comments.addComment');
 $router->get('/Commentaires', 'Comments.index');
+
+// Route Profile
+$router->get('/Profile/ModifierPseudo_:user', 'Profils.modifyPseudo');
+$router->get('/Profile/ModifierAvatar_:avatar', 'Profils.modifyAvatar');
+$router->get('/Profile/ModifierMdp_:mdp', 'Profils.modifymdp');
+$router->get('/Profile/ModifierCompte_:id_user', 'Profils.modifymdp');
+
+$router->get('/Profile', 'Profils.profil');
 
 // Route Deconnexion
 $router->get('/Deconnection', 'Users.logout');
 
 // Route Admin
-$router->get('/Admin/EffacerCommentaire_:id_comment_:id_user', 'Comments.deleteComment');
-$router->get('/Admin/EffacerCommentaire_:id_comment', 'Comments.deleteComment');
+$router->get('/Admin/Effacer_:id_comment/:id_movie/:id_user', 'Comments.deleteComment');
+$router->get('/Admin/Effacer_:id_comment', 'Comments.deleteComment');
 $router->post('/Admin/Utilisateur', 'Comments.searchAllCommByUser');
 $router->get('/Admin/Tous', 'Comments.getAllCom');
 
@@ -75,6 +81,7 @@ $router->get('/Suggestion', 'Suggestion.suggestion');
 
 // Route Home
 $router->get('/', 'Home.index');
+
 
 
 // Route RUN

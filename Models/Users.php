@@ -48,12 +48,11 @@ class Users extends Model
       $req = $this->pdo->prepare("SELECT mail FROM users WHERE mail = :mail");
       $req->bindValue(':mail', $mail);
       $req->execute();
-      //$data = $req->fetch();
       return $req->fetch();
    }
 
 
-   /**************************FONCTIONS POUR CHANGER MOT DE PASSE**************************/
+   /******************FONCTIONS POUR CHANGER MOT DE PASSE**************************/
 
    /*
     * retourner le pseudo d'un utilisateur par rapport a son mail
@@ -61,20 +60,50 @@ class Users extends Model
    public function recupPseudo($mail)
    {
       //chercher dans table users le pseudo correspondant au mail
-      $req = $this->pdo->prepare("SELECT pseudo FROM users WHERE mail = :mail");
-      $req->bindValue(':mail', $mail);
+      $req = $this->pdo->prepare("SELECT pseudo FROM users WHERE mail = ?");
+      $req->execute([$mail]);
+      return $req->fetch();
    }
 
-   /*
-    * changer le mot de passe d'un utilisateur par celui entré dans l'input en fonction de son pseudo
-    */
-   public function updateMdp($pseudo, $mdp)
+   
+
+   public function checkMail($hash)
    {
-      $req = $this->pdo->prepare("UPDATE users SET mdp = :mdp WHERE pseudo= :pseudo");
-      $req->bindValue(':pseudo', $pseudo);
-      $req->bindValue(':mdp', $mdp);
+      $req = $this->pdo->prepare("SELECT mail FROM users WHERE mail = :mail");
+      $req->bindValue(':mail', $hash);
       $req->execute();
+      return $req->fetch();
    }
+
+
+   /**
+    * insertion dans la table Users
+    */
+   public function insertInUsersHash($hash, $mail, $pseudo)
+   {
+      
+      //tester si le hash existe déja 
+      $req = $this->pdo->prepare("SELECT mail FROM users WHERE mail = :mail");
+      $req->bindValue(':mail', $mail);
+      $req->execute();
+      $data = $req->fetch();
+      return $data;
+
+      //si le md5 existe alors remplace son hash par le nouveau
+      if ($data = true) {
+         $req = $this->pdo->prepare("UPDATE users_hash SET 'hash'=:hash, 'mail'=:mail, 'pseudo'=:pseudo WHERE mail= :mail");
+         $req->bindValue(':hash', $hash);
+         $req->bindValue(':mail', $mail);
+         $req->bindValue(':pseudo', $pseudo);
+         $req->execute();
+         //Sinon ajoute le
+      } else {
+         $req = $this->pdo->prepare("INSERT INTO users_hash(hash, mail, pseudo) VALUES ('$hash', '$mail', '$pseudo')");
+         $req->execute();
+      }
+   }
+
+
 
    /*
     * va chercher des caractères dans l'url après l'emplacement donné (ici 42)
@@ -91,45 +120,21 @@ class Users extends Model
    }
 
    /*
-    *création de numéro aléatoire
+    * changer le mot de passe d'un utilisateur par celui entré dans l'input en fonction de son pseudo
     */
-   public function random($max)
+   public function updateMdp($pseudo, $mdp)
    {
-      $string = "";
-      $chaine = "abcdefghijklmnpqrstuvwxy";
-      srand((float) microtime() * 1000000);
-      for ($i = 0; $i < $max; $i++) {
-         $string .= $chaine[rand() % strlen($chaine)];
-      }
-      return $string;
+      $req = $this->pdo->prepare("UPDATE users SET mdp = :mdp WHERE pseudo= :pseudo");
+      $req->bindValue(':pseudo', $pseudo);
+      $req->bindValue(':mdp', $mdp);
+      $req->execute();
    }
 
-   /*************************Function ANTHONY********************/
-   /**
-    * insertion dans la table Users_intermediar
-    */
-   public function insertUsersIntermediar($randomString, $mail)
-   {
-      //tester si le mail existe déja
-      $req = $this->pdo->prepare("SELECT mail FROM users_intermediar WHERE mail = :mail");
-      $req->bindValue(':mail', $mail);
-      $data = $req->fetch();
-      return $data;
 
-      //si le mail existe alors remplace son randomString par le nouveau
-      if ($data = true) {
-         $req = $this->pdo->prepare("UPDATE users_intermediar SET randomString = :randomString WHERE mail= :mail");
-         $req->bindValue(':randomString', $randomString);
-         $req->bindValue(':mail', $mail);
-         $req->execute();
-         //Sinon ajoute le
-      } else {
-         $req = $this->pdo->prepare("INSERT INTO users_intermediar(chaine_aleatoire, mail) VALUES ('$randomString', '$mail')");
-         $req->execute();
-      }
-   }
+   /********************************************************************/
 
-   /*************************FIN FONCTIONS POUR CHANGER MOT DE PASSE**************************/
+
+   /*************************FONCTIONS ANTHONY**************************/
 
    /**
     *  Récupère les Utilisateurs
@@ -142,8 +147,8 @@ class Users extends Model
    }
 
    /**
-   *  Récupère l'id_user depuis son pseudo
-   */
+    *  Récupère l'id_user depuis son pseudo
+    */
    public function getOneUser($pseudo)
    {
       $req = $this->pdo->prepare('SELECT * FROM users WHERE pseudo= ?');
@@ -152,8 +157,8 @@ class Users extends Model
    }
 
    /**
-   * Récupère le pseudo depuis l'id user
-   */
+    * Récupère le pseudo depuis l'id user
+    */
    public function getOnePseudo($id_user)
    {
       $req = $this->pdo->prepare('SELECT pseudo FROM users WHERE id_user= ?');
@@ -172,8 +177,8 @@ class Users extends Model
    }
 
    /**
-   *  Récupère l'avatar depuis un id user
-   */
+    *  Récupère l'avatar depuis un id user
+    */
    public function searchAvatar($id_user)
    {
       $req = $this->pdo->prepare('SELECT `avatar` FROM users WHERE id_user= ?');
@@ -182,13 +187,13 @@ class Users extends Model
    }
 
    /**
-   * Récupère l'id d'un utilisateur depuis son pseudo
-   */
+    * Récupère l'id d'un utilisateur depuis son pseudo
+    */
    public function getOneIdUser($pseudo)
    {
-     $req = $this->pdo->prepare('SELECT `id_user` FROM users WHERE pseudo= ?');
-     $req->execute([$pseudo]);
-     return $req->fetch();
+      $req = $this->pdo->prepare('SELECT `id_user` FROM users WHERE pseudo= ?');
+      $req->execute([$pseudo]);
+      return $req->fetch();
    }
    /*******************************************************************/
 }

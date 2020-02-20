@@ -34,14 +34,15 @@ class CommentsController extends Controller
    /**
    *  Supprime un commentaire
    */
-   public function deleteComment($id_comment, $id_user = null)
+   public function deleteComment($id_comment, $id_movie, $id_user = null)
    {
       if($id_user != null){
+         var_dump($id_comment);
          $this->model->delComment($id_comment);
          $this->refreshAfterDeteleCommByUser($id_user);
       } else {
          $this->model->delComment($id_comment);
-         $this->getAllCom();
+         header("Location: $this->baseUrl/Films/Film_$id_movie");
       }
    }
 
