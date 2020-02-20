@@ -40,82 +40,73 @@ class UsersController extends Controller
     */
    public function login($slug = null)
    {
-      var_dump("test");
-      $errorMdp = null;
-      $errorPseudo = null;
       $userInfo = null;
       $inputPseudo = null;
+      $error = [];
+      $userInfo = $this->model->checkLogin($_POST["pseudo"]);
 
-      //si pseudo vide
-      if (empty($_POST['pseudo'])) {
-         $errorPseudo = " ";
-      }
 
-      //si mdp vide
-      if (empty($_POST['mdp'])) {
-         $errorMdp = " ";
-      }
+      //pour chaque valeur d'input
+      foreach ($_POST as $value) {
 
-      //si mdp vide et pseudo non vide
-      if (empty($_POST['mdp']) && !empty($_POST['pseudo'])) {
-         $userInfo = $this->model->checkLogin($_POST["pseudo"]);
+         //si la valeur de l'input est considérée comme vide
+         if (empty($value)) {
+            $error[] = " ";
+            //Dans le formulaire si $error = " " alors le bord devient rouge
 
-         //si le pseudo est connu de la bdd
-         if ($userInfo) {
-            $inputPseudo = $_POST['pseudo'];
          } else {
-            $inputPseudoFalse = $_POST['pseudo'];
-            $errorPseudo = "Le pseudo : '$inputPseudoFalse' est inconnu de la base de donnée";
-         }
-      }
+            $error[] = "";
 
+            //si l'input pseudo est rempli par un pseudo connu
+            if ($userInfo) {
 
-      // si l'input pseudo et mdp n'est pas vide
-      else if (!empty($_POST['mdp']) && !empty($_POST['pseudo'])) {
+               //rempli l'input par cette meme valeur
+               $inputPseudo = $_POST['pseudo'];
 
-         // $user info appelle la fonction checkLogin
-         $userInfo = $this->model->checkLogin($_POST["pseudo"]);
+               if (!empty($_POST['mdp'])) {
+                  $hashMdp = $userInfo["mdp"];
 
-         //Si $userInfo a pour valeur true
-         if ($userInfo) {
-            $inputPseudo = $_POST['pseudo'];
-            //var_dump($userInfo);
-            $hashMdp = $userInfo["mdp"];
+                  // si le mot de passe est bon
+                  if (password_verify($_POST['mdp'], $hashMdp)) {
 
-            // si le mot de passe est bon
-            if (password_verify($_POST['mdp'], $hashMdp)) {
+                     /*********************ANTHONY*************************/
+                     $instanceHome = new HomeController();
+                     $instanceHome->__set('utilisateur', $_POST['pseudo']);
 
-               /*********************ANTHONY*************************/
-               
-               $instanceHome = new HomeController();
-               $instanceHome->__set('utilisateur', $_POST['pseudo']);
+                     //on recherche si l'utilisateur connecté est administrateur
+                     $this->checkAdministrator($instanceHome->__get('utilisateur'));
 
-               //on recherche si l'utilisateur connecté est administrateur
-               $this->checkAdministrator($instanceHome->__get('utilisateur'));
+                     // Si location existe on redirige vers postAfterLogin()
+                     if (isset($_SESSION['location'])) {
+                        $instanceComments = new CommentsController();
+                        $instanceComments->postAfterLogin();
+                        /****************************************************/
+                     } else {
+                        //Sinon on redirige l'utilisateur sur la page d'accueil
+                        if (!$instanceHome->__empty('utilisateur')) {
 
-               // Si location existe on redirige vers postAfterLogin()
-               if (isset($_SESSION['location'])) {
-                  $instanceComments = new CommentsController();
-                  $instanceComments->postAfterLogin();
-                  /****************************************************/
-               } else {
-                  //Sinon on redirige l'utilisateur sur la page d'accueil
-                  if (!$instanceHome->__empty('utilisateur')) {
-
-                     $pageTwig = 'index.html.twig';
-                     $template = $this->twig->load($pageTwig);
-                     echo $template->render(['status' => $_SESSION['status']]);
-                     exit;
+                           $pageTwig = 'index.html.twig';
+                           $template = $this->twig->load($pageTwig);
+                           echo $template->render(['status' => $_SESSION['status']]);
+                           exit;
+                        }
+                     }
+                  } else {
+                     $error[1] = "Mot de passe incorrect";
                   }
                }
+               //sinon l'input pseudo est rempli par un pseudo inconnu
             } else {
-               $errorMdp = "Mot de passe incorrect";
+               //si le pseudo est inconnu mais défini par ""
+               if ($_POST['pseudo'] == "") {
+                  $error[] = "";
+               } else {
+                  $error[0] = 'Le pseudo : "' . $_POST['pseudo'] . '" est inconnu de la base de donnée';
+               }
             }
-         } else {
-            $errorPseudo = "Vous êtes qui ?! :S";
          }
       }
-
+      
       $title = "Connexion";
 
       $pageTwig = 'Users/login.html.twig';
@@ -123,11 +114,12 @@ class UsersController extends Controller
       echo $template->render([
          'slug' => $slug,
          'title' => $title,
-         'errorMdp' => $errorMdp,
-         'errorPseudo' => $errorPseudo,
+         'error' => $error,
          'inputPseudo' => $inputPseudo,
       ]);
    }
+
+
    /**
     *  Gestion de l'envoi du formulaire de Mot De Passe Oublié
     */
@@ -157,8 +149,8 @@ class UsersController extends Controller
                $pseudo = $this->model->recupPseudo($mail);
                //var_dump($pseudo['pseudo']);
                $pseudo = $pseudo['pseudo'];
-               
-               
+
+
                //on créer hash du pseudo
                $hash = md5($mail);
 
@@ -238,13 +230,13 @@ class UsersController extends Controller
       //déclaration des variables
       $mdp = "";
       $errorMdp = "";
-      
+
       //recupération du hash dans l'url
       $hash = $this->model->returnUrl();
       echo $hash;
 
       //retourne vrai si les 2 infos
-      if (password_verify("johanna", $hash)){
+      if (password_verify("johanna", $hash)) {
          echo "pseudo ok";
          //var_dump($pseudo); 
       }
@@ -393,16 +385,16 @@ class UsersController extends Controller
    /*
     *création de numéro aléatoire
     */
-    public function random($max)
-    {
-       $string = "";
-       $chaine = "abcdefghijklmnpqrstuvwxy";
-       srand((float) microtime() * 1000000);
-       for ($i = 0; $i < $max; $i++) {
-          $string .= $chaine[rand() % strlen($chaine)];
-       }
-       return $string;
-    }
+   public function random($max)
+   {
+      $string = "";
+      $chaine = "abcdefghijklmnpqrstuvwxy";
+      srand((float) microtime() * 1000000);
+      for ($i = 0; $i < $max; $i++) {
+         $string .= $chaine[rand() % strlen($chaine)];
+      }
+      return $string;
+   }
 
 
    /********************************ANTHONY************************************/
