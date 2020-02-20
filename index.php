@@ -49,10 +49,16 @@ $router->post('/Commentaires/Ajouter_:id_movie', 'Comments.addComment');
 $router->get('/Commentaires', 'Comments.index');
 
 // Route Profile
-$router->get('/Profile/ModifierPseudo_:user', 'Profils.modifyPseudo');
-$router->get('/Profile/ModifierAvatar_:avatar', 'Profils.modifyAvatar');
-$router->get('/Profile/ModifierMdp_:mdp', 'Profils.modifymdp');
-$router->get('/Profile/ModifierCompte_:id_user', 'Profils.modifymdp');
+$router->get('/Profile/Modifier/Pseudo', 'Profils.modifyPseudo');
+$router->post('/Profile/Change/Pseudo', 'Profils.changePseudo');
+
+$router->get('/Profile/Modifier/Avatar', 'Profils.modifyAvatar');
+$router->post('/Profile/Modifier/Avatar', 'Profils.changeAvatar');
+
+$router->get('/Profile/Modifier/Mdp_:slug', 'Profils.modifymdp');
+$router->get('/Profile/Modifier/Envoyer_:slug', 'Profils.sendMessage');
+$router->get('/Profile/Modifier/Recevoir_:slug', 'Profils.receiveMessage');
+$router->get('/Profile/Modifier/Compte_:slug', 'Profils.deleteAccount');
 
 $router->get('/Profile', 'Profils.profil');
 
