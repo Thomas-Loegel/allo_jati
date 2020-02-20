@@ -1,9 +1,9 @@
 {% extends "template.html.twig" %}
 
 {% block body %}
-<div class="container-fluid d-flex justify-content-start">
+<div class="container-fluid d-flex justify-content-start" >
    <div class="row">
-      <aside class="col-12 col-md-12 p-0 bg-dark">
+      <aside id="navlateral" class="col-12 col-md-12 p-0 bg-dark">
          <div class="text-center text-white bg-dark font-weight-bold">GESTION PROFILE</div>
          <div class="text-center text-white bg-dark font-weight-bold">
 
@@ -162,7 +162,7 @@
 
 
          {% if (slug == 'Envoyer') %}
-         <div class="container" style="border:1px solid red">
+         <div class="container">
             <form name="send" method="POST" action="{{baseUrl}}/Envoyer">
                <div class="form-row">
                   <div class="p-2 container">

@@ -181,7 +181,10 @@
 @media (max-width: 640px) {}
 
 /*/////////////////////////////////////////////////////////////FIN DE COMMENTS///////////////////////////////////////////////////////////////*/
-
+#navlateral {
+  min-height:90vh;
+  overflow:hidden;
+}
 .inputfile {
   width: 0.1px;
   height: 0.1px;
