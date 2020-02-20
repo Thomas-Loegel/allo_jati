@@ -298,41 +298,33 @@
          {% if (slug == 'Ajout_Artiste') %}
          <div class="d-flex justify-content pt-5 pb-5">
             <div id="ajout-artiste">
-               <form>
+               <form name="addArtist" method="POST" action="{{baseUrl}}/Admin/Ajout_Artiste/Add">
                   <div class="form-row">
-                     <div class="col-md-4 mb-3">
-                        <input type="text" class="form-control" placeholder="Nom">
+                     <div class="col-md-6 mb-3">
+                        <input type="text" name="first_name" value="{{first_name}}" class="form-control" placeholder="Prénom">
                      </div>
 
-                     <div class="col-md-4 mb-3">
-                        <input type="text" class="form-control" placeholder="Prénom">
-                     </div>
-
-                     <div class="col-md-4 mb-3">
-                        <input type="text" class="form-control" placeholder="Anniversaire (JJ/MM/AAAA)">
+                     <div class="col-md-6 mb-3">
+                        <input type="text" name="last_name" value="{{last_name}}" class="form-control" placeholder="Nom">
                      </div>
                   </div>
 
                   <div class="form-row">
                      <div class="col-md-6 mb-3">
-                        <input type="text" class="form-control" placeholder="Photo (URL)">
+                        <input type="text" name="birth_day" value="{{birth_day}}" class="form-control" placeholder="Anniversaire (JJ/MM/AAAA)">
                      </div>
 
                      <div class="col-md-6 mb-3">
-                        <select class="custom-select">
-                           <option value="" selected disabled>--Rôle--</option>
-                           <option>Réalisateur & Acteur</option>
-                           <option>Réalisateur</option>
-                           <option>Acteur</option>
-                        </select>
+                        <input type="text" name="picture" value="{{picture}}" class="form-control" placeholder="Photo (URL)">
                      </div>
                   </div>
 
                   <div class="form-row">
                      <div class="col-md-12 mb-3">
-                        <textarea class="form-control" placeholder="Biographie" rows="3"></textarea>
+                        <textarea class="form-control" name="bio" value="{{bio}}" placeholder="Biographie" rows="3">{{bio}}</textarea>
                      </div>
                   </div>
+
                   <div class="row justify-content-center">
                      <button class="btn btn-secondary" type="submit">Editer</button>
                   </div>

@@ -17,4 +17,15 @@ class Admin extends Model
          VALUES (?,?,?,?,?,?)");
       $req->execute([$picture,$title,$year,$style,$resume,$time]);
    }
+
+   /**
+   *  Ajoute un Artiste dans la BDD
+   */
+   public function addArtist($picture,$first_name,$last_name,$birth_day,$bio)
+   {
+      $req = $this->pdo->prepare(
+        "INSERT INTO artists(picture,first_name,last_name,birth_day,bio)
+         VALUES (?,?,?,?,?)");
+      $req->execute([$picture,$first_name,$last_name,$birth_day,$bio]);
+   }
 }

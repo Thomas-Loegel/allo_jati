@@ -32,8 +32,8 @@ class AdminController extends Controller
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
-         'slug' => $slug,
-         'users' => $users, 
+         'slug'   => $slug,
+         'users'  => $users,
          'status' => $_SESSION['status']
       ]);
    }
@@ -51,7 +51,7 @@ class AdminController extends Controller
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
-         'slug' => $slug,
+         'slug'   => $slug,
          'movies' => $movies,
          'status' => $_SESSION['status']
       ]);
@@ -70,9 +70,9 @@ class AdminController extends Controller
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
-         'slug' => $slug,
-         'artists' => $artists, 
-         'status' => $_SESSION['status']
+         'slug'    => $slug,
+         'artists' => $artists,
+         'status'  => $_SESSION['status']
       ]);
    }
 
@@ -81,13 +81,13 @@ class AdminController extends Controller
    */
    public function addMovie()
    {
-      $slug = 'Ajout_Film';
-      $error   = null;
-      $success = null;
-      $title = $year = $time = $picture = $style = $resume= null;
+      $slug     = 'Ajout_Film';
+      $error    = null;
+      $success  = null;
+      $title    = $year = $time = $picture = $style = $resume= null;
       $pregYear = '/^[0-9]{4}$/m';
       $pregTime = '/^([01]?[0-9]|2[0-3])\:+[0-5][0-9]$/';
-      $pregUrl = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu';
+      $pregUrl  = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu';
 
 
       if (isset($_POST['title']) && !empty($_POST['title'])) {
@@ -138,8 +138,8 @@ class AdminController extends Controller
          'style'   => $style,
          'resume'  => $resume,
          'error'   => $error,
-         'success' => $success, 
-         'status' => $_SESSION['status']
+         'success' => $success,
+         'status'  => $_SESSION['status']
       ]);
    }
 
@@ -148,9 +148,34 @@ class AdminController extends Controller
    */
    public function addArtist()
    {
-      $slug = 'Ajout_Artiste';
+      $slug  = 'Ajout_Artiste';
+      $picture = null;
+      $first_name = null;
+      $last_name = null;
+      $birth_day = null;
+      $bio = null;
+
+      if (isset($_POST)) {
+         $picture    = $_POST['picture'];
+         $first_name = $_POST['first_name'];
+         $last_name  = $_POST['last_name'];
+         $birth_day  = $_POST['birth_day'];
+         $bio        = $_POST['bio'];
+      }
+      //var_dump($_POST);
+
+
+      $this->model->addArtist($picture,$first_name,$last_name,$birth_day,$bio);
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['slug' => $slug, 'status' => $_SESSION['status']]);
+      echo $template->render([
+         'slug'       => $slug,
+         'status'     => $_SESSION['status'],
+         'picture'    => $picture,
+         'first_name' => $first_name,
+         'last_name'  => $last_name,
+         'birth_day'  => $birth_day,
+         'bio'        => $bio,
+      ]);
    }
 }
