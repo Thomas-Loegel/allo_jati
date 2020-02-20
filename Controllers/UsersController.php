@@ -279,7 +279,6 @@ class UsersController extends Controller
     */
    public function register($slug = "Inscription")
    {
-
       //déclaration des variables
       $mail = null;
       $pseudo = null;
@@ -288,12 +287,6 @@ class UsersController extends Controller
       $error = [];
       $inputMail = null;
       $inputPseudo = null;
-
-
-      //fonction mailExist retourne false si le mail n'existe pas dans la bdd
-      //$userMail = $this->model->mailExist($mail);
-
-
 
       //pour chaque valeur d'input
       foreach ($_POST as $value) {
@@ -305,7 +298,6 @@ class UsersController extends Controller
             //sinon UN ou DES inputs sont remplis
          } else {
             $error[] = "";
-
             /****MAIL****/
             $mail = $_POST['mail'];
             // mail correspond aux attentes ?
@@ -326,8 +318,6 @@ class UsersController extends Controller
                   $error[0] = 'L\'adresse mail : "' . $_POST['mail'] . '" ne correspond pas aux attentes';
                }
             }
-
-
             /****PSEUDO****/
             $pseudo = $_POST['pseudo'];
             //pseudo correspond aux attentes ?
@@ -347,8 +337,6 @@ class UsersController extends Controller
                   $error[1] = "2 caractères min. Autorisé : chiffres, lettres en majuscule et minuscule.";
                }
             }
-
-
             /****MOT DE PASSE****/
             // mot de passe correspond aux attentes ?
             if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $_POST['mdp'])) {
@@ -374,15 +362,28 @@ class UsersController extends Controller
       //tous les inputs sont définis ?
       if (isset($inputPseudo) && isset($hashMdp) && isset($inputMail)) {
          $avatar = "jatilogo.png";
-
          // insertion des données dans la bdd
          $insert = $this->model->insertUser($inputPseudo, $hashMdp, $inputMail, $avatar);
-
-         var_dump($insert);
-
          if ($insert === true) {
-            //redirigé vers page accueil
-            header("Location: $this->baseUrl");
+            
+            //redirection en étant connecté
+            $slug = "bienvenue";
+            $instanceHome = new HomeController();
+            $instanceHome->__set('utilisateur', $inputPseudo);
+
+            if (!$instanceHome->__empty('utilisateur')) {
+
+               $_SESSION['status'] = 2;
+
+               //$pageTwig = 'index.html.twig';
+               $pageTwig = 'Users/login.html.twig';
+               $template = $this->twig->load($pageTwig);
+               echo $template->render([
+                  'status' => $_SESSION['status'],
+                  'slug' => $slug
+                  ]);
+               exit;
+            }
          } else {
             $generalError = "Malheureusement nous n'avons pas pu vous créer un compte";
          }
@@ -399,6 +400,25 @@ class UsersController extends Controller
          'error' => $error,
          'inputMail' => $inputMail,
          'inputPseudo' => $inputPseudo,
+      ]);
+   }
+
+   
+   public function bienvenue ($slug = "bienvenue")
+   {
+      $title = "Bienvenue chez Allo Jati";
+
+      var_dump($_SESSION['status']);
+      var_dump($_SESSION['utilisateur']);
+
+      //affichage
+      $pageTwig = 'Users/login.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render([
+         'slug' => $slug,
+         'title' => $title,
+         'status' => $_SESSION['status'],
+         'user' => $_SESSION['utilisateur'],
       ]);
    }
 

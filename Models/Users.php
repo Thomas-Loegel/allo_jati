@@ -186,7 +186,7 @@ class Users extends Model
     */
    public function searchAvatar($id_user)
    {
-      $req = $this->pdo->prepare('SELECT `avatar` FROM users WHERE id_user= ?');
+      $req = $this->pdo->prepare('SELECT avatar FROM users WHERE id_user= ?');
       $req->execute([$id_user]);
       return $req->fetch();
    }

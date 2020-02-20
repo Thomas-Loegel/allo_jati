@@ -42,6 +42,9 @@ $router->post('/Connection/post', 'Users.forgetPassword');
 $router->get('/Inscription', 'Users.register');
 $router->post('/Inscription/post', 'Users.register');
 
+// route bienvenu (apres inscription)
+$router->get('/bienvenue', 'Users.bienvenue');
+
 // Route Commentaires
 $router->get('/Commentaires/Effacer_:id_comment/:id_movie', 'Comments.deleteComment');
 $router->post('/Commentaires/Modifier_:id_movie/:id_comment', 'Comments.modifyComment');
