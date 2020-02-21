@@ -15,7 +15,7 @@
             <div class="collapse navbar-collapse">
                <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
 
-                  <li class="nav-item">Connexion
+                  <li class="nav-item text-light">Connexion
                      <ul>
                         <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Pseudo">Pseudo</a></li>
 
@@ -29,7 +29,7 @@
                         </li>
                      </ul>
                   </li>
-                  <li class="nav-item">Messagerie
+                  <li class="nav-item text-light">Messagerie
                      <ul>
                         {% set send = 'Envoyer' %}
                         <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Envoyer">Envoyer</a>
@@ -40,7 +40,7 @@
                               href="{{baseUrl}}/Profile/Modifier/Recevoir_{{receive}}">Réception</a></li>
                      </ul>
                   </li>
-                  <li class="nav-item">Suppresion
+                  <li class="nav-item text-light">Suppresion
                      <ul>
                         {% set account = 'Compte' %}
                         <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Supprimer/Compte">Compte</a>
@@ -229,14 +229,17 @@
    <div class="container">
       <div class="accordion" id="accordionExample">
          <div class="card">
-            <div class="card-header" id="heading{{ loop.index }}">
+            <div class="card-header" id="heading{{ loop.index }}"><span class="row justify-content-start">Expéditeur: {{ mess.expeditor }}</span>
                <h5 class="mb-0">
+
                   <div class="row justify-content-center">
+
                      <button class="btn btn-link-secondary font-weight-bold" type="button" data-toggle="collapse"
                         data-target="#collapse{{ loop.index }}" aria-expanded="true"
                         aria-controls="collapse{{ loop.index }}">
                         <h5>{{mess.title}}</h5>
                      </button>
+
                   </div>
                </h5>
             </div>
