@@ -304,10 +304,11 @@ h5 {
   color: #991c3b;
   text-transform: uppercase;
 }
-li{
+
+.alertMessage {
   color: #991c3b;
-  text-transform: uppercase;
 }
+
 /** HEADER **/
 
 header {

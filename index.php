@@ -19,7 +19,7 @@ $router->get('/Artiste_:id_artist', 'Artists.showArtist');
 $router->post('/Artistes/Recherche', 'Artists.search');
 $router->get('/Artistes', 'Artists.showAllArtists');
 
-// Route Login 
+// Route Login
 $router->get('/Connection', 'Users.connexion');
 $router->post('/', 'Users.login');
 
@@ -89,6 +89,8 @@ $router->get('/Admin/Ajout_Film', 'Admin.addMovie');
 $router->post('/Admin/Ajout_Film/Add', 'Admin.addMovie');
 $router->post('/Admin/Ajout_Artiste/Add', 'Admin.addArtist');
 $router->get('/Admin/Ajout_Artiste', 'Admin.addArtist');
+$router->get('/Admin/Associer', 'Admin.association');
+$router->post('/Admin/Associer/With', 'Admin.association');
 
 
 // Route Contact
