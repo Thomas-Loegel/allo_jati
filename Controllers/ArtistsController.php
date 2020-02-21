@@ -24,25 +24,23 @@ class ArtistsController extends Controller
    {
       // Affiche les Films de Artiste par Id
       $instanceMovies = new Movies();
-      $movies = $instanceMovies->getAllMovies($id_artist);
 
-      $artist   = $this->model->getArtist($id_artist);
+
+      $artist = $this->model->getArtist($id_artist);
 
       // Défini le role de l'artiste
-      if($artist['role'] == 1){
-         $role = 'Acteur';
-      }else if($artist['role'] == 2){
-         $role = 'Réalisateur';
-      }else if($artist['role'] == 3){
-         $role = 'Acteur & Réalisateur';
-      }
+      // if($artist['role'] == 1){
+      //    $role = 'Acteur';
+      // }else if($artist['role'] == 2){
+      //    $role = 'Réalisateur';
+      // }else if($artist['role'] == 3){
+      //    $role = 'Acteur & Réalisateur';
+      // }
 
       $pageTwig = 'Artists/showArtist.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'artist' => $artist,
-         'movies' => $movies,
-         'role' => $role, 
          'status' => $_SESSION['status']
       ]);
    }
@@ -50,12 +48,12 @@ class ArtistsController extends Controller
    *  Affiche les artistes
    */
    public function showAllArtists()
-   { 
+   {
       $artists  = $this->model->getAllArtists();
       $pageTwig = 'Artists/showAllArtists.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
-         'artists' => $artists, 
+         'artists' => $artists,
          'status' => $_SESSION['status']
          ]);
    }
@@ -68,7 +66,7 @@ class ArtistsController extends Controller
       $artists  = $this->model->getByFilm();
       $pageTwig = 'Artists/showByMovie.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["artists" => $artists, 
+      echo $template->render(["artists" => $artists,
       'status' => $_SESSION['status']
       ]);
    }

@@ -13,7 +13,7 @@ class Admin extends Model
    public function addMovie($picture,$title,$year,$style,$resume,$time)
    {
       $req = $this->pdo->prepare(
-        "INSERT INTO movies(picture,title,year,style,resume,time)
+        "INSERT INTO movies (picture, title, year, style, resume, time)
          VALUES (?,?,?,?,?,?)");
       $req->execute([$picture,$title,$year,$style,$resume,$time]);
    }
@@ -24,8 +24,19 @@ class Admin extends Model
    public function addArtist($picture,$first_name,$last_name,$birth_day,$bio)
    {
       $req = $this->pdo->prepare(
-        "INSERT INTO artists(picture,first_name,last_name,birth_day,bio)
+        "INSERT INTO artists (picture, first_name, last_name, birth_day, bio)
          VALUES (?,?,?,?,?)");
       $req->execute([$picture,$first_name,$last_name,$birth_day,$bio]);
+   }
+
+   /**
+   *  Ajoute un Artiste et son Rôle dans un Film dans la BDD
+   */
+   public function association($id_artist, $id_movie, $role)
+   {
+      $req = $this->pdo->prepare(
+         "INSERT INTO artists_movies (id_artist, id_movie, role)
+         VALUES (?,?,?)");
+      $req->execute([$id_artist, $id_movie, $role]);
    }
 }

@@ -1,5 +1,7 @@
 {% extends "template.html.twig" %}
 
+{% block title %}Admin{% endblock %}
+
 {% block body %}
 <div class="container-fluid d-flex justify-content-start">
    <div class="row">
@@ -12,10 +14,12 @@
                   <li class="nav-item">Listing
                      <ul>
                         <li><a class="nav-link pl-0" href="{{baseUrl}}/Admin/Liste_Utilisateurs">Utilisateurs</a></li>
+                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Admin/Tous">Commentaires</a></li>
                         <li><a class="nav-link pl-0" href="{{baseUrl}}/Admin/Liste_Films">Films</a></li>
                         <li><a class="nav-link pl-0" href="{{baseUrl}}/Admin/Liste_Artistes">Artistes</a></li>
                      </ul>
                   </li>
+
                   <li class="nav-item">Ajouter
                      <ul>
                         <li><a class="nav-link pl-0" href="{{baseUrl}}/Admin/Ajout_Film">Film</a></li>
@@ -23,12 +27,16 @@
                      </ul>
                   </li>
 
-                  {#************************ANTHONY************************#}
-                  <li class="nav-item">Tous les commentaires
+                  <li class="nav-item">Associer
                      <ul>
-                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Admin/Tous">Commentaires</a></li>
+                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Admin/Associer">Artistes <-> Films</a></li>
                      </ul>
-                  <li class="nav-item">Par pseudo
+                  </li>
+
+                  <li class="nav-item">Commentaires
+                     <ul>
+                        <li class="nav-link pl-0">Par pseudo</li>
+                     </ul>
 
 
                      <form name="search" method="POST" action="{{baseUrl}}/Admin/Utilisateur">
@@ -43,7 +51,11 @@
                      </form>
 
 
-                  <li class="nav-item">Par Id Film
+                     <ul>
+                        <li class="nav-link pl-0">Par film </li>
+                     </ul>
+
+
                      <form name="idMovie" method="POST" action="{{baseUrl}}/Admin/Utilisateur">
                         <div class="form-row">
                            <div class="col-md-12 mb-3">
@@ -55,12 +67,13 @@
                         </div>
                      </form>
                   </li>
-                  {#******************************************************#}
                </ul>
             </div>
          </nav>
       </aside>
    </div>
+
+
    <div class="col d-flex justify-content-center">
 
       <!-- Listing des Utilisateurs -->
@@ -140,7 +153,6 @@
                   <th scope="col">Prénom</th>
                   <th scope="col">Date de naissance</th>
                   <th scope="col">Biographie</th>
-                  <th scope="col">Rôle</th>
                   <th scope="col">Photo</th>
                </tr>
             </thead>
@@ -153,7 +165,6 @@
                   <td>{{artists.last_name}}</td>
                   <td>{{artists.birth_day | date("d/m/Y") }}</td>
                   <td>{{artists.bio}}</td>
-                  <td>{{artists.role}}</td>
                   <td>{{artists.picture}}</td>
                </tr>
                {% endfor %}
@@ -162,7 +173,7 @@
       </div>
       {% endif %}
 
-      {#************************ANTHONY***********************#}
+
       <!-- Tous les commentaires -->
       {% if (slug == 'Tous') %}
       <table class="table table-bordered table-hover">
@@ -192,6 +203,7 @@
          </tbody>
       </table>
       {% endif %}
+
 
       <!-- Commentaire par utilisateurs -->
       {% if (slug == 'Utilisateur') %}
@@ -226,119 +238,171 @@
          </tbody>
       </table>
       {% endif %}
-      {#*********************************************************#}
+
 
       <!-- Edition Films -->
       {% if (slug == 'Ajout_Film') %}
       <div class="d-flex justify-content pt-5 pb-5">
-         <div id="ajout-film">
-            <form name="addMovie" method="POST" action="{{baseUrl}}/Admin/Ajout_Film/Add">
-               <div class="form-row">
-                  <div class="col-md-4 mb-3">
-                     <input type="text" class="form-control" value="{{title}}" name="title" placeholder="Titre">
-                  </div>
-
-                  <div class="col-md-4 mb-3">
-                     <input type="text" class="form-control" value="{{year}}" name="year"
-                        placeholder="Date de sortie (AAAA)">
-                  </div>
-
-                  <div class="col-md-4 mb-3">
-                     <input type="text" class="form-control" value="{{time}}" name="time"
-                        placeholder="Durée (HH:MM:SS)">
-                  </div>
+         <form name="addMovie" method="POST" action="{{baseUrl}}/Admin/Ajout_Film/Add">
+            <div class="form-row">
+               <div class="col-md-4 mb-3">
+                  <input type="text" class="form-control" value="{{title}}" name="title" placeholder="Titre">
                </div>
 
-               <div class="form-row">
-                  <div class="col-md-6 mb-3">
-                     <input type="text" class="form-control" value="{{picture}}" name="picture"
-                        placeholder="Affiche (URL)">
-                  </div>
-
-
-                  <div class="col-md-6 mb-3">
-                     <select class="custom-select" name="style">
-                        <option value="" selected disabled>--Style--</option>
-                        <option value="Action" {% if style == "Action" %}selected{% endif %}>Action</option>
-                        <option value="Animation" {% if style == "Animation" %}selected{% endif %}>Animation</option>
-                        <option value="Catasrophe" {% if style == "Catasrophe" %}selected{% endif %}>Catasrophe</option>
-                        <option value="Comédie" {% if style == "Comédie" %}selected{% endif %}>Comédie</option>
-                        <option value="Dramatique" {% if style == "Dramatique" %}selected{% endif %}>Dramatique</option>
-                        <option value="Documentaire" {% if style == "Documentaire" %}selected{% endif %}>Documentaire</option>
-                        <option value="Historique" {% if style == "Historique" %}selected{% endif %}>Historique</option>
-                        <option value="Horreur" {% if style == "Horreur" %}selected{% endif %}>Horreur</option>
-                        <option value="Romantique" {% if style == "Romantique" %}selected{% endif %}>Romantique</option>
-                        <option value="Science-Fiction" {% if style == "Science-Fiction" %}selected{% endif %}>Science-Fiction</option>
-                     </select>
-                  </div>
+               <div class="col-md-4 mb-3">
+                  <input type="text" class="form-control" value="{{year}}" name="year"
+                     placeholder="Date de sortie (AAAA)">
                </div>
 
-               <div class="form-row">
-                  <div class="col-md-12 mb-3">
-                     <textarea class="form-control" name="resume" placeholder="Résumé" rows="3">{{resume}}</textarea>
-                  </div>
+               <div class="col-md-4 mb-3">
+                  <input type="text" class="form-control" value="{{time}}" name="time"
+                     placeholder="Durée (HH:MM:SS)">
                </div>
-
-               <div class="row justify-content-center">
-                  <button class="btn btn-secondary" type="submit">Editer</button>
-               </div>
-            </form>
-
-            <div>
-               <p class="text-success">{{success}}</p>
             </div>
-            <div>
+
+            <div class="form-row">
+               <div class="col-md-6 mb-3">
+                  <input type="text" class="form-control" value="{{picture}}" name="picture"
+                     placeholder="Affiche (URL)">
+               </div>
+
+
+               <div class="col-md-6 mb-3">
+                  <select class="custom-select" name="style">
+                     <option value="" selected disabled>--Style--</option>
+                     <option value="Action" {% if style == "Action" %}selected{% endif %}>Action</option>
+                     <option value="Animation" {% if style == "Animation" %}selected{% endif %}>Animation</option>
+                     <option value="Catasrophe" {% if style == "Catasrophe" %}selected{% endif %}>Catasrophe</option>
+                     <option value="Comédie" {% if style == "Comédie" %}selected{% endif %}>Comédie</option>
+                     <option value="Dramatique" {% if style == "Dramatique" %}selected{% endif %}>Dramatique</option>
+                     <option value="Documentaire" {% if style == "Documentaire" %}selected{% endif %}>Documentaire</option>
+                     <option value="Historique" {% if style == "Historique" %}selected{% endif %}>Historique</option>
+                     <option value="Horreur" {% if style == "Horreur" %}selected{% endif %}>Horreur</option>
+                     <option value="Romantique" {% if style == "Romantique" %}selected{% endif %}>Romantique</option>
+                     <option value="Science-Fiction" {% if style == "Science-Fiction" %}selected{% endif %}>Science-Fiction</option>
+                  </select>
+               </div>
+            </div>
+
+            <div class="form-row">
+               <div class="col-md-12 mb-3">
+                  <textarea class="form-control" name="resume" placeholder="Résumé" rows="3">{{resume}}</textarea>
+               </div>
+            </div>
+
+            <div class="">
+               <p class="alert-warning text-center">{{info}}</p>
+               <p class="text-success">{{success}}</p>
                <p class="text-danger">{{error}}</p>
             </div>
-         </div>
-         {% endif %}
 
-
-         <!-- Edition Artistes -->
-         {% if (slug == 'Ajout_Artiste') %}
-         <div class="d-flex justify-content pt-5 pb-5">
-            <div id="ajout-artiste">
-               <form name="addArtist" method="POST" action="{{baseUrl}}/Admin/Ajout_Artiste/Add">
-                  <div class="form-row">
-                     <div class="col-md-6 mb-3">
-                        <input type="text" name="first_name" value="{{first_name}}" class="form-control" placeholder="Prénom">
-                     </div>
-
-                     <div class="col-md-6 mb-3">
-                        <input type="text" name="last_name" value="{{last_name}}" class="form-control" placeholder="Nom">
-                     </div>
-                  </div>
-
-                  <div class="form-row">
-                     <div class="col-md-6 mb-3">
-                        <input type="text" name="birth_day" value="{{birth_day}}" class="form-control" placeholder="Anniversaire (JJ/MM/AAAA)">
-                     </div>
-
-                     <div class="col-md-6 mb-3">
-                        <input type="text" name="picture" value="{{picture}}" class="form-control" placeholder="Photo (URL)">
-                     </div>
-                  </div>
-
-                  <div class="form-row">
-                     <div class="col-md-12 mb-3">
-                        <textarea class="form-control" name="bio" value="{{bio}}" placeholder="Biographie" rows="3">{{bio}}</textarea>
-                     </div>
-                  </div>
-
-                  <div>
-                     <p class="text-danger">{{error}}</p>
-                  </div>
-                  <div>
-                     <p class="text-success">{{success}}</p>
-                  </div>
-
-                  <div class="row justify-content-center">
-                     <button class="btn btn-secondary" type="submit">Editer</button>
-                  </div>
-               </form>
+            <div class="row justify-content-center">
+               <button class="btn btn-secondary" type="submit">Editer</button>
             </div>
-            {% endif %}
-         </div>
+         </form>
       </div>
+      {% endif %}
+
+
+      <!-- Edition Artistes -->
+      {% if (slug == 'Ajout_Artiste') %}
+      <div class="d-flex justify-content pt-5 pb-5">
+         <form name="addArtist" method="POST" action="{{baseUrl}}/Admin/Ajout_Artiste/Add">
+            <div class="form-row">
+               <div class="col-md-6 mb-3">
+                  <input type="text" name="first_name" value="{{first_name}}" class="form-control" placeholder="Prénom">
+               </div>
+
+               <div class="col-md-6 mb-3">
+                  <input type="text" name="last_name" value="{{last_name}}" class="form-control" placeholder="Nom">
+               </div>
+            </div>
+
+            <div class="form-row">
+               <div class="col-md-6 mb-3">
+                  <input type="text" name="birth_day" value="{{birth_day}}" class="form-control" placeholder="Anniversaire (JJ/MM/AAAA)">
+               </div>
+
+               <div class="col-md-6 mb-3">
+                  <input type="text" name="picture" value="{{picture}}" class="form-control" placeholder="Photo (URL)">
+               </div>
+            </div>
+
+            <div class="form-row">
+               <div class="col-md-12 mb-3">
+                  <textarea class="form-control" name="bio" value="{{bio}}" placeholder="Biographie" rows="3">{{bio}}</textarea>
+               </div>
+            </div>
+
+            <div>
+               <p class="alert-warning text-center">{{info}}</p>
+               <p class="text-danger">{{error}}</p>
+               <p class="text-success">{{success}}</p>
+            </div>
+
+            <div class="row justify-content-center">
+               <button class="btn btn-secondary" type="submit">Editer</button>
+            </div>
+         </form>
+      </div>
+      {% endif %}
+
+      {% if (slug == 'Association')  %}
+      <div class="d-flex justify-content pt-5 pb-5">
+         <form name="association" action="{{baseUrl}}/Admin/Associer/With" method="POST">
+            <div class="row">
+
+               <!-- Liste des Artistes -->
+               <div class="col-md-4">
+                  {% for artists in artists %}
+                  <div class="form-check">
+                     <input class="form-check-input" type="radio" name="id_artist" value="{{artists.id_artist}}" id="{{artists.first_name}}">
+                     <label class="form-check-label" for="{{artists.first_name}}">{{artists.first_name}} {{artists.last_name}}</label>
+                  </div>
+                  {% endfor %}
+               </div>
+
+               <!-- Liste des Rôles -->
+               <div class="col-md-3">
+                  <div class="form-check">
+                     <input class="form-check-input" type="radio" name="role" value="1" id="Acteur">
+                     <label class="form-check-label" for="Acteur">Acteur</label>
+                  </div>
+
+                  <div class="form-check">
+                     <input class="form-check-input" type="radio" name="role" value="2" id="Réalisateur">
+                     <label class="form-check-label" for="Réalisateur">Réalisateur</label>
+                  </div>
+
+                  <div class="form-check">
+                     <input class="form-check-input" type="radio" name="role" value="3" id="Acteur & Réalisateur">
+                     <label class="form-check-label" for="Acteur & Réalisateur">Acteur & Réalisateur</label>
+                  </div>
+               </div>
+
+               <!-- Liste des Films -->
+               <div class="col-md-5">
+                  {% for movies in movies %}
+                  <div class="form-check">
+                     <input class="form-check-input" type="radio" name="id_movie" value="{{movies.id_movie}}" id="{{movies.title}}">
+                     <label class="form-check-label" for="{{movies.title}}">{{movies.title}}</label>
+                  </div>
+                  {% endfor %}
+               </div>
+            </div>
+
+            <div>
+               <p class="alert-warning text-center">{{info}}</p>
+               <p class="text-danger">{{error}}</p>
+               <p class="text-success">{{success}}</p>
+            </div>
+
+            <div class="row justify-content-center">
+               <button class="btn btn-secondary" type="submit">Associer</button>
+            </div>
+         </form>
+      </div>
+      {% endif %}
    </div>
+</div>
 {% endblock %}
