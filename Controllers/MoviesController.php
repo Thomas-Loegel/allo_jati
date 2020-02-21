@@ -23,7 +23,7 @@ class MoviesController extends ArtsController
       $movies   = $this->model->getAllMovies();
       echo $template->render([
          'movies' => $movies,
-         'status' => $_SESSION['status'], 
+         'status' => $_SESSION['status'],
          'alertMessage' => $_SESSION['receiveMessage']
       ]);
    }
@@ -98,19 +98,19 @@ class MoviesController extends ArtsController
    *  Affiche un Film avec son Id
    */
    public function showMovie($id_movie) {
+
       // Affiche les Artistes liés a Id Film
       $instanceArtists = new Artists();
-      $artists = $instanceArtists->getByMovie($id_movie);
+      //$artists = $instanceArtists->getByMovie($id_movie);
+      $infos = $instanceArtists->getRole($id_movie);
 
-      /******************************ANTHONY**********************************/
-
-      //Instancie la class comments
+      // Recherche les commentaire appartenant au film
       $instanceComments = new Comments();
-      //Recherche les commentaire appartenant au film
       $comments = $instanceComments->linkCommentByMovie($id_movie);
-      // ?
+
+
+      // On affiche une alerte si un commentaire vide a été publié
       $instanceUser = new Users();
-      //On affiche une alerte si un commentaire vide a été publié
       if(isset($_SESSION['alert'])) {
          echo $_SESSION['alert'];
          unset($_SESSION['alert']);
@@ -122,7 +122,7 @@ class MoviesController extends ArtsController
          $id_user = $comments[$i]['id_user'];
          //On récupère le pseudo par l'id_user
          $user = $instanceUser->getOnePseudo($id_user);
-       
+
          //On affecte le pseudo a la place de l'id_user
          $comments[$i]['id_user'] = $user['pseudo'];
          //On recherche l'avatar appartenant a l'user qui depose un commentaire
@@ -150,10 +150,34 @@ class MoviesController extends ArtsController
 
       //Si l'utilisateur non identifié avait déjà déposer un commentaire...
       if(isset($_SESSION['tmpComment'])) {
-         echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status'], "tmpTitle" => $_SESSION['tmpTitle'], "tmpComment" => $_SESSION['tmpComment'], "tmpNote" => $_SESSION['tmpNote'], "status" => $_SESSION['status'], "userLogin" => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'alertMessage' => $_SESSION['receiveMessage']]);
+         echo $template->render([
+            "movie"       => $movie,
+            "artists"      => $artists,
+            'infos'        => $infos,
+            "comments"     => $comments,
+            "user"         => $user,
+            "datedujour"   => strftime("%A %d %B %Y"),
+            "status"       => $_SESSION['status'],
+            "tmpTitle"     => $_SESSION['tmpTitle'],
+            "tmpComment"   => $_SESSION['tmpComment'],
+            "tmpNote"      => $_SESSION['tmpNote'],
+            "status"       => $_SESSION['status'],
+            "userLogin"    => $_SESSION['utilisateur'],
+            'avatar'       => $_SESSION['avatar'],
+            'alertMessage' => $_SESSION['receiveMessage']]);
       //Si ce n'était pas le cas on rends a la vus d'autre paramètres...
       } else {
-         echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status'], "userLogin" => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'alertMessage' => $_SESSION['receiveMessage']]);
+         echo $template->render([
+            "movie"        => $movie,
+            "artists"      => $artists,
+            'infos'        => $infos,
+            "comments"     => $comments,
+            "user"         => $user,
+            "datedujour"   => strftime("%A %d %B %Y"),
+            "status"       => $_SESSION['status'],
+            "userLogin"    => $_SESSION['utilisateur'],
+            'avatar'       => $_SESSION['avatar'],
+            'alertMessage' => $_SESSION['receiveMessage']]);
       }
    }
 }
