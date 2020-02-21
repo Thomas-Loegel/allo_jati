@@ -19,7 +19,7 @@ class SuggestionController extends Controller
       $suggestion  = $this->model->suggestion();
       $pageTwig = 'Suggestion/suggestion.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["suggestion" => $suggestion]);
+      echo $template->render(["suggestion" => $suggestion, 'alertMessage' => $_SESSION['receiveMessage']]);
    }
 
    public function addSuggestion()
@@ -93,6 +93,6 @@ class SuggestionController extends Controller
                  
       $pageTwig = 'Suggestion/suggestion.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["alertsEmail" =>$alertsEmail]);
+      echo $template->render(["alertsEmail" =>$alertsEmail, 'alertMessage' => $_SESSION['receiveMessage']]);
    }          
 }

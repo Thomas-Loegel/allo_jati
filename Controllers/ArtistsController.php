@@ -43,7 +43,8 @@ class ArtistsController extends Controller
          'artist' => $artist,
          'movies' => $movies,
          'role' => $role, 
-         'status' => $_SESSION['status']
+         'status' => $_SESSION['status'], 
+         'alertMessage' => $_SESSION['receiveMessage']
       ]);
    }
    /**
@@ -56,7 +57,8 @@ class ArtistsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'artists' => $artists, 
-         'status' => $_SESSION['status']
+         'status' => $_SESSION['status'], 
+         'alertMessage' => $_SESSION['receiveMessage']
          ]);
    }
 
@@ -69,7 +71,7 @@ class ArtistsController extends Controller
       $pageTwig = 'Artists/showByMovie.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(["artists" => $artists, 
-      'status' => $_SESSION['status']
+      'status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage']
       ]);
    }
 
@@ -99,6 +101,7 @@ class ArtistsController extends Controller
          'artists' => $artists,
          'search' => $search,
          'notFound' => $notFound,
+         'alertMessage' => $_SESSION['receiveMessage']
       ]);
    }
 }

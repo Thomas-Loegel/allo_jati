@@ -47,7 +47,6 @@ class Comments extends Model
       $instanceUsers = new Users();
       $user = $instanceUsers->getOneUser($pseudo);
       $id_user = $user['id_user'];
-
       $req = $this->pdo->prepare('SELECT * FROM comments WHERE id_user = ?');
       $req->execute([$id_user]);
 

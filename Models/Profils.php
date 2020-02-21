@@ -6,9 +6,19 @@ class Profils extends Model
    {
       $this->pdo = parent::getPdo();
    }
-
-   /**
-   *  Récherche profile par utilisateur 
-   */
-   
+   public function sendMessage($expeditor, $pseudo,  $title, $message){
+      $req = $this->pdo->prepare('INSERT INTO messages (expeditor, pseudo,  title, message)
+      VALUE (?, ?, ?, ?)');
+      return $req->execute([$expeditor, $pseudo,  $title, $message]);
+   }
+   public function receiveMessage($pseudo){
+      $req = $this->pdo->prepare('SELECT * FROM messages WHERE pseudo = ?');
+      $req->execute([$pseudo]);
+      return $req->fetchAll();
+   }
+   public function delMessage($id_message)
+   {
+      $req = $this->pdo->prepare('DELETE FROM messages WHERE id_message = ?');
+      return $req->execute([$id_message]);
+   }
 }

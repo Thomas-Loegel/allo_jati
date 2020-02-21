@@ -58,8 +58,20 @@ $router->post('/Profile/Modifier/Avatar', 'Profils.changeAvatar');
 $router->get('/Profile/Modifier/Mdp', 'Profils.modifymdp');
 $router->post('/Profile/Modifier/Mdp', 'Profils.changemdp');
 
-$router->get('/Profile/Modifier/Envoyer_:slug', 'Profils.sendMessage');
+$router->get('/Profile/Envoyer_:slug', 'Profils.sendMessage');
+$router->get('/Profile/Envoyer', 'Profils.sendMessage');
+$router->post('/Profile/Envoyer_:slug', 'Profils.sendMessageToUser');
+
+$router->get('/Profile/Message/Supprimer_:slug', 'Profils.deleteMessage');
+
+
+
+
 $router->get('/Profile/Modifier/Recevoir_:slug', 'Profils.receiveMessage');
+
+
+
+
 $router->get('/Profile/Modifier/Compte_:slug', 'Profils.deleteAccount');
 
 $router->get('/Profile', 'Profils.profil');

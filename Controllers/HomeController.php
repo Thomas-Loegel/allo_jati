@@ -19,6 +19,7 @@ class HomeController extends Controller
       if (!isset($_SESSION['status'])) {
          $_SESSION['status'] = null;
          $_SESSION['utilisateur'] = "Visiteur";
+         $_SESSION['receiveMessage'] = null;
       }
    }
 
@@ -125,8 +126,12 @@ class HomeController extends Controller
    public function index()
    {
       $this->startSession();
+      
+      $instanceProfils = new ProfilsController();
+      $instanceProfils->checkMessage();
+
       $pageTwig = 'index.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['status' => $_SESSION['status']]);
+      echo $template->render(['status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage'], 'alertMessage' => $_SESSION['receiveMessage']]);
    }
 }

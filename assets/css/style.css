@@ -217,6 +217,7 @@
   color: #930031;
 }
 
+
 .shadow-drop-2-center:hover {
    transform: translateZ(50px) translateY(-5px);
    box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.5);
@@ -258,9 +259,27 @@ h3 {
   color: #991c3b;
   text-transform: uppercase;
 }
+h4 {
+  color: #991c3b;
+  text-transform: uppercase;
+}
+h5 {
+  color: #991c3b;
+  text-transform: uppercase;
+}
 li{
   color: #991c3b;
   text-transform: uppercase;
+}
+.alertMessage {
+  color: #991c3b;
+  border:1px solid #991c3b;
+  padding:5px;
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  -ms-border-radius:5px;
+  -o-border-radius:5px;
 }
 
 /** HEADER **/

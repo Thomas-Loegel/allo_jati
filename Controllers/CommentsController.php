@@ -16,7 +16,7 @@ class CommentsController extends Controller
    {
       $pageTwig = 'Comments/index.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render();
+      echo $template->render(['alertMessage' => $_SESSION['receiveMessage']]);
    }
 
    /**
@@ -54,7 +54,7 @@ class CommentsController extends Controller
       $comments = $this->model->searchAllCommById($id_user);
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur', 'status' => $_SESSION['status']]);
+      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur', 'status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage']]);
    }
 
    /**
@@ -64,7 +64,7 @@ class CommentsController extends Controller
       $comments = $this->model->searchAllCommByUser($pseudo);
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur', 'status' => $_SESSION['status']]);
+      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur', 'status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage']]);
    }
 
    /**
@@ -87,7 +87,7 @@ class CommentsController extends Controller
       $comments   = $this->model->getAllComments();
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["comments" => $comments, 'slug' => 'Tous', 'status' => $_SESSION['status']]);
+      echo $template->render(["comments" => $comments, 'slug' => 'Tous', 'status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage']]);
    }
 
    /**
@@ -110,7 +110,7 @@ class CommentsController extends Controller
 
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render();
+      echo $template->render(['alertMessage' => $_SESSION['receiveMessage']]);
    }
 
    /**

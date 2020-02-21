@@ -23,7 +23,8 @@ class MoviesController extends ArtsController
       $movies   = $this->model->getAllMovies();
       echo $template->render([
          'movies' => $movies,
-         'status' => $_SESSION['status']
+         'status' => $_SESSION['status'], 
+         'alertMessage' => $_SESSION['receiveMessage']
       ]);
    }
 
@@ -56,6 +57,7 @@ class MoviesController extends ArtsController
          'movies' => $movies,
          'search' => $search,
          'notFound' => $notFound,
+         'alertMessage' => $_SESSION['receiveMessage']
       ]);
    }
 
@@ -88,6 +90,7 @@ class MoviesController extends ArtsController
          'movies' => $movies,
          'style' => $style,
          'notFound' => $notFound,
+         'alertMessage' => $_SESSION['receiveMessage']
       ]);
    }
 
@@ -147,10 +150,10 @@ class MoviesController extends ArtsController
 
       //Si l'utilisateur non identifié avait déjà déposer un commentaire...
       if(isset($_SESSION['tmpComment'])) {
-         echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status'], "tmpTitle" => $_SESSION['tmpTitle'], "tmpComment" => $_SESSION['tmpComment'], "tmpNote" => $_SESSION['tmpNote'], "status" => $_SESSION['status'], "userLogin" => $_SESSION['utilisateur']]);
+         echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status'], "tmpTitle" => $_SESSION['tmpTitle'], "tmpComment" => $_SESSION['tmpComment'], "tmpNote" => $_SESSION['tmpNote'], "status" => $_SESSION['status'], "userLogin" => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'alertMessage' => $_SESSION['receiveMessage']]);
       //Si ce n'était pas le cas on rends a la vus d'autre paramètres...
       } else {
-         echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status'], "userLogin" => $_SESSION['utilisateur']]);
+         echo $template->render(["movie" => $movie, "artists" => $artists, "comments" => $comments, "user" => $user, "datedujour" => strftime("%A %d %B %Y"), "status" => $_SESSION['status'], "userLogin" => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'alertMessage' => $_SESSION['receiveMessage']]);
       }
    }
 }

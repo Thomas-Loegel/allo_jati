@@ -85,7 +85,7 @@ class UsersController extends Controller
 
                            $pageTwig = 'index.html.twig';
                            $template = $this->twig->load($pageTwig);
-                           echo $template->render(['status' => $_SESSION['status']]);
+                           echo $template->render(['status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage']]);
                            exit;
                         }
                      }

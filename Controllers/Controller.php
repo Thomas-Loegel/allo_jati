@@ -11,6 +11,7 @@ class Controller
    {
       $this->twig = self::getTwig();
       $this->baseUrl = self::getBaseUrl();
+      
    }
 
    protected static function getTwig()

@@ -173,11 +173,9 @@
                {% if status == 2 %}
                {% if comment.id_user != userLogin %}
                <button type="submit" id="contact{{ loop.index }}"
-                  class="btn btn-secondary btn-sm mb-2">Contacter</button>
+                  class="btn btn-secondary btn-sm mb-2" onclick="location.href='{{baseUrl}}/Profile/Envoyer_{{comment.id_user}}'">Contacter</button>
                {% endif %}
                {% endif %}
-
-
             </div>
          </div>
       </div>

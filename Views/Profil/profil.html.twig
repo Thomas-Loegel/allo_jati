@@ -1,7 +1,7 @@
 {% extends "template.html.twig" %}
 
 {% block body %}
-<div class="container-fluid d-flex justify-content-start" >
+<div class="container-fluid d-flex justify-content-start">
    <div class="row">
       <aside id="navlateral" class="col-12 col-md-12 p-0 bg-dark">
          <div class="text-center text-white bg-dark font-weight-bold">GESTION PROFILE</div>
@@ -31,7 +31,7 @@
                   <li class="nav-item">Messagerie
                      <ul>
                         {% set send = 'Envoyer' %}
-                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Envoyer_{{send}}">Envoyer</a>
+                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Envoyer">Envoyer</a>
                         </li>
 
                         {% set receive = 'Recevoir' %}
@@ -163,42 +163,105 @@
 
          {% if (slug == 'Envoyer') %}
          <div class="container">
-            <form name="send" method="POST" action="{{baseUrl}}/Envoyer">
+            <form name="send" method="POST" action="{{baseUrl}}/Profile/Envoyer_{{pseudo}}">
                <div class="form-row">
                   <div class="p-2 container">
                      <input class="form-control" name="sendMessage" id="pseudoMessage" rows="1"
-                        placeholder="Envoyer a: Pseudo?" value=""></div>
+                        placeholder="Envoyer a: Pseudo?" value="{{pseudo}}"></div>
                   <div class="p-2 container">
-                     <textarea class="form-control" name="sendMessage" id="tilteMessage" rows="1" placeholder="Titre"
+                     <textarea class="form-control" name="title" id="tilteMessage" rows="1" placeholder="Titre"
                         value=""></textarea>
                   </div>
                   <div class="p-2 container">
-                     <textarea class="form-control" name="sendMessage" id="Message" rows="3" placeholder="Message"
+                     <textarea class="form-control" name="message" id="Message" rows="3" placeholder="Message"
                         value=""></textarea>
                   </div>
                </div>
                <div class="row justify-content-center">
                   <button class="btn btn-secondary" type="submit">Envoyer</button>
                </div>
+               <div class="row justify-content-center p-2">
+
+                  {% if (alert == 'error') %}
+                  <div class="alert alert-danger" role="alert">
+                     Votre message n'a pas pu être transmis!
+                  </div>
+                  {% elseif (alert == 'good') %}
+                  <div class="alert alert-success" role="alert">
+                     Votre message a bien été envoyer!
+                  </div>
+                  {% endif %}
+               </div>
             </form>
          </div>
          {% endif %}
 
+         {# {% if (slug == 'recevoir') %}
 
-         {% if (slug == 'Recevoir') %}
-         <form name="receive" method="POST" action="{{baseUrl}}/Recevoir">
-            <div class="form-row">
-               <div class="col-md-12 mb-12">
-                  <label for="receive">Reception Message</label>
-                  <input type="text" class="form-control" name="receive" placeholder="">
-               </div>
+         <h2>Messagerie</h2></div>
+
+         {% for mess in message %}
+
+         <div class="form-row">
+
+            <div class="container">
+               <div class="row justify-content-center border">
+               <h5>{{mess.title}}</h5></div>
+               <p class="text-center">{{mess.message}}</p>
             </div>
-            <div class="row justify-content-center">
-               <button class="btn btn-secondary" type="submit">Recevoir</button>
-            </div>
-         </form>
-         {% endif %}
+
+          
+
+         </div> 
+         {% endfor %}
+
+         {% endif %} #}
+         {% if (slug == 'recevoir') %}
+         <h2>Messagerie</h2>
       </div>
+      {% for mess in message %}
+      <div class="container">
+         <div class="accordion" id="accordionExample">
+            <div class="card">
+               <div class="card-header" id="heading{{ loop.index }}">
+                  <h5 class="mb-0">
+                     <div class="row justify-content-center">
+                        <button class="btn btn-link-secondary font-weight-bold" type="button" data-toggle="collapse"
+                           data-target="#collapse{{ loop.index }}" aria-expanded="true"
+                           aria-controls="collapse{{ loop.index }}">
+                           <h5>{{mess.title}}</h5>
+                        </button>
+                     </div>
+                  </h5>
+               </div>
+               <div id="collapse{{ loop.index }}" class="collapse hide" aria-labelledby="heading{{ loop.index }}"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                     {{mess.message}}
+                  </div>
+
+                  <div class="row justify-content-center">
+                  <button class="btn btn-link-secondary font-weight-bold text-secondary border" type="button" onclick="location.href='{{baseUrl}}/Profile/Envoyer_{{mess.expeditor}}'">
+                     Répondre
+                  </button>
+                  <button class="btn btn-link-secondary font-weight-bold text-secondary border" type="button" onclick="location.href='{{baseUrl}}/Profile/Message/Supprimer_{{mess.id_message}}'">
+                     Supprimé
+                  </button>
+               </div>
+
+
+
+               </div>
+
+            </div>
+         </div>
+         <script>
+            $('.collapse').collapse()
+         </script>
+      </div>
+      {% endfor %}
+
+      {% endif %}
 
 
 
