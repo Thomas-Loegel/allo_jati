@@ -63,16 +63,10 @@ $router->get('/Profile/Envoyer', 'Profils.sendMessage');
 $router->post('/Profile/Envoyer_:slug', 'Profils.sendMessageToUser');
 
 $router->get('/Profile/Message/Supprimer_:slug', 'Profils.deleteMessage');
-
-
-
-
 $router->get('/Profile/Modifier/Recevoir_:slug', 'Profils.receiveMessage');
 
-
-
-
-$router->get('/Profile/Modifier/Compte_:slug', 'Profils.deleteAccount');
+$router->get('/Profile/Supprimer/Compte', 'Profils.deleteAccount');
+$router->post('/Profile/Supprimer/Compte_:slug', 'Profils.deleteAccount');
 
 $router->get('/Profile', 'Profils.profil');
 
@@ -80,9 +74,10 @@ $router->get('/Profile', 'Profils.profil');
 $router->get('/Deconnection', 'Users.logout');
 
 // Route Admin
-$router->get('/Admin/Effacer_:id_comment/:id_movie/:id_user', 'Comments.deleteComment');
+$router->get('/Admin/Effacer_:id_comment/:id_movie/:pseudo/:id_user', 'Comments.deleteComment');
 $router->get('/Admin/Effacer_:id_comment', 'Comments.deleteComment');
 $router->post('/Admin/Utilisateur', 'Comments.searchAllCommByUser');
+$router->post('/Admin/Titre', 'Comments.searchAllCommByTitleMovie');
 $router->get('/Admin/Tous', 'Comments.getAllCom');
 
 $router->get('/Admin', 'Admin.admin');

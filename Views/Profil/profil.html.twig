@@ -42,7 +42,7 @@
                   <li class="nav-item">Suppresion
                      <ul>
                         {% set account = 'Compte' %}
-                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Compte_{{account}}">Compte</a>
+                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Supprimer/Compte">Compte</a>
                         </li>
                      </ul>
                   </li>
@@ -196,26 +196,6 @@
          </div>
          {% endif %}
 
-         {# {% if (slug == 'recevoir') %}
-
-         <h2>Messagerie</h2></div>
-
-         {% for mess in message %}
-
-         <div class="form-row">
-
-            <div class="container">
-               <div class="row justify-content-center border">
-               <h5>{{mess.title}}</h5></div>
-               <p class="text-center">{{mess.message}}</p>
-            </div>
-
-          
-
-         </div> 
-         {% endfor %}
-
-         {% endif %} #}
          {% if (slug == 'recevoir') %}
          <h2>Messagerie</h2>
       </div>
@@ -241,13 +221,15 @@
                   </div>
 
                   <div class="row justify-content-center">
-                  <button class="btn btn-link-secondary font-weight-bold text-secondary border" type="button" onclick="location.href='{{baseUrl}}/Profile/Envoyer_{{mess.expeditor}}'">
-                     Répondre
-                  </button>
-                  <button class="btn btn-link-secondary font-weight-bold text-secondary border" type="button" onclick="location.href='{{baseUrl}}/Profile/Message/Supprimer_{{mess.id_message}}'">
-                     Supprimé
-                  </button>
-               </div>
+                     <button class="btn btn-link-secondary font-weight-bold text-secondary border" type="button"
+                        onclick="location.href='{{baseUrl}}/Profile/Envoyer_{{mess.expeditor}}'">
+                        Répondre
+                     </button>
+                     <button class="btn btn-link-secondary font-weight-bold text-secondary border" type="button"
+                        onclick="location.href='{{baseUrl}}/Profile/Message/Supprimer_{{mess.id_message}}'">
+                        Supprimé
+                     </button>
+                  </div>
 
 
 
@@ -271,14 +253,26 @@
 
 
 
-      {% if (slug == 'Compte') %}
-      <form name="compte" method="POST" action="{{baseUrl}}/Compte">
-         <div class="form-row">
-         </div>
+      {% if (slug == 'compte') %}
+      <form name="compte" method="POST" action="{{baseUrl}}/Profile/Supprimer/Compte_{{user}}">
+
          <div class="row justify-content-center">
             <button class="btn btn-secondary" type="submit">Suppression</button>
          </div>
+         <div class="row justify-content-center p-2">
+
+            {% if (alert == 'error') %}
+            <div class="alert alert-danger" role="alert">
+               Un erreur est survenu!
+            </div>
+            {% elseif (alert == 'good') %}
+            <div class="alert alert-success" role="alert">
+               Votre message a bien été envoyer!
+            </div>
+         </div>
       </form>
+
+      {% endif %}
       {% endif %}
    </div>
 

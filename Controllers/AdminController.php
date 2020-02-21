@@ -16,7 +16,7 @@ class AdminController extends Controller
    {
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['status' => $_SESSION['status']]);
+      echo $template->render(['status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage']]);
    }
 
    /**
@@ -34,7 +34,8 @@ class AdminController extends Controller
       echo $template->render([
          'slug' => $slug,
          'users' => $users, 
-         'status' => $_SESSION['status']
+         'status' => $_SESSION['status'], 
+         'alertMessage' => $_SESSION['receiveMessage']
       ]);
    }
 
@@ -53,7 +54,8 @@ class AdminController extends Controller
       echo $template->render([
          'slug' => $slug,
          'movies' => $movies,
-         'status' => $_SESSION['status']
+         'status' => $_SESSION['status'], 
+         'alertMessage' => $_SESSION['receiveMessage']
       ]);
    }
 
@@ -72,7 +74,8 @@ class AdminController extends Controller
       echo $template->render([
          'slug' => $slug,
          'artists' => $artists, 
-         'status' => $_SESSION['status']
+         'status' => $_SESSION['status'], 
+         'alertMessage' => $_SESSION['receiveMessage']
       ]);
    }
 
@@ -139,7 +142,8 @@ class AdminController extends Controller
          'resume'  => $resume,
          'error'   => $error,
          'success' => $success, 
-         'status' => $_SESSION['status']
+         'status' => $_SESSION['status'], 
+         'alertMessage' => $_SESSION['receiveMessage']
       ]);
    }
 
@@ -151,6 +155,6 @@ class AdminController extends Controller
       $slug = 'Ajout_Artiste';
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['slug' => $slug, 'status' => $_SESSION['status']]);
+      echo $template->render(['slug' => $slug, 'status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage']]);
    }
 }

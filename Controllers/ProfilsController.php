@@ -181,18 +181,32 @@ class ProfilsController extends Controller
       echo $template->render(['slug' => 'recevoir', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'message' => $message, 'alertMessage' => $_SESSION['receiveMessage']]);
    }
    public function deleteMessage($id_message)
-   { 
+   {
       $this->model->delMessage($id_message);
       $message = $this->checkMessage();
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(['slug' => 'recevoir', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'message' => $message, 'alertMessage' => $_SESSION['receiveMessage']]);
-
    }
-   public function deleteAccount($account = null)
+   public function deleteAccount($slug = null)
    {
+      if (isset($_POST) && $slug != null) {
+         
+         $instanceUsers = new Users();
+         $result = $instanceUsers->deleteAccount($_SESSION['utilisateur']);
+         var_dump($_SESSION['utilisateur']);
+         if ($result === true) {
+            $alert = 'good';
+         } else {
+            $alert = 'error';
+         }
+      } else {
+         $alert = null;
+      }
+
+      
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['slug' => $account, 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar']]);
+      echo $template->render(['slug' => 'compte', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'alertMessage' => $_SESSION['receiveMessage'], 'alert' => $alert]);
    }
 }

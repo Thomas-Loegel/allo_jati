@@ -10,8 +10,8 @@ class CommentsController extends Controller
    }
 
    /**
-   *  render index
-   */
+    *  render index
+    */
    public function index()
    {
       $pageTwig = 'Comments/index.html.twig';
@@ -20,26 +20,34 @@ class CommentsController extends Controller
    }
 
    /**
-   *  Affiche tous les commentaire d'un utilisateur
-   */
+    *  Affiche tous les commentaire d'un utilisateur
+    */
    public function searchAllCommByUser()
    {
       $instanceHome = new HomeController();
-      if(isset($_POST) && !empty($instanceHome->__getPOST('pseudo'))){
+      if (isset($_POST) && !empty($instanceHome->__getPOST('pseudo'))) {
          $pseudo = $instanceHome->__getPOST('pseudo');
          $this->refreshUserForCommByUser($pseudo);
       }
    }
-
    /**
-   *  Supprime un commentaire
-   */
-   public function deleteComment($id_comment, $id_movie, $id_user = null)
+    * Rafraichit la liste des comm par utilisateur (pseudo)
+    */
+   public function refreshUserForCommByUser($pseudo)
    {
-      if($id_user != null){
-         var_dump($id_comment);
+      $comments = $this->model->searchAllCommByUser($pseudo);
+      $pageTwig = 'Admin/admin.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur', 'status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage'], 'pseudo' => $pseudo]);
+   }
+   /**
+    *  Supprime un commentaire
+    */
+   public function deleteComment($id_comment, $id_movie, $pseudo, $id_user = null)
+   {
+      if ($id_user != null) {
          $this->model->delComment($id_comment);
-         $this->refreshAfterDeteleCommByUser($id_user);
+         $this->refreshAfterDeteleCommByUser($id_user, $pseudo);
       } else {
          $this->model->delComment($id_comment);
          header("Location: $this->baseUrl/Films/Film_$id_movie");
@@ -49,27 +57,37 @@ class CommentsController extends Controller
    /**
     * Rafraichit la liste après suppression
     */
-    
-    public function refreshAfterDeteleCommByUser($id_user){
+
+   public function refreshAfterDeteleCommByUser($id_user, $pseudo)
+   {
       $comments = $this->model->searchAllCommById($id_user);
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur', 'status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage']]);
+      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur', 'status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage'], 'pseudo' => $pseudo]);
    }
-
    /**
-   * Rafraichit la liste des comme par utilisateur (pseudo)
-   */
-   public function refreshUserForCommByUser($pseudo){
-      $comments = $this->model->searchAllCommByUser($pseudo);
-      $pageTwig = 'Admin/admin.html.twig';
-      $template = $this->twig->load($pageTwig);
-      echo $template->render(["comments" => $comments, 'slug' => 'Utilisateur', 'status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage']]);
+    *  Affiche tous les commentaire par titre de film
+    */
+   public function searchAllCommByTitleMovie()
+   {
+      if (isset($_POST) && !empty($_POST['title'])) {
+         $this->refreshUserForCommByTitle($_POST['title']);
+      }
    }
-
    /**
-   *  Supprime tous les commentaire liés à id_movie
-   */
+    * Rafraichit la liste des comm par titre de films
+    */
+    public function refreshUserForCommByTitle($title)
+    {
+       $movie = $this->model->searchAllCommByTitleMovie($title);
+       $comments = $this->model->linkCommentByMovie($movie[0]['id_movie']);
+       $pageTwig = 'Admin/admin.html.twig';
+       $template = $this->twig->load($pageTwig);
+       echo $template->render(["comments" => $comments, 'slug' => 'titleMovie', 'status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage'], 'title' => $title]);
+    }
+   /**
+    *  Supprime tous les commentaire liés à id_movie
+    */
    public function delAllComByMovie($id)
    {
       $tabCom = $this->model->linkCommentByMovie($id);
@@ -80,8 +98,8 @@ class CommentsController extends Controller
    }
 
    /**
-   *  Recherche tous les commentaires
-   */
+    *  Recherche tous les commentaires
+    */
    public function getAllCom()
    {
       $comments   = $this->model->getAllComments();
@@ -91,8 +109,8 @@ class CommentsController extends Controller
    }
 
    /**
-   *  Mise en temporaire de la publication
-   */
+    *  Mise en temporaire de la publication
+    */
    public function temporaryFiles($id_movie)
    {
 
@@ -114,8 +132,8 @@ class CommentsController extends Controller
    }
 
    /**
-   *  Ajoute un commentaire
-   */
+    *  Ajoute un commentaire
+    */
    public function addComment($id_movie)
    {
 
@@ -162,8 +180,8 @@ class CommentsController extends Controller
    }
 
    /**
-   *
-   */
+    *
+    */
    public function postAfterLogin()
    {
 
@@ -188,7 +206,7 @@ class CommentsController extends Controller
          $idComment = $this->model->addComment($id_user, $instanceHome->__get('tmpTitle'), $instanceHome->__get('tmpComment'), $instanceHome->__get('tmpNote'));
          // On insert dans la table users_comment l'ID du commentaire appartenant a l'ID user
          $result = $this->model->addUsersComments($id_user, $idComment);
-         if($result === true){
+         if ($result === true) {
             // On insert le commentaire dans la table movie_comments
             $result = $this->model->addMovieComments($instanceHome->__get('id_movie'), $idComment);
             if ($result === true) {
@@ -200,7 +218,7 @@ class CommentsController extends Controller
                $instanceHome->__unsetTab();
             }
          }
-         if ($result ===false) {
+         if ($result === false) {
             // Si une erreur surviens lors de l'ajout du commentaire a la BDD
             $instanceHome->__set('alert', "<script>alert(\"Un erreur est survenu lors de la connexion a la base de données.Veuillez recommencer\")</script>");
             $instanceHome->__alert('alert');

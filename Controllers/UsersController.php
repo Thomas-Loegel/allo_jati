@@ -82,7 +82,8 @@ class UsersController extends Controller
                      } else {
                         //Sinon on redirige l'utilisateur sur la page d'accueil
                         if (!$instanceHome->__empty('utilisateur')) {
-
+                           $instanceProfils = new ProfilsController();
+                           $instanceProfils->checkMessage();
                            $pageTwig = 'index.html.twig';
                            $template = $this->twig->load($pageTwig);
                            echo $template->render(['status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage']]);

@@ -52,6 +52,16 @@ class Comments extends Model
 
       return $req->fetchAll();
    }
+   /**
+   *  recherche tous les commentaires par titre de film
+   */
+  public function searchAllCommByTitleMovie($title)
+  {
+     
+     $req = $this->pdo->prepare('SELECT id_movie FROM movies WHERE title = ?');
+     $req->execute([$title]);
+     return $req->fetchAll();
+  }
 
    /**
    *  suppression commentaire par id_comment

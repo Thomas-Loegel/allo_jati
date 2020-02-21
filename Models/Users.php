@@ -212,8 +212,14 @@ class Users extends Model
    
    public function updatePseudo($newpseudo, $pseudo)
    {
-      $req = $this->pdo->prepare("UPDATE users SET pseudo = ? WHERE pseudo = ?");
+      $req = $this->pdo->prepare('UPDATE users SET pseudo = ? WHERE pseudo = ?');
       return $req->execute([$newpseudo, $pseudo]);
+   }
+
+   public function deleteAccount($pseudo)
+   {
+      $req = $this->pdo->prepare('DELETE FROM users WHERE pseudo = ?');
+      return $req->execute([$pseudo]);
    }
    /*******************************************************************/
 }
