@@ -83,7 +83,7 @@ class AdminController extends Controller
    {
       $slug = 'Ajout_Film';
       $info = $error = $success= null;
-      $title = $year = $time = $picture = $style = $resume = null;
+      $title = $year = $time = $picture = $style = $resume = $trailer = null;
       $pregYear = '/^[0-9]{4}$/m';
       $pregTime = '/^([01]?[0-9]|2[0-3])\:+[0-5][0-9]$/';
       $pregUrl  = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu';
@@ -97,6 +97,12 @@ class AdminController extends Controller
             $error = "Résumé non renseigné !";
          }else{
             $resume = $_POST['resume'];
+         }
+
+         if (empty($_POST['trailer'])) {
+            $error = "Trailer non renseigné !";
+         }else{
+            $trailer = $_POST['trailer'];
          }
 
          if (empty($_POST['style'])) {
@@ -129,12 +135,12 @@ class AdminController extends Controller
             $title = $_POST['title'];
          }
 
-         if (!empty($_POST['title']) && !empty($_POST['year']) && !empty($_POST['time']) && !empty($_POST['picture']) && !empty($_POST['style']) && !empty($_POST['resume'])) {
+         if (!empty($_POST['title']) && !empty($_POST['year']) && !empty($_POST['time']) && !empty($_POST['picture']) && !empty($_POST['style']) && !empty($_POST['resume']) && !empty($_POST['trailer'])) {
             $success = "Votre ajout à bien été effectué !";
          }
       }
 
-      $this->model->addMovie($picture,$title,$year,$style,$resume,$time);
+      $this->model->addMovie($picture,$title,$year,$style,$resume,$trailer,$time);
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
@@ -145,6 +151,7 @@ class AdminController extends Controller
          'picture' => $picture,
          'style'   => $style,
          'resume'  => $resume,
+         'trailer' => $trailer,
          'info'    => $info,
          'error'   => $error,
          'success' => $success,
