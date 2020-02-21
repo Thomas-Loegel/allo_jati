@@ -70,7 +70,7 @@ class Users extends Model
       return $req->fetch();
    }
 
-   
+
 
    public function checkMail($hash)
    {
@@ -80,38 +80,50 @@ class Users extends Model
       return $req->fetch();
    }
 
-
+   /**************POUR FORMULAIRE DE MOT DE PASSE OUBLIE**************/
    /**
-    * insertion dans la table Users
+    * check dans la table Usershash
     */
-   public function insertInUsersHash($hash, $mail, $pseudo)
+   public function checkMailInUsersHash($mail)
    {
-      
-      //tester si le hash existe déja 
-      $req = $this->pdo->prepare("SELECT mail FROM users WHERE mail = :mail");
+      //tester si le mail existe déja 
+      $req = $this->pdo->prepare("SELECT * FROM users_hash WHERE mail = :mail");
       $req->bindValue(':mail', $mail);
       $req->execute();
       $data = $req->fetch();
       return $data;
-
-      //si le md5 existe alors remplace son hash par le nouveau
-      if ($data = true) {
-         $req = $this->pdo->prepare("UPDATE users_hash SET 'hash'=:hash, 'mail'=:mail, 'pseudo'=:pseudo WHERE mail= :mail");
-         $req->bindValue(':hash', $hash);
-         $req->bindValue(':mail', $mail);
-         $req->bindValue(':pseudo', $pseudo);
-         $req->execute();
-         //Sinon ajoute le
-      } else {
-         $req = $this->pdo->prepare("INSERT INTO users_hash(hash, mail, pseudo) VALUES ('$hash', '$mail', '$pseudo')");
-         $req->execute();
-      }
+      //var_dump($data);
    }
 
+   /**
+    * insertion dans la table Usershash
+    */
+   public function insertInUsersHash($mail, $md5, $pseudo) {
+      $req = $this->pdo->prepare("INSERT INTO users_hash (mail, md5, pseudo) VALUES ('$mail', '$md5', '$pseudo')");
+
+      $data = $req->execute();
+      return $data;
+      var_dump($data);
+   }
+
+   /**
+    * update dans la table Usershash
+    */
+   public function updateInUsersHash($mail, $md5) {
+         $req = $this->pdo->prepare("UPDATE users_hash SET md5 = :md5 WHERE mail = :mail");
+         $req->bindValue(':md5', $md5);
+         $req->bindValue(':mail', $mail);
+
+         $data = $req->execute();
+         return $data;
+         var_dump($data);
+   }
+    /********************************************************************/
 
 
+     /**************POUR FORMULAIRE CHANGER DE MOT DE PASSE**************/
    /*
-    * va chercher des caractères dans l'url après l'emplacement donné (ici 42)
+    * va chercher des caractères dans l'url après l'emplacement donné ()
     */
    public function returnUrl($pointeur)
    {
@@ -124,15 +136,30 @@ class Users extends Model
       return substr($adresse, $pointeur);
    }
 
+   /**
+    * check dans la table Usershash
+    */
+    public function checkMd5InUsersHash($md5)
+    {
+       //tester si le md5 existe déja 
+       $req = $this->pdo->prepare("SELECT * FROM users_hash WHERE md5 = '$md5'");
+       $req->execute();
+       $data = $req->fetch();
+       return $data;
+       
+    }
+
+
+
    /*
     * changer le mot de passe d'un utilisateur par celui entré dans l'input en fonction de son pseudo
     */
-   public function updateMdp($pseudo, $mdp)
+   public function updateMdp($mail, $mdp)
    {
-      $req = $this->pdo->prepare("UPDATE users SET mdp = :mdp WHERE pseudo= :pseudo");
-      $req->bindValue(':pseudo', $pseudo);
+      $req = $this->pdo->prepare("UPDATE users SET mdp = :mdp WHERE mail= :mail");
+      $req->bindValue(':mail', $mail);
       $req->bindValue(':mdp', $mdp);
-      $req->execute();
+      return $req->execute();
    }
 
 
@@ -209,7 +236,7 @@ class Users extends Model
       return $req->fetch();
    }
 
-   
+
    public function updatePseudo($newpseudo, $pseudo)
    {
       $req = $this->pdo->prepare("UPDATE users SET pseudo = ? WHERE pseudo = ?");

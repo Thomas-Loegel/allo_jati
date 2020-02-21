@@ -125,7 +125,8 @@ class UsersController extends Controller
    {
       //déclaration des variables
       $mail = null;
-      $errorMail = "";
+      $errorMail = null;
+      $lienInscription = null;
 
       //formulaire soumit ?
       if (!empty($_POST)) {
@@ -141,54 +142,68 @@ class UsersController extends Controller
 
             //mail n'existe pas dans la bdd ?
             if ($userMail == false) {
-               $errorMail = "$mail n'est pas connu";
+               $lienInscription = " ";
+               $errorMail = "Nous ne connaissons pas votre email, si vous n'avez pas encore de compte";
             } else {
                //on va checher le pseudo qui correspond au mail entré
                $pseudo = $this->model->recupPseudo($mail);
-               //var_dump($pseudo['pseudo']);
                $pseudo = $pseudo['pseudo'];
 
+               //on créer md5 du mail
+               $md5 = md5($mail);
 
-               //on créer hash du pseudo
-               $hash = md5($mail);
+               //on check si l'utilisateur a déja fait une demande de changer de mot de passe
+               $checkUsersHash = $this->model->checkMailInUsersHash($mail);
 
-               //on insert le mail le hash et le pseudo dans la table Users_Hash
-               $this->model->insertInUsersHash($hash, $mail, $pseudo);
+               //var_dump($checkUsersHash);
 
-               //contenu mail
-               $sujet = "Mot de passe oublié";
-               $mailBody = "<h2>Bonjour $pseudo ! </h2><p>Vous avez demandé à changer de mot de passe.</p><br><a href='http://localhost/allo_jati/ChangerMotDePasse/$hash'>Changer de mot de passe</a>";
 
-               //si on est en local
-               if ($_SERVER['SERVER_NAME'] === "localhost") {
-                  //on charge Swiftmailer
-                  require_once('vendor/autoload.php');
+               //si l'utilisateur n'a jamais fait de demande alors il n'existe pas donc on l'insert dans la table
+               if ($checkUsersHash == false) {
+                  $insert = $this->model->insertInUsersHash($mail, $md5, $pseudo);
+               }
+               //si l'utilisateur a déja fait une demande alors on lui update seulement son md5
+               else {
+                  $update = $this->model->updateInUsersHash($mail, $md5);
+               }
 
-                  //on instancie une nouvelle méthode d'envois du mail
-                  $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
-                     //Port 25 ou 465 selon votre configuration
-                     //identifiant et mote de passe pour votre swiftmailer
-                     ->setUsername('fb4412351e7042')
-                     ->setPassword('9377fb0dbcb0f8');
-                  //on instancie un nouveau mail
-                  $mailer = new Swift_Mailer($transport);
-                  //on instancie un nouveau corps de document mail
-                  $message = (new Swift_Message($sujet))
-                     ->setFrom(['galli.johanna.g2@gmail.com'])
-                     ->setTo(['galli.johanna.g2@gmail.com'])
-                     ->setBody($mailBody, 'text/html');
-                  //on récupère et modifie le header du mail pour l'envois en HTML
-                  $type = $message->getHeaders()->get('Content-Type');
-                  $type->setValue('text/html');
-                  $type->setParameter('charset', 'utf-8');
-                  //On envois le mail en local
-                  $result = $mailer->send($message);
+               //si l'une des 2 requette a fonctionné alors on peut lui envoyer le mail
+               if ($insert || $update) {
+                  //contenu mail
+                  $sujet = "Mot de passe oublié";
+                  $mailBody = "<h2>Bonjour $pseudo ! </h2><p>Vous avez demandé à changer de mot de passe.</p><br><a href='http://localhost/allo_jati/ChangerMotDePasse/$md5'>Changer de mot de passe</a>";
 
-                  if ($result) {
-                     $slug = "mailEnvoye";
-                     header("Location: $this->baseUrl/$slug");
-                  } else {
-                     echo "Votre mail n'a pas pu être envoyé";
+                  //si on est en local
+                  if ($_SERVER['SERVER_NAME'] === "localhost") {
+                     //on charge Swiftmailer
+                     require_once('vendor/autoload.php');
+
+                     //on instancie une nouvelle méthode d'envois du mail
+                     $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
+                        //Port 25 ou 465 selon votre configuration
+                        //identifiant et mote de passe pour votre swiftmailer
+                        ->setUsername('fb4412351e7042')
+                        ->setPassword('9377fb0dbcb0f8');
+                     //on instancie un nouveau mail
+                     $mailer = new Swift_Mailer($transport);
+                     //on instancie un nouveau corps de document mail
+                     $message = (new Swift_Message($sujet))
+                        ->setFrom(['galli.johanna.g2@gmail.com'])
+                        ->setTo(['galli.johanna.g2@gmail.com'])
+                        ->setBody($mailBody, 'text/html');
+                     //on récupère et modifie le header du mail pour l'envois en HTML
+                     $type = $message->getHeaders()->get('Content-Type');
+                     $type->setValue('text/html');
+                     $type->setParameter('charset', 'utf-8');
+                     //On envois le mail en local
+                     $result = $mailer->send($message);
+
+                     if ($result) {
+                        $slug = "mailEnvoye";
+                        header("Location: $this->baseUrl/$slug");
+                     } else {
+                        echo "Votre mail n'a pas pu être envoyé";
+                     }
                   }
                }
             }
@@ -202,6 +217,7 @@ class UsersController extends Controller
          'slug' => $slug,
          'mail' => $mail,
          'errorMail' => $errorMail,
+         'lienInscription' => $lienInscription,
          //'randomString' => $randomString,
       ]);
    }
@@ -221,43 +237,93 @@ class UsersController extends Controller
    }
 
    /**
-    *
+    * Fonction changer de mot de passe
     */
    public function updatePassword($slug = "ChangerMotDePasse")
    {
       //déclaration des variables
-      $mdp = "";
-      $errorMdp = "";
+      $mdp = null;
+      $goodMail = null;
+      $inputMail = null;
+      $hashMdp = null;
+      $error = [];
 
-      //recupération du hash dans l'url
-      $hash = $this->model->returnUrl(43);
-      echo $hash;
 
-      //retourne vrai si les 2 infos
-      if (password_verify("johanna", $hash)) {
-         echo "pseudo ok";
-         //var_dump($pseudo); 
+      //recupération du md5 dans l'url
+      $md5 = $this->model->returnUrl(43);
+      //echo $md5;
+
+      //cherche dans userhash la ligne qui contient le md5
+      $checkmd5 = $this->model->checkMd5InUsersHash($md5);
+      //on recupere le pseudo et le mail
+      $pseudo = $checkmd5['pseudo'];
+      $mail = $checkmd5['mail'];
+
+      //pour chaque valeur d'input
+      foreach ($_POST as $value) {
+
+         //si la valeur de l'input est considérée comme vide
+         if (empty($value)) {
+            $error[] = " ";
+            //Dans le formulaire si $error = " " alors le bord devient rouge
+
+            //Sinon UN ou DES inputs sont remplis
+         } else {
+            $error[] = "";
+
+            //si l'input mail est rempli par le mail correct
+            if ($mail == $_POST['mail']) {
+               //rempli l'input par cette meme valeur
+               $inputMail = $_POST['mail'];
+               //affiche un message vert qui indique de remplir un nouveau mot de passe
+               $goodMail = "$pseudo... il faut entrer un nouveau mot de passe !";
+
+               if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $_POST['mdp'])) {
+                  $hashMdp = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
+               } else {
+                  if ($_POST['mdp'] === "") {
+                     $error[1] = " ";
+                  } else {
+                     $error[1] = "Le champ contient des caractères non valides";
+                  }
+               }
+               //sinon l'input mail est rempli par un mail inconnu
+            } else {
+               //si le mail est inconnu mais défini par ""
+               if ($_POST['mail'] == "") {
+                  $error[0] = "";
+               } else {
+                  $error[0] = "$pseudo, ce n'est pas votre mail ...";
+               }
+            }
+         }
       }
 
+      if ($hashMdp && $inputMail) {
+         $updateMdp = $this->model->updateMdp($inputMail, $hashMdp);
+         if ($updateMdp == true) {
 
+            $instanceHome = new HomeController();
+            $instanceHome->__set('utilisateur', $pseudo);
 
+            //on recherche si l'utilisateur connecté est administrateur
+            $this->checkAdministrator($instanceHome->__get('utilisateur'));
 
-      $userMail = $this->model->checkMail($hash);
-      var_dump($userMail);
-
-      //si le champ mdp est vide
-      if (empty($_POST['mdp'])) {
-         $errorMdp = " ";
-      } else {
-         $mdp = $_POST['mdp'];
-         if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $mdp)) {
-            //fonction insérer mdp
-            $this->model->updateMdp($userMail, $mdp);
-            //message tout est ok
-            $message = 'Voici un message en javascript écrit par php';
-            echo '<script type="text/javascript">window.alert("' . $message . '");</script>';
+            // Si location existe on redirige vers postAfterLogin()
+            if (isset($_SESSION['location'])) {
+               $instanceComments = new CommentsController();
+               $instanceComments->postAfterLogin();
+            } else {
+               //Sinon on redirige l'utilisateur sur la page d'accueil
+               if (!$instanceHome->__empty('utilisateur')) {
+                  $pageTwig = 'index.html.twig';
+                  $template = $this->twig->load($pageTwig);
+                  echo $template->render(['status' => $_SESSION['status']]);
+                  exit;
+               }
+            }
          } else {
-            $errorMdp = "Votre mot de passe doit contenir des lettres (en majuscule et/ou en minuscule) et/ou des chiffres. 2 - 16 caractères";
+            var_dump("erreur lors du changement de mot de passe");
          }
       }
 
@@ -268,9 +334,13 @@ class UsersController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug' => $slug,
+         'md5' => $md5,
          'title' => $title,
+         'pseudo' => $pseudo,
+         'inputMail' => $inputMail,
+         'goodMail' => $goodMail,
          'mdp' => $mdp,
-         'errorMdp' => $errorMdp,
+         'error' => $error,
       ]);
    }
 
@@ -334,7 +404,7 @@ class UsersController extends Controller
                if ($_POST['pseudo'] === "") {
                   $error[1] = " ";
                } else {
-                  $error[1] = "2 caractères min. Autorisé : chiffres, lettres en majuscule et minuscule.";
+                  $error[1] = "Le champ contient des caractères non valides.";
                }
             }
             /****MOT DE PASSE****/
@@ -351,7 +421,7 @@ class UsersController extends Controller
                if ($_POST['mdp'] === "") {
                   $error[2] = " ";
                } else {
-                  $error[2] = "2 caractères min. Autorisé : chiffres, lettres en majuscule et minuscule.";
+                  $error[2] = "Le champ contient des caractères non valides";
                }
             }
          }
@@ -359,7 +429,7 @@ class UsersController extends Controller
 
 
       /****INSERTION DE L'UTILISATEUR****/
-      
+
       //tous les inputs sont définis ?
       if (isset($inputPseudo) && isset($hashMdp) && isset($inputMail)) {
          $avatar = "jatilogo.png";
