@@ -40,7 +40,7 @@ $router->post('/Connection/post', 'Users.forgetPassword');
 
 // Route Register
 $router->get('/Inscription', 'Users.register');
-$router->post('/Inscription', 'Users.register');
+$router->post('/Inscription/post', 'Users.register');
 
 
 // route bienvenue (apres inscription)

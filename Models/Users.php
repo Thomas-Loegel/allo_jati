@@ -113,7 +113,7 @@ class Users extends Model
    /*
     * va chercher des caractères dans l'url après l'emplacement donné (ici 42)
     */
-   public function returnUrl()
+   public function returnUrl($pointeur)
    {
       $adresse = $_SERVER['PHP_SELF'];
       $i = 0;
@@ -121,7 +121,7 @@ class Users extends Model
          $adresse .= ($i == 0 ? '?' : '&') . $cle . ($valeur ? '=' . $valeur : '');
          $i++;
       }
-      return substr($adresse, 43);
+      return substr($adresse, $pointeur);
    }
 
    /*

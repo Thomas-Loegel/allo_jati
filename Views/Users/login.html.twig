@@ -116,7 +116,7 @@
 		{% elseif (slug == 'Inscription') %}
 
 			<div class="row justify-content-md-center">
-				<form name="register" class="col-4 users-form" method="POST"  {% if slug == "Inscription" %} action="{{ baseUrl }}/Inscription" {% elseif slug == "Bienvenue" %} action="{{ baseUrl }}/Bienvenue"  {% endif %}>
+				<form name="register" class="col-4 users-form" method="POST" action="{{ baseUrl }}/Inscription/post" }>
 					<h2>Créez un compte :</h2>
 					{# MAIL #}
 					<div class="form-group-users">

@@ -230,7 +230,7 @@ class UsersController extends Controller
       $errorMdp = "";
 
       //recupération du hash dans l'url
-      $hash = $this->model->returnUrl();
+      $hash = $this->model->returnUrl(43);
       echo $hash;
 
       //retourne vrai si les 2 infos
@@ -359,35 +359,38 @@ class UsersController extends Controller
 
 
       /****INSERTION DE L'UTILISATEUR****/
-
+      
       //tous les inputs sont définis ?
       if (isset($inputPseudo) && isset($hashMdp) && isset($inputMail)) {
          $avatar = "jatilogo.png";
+
          // insertion des données dans la bdd
          $insert = $this->model->insertUser($inputPseudo, $hashMdp, $inputMail, $avatar);
+
          if ($insert === true) {
-            
+
             //redirection en étant connecté
-            $slug = "Bienvenue";
             $instanceHome = new HomeController();
             $instanceHome->__set('utilisateur', $inputPseudo);
 
-            var_dump($slug);
+            //var_dump($slug);
             if (!$instanceHome->__empty('utilisateur')) {
 
                $_SESSION['status'] = 2;
 
-               //$pageTwig = 'index.html.twig';
+               $slug = "Bienvenue";
+               $title = "Bienvenue chez Allo Jati";
+
+               //affichage
                $pageTwig = 'Users/login.html.twig';
                $template = $this->twig->load($pageTwig);
                echo $template->render([
+                  'slug' => "Bienvenue",
+                  'title' => $title,
                   'status' => $_SESSION['status'],
                   'user' => $_SESSION['utilisateur'],
-                  'slug' => $slug
-                  ]);
+               ]);
                exit;
-
-               //$this->bienvenue($slug);
             }
          } else {
             $generalError = "Malheureusement nous n'avons pas pu vous créer un compte";
@@ -405,25 +408,6 @@ class UsersController extends Controller
          'error' => $error,
          'inputMail' => $inputMail,
          'inputPseudo' => $inputPseudo,
-      ]);
-   }
-
-   
-   public function bienvenue ($slug = "Bienvenue")
-   {
-      $title = "Bienvenue chez Allo Jati";
-
-      var_dump($_SESSION['status']);
-      var_dump($_SESSION['utilisateur']);
-
-      //affichage
-      $pageTwig = 'Users/login.html.twig';
-      $template = $this->twig->load($pageTwig);
-      echo $template->render([
-         'slug' => $slug,
-         'title' => $title,
-         'status' => $_SESSION['status'],
-         'user' => $_SESSION['utilisateur'],
       ]);
    }
 
