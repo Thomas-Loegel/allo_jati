@@ -330,6 +330,17 @@
 
             <div class="form-row">
                <div class="col-md-12 mb-3">
+                  <select class="custom-select text-center" name="role">
+                     <option value="" selected disabled>-- Rôle --</option>
+                     <option value="Acteur" {% if role == "Acteur" %}selected{% endif %}>Acteur</option>
+                     <option value="Réalistateur" {% if role == "Réalistateur" %}selected{% endif %}>Réalistateur</option>
+                     <option value="Acteur & Réalistateur" {% if role == "Acteur & Réalistateur" %}selected{% endif %}>Acteur & Réalistateur</option>
+                  </select>
+               </div>
+            </div>
+
+            <div class="form-row">
+               <div class="col-md-12 mb-3">
                   <textarea class="form-control" name="bio" value="{{bio}}" placeholder="Biographie" rows="3">{{bio}}</textarea>
                </div>
             </div>

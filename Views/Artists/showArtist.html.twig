@@ -11,11 +11,11 @@
             <img class="rounded" src="{{artist.picture}}" style="width:300px;height:400px;">
 
             <div class="mt-4">
-               <span class="font-weight-bold">Date de naissance :</span> {{artist.birth_day | date("d/m/Y")}} <br>
-               <span class="font-weight-bold">Rôle :</span> <br> <br>
+               <span class="font-weight-bold">Date de naissance :</span> <span>{{artist.birth_day | date("d/m/Y")}} </span> <br>
+               <span class="font-weight-bold">Rôle :</span> <span>{{role}}</span>
             </div>
 
-            <h3 class="mb-4">A voir aussi dans :</h3>
+            <h3 class="mb-4 mt-4">A voir aussi dans :</h3>
 
             <!-- Affiche les films ou l'acteur est présent -->
 

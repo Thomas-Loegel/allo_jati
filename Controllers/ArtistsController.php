@@ -22,25 +22,23 @@ class ArtistsController extends Controller
    */
    public function showArtist(int $id_artist)
    {
-      // Affiche les Films de Artiste par Id
-      $instanceMovies = new Movies();
-
 
       $artist = $this->model->getArtist($id_artist);
 
       // Défini le role de l'artiste
-      // if($artist['role'] == 1){
-      //    $role = 'Acteur';
-      // }else if($artist['role'] == 2){
-      //    $role = 'Réalisateur';
-      // }else if($artist['role'] == 3){
-      //    $role = 'Acteur & Réalisateur';
-      // }
+      if($artist['role'] == 1){
+         $role = 'Acteur';
+      }else if($artist['role'] == 2){
+         $role = 'Réalisateur';
+      }else if($artist['role'] == 3){
+         $role = 'Acteur & Réalisateur';
+      }
 
       $pageTwig = 'Artists/showArtist.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'artist' => $artist,
+         'role' => $role,
          'status' => $_SESSION['status']
       ]);
    }

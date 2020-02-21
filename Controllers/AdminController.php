@@ -81,9 +81,9 @@ class AdminController extends Controller
    */
    public function addMovie()
    {
-      $slug     = 'Ajout_Film';
+      $slug = 'Ajout_Film';
       $info = $error = $success= null;
-      $title    = $year = $time = $picture = $style = $resume= null;
+      $title = $year = $time = $picture = $style = $resume = null;
       $pregYear = '/^[0-9]{4}$/m';
       $pregTime = '/^([01]?[0-9]|2[0-3])\:+[0-5][0-9]$/';
       $pregUrl  = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu';
@@ -157,9 +157,9 @@ class AdminController extends Controller
    */
    public function addArtist()
    {
-      $slug  = 'Ajout_Artiste';
+      $slug = 'Ajout_Artiste';
       $info = $error = $success= null;
-      $picture = $first_name = $last_name = $birth_day = $bio = null;
+      $picture = $first_name = $last_name = $birth_day = $bio = $role = null;
       $pregUrl = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu';
 
 
@@ -171,6 +171,12 @@ class AdminController extends Controller
             $error = "Renseignez une bio !";
          }else{
             $bio = $_POST['bio'];
+         }
+
+         if (empty($_POST['role'])) {
+            $error = "Renseignez une role !";
+         }else{
+            $role = $_POST['role'];
          }
 
          if (empty($_POST['picture'])) {
@@ -197,13 +203,13 @@ class AdminController extends Controller
             $first_name = $_POST['first_name'];
          }
 
-         if (!empty($_POST['first_name']) && !empty($_POST['last_name']) && !empty($_POST['birth_day']) && !empty($_POST['picture']) && !empty($_POST['bio'])) {
+         if (!empty($_POST['first_name']) && !empty($_POST['last_name']) && !empty($_POST['birth_day']) && !empty($_POST['picture']) && !empty($_POST['bio']) && !empty($_POST['role'])) {
             $success = "Votre ajout à bien été effectué !";
          }
       }
 
 
-      $this->model->addArtist($picture,$first_name,$last_name,$birth_day,$bio);
+      $this->model->addArtist($picture,$first_name,$last_name,$birth_day,$bio,$role);
       $pageTwig = 'Admin/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
@@ -217,6 +223,7 @@ class AdminController extends Controller
          'last_name'  => $last_name,
          'birth_day'  => $birth_day,
          'bio'        => $bio,
+         'role'       => $role
       ]);
    }
 
@@ -256,8 +263,6 @@ class AdminController extends Controller
             $success = "Votre association à bien été effectué !";
          }
       }
-
-      var_dump($_POST);
 
       $instanceArtists = new Artists();
       $artists = $instanceArtists->getAllArtists();

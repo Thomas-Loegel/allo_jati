@@ -10,23 +10,23 @@ class Admin extends Model
    /**
    *  Ajoute un Film dans la BDD
    */
-   public function addMovie($picture,$title,$year,$style,$resume,$time)
+   public function addMovie($picture, $title, $year, $style, $resume, $time)
    {
       $req = $this->pdo->prepare(
         "INSERT INTO movies (picture, title, year, style, resume, time)
          VALUES (?,?,?,?,?,?)");
-      $req->execute([$picture,$title,$year,$style,$resume,$time]);
+      $req->execute([$picture, $title, $year, $style, $resume, $time]);
    }
 
    /**
    *  Ajoute un Artiste dans la BDD
    */
-   public function addArtist($picture,$first_name,$last_name,$birth_day,$bio)
+   public function addArtist($picture, $first_name, $last_name, $birth_day, $bio, $role)
    {
       $req = $this->pdo->prepare(
-        "INSERT INTO artists (picture, first_name, last_name, birth_day, bio)
-         VALUES (?,?,?,?,?)");
-      $req->execute([$picture,$first_name,$last_name,$birth_day,$bio]);
+        "INSERT INTO artists (picture, first_name, last_name, birth_day, bio, role)
+         VALUES (?,?,?,?,?,?)");
+      $req->execute([$picture, $first_name, $last_name, $birth_day, $bio, $role]);
    }
 
    /**
