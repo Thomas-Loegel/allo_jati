@@ -21,4 +21,9 @@ class Profils extends Model
       $req = $this->pdo->prepare('DELETE FROM messages WHERE id_message = ?');
       return $req->execute([$id_message]);
    }
+   public function delAllMessageByUser($pseudo)
+   {
+      $req = $this->pdo->prepare('DELETE FROM messages WHERE pseudo = ?');
+      return $req->execute([$pseudo]);
+   }
 }

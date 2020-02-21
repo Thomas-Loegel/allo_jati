@@ -18,7 +18,20 @@ class CommentsController extends Controller
       $template = $this->twig->load($pageTwig);
       echo $template->render(['alertMessage' => $_SESSION['receiveMessage']]);
    }
-
+   /**
+    * Modification d'un commentairedeja publier
+    */
+   
+   public function modifyComment($id_movie, $id_comment){
+      var_dump($id_movie);
+      var_dump($id_comment);
+      $content = $_POST['controlText'];
+      $result = $this->model->modifyComment($content, $id_comment);
+      if($result == true) {
+         echo "<script>alert(\"Votre commentaire a bien été modifier\")</script>";
+      }
+      header("Location: $this->baseUrl/Films/Film_$id_movie");
+   }
    /**
     *  Affiche tous les commentaire d'un utilisateur
     */

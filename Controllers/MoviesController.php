@@ -120,16 +120,20 @@ class MoviesController extends ArtsController
       for($i = 0; $i < count($comments) ; $i++){
          //On récupère l'id_user de tous les commentaire
          $id_user = $comments[$i]['id_user'];
+         
          //On récupère le pseudo par l'id_user
          $user = $instanceUser->getOnePseudo($id_user);
-       
+         $mail = $instanceUser->getMailById($id_user);
+         $comments[$i]['mail'] = $mail['mail'];
          //On affecte le pseudo a la place de l'id_user
          $comments[$i]['id_user'] = $user['pseudo'];
          //On recherche l'avatar appartenant a l'user qui depose un commentaire
          $avatar = $instanceUser->searchAvatar($id_user);
          //On ajoute au tableau une donnée, celle de l'avatar du dépositaire du commentaire
          $comments[$i]['avatar'] = $this->baseUrl . "/assets/avatar/" .$avatar['avatar'];
+         
       }
+      var_dump($comments);
       //Défini la date local en europe pour un simple affichage de la date de dépôt du commentaire
       date_default_timezone_set('Europe/Paris');
       setlocale(LC_TIME, 'fr_FR.utf8', 'fra');

@@ -64,14 +64,21 @@
                   <a class="nav-link hover-menu" href="{{baseUrl}}/Deconnection">DECONNECTION</a>
                </li>
                <li class="nav-item active">
-                  <a class="nav-link hover-menu" href="{{baseUrl}}/Profile">PROFILE
-                     {% if alertMessage != 0 %}
-                     <span class="alertMessage">{{ alertMessage}}</span>
-                     {% endif %}
-                  </a>
+                  <a class="nav-link hover-menu" href="{{baseUrl}}/Profile">PROFILE</a>
+                  
                </li>
                <li class="nav-item active">
                   <a class="nav-link hover-menu" href="{{baseUrl}}/Admin">ADMIN</a>
+               </li>
+               <li>
+                  {% if alertMessage != 0 %}
+                  <div id="messages">
+
+                  <img src="{{baseUrl}}/assets/avatar/notif.png" class="message">
+                  <span class="alertMessage">{{ alertMessage}}</span>
+
+                  </div>
+                  {% endif %}
                </li>
             </ul>
          </div>
@@ -101,11 +108,17 @@
                   <a class="nav-link hover-menu" href="{{baseUrl}}/Deconnection">DECONNECTION</a>
                </li>
                <li class="nav-item active">
-                  <a class="nav-link hover-menu" href="{{baseUrl}}/Profile">PROFILE
-                     {% if alertMessage != 0 %}
-                     <span class="alertMessage">{{ alertMessage}}</span>
-                     {% endif %}
-                  </a>
+                  <a class="nav-link hover-menu" href="{{baseUrl}}/Profile">PROFILE</a>
+               </li>
+               <li>
+                  {% if alertMessage != 0 %}
+                  <div id="messages">
+
+                  <img src="{{baseUrl}}/assets/avatar/notif.png" class="message">
+                  <span class="alertMessage">{{ alertMessage}}</span>
+
+                  </div>
+                  {% endif %}
                </li>
             </ul>
          </div>

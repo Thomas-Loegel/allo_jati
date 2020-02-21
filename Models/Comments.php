@@ -87,6 +87,8 @@ class Comments extends Model
    *  edite un commentaire
    */
    public function modifyComment($content, $id_comment){
+      var_dump($content);
+      var_dump($id_comment);
       $req = $this->pdo->prepare('UPDATE comments SET content=? WHERE id_comment=?');
       return $req->execute([$content, $id_comment]);
    }
@@ -108,6 +110,13 @@ class Comments extends Model
       VALUE (?, ?)');
       return $req->execute([$id_movie, $id_comment]);
    }
+   /**
+   *   Supprime tous les commentaire d'un utilisateur
+   */
+  public function deleteAllCommMovieByUser($id_user){
+   $req = $this->pdo->prepare('DELETE FROM users_comments WHERE id_user =?');
+   return $req->execute([$id_user]);
+}
    
    /**
    *  recherche la liste des commentaire par id_movie

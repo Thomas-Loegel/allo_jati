@@ -208,6 +208,12 @@ class Users extends Model
       $req->execute([$pseudo]);
       return $req->fetch();
    }
+   public function getMailById($id_user)
+   {
+      $req = $this->pdo->prepare('SELECT `mail` FROM users WHERE id_user= ?');
+      $req->execute([$id_user]);
+      return $req->fetch();
+   }
 
    
    public function updatePseudo($newpseudo, $pseudo)
