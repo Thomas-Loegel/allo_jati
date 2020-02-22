@@ -403,3 +403,11 @@ main{
    font-size: smaller;
    margin: 0;
 }
+
+.border-color{
+   border-bottom: 2px solid #ff2e63;
+}
+
+.list-color li:hover{
+   color: #ff2e63;
+}
