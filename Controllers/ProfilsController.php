@@ -36,7 +36,7 @@ class ProfilsController extends Controller
       $instanceUsers = new Users();
       if (isset($_POST) && empty($_POST['pseudo'])) {
          $_POST['pseudo'] = $_SESSION['utilisateur'];
-         $alert = 'warning';
+         $alert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Veuillez faire votre choix!</div>';
       } else {
          $newPseudo = $_POST['pseudo'];
          $result = $instanceUsers->pseudoExist($newPseudo);
@@ -45,10 +45,10 @@ class ProfilsController extends Controller
             if ($result === true) {
                $_SESSION['utilisateur'] = $newPseudo;
                $this->searchAvatar();
-               $alert = 'good';
+               $alert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès...</strong> Votre pseudo a bien été modifier!</div>';
             }
          } else if ($result['pseudo'] === $newPseudo) {
-            $alert = 'empty';
+            $alert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Ce pseudo existe déjà!</div>';
          }
       }
       $pageTwig = 'Profil/profil.html.twig';
@@ -64,9 +64,8 @@ class ProfilsController extends Controller
    }
    public function changeAvatar()
    {
+
       $instanceUsers = new Users();
-
-
       if (isset($_FILES['avatarUpload']) && $_FILES['avatarUpload']['error'] == 0) {
          if ($_FILES['avatarUpload']['size'] <= 2000000) {
 
@@ -152,13 +151,16 @@ class ProfilsController extends Controller
    }
    public function sendMessageToUser($slug = null)
    {
+
       if (isset($_POST) && !empty($_POST['pseudoMessage']) && !empty($_POST['title']) && !empty($_POST['message'])) {
          $slug = $_POST['pseudoMessage'];
          $this->model->sendMessage($_SESSION['utilisateur'], $slug, $_POST['title'], $_POST['message']);
-         $alert = 'good';
+         $alert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès</strong> Votre message a bien été envoyer!</div>';
+
       } else {
-         $alert = 'error';
+         $alert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur!</strong> Veuillez vérifier le Destinataire</div>';
       }
+
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(['slug' => 'Envoyer', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'alert' => $alert, 'alertMessage' => $_SESSION['receiveMessage']]);
