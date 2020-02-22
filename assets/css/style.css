@@ -373,3 +373,6 @@ main{
 .inputfile + label {
 	cursor: pointer; /* "hand" cursor */
 }
+.textarea {
+   resize: none;
+}
