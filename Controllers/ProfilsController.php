@@ -34,11 +34,12 @@ class ProfilsController extends Controller
    public function changePseudo()
    {
       $instanceUsers = new Users();
-      if (isset($_POST) && empty($_POST['pseudo'])) {
-         $_POST['pseudo'] = $_SESSION['utilisateur'];
-         $alert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Veuillez faire votre choix!</div>';
-      } else {
+      if (isset($_POST) && !empty($_POST['pseudo'])) {
+
+         //$_POST['pseudo'] = $_SESSION['utilisateur'];
+
          $newPseudo = $_POST['pseudo'];
+
          $result = $instanceUsers->pseudoExist($newPseudo);
          if ($result === false) {
             $result = $instanceUsers->updatePseudo($newPseudo, $_SESSION['utilisateur']);
@@ -50,6 +51,8 @@ class ProfilsController extends Controller
          } else if ($result['pseudo'] === $newPseudo) {
             $alert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Ce pseudo existe déjà!</div>';
          }
+      } else {
+         $alert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Le champ est vide!</div>';
       }
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
