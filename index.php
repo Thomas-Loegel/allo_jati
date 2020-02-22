@@ -43,8 +43,8 @@ $router->get('/Inscription', 'Users.register');
 $router->post('/Inscription/post', 'Users.register');
 
 // Route Commentaires
-$router->get('/Commentaires/Effacer_:id_comment/:id_movie', 'Comments.deleteComment');
-$router->post('/Commentaires/Modifier_:id_movie/:id_comment', 'Comments.modifyComment');
+$router->get('/Commentaires/Effacer/:id_comment/:id_movie/:pseudo', 'Comments.deleteComment');
+$router->post('/Commentaires/Modifier/:id_movie/:id_comment', 'Comments.modifyComment');
 $router->post('/Commentaires/Ajouter_:id_movie', 'Comments.addComment');
 $router->get('/Commentaires', 'Comments.index');
 
@@ -61,6 +61,7 @@ $router->post('/Profile/Modifier/Mdp', 'Profils.changemdp');
 $router->get('/Profile/Envoyer_:slug', 'Profils.sendMessage');
 $router->get('/Profile/Envoyer', 'Profils.sendMessage');
 $router->post('/Profile/Envoyer_:slug', 'Profils.sendMessageToUser');
+$router->post('/Profile/Envoyer_', 'Profils.sendMessageToUser');
 
 $router->get('/Profile/Message/Supprimer_:slug', 'Profils.deleteMessage');
 $router->get('/Profile/Modifier/Recevoir_:slug', 'Profils.receiveMessage');

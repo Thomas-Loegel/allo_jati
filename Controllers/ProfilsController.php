@@ -140,20 +140,20 @@ class ProfilsController extends Controller
    }
    public function sendMessage($slug = null)
    {
+
       if ($slug == null) {
          $pseudo = "";
-         $slug = 'Envoyer';
       } else {
          $pseudo = $slug;
-         $slug = 'Envoyer';
       }
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['slug' => $slug, 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'pseudo' => $pseudo, 'alertMessage' => $_SESSION['receiveMessage']]);
+      echo $template->render(['slug' => 'Envoyer', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'pseudo' => $pseudo, 'alertMessage' => $_SESSION['receiveMessage']]);
    }
-   public function sendMessageToUser($slug)
+   public function sendMessageToUser($slug = null)
    {
-      if (isset($_POST) && !empty($_POST['title']) && !empty($_POST['message'])) {
+      if (isset($_POST) && !empty($_POST['pseudoMessage']) && !empty($_POST['title']) && !empty($_POST['message'])) {
+         $slug = $_POST['pseudoMessage'];
          $this->model->sendMessage($_SESSION['utilisateur'], $slug, $_POST['title'], $_POST['message']);
          $alert = 'good';
       } else {
@@ -170,6 +170,7 @@ class ProfilsController extends Controller
       if (!empty($message)) {
          $_SESSION['receiveMessage'] = count($message);
       } else {
+         $_SESSION['receiveMessage'] = 0;
       }
       return $message;
    }
@@ -193,8 +194,22 @@ class ProfilsController extends Controller
       if (isset($_POST) && $slug != null) {
          
          $instanceUsers = new Users();
-         $result = $instanceUsers->deleteAccount($_SESSION['utilisateur']);
-         var_dump($_SESSION['utilisateur']);
+         $instanceComments = new Comments();
+         $instanceProfils = new Profils();
+
+         $id_user = $instanceUsers->getOneIdUser($_SESSION['utilisateur']);
+
+         $result = $instanceComments->deleteAllCommMovieByUser($id_user['id_user']);
+         var_dump($result);
+         if($result === true){
+            $result = $instanceProfils->delAllMessageByUser($_SESSION['utilisateur']);
+            var_dump($result);
+
+         }
+
+
+         //$result = $instanceUsers->deleteAccount($_SESSION['utilisateur']);
+
          if ($result === true) {
             $alert = 'good';
          } else {

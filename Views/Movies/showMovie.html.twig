@@ -149,6 +149,8 @@
          </div>
       </div>
       {# *************************on affiche son commentaire***************************#}
+
+ 
       <div class="col-10">
          <div class="col-12">
             <div id="controlComment{{ loop.index }}" data-idcomment="{{ comment.id_comment }}" data-base="{{baseUrl}}"
@@ -162,10 +164,10 @@
                   <button type="submit" id="btnmodify{{ loop.index }}"
                      class="btn btn-secondary btn-sm mb-2">Editer</button>
                   <button type="submit" id="btndelete{{ loop.index }}" class="btn btn-secondary btn-sm mb-2"
-                     onclick="location.href='{{baseUrl}}/Commentaires/Effacer_{{ comment.id_comment }}/{{movie.id_movie}}'">Supprimer</button>
+                     onclick="location.href='{{baseUrl}}/Commentaires/Effacer/{{ comment.id_comment }}/{{movie.id_movie}}/{{comment.id_user}}'">Supprimer</button>
                   {# *******************On peux envoyer un email a l'utilisateur *****************#}
                   <button type="submit" id="btncontact{{ loop.index }}" class="btn btn-secondary btn-sm mb-2"
-                     data-user="{{ comment.id_user }}" data>Contacter</button>
+                     data-user="{{ comment.id_user }}" data-mail="{{ comment.mail }}">Contacter</button>
                </div>
                {% endif %}
                {% if status == 2 and comment.id_user == userLogin %}
