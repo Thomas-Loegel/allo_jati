@@ -179,10 +179,6 @@ class SuggestionController extends Controller
 
       $pageTwig = 'Suggestion/suggestion.html.twig';
       $template = $this->twig->load($pageTwig);
-<<<<<<< HEAD
-      echo $template->render(["alertsEmail" =>$alertsEmail, 'alertMessage' => $_SESSION['receiveMessage'], 'status' => $_SESSION['status']]);
-   }          
-=======
       echo $template->render([   "alertsEmail" => $alertsEmail,
                                  "name" => $name,
                                  "mail" => $mail,
@@ -190,8 +186,10 @@ class SuggestionController extends Controller
                                  "erPseudo" => $erPseudo,
                                  "erEmail" => $erEmail,
                                  "erText" => $erText,                                 
-                                 "zip" => $zip   ]);
+                                 "zip" => $zip,
+                                 "alertsEmail" =>$alertsEmail, 
+                                 "alertMessage" => $_SESSION['receiveMessage'], 
+                                 "status" => $_SESSION['status']  ]);
 
    }         
->>>>>>> contact
 }
