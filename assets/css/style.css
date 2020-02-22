@@ -411,3 +411,6 @@ main{
 .list-color li:hover{
    color: #ff2e63;
 }
+.textarea {
+   resize: none;
+}
