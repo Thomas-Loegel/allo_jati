@@ -44,32 +44,31 @@
 
    <!-- HEADER ADMIN  -->
    {% elseif status == 1 %}
-   <header>
+   <header class="bg-dark">
       <nav class="header-nav navbar navbar-expand-lg mb-0 p-0">
          <a class="navbar-brand ml-5" href="{{baseUrl}}">
-            <img src="https://i.ibb.co/RSYk2Kw/jatilogo.png" width="100" height="100" class="d-inline-block align-top"
-               alt="">
+            <img src="https://i.ibb.co/RSYk2Kw/jatilogo.png" width="100" height="100" class="d-inline-block align-top" alt="">
          </a>
          <div class="collapse navbar-collapse " id="navbarText">
             <ul class="navbar-nav mx-auto font-weight-bold p-0">
                <li class="nav-item active">
-                  <a class="nav-link hover-menu" href="{{baseUrl}}/Films">FILMS</a>
+                  <a class="nav-link hover-menu text-white" href="{{baseUrl}}/Films">FILMS</a>
                </li>
                <li class="nav-item active">
-                  <a class="nav-link hover-menu" href="{{baseUrl}}/Artistes">ARTISTES</a>
+                  <a class="nav-link hover-menu text-white" href="{{baseUrl}}/Artistes">ARTISTES</a>
                </li>
                <li class="nav-item active">
-                  <a class="nav-link hover-menu" href="{{baseUrl}}/Deconnection">DECONNECTION</a>
+                  <a class="nav-link hover-menu text-white" href="{{baseUrl}}/Deconnection">DECONNECTION</a>
                </li>
                <li class="nav-item active">
-                  <a class="nav-link hover-menu" href="{{baseUrl}}/Profile">PROFILE
+                  <a class="nav-link hover-menu text-white" href="{{baseUrl}}/Profile">PROFILE
                      {% if alertMessage != 0 %}
                      <span class="alertMessage">{{ alertMessage}}</span>
                      {% endif %}
                   </a>
                </li>
                <li class="nav-item active">
-                  <a class="nav-link hover-menu" href="{{baseUrl}}/Admin">ADMIN</a>
+                  <a class="nav-link hover-menu text-white" href="{{baseUrl}}/Admin">ADMIN</a>
                </li>
             </ul>
          </div>

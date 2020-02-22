@@ -151,8 +151,7 @@ class MoviesController extends ArtsController
       //Si l'utilisateur non identifié avait déjà déposer un commentaire...
       if(isset($_SESSION['tmpComment'])) {
          echo $template->render([
-            "movie"       => $movie,
-            "artists"      => $artists,
+            "movie"        => $movie,
             'infos'        => $infos,
             "comments"     => $comments,
             "user"         => $user,
@@ -163,20 +162,19 @@ class MoviesController extends ArtsController
             "tmpNote"      => $_SESSION['tmpNote'],
             "status"       => $_SESSION['status'],
             "userLogin"    => $_SESSION['utilisateur'],
-            'avatar'       => $_SESSION['avatar'],
+            //'avatar'       => $_SESSION['avatar'],
             'alertMessage' => $_SESSION['receiveMessage']]);
       //Si ce n'était pas le cas on rends a la vus d'autre paramètres...
       } else {
          echo $template->render([
             "movie"        => $movie,
-            "artists"      => $artists,
             'infos'        => $infos,
             "comments"     => $comments,
             "user"         => $user,
             "datedujour"   => strftime("%A %d %B %Y"),
             "status"       => $_SESSION['status'],
             "userLogin"    => $_SESSION['utilisateur'],
-            'avatar'       => $_SESSION['avatar'],
+            //'avatar'       => $_SESSION['avatar'],
             'alertMessage' => $_SESSION['receiveMessage']]);
       }
    }
