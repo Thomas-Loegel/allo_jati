@@ -1,9 +1,7 @@
+/////////////////////////////////////////////ANTHONY/////////////////////////////////////////////
 //Déclaration des constantes
 const CheminComplet = document.location.href;
 const CheminRepertoire = CheminComplet.substring(0, CheminComplet.lastIndexOf("/"));
-
-
-
 let tabButton = [];
 let btn = []
 let tabcontent = document.getElementsByClassName("name");
@@ -96,7 +94,7 @@ if (CheminRepertoire === "http://localhost/allo_jati/Films") {
       });
    }
 }
-
+/*ALERTE DYNAMIQUE*/
 (function () {
    alerte = document.getElementById('alerte');
    test = document.getElementById('alertDisplay');
@@ -108,9 +106,11 @@ if (CheminRepertoire === "http://localhost/allo_jati/Films") {
       });
    }
 })()
-
+/*CHARGEMENT FICHIERS*/
 function uploadFile(target) {
    file = "<b>Votre image:</b><br>" + target.files[0].name;
    document.getElementById("file-name").innerHTML = file;
 }
+/*MESSAGES ACCORDEON*/
 $('.collapse').collapse();
+///////////////////////////////////////////////////////////////////////////////////////////////
