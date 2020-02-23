@@ -113,3 +113,4 @@ function uploadFile(target) {
    file = "<b>Votre image:</b><br>" + target.files[0].name;
    document.getElementById("file-name").innerHTML = file;
 }
+$('.collapse').collapse();
