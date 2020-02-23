@@ -142,28 +142,23 @@ class ProfilsController extends Controller
    }
    public function sendMessage($slug = null)
    {
-
-      if ($slug == null) {
-         $pseudo = "";
-      } else {
-         $pseudo = $slug;
-      }
+      date_default_timezone_set('Europe/Paris');
+      setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
+      if ($slug == null) {$pseudo = "";} else {$pseudo = $slug;}
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['slug' => 'Envoyer', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'pseudo' => $pseudo, 'alertMessage' => $_SESSION['receiveMessage']]);
+
+      echo $template->render(['slug' => 'Envoyer', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'pseudo' => $pseudo, 'alertMessage' => $_SESSION['receiveMessage'], "datedujour" => strftime("%A %d %B %Y"),]);
    }
    public function sendMessageToUser($slug = null)
    {
-
       if (isset($_POST) && !empty($_POST['pseudoMessage']) && !empty($_POST['title']) && !empty($_POST['message'])) {
          $slug = $_POST['pseudoMessage'];
          $this->model->sendMessage($_SESSION['utilisateur'], $slug, $_POST['title'], $_POST['message']);
          $alert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès</strong> Votre message a bien été envoyer!</div>';
-
       } else {
          $alert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur!</strong> Veuillez vérifier le Destinataire</div>';
       }
-
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(['slug' => 'Envoyer', 'status' => $_SESSION['status'], 'user' => $_SESSION['utilisateur'], 'avatar' => $_SESSION['avatar'], 'alert' => $alert, 'alertMessage' => $_SESSION['receiveMessage']]);
