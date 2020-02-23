@@ -99,7 +99,7 @@ if (CheminRepertoire === "http://localhost/allo_jati/Films") {
 
 (function () {
    alerte = document.getElementById('alerte');
-   test = document.getElementById('test');
+   test = document.getElementById('alertDisplay');
    if (alerte != null) {
       $("#alerte").fadeTo(3000, 500).slideUp(500, function () {
          $("#alerte").slideUp(500);

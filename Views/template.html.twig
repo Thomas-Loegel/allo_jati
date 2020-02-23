@@ -68,9 +68,6 @@
                </li>
                <li class="nav-item active">
                   <a class="nav-link hover-menu text-white" href="{{baseUrl}}/Profile">PROFILE
-                     {% if alertMessage != 0 %}
-                     <span class="alertMessage">{{ alertMessage}}</span>
-                     {% endif %}
                   </a>
                </li>
                <li class="nav-item active">
@@ -79,10 +76,8 @@
                <li>
                   {% if alertMessage != 0 %}
                   <div id="messages">
-
                      <img src="{{baseUrl}}/assets/avatar/notif.png" class="message">
                      <span class="alertMessage text-white">{{ alertMessage}}</span>
-
                   </div>
                   {% endif %}
                </li>
