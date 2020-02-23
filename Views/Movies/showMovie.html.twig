@@ -246,6 +246,11 @@
                                                 class="btn btn-link-secondary font-weight-bold text-secondary border m-2">
                                                 Editer
                                              </button>
+                                             <button type="submit" id="btndelete{{ loop.index }}"
+                                                class="btn btn-link-secondary font-weight-bold text-secondary border m-2"
+                                                onclick="location.href='{{baseUrl}}/Commentaires/Effacer/{{ comment.id_comment }}/{{movie.id_movie}}/{{comment.id_user}}'">
+                                                Supprimer
+                                             </button>
                                              {# *******************On affiche la note du film, l'id du commentaire et sa date de publication*****************#}
                                              {% elseif status == 2 and comment.id_user != userLogin %}
                                              <button type="submit" id="contact{{ loop.index }}"
