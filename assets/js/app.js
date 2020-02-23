@@ -32,7 +32,7 @@ for (let i = 0, iMax = tabButton.length; i < iMax; ++i) {
                let dataIdComment = controlText.dataset.idcomment;
 
                //On ré-injecte le formulaire de soumission 
-               controlText.innerHTML = '<form method="POST" id="comment" action="' + dataBase + '/Commentaires/Modifier/' + dataIdMovie + '/' + dataIdComment + '"><textarea class="form-control" name="controlText" id="ControlText" rows="3">' + tmp + '</textarea><div id="contenaireBtn' + i + '" class="col-12 d-flex justify-content-between name"><button type="submit" id="btnmodify' + i + '" class="btn btn-secondary btn-sm mb-2">Publier</button><button type="submit" id="btndelete' + i + '" class="btn btn-secondary btn-sm mb-2">Supprimer</button><button type="submit" id="btncontact' + i + '" class="btn btn-secondary btn-sm mb-2">Contacter</button></form>';
+               controlText.innerHTML = '<form method="POST"  id="comment" action="' + dataBase + '/Commentaires/Modifier/' + dataIdMovie + '/' + dataIdComment + '"><textarea class="form-control m-2" rows="5" cols="100" name="controlText" id="ControlText" >' + tmp + '</textarea><div id="contenaireBtn' + i + '" ><button type="submit" id="btnmodify' + i + '"  class="btn btn-link-secondary font-weight-bold text-secondary border m-2">Publier</button></form>';
                break;
 
             case "btncontact":

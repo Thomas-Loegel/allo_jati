@@ -152,14 +152,16 @@
             <div class="row">
                <div class="col-2">
                   {# *************************on affiche l'avatar du propriétaire du commentaire***************************#}
-                  <img src="{{comment.avatar }}" class="img-thumbnail">
+                  <img src="{{comment.avatar}}" class="img-thumbnail m-2">
                   <p class="text-center">{{ comment.id_user }}</p>
                </div>
                <div class="col d-flex justify-content-start ">
                   {# *************************on affiche son commentaire***************************#}
                   <div id="controlComment{{ loop.index }}" data-idcomment="{{ comment.id_comment }}"
                      data-base="{{baseUrl}}" data-idmovie="{{movie.id_movie}}">
-                     <p class="pr-sm-1" id="pComment{{ loop.index }}">{{ comment.content }}</p>
+
+                     <p class="pr-sm-1 m-2" id="pComment{{ loop.index }}">{{ comment.content }}</p>
+
                   </div>
                </div>
                <div class="container h-100">
@@ -179,12 +181,17 @@
                                                 data-target="#collapse{{ loop.index }}" aria-expanded="true"
                                                 aria-controls="collapse{{ loop.index }}">
                                                 {% if status == 1 %}
-                                                <small class="pull-right" style="border:none">Administration:</small>
-                                             </h4>
-                                             {% endif %}
+                                                   <small class="pull-right" style="border:none">Administration:</small>
+                                                   </h4>
+                                                {% endif %}
                                              {% if status == 2 %}
-                                             <small class="pull-right" style="border:none">Editer:</small></h4>
+                                                {% if comment.id_user == userLogin %}
+                                                   <small class="pull-right" style="border:none">Editer:</small></h4>
+                                                {% endif %}
                                              {% endif %}
+                                                {% if status == 2 and comment.id_user != userLogin%}
+                                                   <small class="pull-right" style="border:none">Contacter:</small></h4>
+                                                {% endif %}
                                           </div>
                                        </div>
                                     </div>
@@ -194,48 +201,43 @@
                                           {{mess.message}}
                                        </div>
                                        <div class="row justify-content-center">
-                                          {% if status == 1 %}
-                                          <div id="contenaireBtn{{ loop.index }}"
-                                             class="col-12 d-flex justify-content-between name">
-                                             <button type="submit" id="btnmodify{{ loop.index }}"
-                                                class="btn btn-link-secondary font-weight-bold text-secondary border m-2">
-                                                Editer
-                                             </button>
-                                             <button type="submit" id="btndelete{{ loop.index }}"
-                                                class="btn btn-link-secondary font-weight-bold text-secondary border m-2"
-                                                onclick="location.href='{{baseUrl}}/Commentaires/Effacer/{{ comment.id_comment }}/{{movie.id_movie}}/{{comment.id_user}}'">
-                                                Supprimer
-                                             </button>
-                                             <button type="submit" id="contact{{ loop.index }}"
-                                                class="btn btn-link-secondary font-weight-bold text-secondary border m-2"
-                                                onclick="location.href='{{baseUrl}}/Profile/Envoyer_{{comment.id_user}}'">
-                                                Contacter
-                                             </button>
-                                             {# *******************On peux envoyer un email a l'utilisateur *****************#}
-                                             <button type="submit" id="btncontact{{ loop.index }}"
-                                                class="btn btn-link-secondary font-weight-bold text-secondary border m-2"
-                                                data-user="{{ comment.id_user }}" data-mail="{{ comment.mail }}">
-                                                Mail
-                                             </button>
+                                          <div id="contenaireBtn{{ loop.index }}" class="col-12 d-flex justify-content-center name">
+                                             {% if status == 1 %}
+                                                <button type="submit" id="btnmodify{{ loop.index }}"
+                                                   class="btn btn-link-secondary font-weight-bold text-secondary border m-2">
+                                                   Editer
+                                                </button>
+                                                <button type="submit" id="btndelete{{ loop.index }}"
+                                                   class="btn btn-link-secondary font-weight-bold text-secondary border m-2"
+                                                   onclick="location.href='{{baseUrl}}/Commentaires/Effacer/{{ comment.id_comment }}/{{movie.id_movie}}/{{comment.id_user}}'">
+                                                   Supprimer
+                                                </button>
+                                                <button type="submit" id="contact{{ loop.index }}"
+                                                   class="btn btn-link-secondary font-weight-bold text-secondary border m-2"
+                                                   onclick="location.href='{{baseUrl}}/Profile/Envoyer_{{comment.id_user}}'">
+                                                   Contacter
+                                                </button>
+                                                {# *******************On peux envoyer un email a l'utilisateur *****************#}
+                                                <button type="submit" id="btncontact{{ loop.index }}"
+                                                   class="btn btn-link-secondary font-weight-bold text-secondary border m-2"
+                                                   data-user="{{ comment.id_user }}" data-mail="{{ comment.mail }}">
+                                                   Mail
+                                                </button>
+                                             {% endif %}
+                                             {% if status == 2 and comment.id_user == userLogin %}
+                                                <button type="submit" id="btnmodify{{ loop.index }}"
+                                                   class="btn btn-link-secondary font-weight-bold text-secondary border m-2">
+                                                   Editer
+                                                </button>
+                                                {# *******************On affiche la note du film, l'id du commentaire et sa date de publication*****************#}
+                                             {% elseif status == 2 and comment.id_user != userLogin %}
+                                                <button type="submit" id="contact{{ loop.index }}"
+                                                   class="btn btn-link-secondary font-weight-bold text-secondary border m-2"
+                                                   onclick="location.href='{{baseUrl}}/Profile/Envoyer_{{comment.id_user}}'">
+                                                   Contacter
+                                                </button>
+                                             {% endif %}
                                           </div>
-                                          {% endif %}
-
-                                          {% if status == 2 and comment.id_user == userLogin %}
-                                          <button type="submit" id="btnmodify{{ loop.index }}"
-                                             class="btn btn-link-secondary font-weight-bold text-secondary border m-2"
-                                             Modifier </button>
-                                             {# *******************On affiche la note du film, l'id du commentaire et sa date de publication*****************#}
-                                             {% endif %}
-
-                                             {% if status == 2 %}
-                                             {% if comment.id_user != userLogin %}
-                                             <button type="submit" id="contact{{ loop.index }}"
-                                                class="btn btn-link-secondary font-weight-bold text-secondary border m-2"
-                                                onclick="location.href='{{baseUrl}}/Profile/Envoyer_{{comment.id_user}}'">
-                                                Contacter
-                                             </button>
-                                             {% endif %}
-                                             {% endif %}
                                        </div>
                                     </div>
                                  </div>
@@ -255,6 +257,7 @@
       <div class="card-footer text-center">
          <span class="btn btn-theme float-left">
             <div class="star-note">
+
                {% for i in 1..comment.note %}
                <label></label>
                {% endfor %}
