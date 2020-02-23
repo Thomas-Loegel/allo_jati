@@ -89,27 +89,27 @@ class ProfilsController extends Controller
                   $actualAvatar = $instanceUsers->searchAvatar($id_user['id_user']);
                   $actualAvatar = $actualAvatar['avatar'];
                   $ifExist = "assets/avatar/$actualAvatar";
-                  if ($ifExist && $actualAvatar != "jatilogo.png") {
+                  if (file_exists($ifExist) && $actualAvatar != "jatilogo.png") {
                      unlink($ifExist);
                   }
                   $result = $instanceUsers->modifyAvatar($fileNameNew, $_SESSION['utilisateur']);
                   if ($result === true) {
                      $_SESSION['avatar'] = "$this->baseUrl/assets/avatar/$fileNameNew";
-                     $alert = 'good';
+                     $alert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès...</strong> Avatar bien modifié!</div>';
                   } else {
-                     $alert = "bdd";
+                     $alert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Erreur de connection avec la base données</div>';
                   }
                } else {
-                  $alert = 'move';
+                  $alert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Votre fichier n\'a pas été déplacer sur le serveur</div>';
                }
             } else {
-               $alert = 'format';
+               $alert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Votre fichier n\'est pas au bon format</div>';
             }
          } else {
-            $alert = 'size';
+            $alert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Votre fichier est de tailler trop importante</div>';
          }
       } else {
-         $alert = 'empty';
+         $alert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Veuillez indiqué l\'emplacement de votre fichier</div>';
       }
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -129,12 +129,12 @@ class ProfilsController extends Controller
          $hashMdp = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
          $result = $instanceUsers->updateMdp($_SESSION['utilisateur'], $hashMdp);
          if ($result === true) {
-            $alert = 'good';
+            $alert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès...</strong> Votre mot de passe a bien été modifié</div>';
          } else {
-            $alert = 'warning';
+            $alert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Erreur de connection avec la base de données</div>';
          }
       } else {
-         $alert = 'empty';
+         $alert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Veuillez indiqué votre nouveau mote de passe</div>';
       }
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
