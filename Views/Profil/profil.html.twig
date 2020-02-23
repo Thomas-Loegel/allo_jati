@@ -15,7 +15,7 @@
                <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
                   <li class="nav-item">
                      <span class="border-color text-white font-weight-bold m-0 p-1">Connection</span>
-                     <ul>
+                     <ul class="list-color">
                         <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Pseudo">Pseudo</a></li>
                         <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Avatar">Avatar</a>
                         </li>
@@ -26,7 +26,7 @@
                   </li>
                   <li class="nav-item">
                      <span class="border-color text-white font-weight-bold m-0 p-1">Messagerie</span>
-                     <ul>
+                     <ul class="list-color">
                         {% set send = 'Envoyer' %}
                         <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Envoyer">Envoyer</a>
                         </li>
@@ -38,7 +38,7 @@
                   </li>
                   <li class="nav-item">
                      <span class="border-color text-white font-weight-bold m-0 p-1">Suppresion</span>
-                     <ul>
+                     <ul class="list-color">
                         {% set account = 'Compte' %}
                         <li class="nav-item">
                            <a class="nav-link pl-0" href="{{baseUrl}}/Profile/Supprimer/Compte">Compte</a>
@@ -60,7 +60,7 @@
                </div>
                <div class="card h-100 justify-content-center bg-secondary text-white">
                   <div class="text-center">
-                     <img src="{{ avatar }}" class="img-thumbnail">
+                     <img src="{{ avatar }}" class="img-thumbnail m-4">
                      <div class="pt-lg-2 pl-lg-0">{{user}}</div>
                      <form method="POST" action="{{baseUrl}}/Profile/Change/Pseudo">
                         <div class="col-md-12 mb-3">
