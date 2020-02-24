@@ -364,7 +364,7 @@ main{
    top: 164px;
    left: 0;
    right: 0;
-} 
+}
 
 .err-1-ChgMdp {
    position: absolute;
@@ -406,7 +406,7 @@ main{
    top: 505px;
    left: 0;
    right: 0;
-} 
+}
 
 .jati-colors-btn {
    border-style: solid !important;
@@ -441,7 +441,6 @@ main{
    resize: none;
 }
 
-<<<<<<< HEAD
 .back-forgetPassword {
    height: 25px;
    width: 25px;
@@ -458,7 +457,7 @@ main{
    left: 15px;
    top: 38px;
 }
-=======
+
 .fa-sign-in-alt{
    font-size: 1.5rem;
    color: #555;
@@ -497,4 +496,3 @@ main{
 .profil-admin{
    color: white;
 }
->>>>>>> 38b2d87e51841b6a7f0b8e6d96b373cbf7c1fad0
