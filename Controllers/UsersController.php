@@ -128,7 +128,7 @@ class UsersController extends Controller
       $mail = null;
       $errorMail = null;
       $lienInscription = null;
-      $insert = null;
+      $insert = $update = null;
 
       //formulaire soumit ?
       if (!empty($_POST)) {
@@ -281,14 +281,14 @@ class UsersController extends Controller
       $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
          //Port 25 ou 465 selon votre configuration
          //identifiant et mot de passe pour votre swiftmailer
-         ->setUsername('fb4412351e7042')
-         ->setPassword('9377fb0dbcb0f8');
+         ->setUsername('0cf32673dea69d')
+         ->setPassword('50f544d056b8b2');
       //on instancie un nouveau mail
       $mailer = new Swift_Mailer($transport);
       //on instancie un nouveau corps de document mail
       $message
          ->setFrom(['Allo-jati@mail.fr'])
-         ->setTo(['galli.johanna.g2@gmail.com'])
+         ->setTo(['iliasimoula97@gmail.com'])
          ->setBody($mailBody, 'text/html');
       //on récupère et modifie le header du mail pour l'envois en HTML
       $type = $message->getHeaders()->get('Content-Type');
