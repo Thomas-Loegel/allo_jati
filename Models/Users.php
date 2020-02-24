@@ -127,10 +127,18 @@ class Users extends Model
    /*
     * changer le mot de passe d'un utilisateur par celui entré dans l'input en fonction de son pseudo
     */
-   public function updateMdp($pseudo, $mdp)
+   public function updateMdpByPseudo($pseudo, $mdp)
    {
       $req = $this->pdo->prepare("UPDATE users SET mdp = :mdp WHERE pseudo= :pseudo");
       $req->bindValue(':pseudo', $pseudo);
+      $req->bindValue(':mdp', $mdp);
+      return $req->execute();
+   }
+
+   public function updateMdp($mail, $mdp)
+   {
+      $req = $this->pdo->prepare("UPDATE users SET mdp = :mdp WHERE mail= :mail");
+      $req->bindValue(':mail', $mail);
       $req->bindValue(':mdp', $mdp);
       return $req->execute();
    }
