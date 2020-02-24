@@ -53,42 +53,13 @@
 {% block comment %}
 
 <div class="container">
-
-
-  {% if anchor %} 
-
-   <div id="alerteDisplay">
-      {{ alert | striptags ('<div>') | raw }}
-   </div>
-   {% endif %}
-
-   {% block javascripts %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function(event) {
-            if(document.getElementById("alertDisplay")){
-                location.href = "#alertDisplay"
-            }
-        });
-    </script>
-{% endblock %} #}
-
-
-
-
-
-
-
-   {# <div id="alerteDisplay">
-      {{ alert | striptags ('<div>') | raw }}
-   </div> #}
-
-
-
-   
    <div class="card text-center m-3">
-
-   
-      
+      {% if anchor %}
+      <div id="alerteDisplay">
+         {{ alert | striptags ('<div>') | raw }}
+           {#} <span id="adressPage" data-adress="{{baseUrl}}/Connection"></ span>#}
+      </div>
+      {% endif %}
       <div class="card-header">
          <form method="POST" id="comment" action="{{baseUrl}}/Commentaires/Ajouter_{{movie.id_movie}}">
 
@@ -131,15 +102,15 @@
                {#*****************************Si nous sommes administrateur ou logger ****************************#}
                {% if status == 1 or status == 2 %}
                {#*****Si une note a été placés en temporaire avant login*****#}
-               {% if tmpNote %}
-               <div id="containerstar" class="star-complet{{tmpNote}}">
+                  {% if tmpNote %}
+                     <div id="containerstar" class="star-complet{{tmpNote}}">
                   {% else %}
                   <div id="containerstar" class="star">
-                     {% endif %}
+                  {% endif %}
 
-                     {% else %}
-                     <div id="containerstar" class="star">
-                        {% endif %}
+               {% else %}
+                  <div id="containerstar" class="star">
+               {% endif %}
                         <!--System de notation par étoile-->
                         <label for="note-5" class="labelButon">☆</label>
                         <input class="radio" type="radio" name="note" id="note-5" value="5">
@@ -190,7 +161,7 @@
 
 
 {% if comments %}
-<div class="container">
+   <div class="container">
 
    {% for comment in comments %}
    <div class="card text-center m-3">
@@ -318,9 +289,26 @@
          </span>
       </div>
    </div>
-
    {% endfor %}
    {% endif %}
 
-   {% endblock %}
+   {% endblock %}   
+{% endblock %}
+   {% block javascripts %}
+   {{ parent() }}
+   <script>
+      document.addEventListener("DOMContentLoaded", function (event) {
+         if (document.getElementById("alerteDisplay")) {
+            location.href = "#alerteDisplay";
+            $("#alerte").fadeTo(3000, 500).slideUp(500, function () {
+               $("#alerte").slideUp(500);
+               let adressPage = document.getElementById('alerte');
+               let adressRedirect = adressPage.dataset.adress;
+               if(adressRedirect != null){
+                  location.href = adressRedirect;
+               }
+            });
+         }
+      });
+   </script>
    {% endblock %}

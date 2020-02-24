@@ -3,7 +3,7 @@ class UsersController extends Controller
 {
    public function __construct()
    {
-      //$this->twig = parent::getTwig();
+
       parent::__construct();
       $this->model = new Users();
    }
