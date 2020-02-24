@@ -23,8 +23,7 @@ class CommentsController extends Controller
     */
    
    public function modifyComment($id_movie, $id_comment){
-      var_dump($id_movie);
-      var_dump($id_comment);
+
       $content = $_POST['controlText'];
       $result = $this->model->modifyComment($content, $id_comment);
       if($result == true) {
@@ -124,10 +123,11 @@ class CommentsController extends Controller
    /**
     *  Mise en temporaire de la publication
     */
-   public function temporaryFiles($id_movie)
+   public function temporaryFiles($id_movie, $displayAlert)
    {
 
       $_SESSION['tabSession'] = [];
+
       $instanceHome = new HomeController();
       //On sauvegarde les éléments du commentaire avant redirection
       $instanceHome->__set('tmpTitle', $instanceHome->__getPOST('title'));
@@ -139,9 +139,14 @@ class CommentsController extends Controller
       $instanceHome->__set('location', "$this->baseUrl/Films/Film_$id_movie");
       $_SESSION['tabSession'][] = 'location';
 
-      $pageTwig = 'Users/login.html.twig';
+
+      $instanceMovies = new MoviesController();
+      $instanceMovies->showMovie($id_movie, $displayAlert);
+
+
+      /*$pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['alertMessage' => $_SESSION['receiveMessage']]);
+      echo $template->render(['alertMessage' => $_SESSION['receiveMessage']]);*/
    }
 
    /**
@@ -178,22 +183,24 @@ class CommentsController extends Controller
          // Si le post existe mais que l'une ou l'autre information manque on les mets en temporaire
          else {
             // On affiche une alerte
-            $instanceHome->__set('alert', "<script>alert(\"Votre commentaire n'a pas été publié car il est incomplet\")</script>");
-            $instanceHome->__alert('alert');
+            $displayAlert = '<div class="alert alert-danger text-center" id="alerte" data-location="$this->baseUrl/Films/Film_' . $_SESSION['id_movie'] .'" ><strong>Erreur...</strong> Votre commentaire n\'a pas été publié car il est incomplet!</div>';
+
+            
             // On mets les éléments du commentaire en temporaire
-            $this->temporaryFiles($id_movie);
+            $this->temporaryFiles($id_movie, $displayAlert);
          }
       } else {
          // On affiche une alerte
-         $instanceHome->__set('alert', "<script>alert(\"Vous devez vous identifier vous publier.\")</script>");
-         $instanceHome->__alert('alert');
+
+         $displayAlert = '<div class="alert alert-danger text-center" id="alerte" data-location="$this->baseUrl/Films/Film_' . $_SESSION['id_movie'] .'" ><strong>Erreur...</strong> Vous devez vous identifier vous publier!</div>';
+
          // On mets les éléments du commentaire en temporaire
-         $this->temporaryFiles($id_movie);
+         $this->temporaryFiles($id_movie, $displayAlert);
       }
    }
 
    /**
-    *
+    * Post un commentaire après connection
     */
    public function postAfterLogin()
    {
@@ -203,8 +210,12 @@ class CommentsController extends Controller
 
       if (empty($_SESSION['tmpTitle']) || empty($_SESSION['tmpComment'])) {
          // On affiche une alerte
+
+
          $instanceHome->__set('alert', "<script>alert(\"Votre commentaire n'a pas été publié car il est incomplet.Veuillez-vérifié.\")</script>");
          $instanceHome->__alert('alert');
+
+
          // On redirige sur la page du commentaire
          $location = $instanceHome->__get('location');
          header("Location: $location");
@@ -224,8 +235,7 @@ class CommentsController extends Controller
             $result = $this->model->addMovieComments($instanceHome->__get('id_movie'), $idComment);
             if ($result === true) {
                // On affiche une alerte
-               $instanceHome->__set('alert', "<script>alert(\"Votre commentaire a bien été publié. Merci.\")</script>");
-               $instanceHome->__alert('alert');
+               $displayAlert = '<div class="alert alert-success text-center" id="alerte" data-location="$this->baseUrl/Films/Film_' . $_SESSION['id_movie'] .'" ><strong>Succès...</strong> Votre commentaire a bien été publié. Merci.</div>';
                // On efface toutes les super-global
                $location = $instanceHome->__get('location');
                $instanceHome->__unsetTab();
@@ -233,12 +243,12 @@ class CommentsController extends Controller
          }
          if ($result === false) {
             // Si une erreur surviens lors de l'ajout du commentaire a la BDD
-            $instanceHome->__set('alert', "<script>alert(\"Un erreur est survenu lors de la connexion a la base de données.Veuillez recommencer\")</script>");
-            $instanceHome->__alert('alert');
+            $displayAlert = '<div class="alert alert-success text-center" id="alerte" data-location="$this->baseUrl/Films/Film_' . $_SESSION['id_movie'] .'" ><strong>Erreur...</strong>Un erreur est survenu lors de la connexion a la base de données.Veuillez recommencer</div>';
             // On efface toutes les super-global
             $location = $instanceHome->__get('location');
          }
-         header("Location: $location");
+         $instanceMovies = new MoviesController();
+         $instanceMovies->showMovie($_SESSION['id_movie'], $displayAlert);
       }
    }
 }
