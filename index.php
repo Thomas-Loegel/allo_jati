@@ -21,7 +21,7 @@ $router->get('/Artistes', 'Artists.showAllArtists');
 
 // Route Login
 $router->get('/Connection', 'Users.connexion');
-$router->post('/', 'Users.login');
+$router->post('/Connection/post', 'Users.connexion');
 
 // route forgetPassword
 $router->get('/MotDePasseOublie', 'Users.forgetPassword');
