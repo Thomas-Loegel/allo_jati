@@ -174,6 +174,9 @@ class UsersController extends Controller
    }
 
 
+   /**
+    * Fonction envoi de mail
+    */
    public function envoiMailLocal($pseudo, $md5)
    {
       
@@ -243,6 +246,9 @@ class UsersController extends Controller
    }
 
 
+   /**
+    * Vue du mail envoyé
+    */
    public function mailEnvoye($slug = "mailEnvoye")
    {
       $title = "Mail envoyé";
