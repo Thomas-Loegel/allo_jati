@@ -34,6 +34,10 @@ $router->get('/mailEnvoye', 'Users.mailEnvoye');
 $router->get('/ChangerMotDePasse/:md5', 'Users.updatePassword');
 $router->post('/ChangerMotDePasse/:md5', 'Users.updatePassword');
 
+// route MailEnvoyé
+$router->get('/MotDePasseRéinitialisé', 'Users.MotDePasseRéinitialisé');
+
+
 // route forgetPassword
 $router->get('/MotDePasseOublie', 'Users.forgetPassword');
 $router->post('/Connection/post', 'Users.forgetPassword');
