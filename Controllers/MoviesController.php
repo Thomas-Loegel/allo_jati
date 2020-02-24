@@ -39,13 +39,16 @@ class MoviesController extends ArtsController
       // Recherche par nom
       if ($slug = "Recherche") {
 
-         if (!empty($_POST['search'])) {
+         if (empty($_POST['search'])) {
+            $notFound = "Aucun résultat ne correspond à votre recherche !";
+         }
 
+         if (!empty($_POST['search'])) {
             $search = $_POST['search'];
             $search = $this->model->getBySearch($search);
 
-         }else{
-            $notFound = "Nous n'avons pas ce film !";
+         }else {
+            $notFound = "Aucun résultat ne correspond à votre recherche !";
          }
       }
 
