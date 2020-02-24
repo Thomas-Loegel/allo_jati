@@ -99,7 +99,7 @@ class MoviesController extends ArtsController
    /**
    *  Affiche un Film avec son Id
    */
-   public function showMovie($id_movie) {
+   public function showMovie($id_movie, $displayAlert = null, $anchor = null) {
 
       // Affiche les Artistes liés a Id Film
       $instanceArtists = new Artists();
@@ -150,6 +150,7 @@ class MoviesController extends ArtsController
       }
       //On rends la vus au controller
       $movie = $this->model->getMovie($id_movie);
+
       $pageTwig = 'Movies/showMovie.html.twig';
       $template = $this->twig->load($pageTwig);
 
@@ -168,7 +169,9 @@ class MoviesController extends ArtsController
             "status"       => $_SESSION['status'],
             "userLogin"    => $_SESSION['utilisateur'],
             //'avatar'       => $_SESSION['avatar'],
-            'alertMessage' => $_SESSION['receiveMessage']]);
+            'alertMessage' => $_SESSION['receiveMessage'], 
+            "alert"        => $displayAlert,
+            "anchor"       => 'anchor']);
       //Si ce n'était pas le cas on rends a la vus d'autre paramètres...
       } else {
          echo $template->render([
@@ -180,7 +183,9 @@ class MoviesController extends ArtsController
             "status"       => $_SESSION['status'],
             "userLogin"    => $_SESSION['utilisateur'],
             //'avatar'       => $_SESSION['avatar'],
-            'alertMessage' => $_SESSION['receiveMessage']]);
+            "alertMessage" => $_SESSION['receiveMessage'], 
+            "alert"        => $displayAlert,
+            "anchor"       => 'anchor']);
       }
    }
 }

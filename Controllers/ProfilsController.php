@@ -129,7 +129,7 @@ class ProfilsController extends Controller
 
          $instanceUsers = new Users();
          $hashMdp = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
-         $result = $instanceUsers->updateMdp($_SESSION['utilisateur'], $hashMdp);
+         $result = $instanceUsers->updateMdpByPseudo($_SESSION['utilisateur'], $hashMdp);
          if ($result === true) {
             $alert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès...</strong> Votre mot de passe a bien été modifié</div>';
          } else {

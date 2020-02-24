@@ -97,10 +97,12 @@ if (CheminRepertoire === "http://localhost/allo_jati/Films") {
 /*ALERTE DYNAMIQUE*/
 (function () {
    alerte = document.getElementById('alerte');
-   test = document.getElementById('alertDisplay');
+   console.log(alerte);
+   test = document.getElementById('alerteDisplay');
    if (alerte != null) {
       $("#alerte").fadeTo(3000, 500).slideUp(500, function () {
          $("#alerte").slideUp(500);
+         if(test != null){}
          test.innerHTML = "";
 
       });
@@ -113,4 +115,5 @@ function uploadFile(target) {
 }
 /*MESSAGES ACCORDEON*/
 $('.collapse').collapse();
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
