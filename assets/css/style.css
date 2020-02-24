@@ -449,6 +449,9 @@ main{
    font-size: 2rem;
    color: #555;
 }
+.fa-user-circle:hover{
+   color: #f7b071;
+}
 
 .profil-admin{
    color: white;
