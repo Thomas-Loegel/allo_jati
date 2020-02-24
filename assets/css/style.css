@@ -417,3 +417,39 @@ main{
 .textarea {
    resize: none;
 }
+
+.fa-sign-in-alt{
+   font-size: 1.5rem;
+   color: #555;
+
+}
+.fa-sign-in-alt:hover{
+   color: green;
+}
+
+.fa-sign-out-alt{
+   font-size: 1.5rem;
+   color: #555;
+}
+
+.sign-out-admin{
+   color: white;
+}
+
+.fa-sign-out-alt:hover{
+   color: #ff2e63;
+}
+
+.fa-tools{
+   font-size: 1.2rem;
+   margin-right: 2px;
+}
+
+.fa-user-circle{
+   font-size: 2rem;
+   color: #555;
+}
+
+.profil-admin{
+   color: white;
+}
