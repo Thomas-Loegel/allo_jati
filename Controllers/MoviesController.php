@@ -14,8 +14,8 @@ class MoviesController extends ArtsController
    }
 
    /**
-   *  Affiche tout les Films
-   */
+    *  Affiche tout les Films
+    */
    public function showAllMovies()
    {
       $pageTwig = 'Movies/showAllMovies.html.twig';
@@ -29,8 +29,8 @@ class MoviesController extends ArtsController
    }
 
    /**
-   *  Affiche les films en fonction de la recherhce
-   */
+    *  Affiche les films en fonction de la recherhce
+    */
    public function search($search = null)
    {
       $slug = null;
@@ -43,8 +43,7 @@ class MoviesController extends ArtsController
 
             $search = $_POST['search'];
             $search = $this->model->getBySearch($search);
-
-         }else{
+         } else {
             $notFound = "Nous n'avons pas ce film !";
          }
       }
@@ -62,8 +61,8 @@ class MoviesController extends ArtsController
    }
 
    /**
-   *  Affiche les films par genre
-   */
+    *  Affiche les films par genre
+    */
    public function genre($style = null)
    {
       $slug = null;
@@ -76,8 +75,7 @@ class MoviesController extends ArtsController
 
             $style = $_POST['style'];
             $style = $this->model->getByStyle($style);
-
-         }else{
+         } else {
             $notFound = "Nous n'avons pas de films dans cette catégorie !";
          }
       }
@@ -117,7 +115,7 @@ class MoviesController extends ArtsController
       }
 
       // On récupère l'id_user des commentaire et l'on recherche le pseudo leur appartenant
-      for($i = 0; $i < count($comments) ; $i++){
+      for ($i = 0; $i < count($comments); $i++) {
          //On récupère l'id_user de tous les commentaire
          $id_user = $comments[$i]['id_user'];
 
