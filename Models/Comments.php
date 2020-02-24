@@ -111,8 +111,6 @@ class Comments extends Model
     */
    public function modifyComment($content, $id_comment)
    {
-      var_dump($content);
-      var_dump($id_comment);
       $req = $this->pdo->prepare('UPDATE comments SET content=? WHERE id_comment=?');
       return $req->execute([$content, $id_comment]);
    }

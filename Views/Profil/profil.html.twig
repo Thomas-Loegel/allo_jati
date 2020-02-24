@@ -7,11 +7,7 @@
       <aside id="navlateral" class="col-12 col-md-12 p-0 pt-lg-3 pl-lg-0 bg-dark">
          <div class="text-center text-white bg-dark font-weight-bold">GESTION PROFILE</div>
          <div class="text-center text-white bg-dark font-weight-bold pt-lg-3 pl-lg-0">
-
-          
                <img src="{{ avatar }}" class="img-thumbnail m-4">
-          
-
             <div class="pt-lg-2 pl-lg-0">{{user}}</div>
          </div>
          <nav class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start">
@@ -246,9 +242,7 @@
                </div>
                <div class="card h-100 justify-content-center bg-secondary text-white">
                   <div class="text-center">
- 
                      <img src="{{ avatar }}" class="img-thumbnail m-4">
-
                      <form name="compte" method="POST" action="{{baseUrl}}/Profile/Supprimer/Compte_{{user}}">
                         <button class="btn btn-dark m-5" type="submit">Suppression</button>
                      </form>

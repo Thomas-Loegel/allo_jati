@@ -26,40 +26,14 @@ class CommentsController extends Controller
 
    public function modifyComment($id_movie, $id_comment)
    {
-
       $content = $_POST['controlText'];
       $result = $this->model->modifyComment($content, $id_comment);
       if ($result == true) {
-
-         $adress = "$this->baseUrl/Films/Film_$id_movie";
-            $displayAlert = '<div class="alert alert-success text-center" id="alerte" data-adress="' . $adress . '"><strong>Succès...</strong> Votre commentaire a bien été modifié</div>';
-
+         $displayAlert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès...</strong> Votre commentaire a bien été modifié</div>';
       }
-      $pageTwig = 'showMovie/index.html.twig';
-      $template = $this->twig->load($pageTwig);
-      echo $template->render([
-         'alertMessage' => $_SESSION['receiveMessage'], 
-         'alert'        => $displayAlert, 
-      ]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-      /*
-      header("Location: $this->baseUrl/Films/Film_$id_movie");*/
+      $instanceMovies = new MoviesController();
+      $instanceMovies->showMovie($id_movie, $displayAlert);
+      /*header("Location: $this->baseUrl/Films/Film_$id_movie");*/
    }
    /**
     *  Affiche tous les commentaire d'un utilisateur
@@ -253,15 +227,11 @@ class CommentsController extends Controller
     */
    public function postAfterLogin()
    {
-      var_dump('postAfterLogin');
-
       $instanceHome = new HomeController();
       //Si l'un ou l'autre champ est vide on affiche une alerte
 
       if (empty($_SESSION['tmpTitle']) || empty($_SESSION['tmpComment'])) {
          // On affiche une alerte
-
-
          $instanceHome->__set('alert', "<script>alert(\"Votre commentaire n'a pas été publié car il est incomplet.Veuillez-vérifié.\")</script>");
          $instanceHome->__alert('alert');
 
