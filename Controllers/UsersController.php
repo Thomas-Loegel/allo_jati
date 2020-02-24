@@ -128,6 +128,7 @@ class UsersController extends Controller
       $mail = null;
       $errorMail = null;
       $lienInscription = null;
+      $insert = null;
 
       //formulaire soumit ?
       if (!empty($_POST)) {
@@ -156,8 +157,6 @@ class UsersController extends Controller
                //on check si l'utilisateur a déja fait une demande de changer de mot de passe
                $checkUsersHash = $this->model->checkMailInUsersHash($mail);
 
-               //var_dump($checkUsersHash);
-
 
                //si l'utilisateur n'a jamais fait de demande alors il n'existe pas donc on l'insert dans la table
                if ($checkUsersHash == false) {
@@ -170,41 +169,19 @@ class UsersController extends Controller
 
                //si l'une des 2 requette a fonctionné alors on peut lui envoyer le mail
                if ($insert || $update) {
-                  //contenu mail
-                  $sujet = "Mot de passe oublié";
-                  $mailBody = "<h2>Bonjour $pseudo ! </h2><p>Vous avez demandé à changer de mot de passe.</p><br><a href='http://localhost/allo_jati/ChangerMotDePasse/$md5'>Changer de mot de passe</a>";
-
+                  
                   //si on est en local
                   if ($_SERVER['SERVER_NAME'] === "localhost") {
-                     //on charge Swiftmailer
-                     require_once('vendor/autoload.php');
+                     $envoiMailLocal = $this->envoiMailLocal($pseudo, $md5);
+                  } else {
+                     echo "impossible de vous envoyer un mail car nous sommes en local";
+                  }
 
-                     //on instancie une nouvelle méthode d'envois du mail
-                     $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
-                        //Port 25 ou 465 selon votre configuration
-                        //identifiant et mote de passe pour votre swiftmailer
-                        ->setUsername('fb4412351e7042')
-                        ->setPassword('9377fb0dbcb0f8');
-                     //on instancie un nouveau mail
-                     $mailer = new Swift_Mailer($transport);
-                     //on instancie un nouveau corps de document mail
-                     $message = (new Swift_Message($sujet))
-                        ->setFrom(['galli.johanna.g2@gmail.com'])
-                        ->setTo(['galli.johanna.g2@gmail.com'])
-                        ->setBody($mailBody, 'text/html');
-                     //on récupère et modifie le header du mail pour l'envois en HTML
-                     $type = $message->getHeaders()->get('Content-Type');
-                     $type->setValue('text/html');
-                     $type->setParameter('charset', 'utf-8');
-                     //On envois le mail en local
-                     $result = $mailer->send($message);
-
-                     if ($result) {
-                        $slug = "mailEnvoye";
-                        header("Location: $this->baseUrl/$slug");
-                     } else {
-                        echo "Votre mail n'a pas pu être envoyé";
-                     }
+                  if ($envoiMailLocal) {
+                     $slug = "mailEnvoye";
+                     header("Location: $this->baseUrl/$slug");
+                  } else {
+                     echo "Votre mail n'a pas pu être envoyé pour une raison inconnue";
                   }
                }
             }
@@ -221,6 +198,105 @@ class UsersController extends Controller
          'lienInscription' => $lienInscription,
          //'randomString' => $randomString,
       ]);
+   }
+
+
+   public function envoiMailLocal($pseudo, $md5)
+   {
+      
+
+      //on charge Swiftmailer
+      require_once('vendor/autoload.php');
+      
+      $sujet = "Mot de passe oublié";
+      //on instancie un nouveau corps de document mail
+      $message = (new Swift_Message($sujet));
+      $img = $message->embed(Swift_Image::fromPath($this->baseUrl . '/assets/avatar/jatilogo.png'));
+      
+      //contenu mail
+      $mailBody =
+         '
+         <html>
+
+         <body>
+         <div class="main">
+
+            <div class="body">
+
+               <h1 class="title">Bonjour ' . $pseudo . ' !</h1>
+               
+               <h3>Vous avez effectué une demande de réinitialisation de mot de passe.</h3>
+               
+               <h4>Cliquez sur le lien ci-dessous :</h4>
+               
+               <a class="link" href="http://localhost/allo_jati/ChangerMotDePasse/' . $md5 . '">Changer de mot de passe</a>
+               <br>
+
+               <img class="logo" src="'. $img .'" />
+
+               <p>À bientôt chez ALLO JATI !</p>
+
+
+            </div>
+         </div>
+         
+         <style type="text/css">
+
+            .main {
+               margin: 20px;
+               box-shadow: 0px 5px 20px rgba(153, 28, 59, 0.1);
+               max-width: 100%;
+            }
+
+            .body {
+               padding: 20px;
+               text-align: center;
+               font-family: "Gill Sans", sans-serif;
+            }
+
+            .title {
+               color: #991c3b;
+            }
+
+            .link {
+               padding: 3px;
+               border-style: solid 1px;
+               border
+               border-color: #991c3b;
+               color: #991c3b;
+            }
+            
+            .logo {
+               max-height:130px;
+               max-width:130px;
+            }
+
+         </style>
+         </body>
+         </html>
+
+      ';
+
+      //on instancie une nouvelle méthode d'envois du mail
+      $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
+         //Port 25 ou 465 selon votre configuration
+         //identifiant et mot de passe pour votre swiftmailer
+         ->setUsername('fb4412351e7042')
+         ->setPassword('9377fb0dbcb0f8');
+      //on instancie un nouveau mail
+      $mailer = new Swift_Mailer($transport);
+      //on instancie un nouveau corps de document mail
+      $message
+         ->setFrom(['Allo-jati@mail.fr'])
+         ->setTo(['galli.johanna.g2@gmail.com'])
+         ->setBody($mailBody, 'text/html');
+      //on récupère et modifie le header du mail pour l'envois en HTML
+      $type = $message->getHeaders()->get('Content-Type');
+      $type->setValue('text/html');
+      $type->setParameter('charset', 'utf-8');
+      //On envois le mail en local
+      $result = $mailer->send($message);
+      return $result;
    }
 
 
@@ -249,7 +325,6 @@ class UsersController extends Controller
       $hashMdp = null;
       $error = [];
 
-
       //recupération du md5 dans l'url
       $md5 = $this->model->returnUrl(43);
       //echo $md5;
@@ -270,10 +345,10 @@ class UsersController extends Controller
 
             //Sinon UN ou DES inputs sont remplis
          } else {
-            $error[] = "";
 
             //si l'input mail est rempli par le mail correct
             if ($mail == $_POST['mail']) {
+               $error[] = "";
                //rempli l'input par cette meme valeur
                $inputMail = $_POST['mail'];
                //affiche un message vert qui indique de remplir un nouveau mot de passe
@@ -304,25 +379,9 @@ class UsersController extends Controller
          $updateMdp = $this->model->updateMdp($inputMail, $hashMdp);
          if ($updateMdp == true) {
 
-            $instanceHome = new HomeController();
-            $instanceHome->__set('utilisateur', $pseudo);
 
-            //on recherche si l'utilisateur connecté est administrateur
-            $this->checkAdministrator($instanceHome->__get('utilisateur'));
-
-            // Si location existe on redirige vers postAfterLogin()
-            if (isset($_SESSION['location'])) {
-               $instanceComments = new CommentsController();
-               $instanceComments->postAfterLogin();
-            } else {
-               //Sinon on redirige l'utilisateur sur la page d'accueil
-               if (!$instanceHome->__empty('utilisateur')) {
-                  $pageTwig = 'index.html.twig';
-                  $template = $this->twig->load($pageTwig);
-                  echo $template->render(['status' => $_SESSION['status']]);
-                  exit;
-               }
-            }
+            $slug = "MotDePasseRéinitialisé";
+            header("Location: $this->baseUrl/$slug");
          } else {
             var_dump("erreur lors du changement de mot de passe");
          }
@@ -344,6 +403,24 @@ class UsersController extends Controller
          'error' => $error,
       ]);
    }
+
+
+
+   public function MotDePasseRéinitialisé($slug = "MotDePasseRéinitialisé")
+   {
+      $title = "Mot De Passe Réinitialisé";
+
+      //affichage
+      $pageTwig = 'Users/login.html.twig';
+      $template = $this->twig->load($pageTwig);
+      echo $template->render([
+         'slug' => $slug,
+         'title' => $title,
+      ]);
+   }
+
+
+
 
    /**
     *  gestion de l'envoi du formulaire d'inscription

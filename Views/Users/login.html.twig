@@ -18,7 +18,7 @@
 
 			<div class="row justify-content-md-center">
 				<form name="login" class="col-4 users-form" method="POST" action="{{baseUrl}}/">
-					<h2>Connectez-vous :</h2>
+					<h2 class="title-forms-users">Se connecter :</h2>
 					{# PSEUDO #}
 					<div class="form-group-users">
 						<label for="pseudo">
@@ -53,12 +53,12 @@
 
 			<div class="row justify-content-md-center">
 
-				<form name="forgetPassword" class="col-4 users-form" method="POST" action="{{ baseUrl }}/MotDePasseOublie/post">
+				<form
+					name="forgetPassword" class="col-4 users-form" method="POST" action="{{ baseUrl }}/MotDePasseOublie/post">
 
-               {# PROBLEME : lors de la soumission du formulaire l'image de la flèche ne s'affiche plus #}
 					<a href="{{ baseUrl }}/Connection"><img src="{{ baseUrl }}/assets/avatar/back.png" alt="back" class="back-forgetPassword "/></a>
 
-					<h2>Mot de passe oublié</h2>
+					<h2 class="title-forms-users">Mot de passe oublié</h2>
 					{# MAIL #}
 					<div class="form-group-users">
 						<label for="regMail">
@@ -108,24 +108,23 @@
 
 			<div class="row justify-content-md-center">
 				<form name="changePassword" class="col-4 users-form" method="POST" action="{{ baseUrl }}/ChangerMotDePasse/{{ md5 }}">
-					<h2>Changer mot de passe</h2>
+					<h2 class="title-forms-users">Changer mot de passe</h2>
 
-               {# MAIL #}
+					{# MAIL #}
 					<div class="form-group-users">
-               <label for="regMail">
-							<h4>Confirmez votre adresse mail</h4>
+						<label for="regMail">
+							<h4>adresse mail</h4>
 						</label>
-                  {# PROBLEME AFFICHAGE DE L4INPUT AVEC BORD VERT, IL REST ROUGE #}
-						<input type="email" class="form-control" name="mail" value="{{ inputMail }}" {% if error %} style="border-color: #FF2E63;" {% endif %} {% if goodMail %} style="border-color: #89a745;" {% endif %}>
+						<input type="email" class="form-control" name="mail" value="{{ inputMail }}" {% if error[0] %} style="border-color: #FF2E63;" {% endif %}>
 
 
 						<p id="requiredField" class="text-danger d-inline err-1-ChgMdp">{{ error[0] }}</p>
-                  <p id="requiredField" class="text-success d-inline err-1-ChgMdp">{{ goodMail }}</p>
+						<p id="requiredField" class="text-success d-inline err-1-ChgMdp">{{ goodMail }}</p>
 					</div>
 
 					{# MOT DE PASSE #}
 					<div class="form-group-users">
-               <label for="regMail">
+						<label for="regMail">
 							<h4>Nouveau mot de passe</h4>
 						</label>
 						<input type="password" maxlength="16" class="form-control" name="mdp" {% if error %} style="border-color: #FF2E63;" {% endif %}>
@@ -139,22 +138,41 @@
 			</div>
 
 
+			{# VOTRE MOT DE PASSE A ÉTÉ RÉINITIALISÉ #}
+		{% elseif (slug == 'MotDePasseRéinitialisé') %}
+
+			<div class="row justify-content-md-center">
+				<div
+					class="col-4 users-form">
+					{# message de Mail envoyé #}
+					<div class="form-group-users">
+						<p>Votre mot de passe à bien été réinitialisé</p>
+					</div>
+					{# direction page conexion #}
+					<div class="form-group-users">
+						<a href="{{ baseUrl }}/Connection" class="btn btn-outline jati-colors-btn col">Se connecter</a>
+					</div>
+				</div>
+			</div>
+
+
 			{# FORMULAIRE D'INSCRIPTION #}
 		{% elseif (slug == 'Inscription' or slug == 'Inscription/post') %}
 
 			<div class="row justify-content-md-center">
-				<form name="register" class="col-4 users-form" method="POST" action="{{ baseUrl }}/Inscription/post" }>
+				<form
+					name="register" class="col-4 users-form" method="POST" action="{{ baseUrl }}/Inscription/post" }>
 
-               {# PROBLEME : lors de la soumission du formulaire l'image de la flèche ne s'affiche plus #}
+					{# PROBLEME : lors de la soumission du formulaire l'image de la flèche ne s'affiche plus #}
 					<a href="{{ baseUrl }}/Connection" class="back"><img src="{{ baseUrl }}/assets/avatar/back.png" alt="back" class="back-register"/></a>
 
-					<h2>Créer un compte</h2>
+					<h2 class="title-forms-users">Créer un compte</h2>
 
 
 					{# MAIL #}
 					<div class="form-group-users">
 						<label for="regMail">
-							<h4>Adresse mail *</h4>
+							<h4>Adresse mail</h4>
 						</label>
 						<input type="email" class="form-control" name="mail" value="{{ inputMail }}" {% if error[0] %} style="border-color: #FF2E63;" {% endif %}>
 						<p id="requiredField" class="text-danger d-inline grp-err-1">{{ error[0] }}</p>
@@ -162,7 +180,7 @@
 					{# PSEUDO #}
 					<div class="form-group-users">
 						<label for="regPseudo">
-							<h4>Pseudo *</h4>
+							<h4>Pseudo</h4>
 						</label>
 						<input type="text" maxlength="15" class="form-control" name="pseudo" value="{{ inputPseudo }}" {% if error[1] %} style="border-color: #FF2E63;" {% endif %}>
 						<p id="requiredField" class="text-danger d-inline grp-err-2">
@@ -171,7 +189,7 @@
 					{# MOT DE PASSE #}
 					<div class="form-group-users">
 						<label for="regPassword">
-							<h4>Mot de passe *</h4>
+							<h4>Mot de passe</h4>
 						</label>
 						<input type="password" class="form-control" name="mdp" {% if error[2] %} style="border-color: #FF2E63;" {% endif %}>
 						<p id="requiredField" class="text-danger d-inline grp-err-3">
