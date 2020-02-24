@@ -3,9 +3,9 @@
 {% block title %}Admin{% endblock %}
 
 {% block body %}
-<div class="container-fluid d-flex justify-content-start">
-   <div class="row">
-      <aside id="navlateral" class="col-11 col-md-11 pt-lg-5 pl-lg-0 bg-dark">
+<div class="container-fluid d-flex justify-content-start px-0">
+   <div class="bg-dark">
+      <aside id="navlateral" class="pt-lg-5 pl-lg-0 bg-dark">
          <div class="text-center text-white bg-dark font-weight-bold ">ADMINISTRATEUR</div>
          <nav class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start">
             <div class="collapse navbar-collapse">
@@ -72,12 +72,17 @@
    </div>
 
 
-   <div class="col d-flex justify-content-center">
+   <div class="col d-flex justify-content-center px-0">
 
       <!-- Listing des Utilisateurs -->
       {% if (slug == 'Liste_Utilisateurs') %}
-      <div id="utilisateurs">
+      <div id="utilisateurs" class="table-utilisateurs">
          <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+               <tr>
+                  <th colspan="6" class="text-center"><h3 class="font-weight-bold text-uppercase text-dark">Listes des utilisateurs</h3></th>
+               </tr>
+            </thead>
             <thead class="thead-dark">
                <tr>
                   <th scope="col"># ID</th>
@@ -110,6 +115,11 @@
       {% if (slug == 'Liste_Films') %}
       <div id="films">
          <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+               <tr>
+                  <th colspan="7" class="text-center"><h3 class="font-weight-bold text-uppercase text-dark">Listes des films</h3></th>
+               </tr>
+            </thead>
             <thead class="thead-dark">
                <tr>
                   <th scope="col"># ID</th>
@@ -142,16 +152,22 @@
 
       <!-- Listing Artistes -->
       {% if (slug == 'Liste_Artistes') %}
-      <div id="artistes">
+      <div class="table-responsive">
          <table class="table table-bordered table-hover">
-            <thead class="thead-dark">
+            <thead class="thead-light">
                <tr>
+                  <th colspan="7" class="text-center"><h3 class="font-weight-bold text-uppercase text-dark">Liste des artistes</h3></th>
+               </tr>
+            </thead>
+
+            <thead class="thead-dark">
+               </tr>               
                   <th scope="col"># ID</th>
                   <th scope="col">Nom</th>
                   <th scope="col">Prénom</th>
                   <th scope="col">Date de naissance</th>
                   <th scope="col">Biographie</th>
-                  <th scope="col">Photo</th>
+                  <th  width="30px" scope="col">Photo</th>
                   <th scope="col">Rôle</th>
                </tr>
             </thead>
@@ -164,7 +180,7 @@
                   <td>{{artists.last_name}}</td>
                   <td>{{artists.birth_day | date("d/m/Y") }}</td>
                   <td>{{artists.bio}}</td>
-                  <td>{{artists.picture}}</td>
+                  <td><img src="{{artists.picture }}" width="100px" height="120px"></td>
                   <td>{{artists.role}}</td>
                </tr>
                {% endfor %}
@@ -177,6 +193,11 @@
       <!-- Tous les commentaires -->
       {% if (slug == 'Tous') %}
       <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+               <tr>
+                  <th colspan="7" class="text-center"><h3 class="font-weight-bold text-uppercase text-dark">Listes des commentaires</h3></th>
+               </tr>
+            </thead>
          <thead class="thead-dark">
             <tr>
                <th scope="col"># ID Commentaire</th>
@@ -197,7 +218,7 @@
                <td>{{comment.content}}</td>
                <td>{{comment.note}}</td>
                <td>{{comment.date}}</td>
-               <td><a href="{{baseUrl}}/Admin/EffacerCommentaire_{{comment.id_comment}}">Supprimer</a></td>
+               <td class="text-center"><a href="{{baseUrl}}/Admin/EffacerCommentaire_{{comment.id_comment}}"><i class="far fa-trash-alt" style="font-size:250%;color:red" ></i></a>Supprimer</td>
             </tr>
             {% endfor %}
          </tbody>
