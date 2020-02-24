@@ -290,17 +290,15 @@ class ProfilsController extends Controller
        
 
          if ($result === true) {
-
             $instanceHome->destroy();
             $instanceHome->startSession();
             $adress = "$this->baseUrl";
+            $_SESSION['avatar'] = "$this->baseUrl/assets/avatar/jatilogo.png";
             $displayAlert = '<div class="alert alert-success text-center" id="alerte" data-adress="' . $adress . '"><strong>Succès...</strong> Votre compte a bien été supprimer</div>';
-
          } else {
             $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong>Une erreur est survenu lors de la suppression de votre compte</div>';
          }
       }
-      var_dump($_SESSION['avatar']);
      $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([

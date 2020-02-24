@@ -22,10 +22,7 @@ class HomeController extends Controller
          $_SESSION['status'] = null;
          $_SESSION['utilisateur'] = "Visiteur";
          $_SESSION['receiveMessage'] = null;
-         $_SESSION['avatar'] = "/assets/avatar/jatilogo.png";
 
-
-         
       }
    }
 
