@@ -3,47 +3,20 @@ class UsersController extends Controller
 {
    public function __construct()
    {
-      //$this->twig = parent::getTwig();
+
       parent::__construct();
       $this->model = new Users();
    }
 
    /**
-    *  Affichage du template pour $slug = null (formulaire de connexion)
+    *  Gestion de l'envoi du formulaire de connexion
     */
    public function connexion($slug = null)
    {
-      //$slug est null
-      $title = "Connexion";
-
-      //si slug est défini et différent de "Inscription" et différent de "MotDePasseOublie" (en gros si l'utilisateur met nimp dans l'url) alors :
-      if (isset($slug) && $slug !== "MotDePasseOublie"  && $slug !== "mailEnvoye" && $slug !== "ChangerMotDePasse" && $slug !== "Inscription") {
-         //Affiche une erreur 303 dans la console :
-         header("HTTP/1.0 303 Redirection");
-
-         //Fait une redirection vers la page d'accueil :
-         header("Location: $this->baseUrl");
-      }
-
-      //Affichage
-      $pageTwig = 'Users/login.html.twig';
-      $template = $this->twig->load($pageTwig);
-
-      echo $template->render([
-         'slug' => $slug,
-         "title" => $title,
-      ]);
-   }
-
-   /**
-    *  Gestion de l'envoi du formulaire de connexion
-    */
-   public function login($slug = null)
-   {
       $userInfo = null;
-      $inputPseudo = null;
+      $inputPseudo = "";
       $error = [];
-      $userInfo = $this->model->checkLogin($_POST["pseudo"]);
+      $userInfo = null;
 
       //pour chaque valeur d'input
       foreach ($_POST as $value) {
@@ -53,10 +26,10 @@ class UsersController extends Controller
             $error[] = " ";
             //Dans le formulaire si $error = " " alors le bord devient rouge
 
-
             //Sinon UN ou DES inputs sont remplis
          } else {
             $error[] = "";
+            $userInfo = $this->model->checkLogin($_POST["pseudo"]);
 
             //si l'input pseudo est rempli par un pseudo connu
             if ($userInfo) {
@@ -106,7 +79,7 @@ class UsersController extends Controller
          }
       }
 
-      $title = "Connexion";
+      $title = "Connection";
 
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -201,6 +174,9 @@ class UsersController extends Controller
    }
 
 
+   /**
+    * Fonction envoi de mail
+    */
    public function envoiMailLocal($pseudo, $md5)
    {
       
@@ -214,68 +190,38 @@ class UsersController extends Controller
       $img = $message->embed(Swift_Image::fromPath($this->baseUrl . '/assets/avatar/jatilogo.png'));
       
       //contenu mail
-      $mailBody =
-         '
+      $mailBody ='
          <html>
-
          <body>
          <div class="main">
-
             <div class="body">
-
                <h1 class="title">Bonjour ' . $pseudo . ' !</h1>
-               
                <h3>Vous avez effectué une demande de réinitialisation de mot de passe.</h3>
-               
                <h4>Cliquez sur le lien ci-dessous :</h4>
-               
                <a class="link" href="http://localhost/allo_jati/ChangerMotDePasse/' . $md5 . '">Changer de mot de passe</a>
                <br>
-
                <img class="logo" src="'. $img .'" />
-
                <p>À bientôt chez ALLO JATI !</p>
-
-
             </div>
          </div>
-         
          <style type="text/css">
-
-            .main {
-               margin: 20px;
+            .main {margin: 20px;
                box-shadow: 0px 5px 20px rgba(153, 28, 59, 0.1);
-               max-width: 100%;
-            }
-
-            .body {
-               padding: 20px;
+               max-width: 100%;}
+            .body {padding: 20px;
                text-align: center;
-               font-family: "Gill Sans", sans-serif;
-            }
-
-            .title {
-               color: #991c3b;
-            }
-
-            .link {
-               padding: 3px;
+               font-family: "Gill Sans", sans-serif;}
+            .title {color: #991c3b;}
+            .link {padding: 3px;
                border-style: solid 1px;
                border
                border-color: #991c3b;
-               color: #991c3b;
-            }
-            
-            .logo {
-               max-height:130px;
-               max-width:130px;
-            }
-
+               color: #991c3b;}
+            .logo {max-height:130px;
+               max-width:130px;}
          </style>
          </body>
-         </html>
-
-      ';
+         </html>';
 
       //on instancie une nouvelle méthode d'envois du mail
       $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 465))
@@ -300,6 +246,9 @@ class UsersController extends Controller
    }
 
 
+   /**
+    * Vue du mail envoyé
+    */
    public function mailEnvoye($slug = "mailEnvoye")
    {
       $title = "Mail envoyé";
@@ -337,15 +286,12 @@ class UsersController extends Controller
 
       //pour chaque valeur d'input
       foreach ($_POST as $value) {
-
          //si la valeur de l'input est considérée comme vide
          if (empty($value)) {
             $error[] = " ";
             //Dans le formulaire si $error = " " alors le bord devient rouge
-
             //Sinon UN ou DES inputs sont remplis
          } else {
-
             //si l'input mail est rempli par le mail correct
             if ($mail == $_POST['mail']) {
                $error[] = "";
@@ -353,7 +299,6 @@ class UsersController extends Controller
                $inputMail = $_POST['mail'];
                //affiche un message vert qui indique de remplir un nouveau mot de passe
                $goodMail = "$pseudo... il faut entrer un nouveau mot de passe !";
-
                if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $_POST['mdp'])) {
                   $hashMdp = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
                } else {
@@ -378,8 +323,6 @@ class UsersController extends Controller
       if ($hashMdp && $inputMail) {
          $updateMdp = $this->model->updateMdp($inputMail, $hashMdp);
          if ($updateMdp == true) {
-
-
             $slug = "MotDePasseRéinitialisé";
             header("Location: $this->baseUrl/$slug");
          } else {
@@ -409,7 +352,6 @@ class UsersController extends Controller
    public function MotDePasseRéinitialisé($slug = "MotDePasseRéinitialisé")
    {
       $title = "Mot De Passe Réinitialisé";
-
       //affichage
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -418,9 +360,6 @@ class UsersController extends Controller
          'title' => $title,
       ]);
    }
-
-
-
 
    /**
     *  gestion de l'envoi du formulaire d'inscription
@@ -435,14 +374,12 @@ class UsersController extends Controller
       $error = [];
       $inputMail = null;
       $inputPseudo = null;
-
       //pour chaque valeur d'input
       foreach ($_POST as $value) {
          //si la valeur de l'input est considérée comme vide
          if (empty($value)) {
             $error[] = " ";
             //Dans le formulaire si $error = " " alors le bord devient rouge
-
             //sinon UN ou DES inputs sont remplis
          } else {
             $error[] = "";
@@ -451,7 +388,6 @@ class UsersController extends Controller
             // mail correspond aux attentes ?
             if (preg_match("#^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$#", $mail)) {
                $userMail = $this->model->mailExist($mail);
-
                // $user mail n'existe pas dans bdd
                if ($userMail === false) {
                   $inputMail = $mail;
@@ -511,24 +447,17 @@ class UsersController extends Controller
       //tous les inputs sont définis ?
       if (isset($inputPseudo) && isset($hashMdp) && isset($inputMail)) {
          $avatar = "jatilogo.png";
-
          // insertion des données dans la bdd
          $insert = $this->model->insertUser($inputPseudo, $hashMdp, $inputMail, $avatar);
-
          if ($insert === true) {
-
             //redirection en étant connecté
             $instanceHome = new HomeController();
             $instanceHome->__set('utilisateur', $inputPseudo);
-
             //var_dump($slug);
             if (!$instanceHome->__empty('utilisateur')) {
-
                $_SESSION['status'] = 2;
-
                $slug = "Bienvenue";
                $title = "Bienvenue chez Allo Jati";
-
                //affichage
                $pageTwig = 'Users/login.html.twig';
                $template = $this->twig->load($pageTwig);
@@ -590,14 +519,11 @@ class UsersController extends Controller
    public function checkAdministrator($pseudo)
    {
       $instanceHome = new HomeController();
-
       //On récupère l'id utilisateur par le pseudo
       $id_user = $this->model->getOneIdUser($pseudo);
       //On vérifie si l'id utilisateur est Admin
       $admin = $this->model->checkAdmin($id_user['id_user']);
-
       $instanceHome = new HomeController();
-
       if ($admin['admin'] == 1) {
          $_SESSION['status'] = 1;
       } else {

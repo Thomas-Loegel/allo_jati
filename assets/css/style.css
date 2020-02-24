@@ -368,7 +368,7 @@ main{
    top: 200px;
    left: 0;
    right: 0;
-} 
+}
 
 .err-1-ChgMdp {
    position: absolute;
@@ -401,6 +401,13 @@ main{
 .grp-err-3 {
    position: absolute;
    top: 450px;
+   left: 0;
+   right: 0;
+}
+
+.grp-err-4 {
+   position: absolute;
+   top: 505px;
    left: 0;
    right: 0;
 }
@@ -454,6 +461,7 @@ main{
    left: 15px;
    top: 38px;
 }
+
 .fa-sign-in-alt{
    font-size: 1.5rem;
    color: #555;
@@ -491,7 +499,7 @@ main{
 
 .profil-admin{
    color: white;
-}   
+}
 .table-utilisateurs{
    width: 100% ;
 }
