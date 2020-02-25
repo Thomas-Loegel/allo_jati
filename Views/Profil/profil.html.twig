@@ -7,7 +7,7 @@
       <aside id="navlateral" class="col-12 col-md-12 p-0 pt-lg-3 pl-lg-0 bg-dark">
          <div class="text-center text-white bg-dark font-weight-bold">GESTION PROFILE</div>
          <div class="text-center text-white bg-dark font-weight-bold pt-lg-3 pl-lg-0">
-            <img src="{{ avatar }}" class="img-thumbnail"><br>
+            <img src="{{ avatar }}" class="img-thumbnail m-4">
             <div class="pt-lg-2 pl-lg-0">{{user}}</div>
          </div>
          <nav class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start">
@@ -50,6 +50,28 @@
          </nav>
       </aside>
    </div>
+   {% if (slug == 'accueil') %}
+   <div class="container">
+      <div class="container h-100">
+         <div class="row align-items-center h-100">
+            <div class="col-12">
+               <div class="card h-100 justify-content-center">
+                  <div class="text-center">
+                     <div class="card">
+                        <div class="card-body">
+                           <img src="{{ avatar }}" class="w-25 p-3">
+                          <h5 class="card-title">Bienvenue sur votre page Profile </h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Personnalisez votre compte</h6>
+                          <p class="card-text"> {{user}}</p>
+                        </div>
+                      </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   {% endif %}
    {% if (slug == 'pseudo') %}
    <div class="container">
       <div class="container h-100">
@@ -87,7 +109,7 @@
                </div>
                <div class="card h-100 justify-content-center">
                   <div class="text-center bg-secondary text-white">
-                     <img src="{{ avatar }}" class="img-thumbnail m-4">
+                     <img src="{{baseUrl}}/assets/avatar/anthony.jpg" class="img-thumbnail m-4">
                      <form method="POST" enctype="multipart/form-data" action="{{baseUrl}}/Profile/Modifier/Avatar">
                         <input type="file" name="avatarUpload" id="file" class="inputfile" onchange='uploadFile(this)'>
                         <div class="inputfile-box text-center">
@@ -116,13 +138,10 @@
                <div id="alerteDisplay">
                   {{ alert | striptags ('<div>') | raw }}
                </div>
-
                <div class="card h-100 justify-content-center bg-secondary text-white">
                   <div class="text-center">
-
                      <img src="{{ avatar }}" class="img-thumbnail">
                      <div class="pt-lg-2 pl-lg-0">{{user}}</div>
-
                      <form name="mdp" method="POST" action="{{baseUrl}}/Profile/Modifier/Mdp"
                         class="bg-secondary text-white">
                         <div class="col-md-12 mb-3">
@@ -183,9 +202,7 @@
                <div class="text-center">
                   <h2>MESSAGERIE</h2>
                </div>
-
                {% for mess in message %}
-               {#} {{ dump(mess) }}  #}
                <div class="col-12">
                   <div id="alerteDisplay">
                      {{ alert | striptags ('<div>') | raw }}
@@ -230,7 +247,6 @@
          </div>
       </div>
    </div>
-
    {% endif %}
    {% if (slug == 'compte') %}
    <div class="container">
@@ -255,8 +271,27 @@
    {% endif %}
 </div>
 {% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script>
+   document.addEventListener("DOMContentLoaded", function (event) {
+      if (document.getElementById("alerteDisplay")) {
+         location.href = "#alerteDisplay";
+         $("#alerte").fadeTo(3000, 500).slideUp(500, function () {
+            $("#alerte").slideUp(500);
+            let adressPage = document.getElementById('alerte');
+            let adressRedirect = adressPage.dataset.adress;
+            if (adressRedirect != null) {
+               location.href = adressRedirect;
+            }
+         });
+      }
+   });
+</script>
+{% endblock %}
 {#
-    <div class="container h-100">
+<div class="container">
+      <div class="container h-100">
          <div class="row align-items-center h-100" style="border:1px solid red">
             <div class="col-12">
                <div class="card h-100 justify-content-center" style="border:1px solid red">
@@ -267,4 +302,5 @@
             </div>
          </div>
       </div>
+   </div>
       #}

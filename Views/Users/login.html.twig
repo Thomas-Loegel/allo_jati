@@ -17,7 +17,7 @@
 		{% if slug is null %}
 
 			<div class="row justify-content-md-center">
-				<form name="login" class="col-4 users-form" method="POST" action="{{baseUrl}}/">
+				<form name="login" class="col-4 users-form" method="POST" action="{{baseUrl}}/connection/post">
 					<h2 class="title-forms-users">Se connecter :</h2>
 					{# PSEUDO #}
 					<div class="form-group-users">
@@ -48,8 +48,8 @@
 			</div>
 
 
-			{# FORMULAIRE DE MOT DE PASSE OUBLIÉ #}
-		{% elseif (slug == 'MotDePasseOublie') %}
+		{# FORMULAIRE DE MOT DE PASSE OUBLIÉ #}
+      {% elseif (slug == 'MotDePasseOublie') %}
 
 			<div class="row justify-content-md-center">
 
@@ -81,7 +81,7 @@
 				</form>
 			</div>
 
-			{# UN EMAIL VOUS A ETE ENVOYE  #}
+		{# UN EMAIL VOUS A ETE ENVOYE  #}
 		{% elseif (slug == 'mailEnvoye') %}
 
 
@@ -103,7 +103,7 @@
 				</div>
 			</div>
 
-			{# FORMULAIRE POUR CHANGER MOT DE PASSE #}
+		{# FORMULAIRE POUR CHANGER MOT DE PASSE #}
 		{% elseif (slug == md5) %}
 
 			<div class="row justify-content-md-center">
@@ -138,7 +138,7 @@
 			</div>
 
 
-			{# VOTRE MOT DE PASSE A ÉTÉ RÉINITIALISÉ #}
+		{# VOTRE MOT DE PASSE A ÉTÉ RÉINITIALISÉ #}
 		{% elseif (slug == 'MotDePasseRéinitialisé') %}
 
 			<div class="row justify-content-md-center">
@@ -156,8 +156,8 @@
 			</div>
 
 
-			{# FORMULAIRE D'INSCRIPTION #}
-		{% elseif (slug == 'Inscription' or slug == 'Inscription/post') %}
+		{# FORMULAIRE D'INSCRIPTION #}
+		{% elseif (slug == 'Inscription') %}
 
 			<div class="row justify-content-md-center">
 				<form name="register" class="col-4 users-form" method="POST" action="{{ baseUrl }}/Inscription/post" }>
@@ -205,7 +205,7 @@
 			</div>
 
 
-			{# BIENVENUE #}
+		{# BIENVENUE CHEZ ALLO JATI #}
 		{% elseif (slug == 'Bienvenue') %}
 
 			<div class="row justify-content-md-center">

@@ -1,38 +1,35 @@
 <?php
-
+   /**
+    *          ANTHONY
+    */
 class HomeController extends Controller
 {
-
-   private static $instanceSession;
-
    public function __construct()
    {
+      parent::__construct();
       $this->twig = parent::getTwig();
-     
+      $this->baseUrl = parent::getBaseUrl();
    }
    /**
-    *
+    * Démarre et initialise une session utilisateur
     */
    public function startSession()
    {
-      //var_dump($_SESSION['status']);
       if (!isset($_SESSION['status'])) {
          $_SESSION['status'] = null;
          $_SESSION['utilisateur'] = "Visiteur";
          $_SESSION['receiveMessage'] = null;
       }
    }
-
    /**
-    *
+    * D2fini une super global
     */
    public function __set($name, $value)
    {
       $_SESSION[$name] = $value;
    }
-
    /**
-    *
+    * Recherche une valeur s'une super global
     */
    public function __get($name)
    {
@@ -40,9 +37,8 @@ class HomeController extends Controller
          return $_SESSION[$name];
       }
    }
-
    /**
-    *
+    * Vérifie si un formulaire a été posté
     */
    public function __getPOST($name)
    {
@@ -50,25 +46,22 @@ class HomeController extends Controller
          return $_POST[$name];
       }
    }
-
    /**
-    *
+    * Vérifie si une super global est vide
     */
    public function __empty($name)
    {
       return empty($_SESSION[$name]);
    }
-
    /**
-    *
+    * Vérifie si une super global existe
     */
    public function __isset($name)
    {
       return isset($_SESSION[$name]);
    }
-
    /**
-    *
+    * Efface le tableau des super global
     */
    public function __unsetTab()
    {
@@ -86,32 +79,26 @@ class HomeController extends Controller
          unset($_SESSION['tabSession']);
       }
    }
-
    /**
-    *
+    *  Détruit une super global
     */
    public function __unset($name)
    {
       unset($_SESSION[$name]);
    }
-
    /**
-    *
+    * Ecrase une session
     */
    public function destroy()
    {
-      session_start();
-
       session_destroy();
       unset($_SESSION);
-
-      session_start();
-      //$_SESSION['status'] = null;
-      //$_SESSION['utilisateur'] = "Visiteur";
+      $_SESSION['status'] = null;
+      $_SESSION['utilisateur'] = "Visiteur";
+      $_SESSION['avatar'] = "$this->baseUrl/assets/avatar/jatilogo.png";
    }
-
    /**
-    *
+    * Affiche une alerte(n'est plu utilisé)
     */
    public function __alert($alert)
    {
@@ -119,9 +106,8 @@ class HomeController extends Controller
          echo $_SESSION[$alert];
       }
    }
-
    /**
-    *
+    * rend la vus du Home
     */
    public function index()
    {
