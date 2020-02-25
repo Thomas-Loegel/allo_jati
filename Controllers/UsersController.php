@@ -73,13 +73,13 @@ class UsersController extends Controller
                if ($_POST['pseudo'] == "") {
                   $error[] = "";
                } else {
-                  $error[0] = 'Le pseudo : "' . $_POST['pseudo'] . '" est inconnu de la base de donnée';
+                  $error[0] = 'Le pseudo : "' . $_POST['pseudo'] . '" est inconnu de la base de données';
                }
             }
          }
       }
 
-      $title = "Connection";
+      $title = "Connexion";
 
       $pageTwig = 'Users/login.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -147,7 +147,7 @@ class UsersController extends Controller
                   if ($_SERVER['SERVER_NAME'] === "localhost") {
                      $envoiMailLocal = $this->envoiMailLocal($pseudo, $md5);
                   } else {
-                     echo "impossible de vous envoyer un mail car nous sommes en local";
+                     echo "Impossible de vous envoyer un mail car nous sommes en local";
                   }
 
                   if ($envoiMailLocal) {

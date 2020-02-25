@@ -54,7 +54,7 @@ class CommentsController extends Controller
    public function refreshUserForCommByUser($pseudo)
    {
       $comments = $this->model->searchAllCommByUser($pseudo);
-      $pageTwig = 'Admin/admin.html.twig';
+      $pageTwig = 'Administration/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          "comments"     => $comments,
@@ -85,7 +85,7 @@ class CommentsController extends Controller
    public function refreshAfterDeteleCommByUser($id_user, $pseudo)
    {
       $comments = $this->model->searchAllCommById($id_user);
-      $pageTwig = 'Admin/admin.html.twig';
+      $pageTwig = 'Administration/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          "comments" => $comments,
@@ -112,12 +112,8 @@ class CommentsController extends Controller
    {
       
       $movie = $this->model->searchAllCommByTitleMovie($title);
-      if(!empty($movie)){
-         $comments = $this->model->linkCommentByMovie($movie[0]['id_movie']);
-      } else {
-         $comments = "Vide";
-      }
-      $pageTwig = 'Admin/admin.html.twig';
+      $comments = $this->model->linkCommentByMovie($movie[0]['id_movie']);
+      $pageTwig = 'Administration/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          "comments"     => $comments,
@@ -146,7 +142,7 @@ class CommentsController extends Controller
    public function getAllCom()
    {
       $comments   = $this->model->getAllComments();
-      $pageTwig = 'Admin/admin.html.twig';
+      $pageTwig = 'Administration/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          "comments"     => $comments,
@@ -203,10 +199,10 @@ class CommentsController extends Controller
                   $displayAlert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès...</strong> Votre commentaire a bien été publié, merci.</div>';
                   $instanceHome->__unsetTab();
                } else {
-                  $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong>Une erreur est survenu lors de la connexion a la base de données.Veuillez recommencer...</div>';
+                  $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong>Une erreur est survenue lors de la connexion à la base de données.Veuillez recommencer...</div>';
                }
             } else {
-               $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong>Une erreur est survenu lors de la connexion a la base de données.Veuillez recommencer...</div>';
+               $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong>Une erreur est survenue lors de la connexion à la base de données.Veuillez recommencer...</div>';
             }
             $instanceMovies = new MoviesController();
             $instanceMovies->showMovie($id_movie, $displayAlert);
@@ -214,13 +210,13 @@ class CommentsController extends Controller
          // Si le post existe mais que l'une ou l'autre information manque on les mets en temporaire
          else {
             // On affiche une alerte
-            $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Votre commentaire n\'est pas complet! Veuillez vérifié!</div>';
+            $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Votre commentaire n\'est pas complet! Veuillez vérifier !</div>';
             // On mets les éléments du commentaire en temporaire
             $this->temporaryFiles($id_movie, $displayAlert);
          }
       } else {
          // On affiche une alerte
-         $adress = "$this->baseUrl/Connection";
+         $adress = "$this->baseUrl/Connexion";
          $displayAlert = '<div class="alert alert-danger text-center" id="alerte" data-adress="' . $adress . '" ><strong>Erreur...</strong> Vous devez vous identifier pour publier! Vous allez être redirigé...</div>';
          // On mets les éléments du commentaire en temporaire
          $this->temporaryFiles($id_movie, $displayAlert);
@@ -228,7 +224,7 @@ class CommentsController extends Controller
    }
 
    /**
-    * Post un commentaire après connection
+    * Post un commentaire après connexion
     */
    public function postAfterLogin()
    {
@@ -240,7 +236,7 @@ class CommentsController extends Controller
 
 
 
-         $displayAlert = '<div class="alert alert-danger text-center" id="alerte" ><strong>Erreur...</strong>Votre commentaire n\'a pas été publié car il est incomplet.Veuillez-vérifié....</div>';
+         $displayAlert = '<div class="alert alert-danger text-center" id="alerte" ><strong>Erreur...</strong>Votre commentaire n\'a pas été publié car il est incomplet. Veuillez-vérifier ...</div>';
 
 
          // On redirige sur la page du commentaire
@@ -267,7 +263,7 @@ class CommentsController extends Controller
          } else {
             // Si une erreur surviens lors de l'ajout du commentaire a la BDD
             $adress = "$this->baseUrl/Films/Film_" . $_SESSION['id_movie'];
-            $displayAlert = '<div class="alert alert-danger text-center" id="alerte" data-adress="' . $adress . '" ><strong>Erreur...</strong>Une erreur est survenu lors de la connexion a la base de données.Veuillez recommencer...</div>';
+            $displayAlert = '<div class="alert alert-danger text-center" id="alerte" data-adress="' . $adress . '" ><strong>Erreur...</strong>Une erreur est survenue lors de la connexion à la base de données.Veuillez recommencer...</div>';
             // On efface toutes les super-global
          }
          $instanceHome->__unsetTab();

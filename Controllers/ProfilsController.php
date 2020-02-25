@@ -66,15 +66,15 @@ class ProfilsController extends Controller
             if ($result === true) {
                $_SESSION['utilisateur'] = $newPseudo;
                $this->searchAvatar();
-               $displayAlert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès...</strong> Votre pseudo a bien été modifier!</div>';
+               $displayAlert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès...</strong> Votre pseudo a bien été modifié !</div>';
             }
          } else if ($result['pseudo'] === $newPseudo) {
-            $displayAlert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Ce pseudo existe déjà!</div>';
+            $displayAlert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Ce pseudo existe déjà !</div>';
          } else {
-            $displayAlert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Ce pseudo existe déjà!</div>';
+            $displayAlert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Ce pseudo existe déjà !</div>';
          }
       } else {
-         $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Le champ est vide!</div>';
+         $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Le champ est vide !</div>';
       }
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -129,21 +129,21 @@ class ProfilsController extends Controller
                   $result = $instanceUsers->modifyAvatar($fileNameNew, $_SESSION['utilisateur']);
                   if ($result === true) {
                      $_SESSION['avatar'] = "$this->baseUrl/assets/avatar/$fileNameNew";
-                     $displayAlert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès...</strong> Avatar bien modifié!</div>';
+                     $displayAlert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès...</strong> Avatar bien modifié !</div>';
                   } else {
-                     $displayAlert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Erreur de connection avec la base données</div>';
+                     $displayAlert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Erreur de connexion avec la base données</div>';
                   }
                } else {
-                  $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Votre fichier n\'a pas été déplacer sur le serveur</div>';
+                  $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Votre fichier n\'a pas été déplacé sur le serveur</div>';
                }
             } else {
                $displayAlert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Votre fichier n\'est pas au bon format</div>';
             }
          } else {
-            $displayAlert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Votre fichier est de tailler trop importante</div>';
+            $displayAlert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Votre fichier est de taille trop importante</div>';
          }
       } else {
-         $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Veuillez indiqué l\'emplacement de votre fichier</div>';
+         $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Veuillez indiquer l\'emplacement de votre fichier</div>';
       }
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -183,10 +183,10 @@ class ProfilsController extends Controller
          if ($result === true) {
             $displayAlert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès...</strong> Votre mot de passe a bien été modifié</div>';
          } else {
-            $displayAlert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Erreur de connection avec la base de données</div>';
+            $displayAlert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur...</strong> Erreur de connexion avec la base de données</div>';
          }
       } else {
-         $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Veuillez indiqué votre nouveau mote de passe</div>';
+         $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Veuillez indiquer votre nouveau mot de passe</div>';
       }
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -227,9 +227,9 @@ class ProfilsController extends Controller
       if (isset($_POST) && !empty($_POST['pseudoMessage']) && !empty($_POST['title']) && !empty($_POST['message'])) {
          $slug = $_POST['pseudoMessage'];
          $this->model->sendMessage($_SESSION['utilisateur'], $slug, $_POST['title'], $_POST['message']);
-         $displayAlert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès</strong> Votre message a bien été envoyer!</div>';
+         $displayAlert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès</strong> Votre message a bien été envoyé !</div>';
       } else {
-         $displayAlert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur!</strong> Veuillez vérifier le Destinataire</div>';
+         $displayAlert = '<div class="alert alert-warning text-center" id="alerte"><strong>Erreur!</strong> Veuillez vérifier le destinataire</div>';
       }
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
@@ -317,9 +317,9 @@ class ProfilsController extends Controller
             $instanceHome->startSession();
             $adress = "$this->baseUrl";
             $_SESSION['avatar'] = "$this->baseUrl/assets/avatar/jatilogo.png";
-            $displayAlert = '<div class="alert alert-success text-center" id="alerte" data-adress="' . $adress . '"><strong>Succès...</strong> Votre compte a bien été supprimer</div>';
+            $displayAlert = '<div class="alert alert-success text-center" id="alerte" data-adress="' . $adress . '"><strong>Succès...</strong> Votre compte a bien été supprimé</div>';
          } else {
-            $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong>Une erreur est survenu lors de la suppression de votre compte</div>';
+            $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong> Une erreur est survenue lors de la suppression de votre compte</div>';
          }
       }
      $pageTwig = 'Profil/profil.html.twig';

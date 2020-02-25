@@ -60,7 +60,7 @@ class SuggestionController extends Controller
                $zip_name = "assets/FileZip/FileZip" .rand(0 , 999). ".zip";              
                // Create a zip target
                if ($zip->open($zip_name, ZipArchive::CREATE) !== TRUE) {
-                  $error .= "Sorry ZIP creation is not working currently.<br/>";
+                  $error .= "Désolé, la création du ZIP n'a pas pu s'effectuer correctement.<br/>";
                  
                }
                $imageCount = count($_FILES['zip_file']['name']);
@@ -98,7 +98,7 @@ class SuggestionController extends Controller
 
          //Si le fichier zip existe créer un lien pour le télécharge
          if (isset($zip_name)){
-            $download = " <a href=http://localhost/allo_jati/$zip_name><h1>Download</h1></a>";
+            $download = " <a href=http://localhost/allo_jati/$zip_name><h1>Télécharger</h1></a>";
             $zip = 'yes';
 
          }else{

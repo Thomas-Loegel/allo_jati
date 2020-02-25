@@ -14,13 +14,13 @@
             <div class="collapse navbar-collapse">
                <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
                   <li class="nav-item">
-                     <span class="border-color text-white font-weight-bold m-0 p-1">Connection</span>
+                     <span class="border-color text-white font-weight-bold m-0 p-1">Connexion</span>
                      <ul class="list-color">
                         <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Pseudo">Pseudo</a></li>
                         <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Avatar">Avatar</a>
                         </li>
                         {% set mdp = 'Mdp' %}
-                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Mdp">Mot de passe </a>
+                        <li><a class="nav-link pl-0" href="{{baseUrl}}/Profile/Modifier/Mdp">Mot de passe</a>
                         </li>
                      </ul>
                   </li>
@@ -60,7 +60,7 @@
                      <div class="card">
                         <div class="card-body">
                            <img src="{{ avatar }}" class="w-25 p-3">
-                          <h5 class="card-title">Bienvenue sur votre page Profile </h5>
+                          <h5 class="card-title">Bienvenu sur votre page Profile </h5>
                           <h6 class="card-subtitle mb-2 text-muted">Personnalisez votre compte</h6>
                           <p class="card-text"> {{user}}</p>
                         </div>
@@ -145,7 +145,7 @@
                      <form name="mdp" method="POST" action="{{baseUrl}}/Profile/Modifier/Mdp"
                         class="bg-secondary text-white">
                         <div class="col-md-12 mb-3">
-                           <label for="mdp" class="m-4">Changez votre Mot de Passe</label>
+                           <label for="mdp" class="m-4">Changez votre mot de passe</label>
                            <input type="text" class="form-control text-center bg-dark text-white" name="mdp"
                               placeholder="Nouveau mot de passe">
                            <button class="btn btn-dark m-5" type="submit">Modifier</button>
@@ -215,7 +215,7 @@
                                  <h4 type="button" data-toggle="collapse" data-target="#collapse{{ loop.index }}"
                                     aria-expanded="true" aria-controls="collapse{{ loop.index }}" class="card-header">
                                     {{mess.title}} <small
-                                       class="pull-right text-white">Expéditeur:{{mess.expeditor }}</small></h4>
+                                       class="pull-right text-white">Expéditeur : {{mess.expeditor }}</small></h4>
                               </div>
                            </div>
                         </div>
@@ -232,12 +232,12 @@
                               <button class="btn btn-link-secondary font-weight-bold text-secondary border m-2"
                                  type="button"
                                  onclick="location.href='{{baseUrl}}/Profile/Message/Supprimer_{{mess.id_message}}'">
-                                 Supprimé
+                                 Supprimer
                               </button>
                            </div>
                         </div>
                         <div class="card-footer text-muted">
-                           Date de réception:
+                           Date de réception :
                         </div>
                      </div>
                   </div>
