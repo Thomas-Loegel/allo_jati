@@ -1,5 +1,7 @@
 <?php
-
+   /**
+    *          ANTHONY
+    */
 class ProfilsController extends Controller
 {
    public function __construct()
@@ -8,7 +10,9 @@ class ProfilsController extends Controller
       parent::__construct();
       $this->model = new Profils();
    }
-
+   /**
+    *  Rends la vus du controller
+    */
    public function profil()
    {
       $this->searchAvatar();
@@ -18,9 +22,13 @@ class ProfilsController extends Controller
          'status'       => $_SESSION['status'], 
          'user'         => $_SESSION['utilisateur'], 
          'avatar'       => $_SESSION['avatar'], 
-         'alertMessage' => $_SESSION['receiveMessage']
+         'alertMessage' => $_SESSION['receiveMessage'],
+         'slug'         => 'accueil'
          ]);
    }
+   /**
+    * Recherche un avatar
+    */
    public function searchAvatar()
    {
       $instanceUsers = new Users();
@@ -29,6 +37,9 @@ class ProfilsController extends Controller
       $avatar = $this->baseUrl . "/assets/avatar/" . $avatar['avatar'];
       $_SESSION['avatar'] = $avatar;
    }
+   /**
+    * Page Modifier un pseudo
+    */
    public function modifyPseudo()
    {
       $pageTwig = 'Profil/profil.html.twig';
@@ -41,14 +52,13 @@ class ProfilsController extends Controller
          'alertMessage' => $_SESSION['receiveMessage']
          ]);
    }
-
+   /**
+    *  Modifie un pseudo
+    */
    public function changePseudo()
    {
       $instanceUsers = new Users();
       if (isset($_POST) && !empty($_POST['pseudo'])) {
-
-         //$_POST['pseudo'] = $_SESSION['utilisateur'];
-
          $newPseudo = $_POST['pseudo'];
          $result = $instanceUsers->pseudoExist($newPseudo);
          if ($result === false) {
@@ -76,9 +86,11 @@ class ProfilsController extends Controller
          'alert'        => $displayAlert, 
          'alertMessage' => $_SESSION['receiveMessage']]);
    }
+   /**
+    *  Page modifier un avatar
+    */
    public function modifyAvatar()
    {
-
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
@@ -89,26 +101,24 @@ class ProfilsController extends Controller
          'alertMessage' => $_SESSION['receiveMessage']
          ]);
    }
+   /**
+    *  Modifier un avatar
+    */
    public function changeAvatar()
    {
 
       $instanceUsers = new Users();
       if (isset($_FILES['avatarUpload']) && $_FILES['avatarUpload']['error'] == 0) {
          if ($_FILES['avatarUpload']['size'] <= 2000000) {
-
             $infosfichier = pathinfo($_FILES['avatarUpload']['name']);
             $extension_upload = $infosfichier['extension'];
             $extension_upload = strtolower($extension_upload);
-
             $extensions_autorisees = array('bmp', 'jpg', 'jpeg', 'png', 'gif', 'tiff');
             if (in_array($extension_upload, $extensions_autorisees)) {
-
                $fileNameNew = uniqid('', true) . "." . $extension_upload;
                $fileDestination = "assets/avatar/$fileNameNew";
                $result = move_uploaded_file($_FILES['avatarUpload']['tmp_name'], $fileDestination);
-
                if ($result === true) {
-
                   $id_user = $instanceUsers->getOneIdUser($_SESSION['utilisateur']);
                   $actualAvatar = $instanceUsers->searchAvatar($id_user['id_user']);
                   $actualAvatar = $actualAvatar['avatar'];
@@ -146,6 +156,9 @@ class ProfilsController extends Controller
          'alertMessage' => $_SESSION['receiveMessage']
          ]);
    }
+   /**
+    *  Page modifier un mdp
+    */
    public function modifymdp()
    {
       $pageTwig = 'Profil/profil.html.twig';
@@ -158,10 +171,12 @@ class ProfilsController extends Controller
          'alertMessage' => $_SESSION['receiveMessage']
          ]);
    }
+   /**
+    *  Modifie un avatar
+    */
    public function changemdp()
    {
       if (isset($_POST) && !empty($_POST['mdp'])) {
-
          $instanceUsers = new Users();
          $hashMdp = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
          $result = $instanceUsers->updateMdpByPseudo($_SESSION['utilisateur'], $hashMdp);
@@ -183,20 +198,17 @@ class ProfilsController extends Controller
          'alert'        => $displayAlert, 
          'alertMessage' => $_SESSION['receiveMessage']]);
    }
+   /**
+    *  Page Envoyé un message
+    */
    public function sendMessage($slug = null)
    {
-
       date_default_timezone_set('Europe/Paris');
       setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
       $this->searchAvatar();
-      if ($slug == null) {
-         $pseudo = "";
-      } else {
-         $pseudo = $slug;
-      }
+      if ($slug == null) {$pseudo = "";} else {$pseudo = $slug;}
       $pageTwig = 'Profil/profil.html.twig';
       $template = $this->twig->load($pageTwig);
-
       echo $template->render([
          'slug'         => 'Envoyer',
          'status'       => $_SESSION['status'],
@@ -205,9 +217,11 @@ class ProfilsController extends Controller
          'pseudo'       => $pseudo,
          'alertMessage' => $_SESSION['receiveMessage'],
          'datedujour'   => strftime("%A %d %B %Y"),
-
       ]);
    }
+   /**
+    *  Enovyé un message a un utilisateur
+    */
    public function sendMessageToUser($slug = null)
    {
       if (isset($_POST) && !empty($_POST['pseudoMessage']) && !empty($_POST['title']) && !empty($_POST['message'])) {
@@ -228,7 +242,9 @@ class ProfilsController extends Controller
          'alertMessage' => $_SESSION['receiveMessage']
          ]);
    }
-
+   /**
+    *  Vérifie les message reçus
+    */
    public function checkMessage()
    {
       $message = $this->model->receiveMessage($_SESSION['utilisateur']);
@@ -239,6 +255,9 @@ class ProfilsController extends Controller
       }
       return $message;
    }
+   /**
+    *  Affiche les message reçus
+    */
    public function receiveMessage()
    {
       $message = $this->checkMessage();
@@ -252,6 +271,9 @@ class ProfilsController extends Controller
          'message'      => $message, 
          'alertMessage' => $_SESSION['receiveMessage']]);
    }
+   /**
+    *  Efface les message
+    */
    public function deleteMessage($id_message)
    {
       $this->model->delMessage($id_message);
@@ -266,6 +288,9 @@ class ProfilsController extends Controller
          'message'      => $message, 
          'alertMessage' => $_SESSION['receiveMessage']]);
    }
+   /**
+    *  Supprime un compte
+    */
    public function deleteAccount($slug = null)
    {
       $displayAlert = null;
@@ -274,21 +299,19 @@ class ProfilsController extends Controller
          $instanceUsers = new Users();
          $instanceComments = new Comments();
          $instanceHome = new HomeController();
+         $instanceProfils = new Profils();
+
          // Recherche tous les commentaires d'un utilisateur dans la table Comments
          $id_user = $instanceUsers->getOneIdUser($_SESSION['utilisateur']);
-
-
          $result = $instanceComments->searchAllCommByUser($_SESSION['utilisateur']);
-
          foreach ($result as $key => $value) {
             // Supprimer tous les commentaires de la tables Comments
             $instanceComments->delComment($value['id_comment']);
             $instanceComments->deleteAllCommMovieById_comment($value['id_comment']);
+            $instanceProfils->delAllMessageByUser($_SESSION['utilisateur']);
          }
          $instanceComments->deleteAllCommMovieByUser($id_user['id_user']);
          $result = $instanceUsers->deleteAccount($_SESSION['utilisateur']);
-       
-
          if ($result === true) {
             $instanceHome->destroy();
             $instanceHome->startSession();
