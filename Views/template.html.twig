@@ -145,20 +145,29 @@
    {% block footer %}
    {# Footer ici #}
    
-   {% if movies or movie or slug %}
+   {% if movies or movie or artists  %}
    <footer class="footer text-center">
       <div class="container">
          <span class="text-muted">Johanna - Anthony - Thomas -Ilias</span>
       </div>
    </footer>
-   {% else %}
+   {% elseif homefooter %}
+   <div class="d-flex justify-content-center">
+      <footer class="footer-classic ">
+         <div class="container">
+            <span class="text-white">Johanna - Anthony - Thomas -Ilias</span>
+         </div>
+      </footer>
+   </div>
+   {% elseif artist or pageSug or admin or footerconect or footerinscript or 'footerregister'%}
    <div class="d-flex justify-content-center">
       <footer class="footer-classic ">
          <div class="container">
             <span class="text-muted">Johanna - Anthony - Thomas -Ilias</span>
          </div>
       </footer>
-   </div>
+   </div> 
+  
    {% endif %}
    {% endblock %}
 

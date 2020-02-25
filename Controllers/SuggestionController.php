@@ -19,8 +19,11 @@ class SuggestionController extends Controller
       $suggestion  = $this->model->suggestion();
       $pageTwig = 'Suggestion/suggestion.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(["suggestion" => $suggestion,
-                              "status" => $_SESSION['status']]);
+      echo $template->render([
+      "suggestion" => $suggestion,
+      "status" => $_SESSION['status'],
+      "pageSug" => "pageSug"
+      ]);
    }
 
    public function addSuggestion()

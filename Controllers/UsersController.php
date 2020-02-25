@@ -88,6 +88,7 @@ class UsersController extends Controller
          'title' => $title,
          'error' => $error,
          'inputPseudo' => $inputPseudo,
+         'footerconect' => 'footerconect'
       ]);
    }
 
@@ -169,6 +170,7 @@ class UsersController extends Controller
          'mail' => $mail,
          'errorMail' => $errorMail,
          'lienInscription' => $lienInscription,
+         'footerinscript' => 'footerinscript',
          //'randomString' => $randomString,
       ]);
    }
@@ -492,6 +494,7 @@ class UsersController extends Controller
          'error' => $error,
          'inputMail' => $inputMail,
          'inputPseudo' => $inputPseudo,
+         'footerregister' => 'footerregister'
       ]);
    }
 
