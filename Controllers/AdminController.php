@@ -16,7 +16,11 @@ class AdminController extends Controller
    {
       $pageTwig = 'Administration/admin.html.twig';
       $template = $this->twig->load($pageTwig);
-      echo $template->render(['status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage']]);
+      echo $template->render([
+         'status'       => $_SESSION['status'], 
+         'alertMessage' => $_SESSION['receiveMessage'],
+         'admin'        => 'admin'
+         ]);
    }
 
    /**
