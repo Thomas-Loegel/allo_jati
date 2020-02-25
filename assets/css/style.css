@@ -537,3 +537,10 @@ main{
 .error-form {
    text-align: center;
 }
+
+
+.footer-classic{
+  position:fixed;
+  bottom:0;
+
+}
