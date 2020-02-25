@@ -100,6 +100,7 @@ class CommentsController extends Controller
     */
    public function searchAllCommByTitleMovie()
    {
+   
       if (isset($_POST) && !empty($_POST['title'])) {
          $this->refreshUserForCommByTitle($_POST['title']);
       }
@@ -109,6 +110,7 @@ class CommentsController extends Controller
     */
    public function refreshUserForCommByTitle($title)
    {
+      
       $movie = $this->model->searchAllCommByTitleMovie($title);
       $comments = $this->model->linkCommentByMovie($movie[0]['id_movie']);
       $pageTwig = 'Administration/admin.html.twig';
@@ -126,10 +128,12 @@ class CommentsController extends Controller
     */
    public function delAllComByMovie($id)
    {
+     
       $tabCom = $this->model->linkCommentByMovie($id);
       foreach ($tabCom as $k => $v) {
          $delId = $v['id_comment'];
          $this->model->delComment($delId);
+         
       }
    }
    /**
