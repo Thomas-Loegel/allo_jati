@@ -197,7 +197,7 @@ class CommentsController extends Controller
                $result = $this->model->addMovieComments($id_movie, $idComment);
                if ($result === true) {
                   $displayAlert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès...</strong> Votre commentaire a bien été publié, merci.</div>';
-                  $instanceHome->__unsetTab();
+                  //$instanceHome->__unsetTab();
                } else {
                   $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong>Une erreur est survenue lors de la connexion à la base de données.Veuillez recommencer...</div>';
                }
