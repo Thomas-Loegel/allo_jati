@@ -14,7 +14,7 @@ class AdminController extends Controller
    */
    public function admin()
    {
-      $pageTwig = 'Admin/admin.html.twig';
+      $pageTwig = 'Administration/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render(['status' => $_SESSION['status'], 'alertMessage' => $_SESSION['receiveMessage']]);
    }
@@ -29,7 +29,7 @@ class AdminController extends Controller
       $instanceUsers = new Users();
       $users = $instanceUsers->getAllUsers();
 
-      $pageTwig = 'Admin/admin.html.twig';
+      $pageTwig = 'Administration/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug'         => $slug,
@@ -49,7 +49,7 @@ class AdminController extends Controller
       $instanceMovies = new Movies();
       $movies = $instanceMovies->getAllMovies();
 
-      $pageTwig = 'Admin/admin.html.twig';
+      $pageTwig = 'Administration/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug'         => $slug,
@@ -69,7 +69,7 @@ class AdminController extends Controller
       $instanceArtists = new Artists();
       $artists = $instanceArtists->getAllArtists();
 
-      $pageTwig = 'Admin/admin.html.twig';
+      $pageTwig = 'Administration/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug'         => $slug,
@@ -93,7 +93,7 @@ class AdminController extends Controller
 
 
       if (empty($_POST)) {
-         $info = "Veuillez remplir tout les champs !";
+         $info = "Veuillez remplir tous les champs !";
       }else {
 
          if (empty($_POST['resume'])) {
@@ -144,7 +144,7 @@ class AdminController extends Controller
       }
 
       $this->model->addMovie($picture,$title,$year,$style,$resume,$trailer,$time);
-      $pageTwig = 'Admin/admin.html.twig';
+      $pageTwig = 'Administration/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug'         => $slug,
@@ -175,7 +175,7 @@ class AdminController extends Controller
 
 
       if (empty($_POST)) {
-         $info = "Veuillez remplir tout les champs !";
+         $info = "Veuillez remplir tous les champs !";
       }else {
 
          if (empty($_POST['bio'])) {
@@ -185,7 +185,7 @@ class AdminController extends Controller
          }
 
          if (empty($_POST['role'])) {
-            $error = "Renseignez une role !";
+            $error = "Renseignez une rôle !";
          }else{
             $role = $_POST['role'];
          }
@@ -221,7 +221,7 @@ class AdminController extends Controller
 
 
       $this->model->addArtist($picture,$first_name,$last_name,$birth_day,$bio,$role);
-      $pageTwig = 'Admin/admin.html.twig';
+      $pageTwig = 'Administration/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'slug'         => $slug,
@@ -254,25 +254,25 @@ class AdminController extends Controller
       }else {
 
          if (empty($_POST['id_artist'])) {
-            $error = "Selectionnez un artiste !";
+            $error = "Sélectionnez un artiste !";
          }else{
             $id_artist = $_POST['id_artist'];
          }
 
          if (empty($_POST['id_movie'])) {
-            $error = "Selectionnez un film !";
+            $error = "Sélectionnez un film !";
          }else{
             $id_movie = $_POST['id_movie'];
          }
 
          if (empty($_POST['role'])) {
-            $error = "Selectionnez son rôle !";
+            $error = "Sélectionnez son rôle !";
          }else{
             $role = $_POST['role'];
          }
 
          if (isset($_POST['id_artist']) && isset($_POST['id_movie']) && isset($_POST['role'])) {
-            $success = "Votre association à bien été effectué !";
+            $success = "Votre association à bien été effectuée !";
          }
       }
 
@@ -284,7 +284,7 @@ class AdminController extends Controller
 
       $this->model->association($id_artist, $id_movie, $role);
 
-      $pageTwig = 'Admin/admin.html.twig';
+      $pageTwig = 'Administration/admin.html.twig';
       $template = $this->twig->load($pageTwig);
       echo $template->render([
          'status'    => $_SESSION['status'],
