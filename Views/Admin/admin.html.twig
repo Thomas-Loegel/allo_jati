@@ -72,7 +72,23 @@
    </div>
 
 
-   <div class="col d-flex justify-content-center px-0">
+   {% if slug is null %}
+   <div class="m-auto">
+      <div class="admin-form">
+         <h2 class="mb-4">Panneau d'administration</h2>
+         <p>
+            Bienvenu sur votre espace back-office : <br>
+
+            Vous pourrez gérer le contenu de votre site facilement, <br>
+            modérer les commentaires ainsi que vos administrés. <br>
+
+            Pour toutes questions relative à espace d'administration <br>
+            <br>
+            (<a href="#">contact.support@jati.com</a>)
+         </p>
+      </div>
+   </div>
+   {% endif %}
 
       <!-- Listing des Utilisateurs -->
       {% if (slug == 'Liste_Utilisateurs') %}
@@ -161,7 +177,7 @@
             </thead>
 
             <thead class="thead-dark">
-               </tr>               
+               </tr>
                   <th scope="col"># ID</th>
                   <th scope="col">Nom</th>
                   <th scope="col">Prénom</th>
@@ -304,10 +320,10 @@
       <!-- Edition Films -->
       {% if (slug == 'Ajout_Film') %}
       <div class="d-flex justify-content pt-5 ">
-      
+
          <form name="addMovie" method="POST" action="{{baseUrl}}/Admin/Ajout_Film/Add" class="admin-form">
             <h2 class="titleFormAdmin">Ajouter un film</h2>
-            
+
             <div class="form-row form-row-admin">
                <div class="col-md-4 mb-3">
                   <input type="text" class="form-control" value="{{title}}" name="title" placeholder="Titre">
@@ -427,6 +443,8 @@
          </form>
       </div>
       {% endif %}
+
+
 
       {% if (slug == 'Association')  %}
       <div class="d-flex justify-content pt-5 pb-5">
