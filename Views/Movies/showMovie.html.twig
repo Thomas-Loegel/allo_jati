@@ -56,7 +56,7 @@
       {% if anchor %}
       <div id="alerteDisplay">
          {{ alert | striptags ('<div>') | raw }}
-           {#} <span id="adressPage" data-adress="{{baseUrl}}/Connection"></ span>#}
+           {#} <span id="adressPage" data-adress="{{baseUrl}}/Connexion"></ span>#}
       </div>
       {% endif %}
       <div class="card-header">
@@ -190,11 +190,11 @@
                                              {% endif %}
                                              {% if status == 2 %}
                                              {% if comment.id_user == userLogin %}
-                                             <small class="pull-right" style="border:none">Editer:</small></h4>
+                                             <small class="pull-right" style="border:none">Editer :</small></h4>
                                              {% endif %}
                                              {% endif %}
                                              {% if status == 2 and comment.id_user != userLogin%}
-                                             <small class="pull-right" style="border:none">Contacter:</small>
+                                             <small class="pull-right" style="border:none">Contacter :</small>
                                              </h4>
                                              {% endif %}
                                           </div>
@@ -269,7 +269,7 @@
                {% endfor %}
             </div>
          </span>
-         <span class="btn btn-theme">Commentaire: N°{{ comment.id_comment }}
+         <span class="btn btn-theme">Commentaire : N°{{ comment.id_comment }}
          </span>
          <span class="btn btn-theme float-right">{{ comment.date | date("d/m/Y/ H:i:s", "Europe/Paris") }}
          </span>
