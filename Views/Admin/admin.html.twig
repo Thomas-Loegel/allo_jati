@@ -54,7 +54,7 @@
 
                      <p class="text-white pl-0">Par film </p>
 
-                     <form name="idMovie" method="POST" action="{{baseUrl}}/Admin/Utilisateur">
+                     <form name="idMovie" method="POST" action="{{baseUrl}}/Admin/Titre">
                         <div class="form-row">
                            <div class="col-md-12 mb-3">
                               <input type="text" class="input-sm" name="title" placeholder="Titre">
@@ -278,7 +278,7 @@
          </tbody>
       </table>
       {% endif %}
-
+      <!-- Commentaire par titre de film -->
       {% if (slug == 'titleMovie') %}
       <table class="table table-bordered table-hover">
          <thead class="thead-dark ">

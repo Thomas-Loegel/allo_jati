@@ -8,15 +8,12 @@
       <div class="d-flex justify-content-center pt-5">
          <h2>{{movie.title}}</h2>
       </div>
-
-
       <div class="d-flex pt-5">
          <div class="d-flex flex-column">
             <img class="rounded mb-5" src="{{movie.picture}}" style="width:300px;height:400px;">
             <p><span class="font-weight-bold">Année : </span>{{movie.year}}</p>
             <p><span class="font-weight-bold">Genre : </span>{{movie.style}}</p>
             <p><span class="font-weight-bold">Durée : </span>{{movie.time | date('H:i:s')}}</p>
-
             <!-- Défini le role de l'artiste -->
             {% for infos in infos %}
             {% if infos.role == 1 %}
@@ -24,14 +21,12 @@
             {% elseif infos.role == 2 %}
             {% set role = 'Réalisateur' %}
             {% endif %}
-
             <span class="font-weight-bold">
                {{role}} : <a class="font-weight-normal text-transform-capitalize"
                   href="{{baseUrl}}/Artistes/Artiste_{{infos.id_artist}}">{{infos.first_name}} {{infos.last_name}}</a>
             </span>
             {% endfor %}
          </div>
-
          <div class="d-flex flex-column ml-5">
             <div class=" text-break mb-5">
                <p class="font-weight-bold">Resumé :</p>
