@@ -502,7 +502,9 @@ class UsersController extends Controller
       return $string;
    }
 
-   /********************************ANTHONY************************************/
+   /**
+    *  ANTHONY
+    */
    /**
     *  On déconnecte la SESSION
     */
