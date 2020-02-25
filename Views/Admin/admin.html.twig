@@ -71,7 +71,6 @@
       </aside>
    </div>
 
-
    {% if slug is null %}
    <div class="m-auto">
       <div class="admin-form">
@@ -89,6 +88,8 @@
       </div>
    </div>
    {% endif %}
+
+   <div class="col d-flex justify-content-center px-0">
 
       <!-- Listing des Utilisateurs -->
       {% if (slug == 'Liste_Utilisateurs') %}
@@ -443,8 +444,6 @@
          </form>
       </div>
       {% endif %}
-
-
 
       {% if (slug == 'Association')  %}
       <div class="d-flex justify-content pt-5 pb-5">
