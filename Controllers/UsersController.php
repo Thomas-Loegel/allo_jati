@@ -374,6 +374,8 @@ class UsersController extends Controller
       $error = [];
       $inputMail = null;
       $inputPseudo = null;
+
+
       //pour chaque valeur d'input
       foreach ($_POST as $value) {
          //si la valeur de l'input est considérée comme vide
@@ -383,6 +385,7 @@ class UsersController extends Controller
             //sinon UN ou DES inputs sont remplis
          } else {
             $error[] = "";
+
             /****MAIL****/
             $mail = $_POST['mail'];
             // mail correspond aux attentes ?
@@ -394,14 +397,16 @@ class UsersController extends Controller
                } else {
                   $error[0] = 'Le mail : "' . $_POST['mail'] . '" est existe déja';
                }
-            } //si le pseudo est inconnu mais défini par ""
+            } 
             else {
+               //si le pseudo est inconnu mais défini par ""
                if ($_POST['mail'] === "") {
                   $error[0] = " ";
                } else {
                   $error[0] = 'L\'adresse mail : "' . $_POST['mail'] . '" ne correspond pas aux attentes';
                }
             }
+
             /****PSEUDO****/
             $pseudo = $_POST['pseudo'];
             //pseudo correspond aux attentes ?
@@ -421,6 +426,7 @@ class UsersController extends Controller
                   $error[1] = "Le champ contient des caractères non valides.";
                }
             }
+
             /****MOT DE PASSE****/
             // mot de passe correspond aux attentes ?
             if (preg_match('`^([a-zA-Z0-9-_]{2,16})$`', $_POST['mdp'])) {
@@ -474,6 +480,7 @@ class UsersController extends Controller
          }
       }
 
+      
       $title = "Inscription";
 
       $pageTwig = 'Users/login.html.twig';
