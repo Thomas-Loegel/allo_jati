@@ -1,8 +1,8 @@
 <?php
 
-   /**
-    *          ANTHONY
-    */
+/**
+ *          ANTHONY
+ */
 class CommentsController extends Controller
 {
    public function __construct()
@@ -193,6 +193,7 @@ class CommentsController extends Controller
                $result = $this->model->addMovieComments($id_movie, $idComment);
                if ($result === true) {
                   $displayAlert = '<div class="alert alert-success text-center" id="alerte"><strong>Succès...</strong> Votre commentaire a bien été publié, merci.</div>';
+                  $instanceHome->__unsetTab();
                } else {
                   $displayAlert = '<div class="alert alert-danger text-center" id="alerte"><strong>Erreur...</strong>Une erreur est survenu lors de la connexion a la base de données.Veuillez recommencer...</div>';
                }
@@ -254,8 +255,6 @@ class CommentsController extends Controller
                // On affiche une alerte
                $adress = "$this->baseUrl/Films/Film_" . $_SESSION['id_movie'];
                $displayAlert = '<div class="alert alert-success text-center" id="alerte" data-adress="' . $adress . '" ><strong>Succès...</strong> Votre commentaire a bien été publié, merci.</div>';
-
-               
             }
          } else {
             // Si une erreur surviens lors de l'ajout du commentaire a la BDD
@@ -265,7 +264,7 @@ class CommentsController extends Controller
          }
          $instanceHome->__unsetTab();
 
-         
+
          $instanceMovies->showMovie($_SESSION['id_movie'], $displayAlert);
       }
    }
