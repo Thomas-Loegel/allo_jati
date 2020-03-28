@@ -1,0 +1,6 @@
+{
+   "dsn": "mysql:host=localhost;dbname=anthonym_allo_jati;charset=utf8;",
+   "user": "anthonym",
+   "psswd": "4Wflo7tNwAG41A==",
+   "baseUrl": "http://anthonym.promo-36.codeur.online/Allo%20Jati"
+}
